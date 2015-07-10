@@ -1,6 +1,14 @@
 <?php
 $changelog = <<<'EOT'
 
+= 2.1.2 =
+* Fixed a bug in the firewall that could corrupt the content
+  of a POST or GET array.
+* [Pro+ edition] Whitelisted and blacklisted IPs are sorted using
+  "natural order" algorithm in the "Access Control" page.
+* Updated security rules.
+* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 2.1.1 =
 * The firewall will no longer sanitise user input when running
   in "Debugging Mode", but will only write the event to its log.

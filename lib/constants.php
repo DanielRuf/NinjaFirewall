@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-04-22 18:53:03                                       |
+ | REVISION: 2015-07-08 11:22:27                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -22,14 +22,13 @@
 
 /* ------------------------------------------------------------------ */
 
-define('NFW_ENGINE_VERSION', '2.1.1');
-define('NFW_RULES_VERSION', '20150522.1');
+define('NFW_ENGINE_VERSION', '2.1.2');
+define('NFW_RULES_VERSION', '20150708.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
 // (obviously, you will not be able to update NF anymore !) :
 define('NFW_UPDATE', 'pro.ninjafirewall.com');
-
 /* ------------------------------------------------------------------ */
 
 // Used by the admin script and the installer :

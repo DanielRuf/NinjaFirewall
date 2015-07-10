@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-05-06 23:36:25                                       |
+ | REVISION: 2015-06-17 21:59:02                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -705,10 +705,10 @@ ADMIN_SAVE_END:
 	$nfw_rules = fw_conf_rules();
 
 	// Add the DOCUMENT_ROOT :
-	if ( strlen( getenv('DOCUMENT_ROOT') ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
-	} elseif ( strlen($_SERVER['DOCUMENT_ROOT']) > 5 ) {
+	if ( strlen($_SERVER['DOCUMENT_ROOT']) > 5 ) {
 		$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
+	} elseif ( strlen( getenv('DOCUMENT_ROOT') ) > 5 ) {
+		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
 	} else {
 		$nfw_rules[NFW_DOC_ROOT]['on']  = 0;
 	}
@@ -1507,11 +1507,11 @@ function fw_conf_rules() {
 	global $nfw_rules;
 
 	// Try to get the document root :
-	if ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 1;
-	} elseif ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
+	if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
 		$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
+		$nfw_rules[NFW_DOC_ROOT]['on'] = 1;
+	} elseif ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
+		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
 		$nfw_rules[NFW_DOC_ROOT]['on'] = 1;
 	} else {
 		$nfw_rules[NFW_DOC_ROOT]['on'] = 0;

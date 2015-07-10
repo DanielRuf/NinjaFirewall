@@ -545,7 +545,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 
 	<?php
 	// If the document root is < 5 characters, grey out that option:
-	if ( strlen( getenv( 'DOCUMENT_ROOT' ) ) < 5 ) {
+	if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) < 5 ) {
 		$nfw_rules[NFW_DOC_ROOT]['on'] = 0;
 		$greyed = 'style="color:#bbbbbb"';
 		$disabled = 'disabled ';
@@ -702,11 +702,11 @@ function restore_firewall_policies() {
 	$nfw_options['php_path_t'] = 1;
 	$nfw_options['php_path_i'] = 1;
 
-	if ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
-		$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
-	} elseif ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
+	if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
 		$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
+		$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
+	} elseif ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
+		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
 		$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
 	} else {
 		$nfw_rules[NFW_DOC_ROOT]['on']	= 0;
@@ -1008,11 +1008,11 @@ function save_firewall_policies() {
 		// We need to ensure that the document root is at least
 		// 5 characters, otherwise this option could block a lot
 		// of legitimate requests:
-		if ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
-			$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
-			$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
-		} elseif ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
+		if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
 			$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
+			$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
+		} elseif ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
+			$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
 			$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
 		// we must disable that option:
 		} else {

@@ -5,7 +5,7 @@
 // | (c) NinTechNet - http://nintechnet.com/                             |
 // |                                                                     |
 // +---------------------------------------------------------------------+
-// | REVISION: 2015-04-22 18:48:41                                       |
+// | REVISION: 2015-06-26 21:17:09                                       |
 // +---------------------------------------------------------------------+
 // | This program is free software: you can redistribute it and/or       |
 // | modify it under the terms of the GNU General Public License as      |
@@ -27,8 +27,8 @@ $nfw_['fw_starttime'] = microtime(true);
 
 // Optional NinjaFirewall configuration file
 // ( see http://ninjafirewall.com/pro/htninja/ ) :
-if ( @file_exists($nfw_['file'] = dirname(getenv('DOCUMENT_ROOT')) .'/.htninja') ||
-	@file_exists($nfw_['file'] = getenv('DOCUMENT_ROOT') .'/.htninja') ) {
+if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja') ||
+	@file_exists($nfw_['file'] = $_SERVER['DOCUMENT_ROOT'] .'/.htninja') ) {
 	$nfw_['res'] = @include($nfw_['file']);
 	// Allow and stop filtering :
 	if ( $nfw_['res'] == 'ALLOW' ) {
@@ -408,7 +408,7 @@ function nfw_check_upload() {
 			// Reject scripts, ELF and system files ?
 			if ( $nfw_['nfw_options']['uploads'] == 2 ) {
 				// System files :
-				if (preg_match('/\.ht(?:access|passwd)|(?:php\d?|\.user)\.ini|\.p(?:hp\d?|html)/', $f_uploaded[$key]['name']) ) {
+				if (preg_match('/\.ht(?:access|passwd)|(?:php\d?|\.user)\.ini|\.ph(?:p[345]?|t|tml)\b/', $f_uploaded[$key]['name']) ) {
 					nfw_log('Attempt to upload a script or system file', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
 					nfw_block(3);
 				}
@@ -534,16 +534,17 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 			if (! empty($sub_value[1]) && @isset($GLOBALS['_' . $sub_value[0]] [$sub_value[1]]) ) {
 				if ( is_array($GLOBALS['_' . $sub_value[0]] [$sub_value[1]]) ) {
 					$res = nfw_flatten( "\n", $GLOBALS['_' . $sub_value[0]] [$sub_value[1]] );
-					$GLOBALS['_' . $sub_value[0]] [$sub_value[1]] = $res;
 					$rules_values['what'] = '(?m:'. $rules_values['what'] .')';
+				} else {
+					$res = $GLOBALS['_' . $sub_value[0]] [$sub_value[1]];
 				}
-				if (! $GLOBALS['_' . $sub_value[0]][$sub_value[1]] ) { continue; }
-				if ( preg_match('`'. $rules_values['what'] .'`', $GLOBALS['_' . $sub_value[0]][$sub_value[1]]) ) {
+				if (! $res ) { continue; }
+				if ( preg_match('`'. $rules_values['what'] .'`', $res) ) {
 					// Extra rule :
 					if (! empty($rules_values['extra'])) {
 						if ( empty($GLOBALS['_' . $rules_values['extra'][1]] [$rules_values['extra'][2]]) || ! preg_match('`'. $rules_values['extra'][3] .'`', $GLOBALS['_' . $rules_values['extra'][1]] [$rules_values['extra'][2]]) ) { continue;	}
 					}
-					nfw_log($rules_values['why'], $sub_value[0]. ':' .$sub_value[1]. ' = ' .$GLOBALS['_' . $sub_value[0]][$sub_value[1]], $rules_values['level'], $rules_id);
+					nfw_log($rules_values['why'], $sub_value[0]. ':' .$sub_value[1]. ' = ' . $res, $rules_values['level'], $rules_id);
 					nfw_block($rules_values['level']);
 				}
 			}

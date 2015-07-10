@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-02-08 23:57:45                                       |
+ | REVISION: 2015-06-17 22:08:26                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -296,8 +296,8 @@ if (! is_writable('./conf') ) {
 }
 // Optional NinjaFirewall .htninja configuration file
 // ( see http://ninjafirewall.com/pro/htninja/ ) :
-if ( @file_exists( $file = dirname(getenv('DOCUMENT_ROOT') ) . '/.htninja') ||
-		@file_exists( $file = getenv('DOCUMENT_ROOT') . '/.htninja') ) {
+if ( @file_exists( $file = dirname($_SERVER['DOCUMENT_ROOT'] ) . '/.htninja') ||
+		@file_exists( $file = $_SERVER['DOCUMENT_ROOT'] . '/.htninja') ) {
 	?>
 	<tr>
 		<td width="45%"><?php echo $lang['htninja'] ?></td>
