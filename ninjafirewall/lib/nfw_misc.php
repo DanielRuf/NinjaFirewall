@@ -5,7 +5,7 @@
  |                                                                     |
  | (c) NinTechNet - http://nintechnet.com/                             |
  +---------------------------------------------------------------------+
- | REVISION: 2015-05-01 00:55:43                                       |
+ | REVISION: 2015-07-31 17:34:49                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -16,7 +16,7 @@
  | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
  | GNU General Public License for more details.                        |
- +---------------------------------------------------------------------+ i18n / sa
+ +---------------------------------------------------------------------+ i18n+ / sa
 */
 
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
@@ -48,10 +48,12 @@ function nfw_admin_notice(){
 		}
 	}
 	if (! file_exists(NFW_LOG_DIR . '/nfwlog') ) {
-		echo '<div class="error"><p>' . sprintf( __('<strong>NinjaFirewall error :</strong> <code>%s/nfwlog/</code> directory cannot be created. Please review your installation and ensure that <code>/wp-content/</code> is writable.', 'ninjafirewall'), htmlspecialchars(NFW_LOG_DIR) ) . '</p></div>';
+		echo '<div class="error notice is-dismissible"><p><strong>' . __('NinjaFirewall error', 'ninjafirewall') . ' :</strong> ' .
+			sprintf( __('%s directory cannot be created. Please review your installation and ensure that %s is writable.', 'ninjafirewall'), '<code>'. htmlspecialchars(NFW_LOG_DIR) .'/nfwlog/</code>',  '<code>/wp-content/</code>') . '</p></div>';
 	}
 	if (! is_writable(NFW_LOG_DIR . '/nfwlog') ) {
-		echo '<div class="error"><p>' . sprintf( __('<strong>NinjaFirewall error :</strong> <code>%s/nfwlog/</code> directory is read-only. Please review your installation and ensure that <code>/nfwlog/</code> is writable.', 'ninjafirewall'), htmlspecialchars(NFW_LOG_DIR) ) . '</p></div>';
+		echo '<div class="error notice is-dismissible"><p><strong>' . __('NinjaFirewall error', 'ninjafirewall') . ' :</strong> ' .
+			sprintf( __('%s directory is read-only. Please review your installation and ensure that %s is writable.', 'ninjafirewall'), '<code>'. htmlspecialchars(NFW_LOG_DIR) .'/nfwlog/</code>', '<code>/nfwlog/</code>') . '</p></div>';
 	}
 
 	if (! NF_DISABLED) {
@@ -77,9 +79,9 @@ function nfw_admin_notice(){
 	if (! empty($GLOBALS['err_fw'][NF_DISABLED]) ) {
 		$msg = $GLOBALS['err_fw'][NF_DISABLED];
 	} else {
-		$msg = 'unknown error #' . NF_DISABLED;
+		$msg = __('unknown error', 'ninjafirewall') . ' #' . NF_DISABLED;
 	}
-	echo '<div class="error"><p><strong>' . __('NinjaFirewall fatal error :', 'ninjafirewall') . '</strong> ' . $msg .
+	echo '<div class="error notice is-dismissible"><p><strong>' . __('NinjaFirewall fatal error:', 'ninjafirewall') . '</strong> ' . $msg .
 		'. ' . __('Review your installation, your site is not protected.', 'ninjafirewall') . '</p></div>';
 }
 
@@ -103,7 +105,7 @@ function nfw_query( $query ) { // i18n
 			return;
 		}
 		$query->set('author_name', '0');
-		nfw_log2( __('User enumeration scan (author archives)', 'ninjafirewall'), $tmp, 2, 0);
+		nfw_log2('User enumeration scan (author archives)', $tmp, 2, 0);
 		wp_redirect( home_url('/') );
 		exit;
 	}
@@ -200,11 +202,11 @@ function nf_check_dbdata() {
 		$subject = __('[NinjaFirewall] Alert: Database changes detected', 'ninjafirewall');
 		$message = __('NinjaFirewall has detected that one or more administrator accounts were modified in the database:', 'ninjafirewall') . "\n\n";
 		if ( is_multisite() ) {
-			$message.= __('Blog : ', 'ninjafirewall') . network_home_url('/') . "\n";
+			$message.= __('Blog:', 'ninjafirewall') .' '. network_home_url('/') . "\n";
 		} else {
-			$message.= __('Blog : ', 'ninjafirewall') . home_url('/') . "\n";
+			$message.= __('Blog:', 'ninjafirewall') .' '. home_url('/') . "\n";
 		}
-		$message.= __('Date : ', 'ninjafirewall') . date_i18n('F j, Y @ H:i:s') . ' (UTC '. date('O') . ")\n\n";
+		$message.= __('Date:', 'ninjafirewall') .' '. date_i18n('F j, Y @ H:i:s') . ' (UTC '. date('O') . ")\n\n";
 		$message.= sprintf(__('Total administrators : %s', 'ninjafirewall'), count($adm_users) ) . "\n\n";
 		foreach( $adm_users as $obj => $adm ) {
 			$message.= 'Admin ID : ' . $adm->ID . "\n";
@@ -221,7 +223,7 @@ function nf_check_dbdata() {
 
 		// Log event if required :
 		if (! empty($nfw_options['a_41']) ) {
-			nfw_log2( __('Database changes detected', 'ninjafirewall'), __('administrator account', 'ninjafirewall'), 4, 0);
+			nfw_log2('Database changes detected', __('administrator account', 'ninjafirewall'), 4, 0);
 		}
 	}
 

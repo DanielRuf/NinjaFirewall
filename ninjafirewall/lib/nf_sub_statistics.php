@@ -5,7 +5,7 @@
  |                                                                     |
  | (c) NinTechNet - http://nintechnet.com/                             |
  +---------------------------------------------------------------------+
- | REVISION: 2014-10-08 00:37:55                                       |
+ | REVISION: 2015-08-01 17:43:40                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -16,7 +16,7 @@
  | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
  | GNU General Public License for more details.                        |
- +---------------------------------------------------------------------+ i18n / sa
+ +---------------------------------------------------------------------+ i18n+ / sa
 */
 
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
@@ -73,7 +73,7 @@ if ($fh = @fopen($fw_log, 'r') ) {
 	}
 	fclose( $fh);
 } else {
-	echo '<div class="error settings-error"><p><strong>' . __('Cannot open logfile', 'ninjafirewall') . ' :</strong> <code>' . $fw_log . '</code></p></div></div>';
+	echo '<div class="error notice is-dismissible"><p>' . __('Cannot open logfile', 'ninjafirewall') . ' : <code>' . $fw_log . '</code></p></div></div>';
 	summary_stats_combo($xtr);
 	return;
 }
@@ -84,7 +84,7 @@ $total = $critical + $high + $medium;
 if ($total == 1) {$fast = $slow;}
 
 if (! $total ) {
-	echo '<div class="error settings-error"><p>' . __('You do not have any stats for the current month yet.', 'ninjafirewall') . '</p></div>';
+	echo '<div class="error notice is-dismissible"><p>' . __('You do not have any stats for the current month yet.', 'ninjafirewall') . '</p></div>';
 	$fast = 0;
 } else {
 	$coef = 100 / $total;
@@ -171,7 +171,7 @@ function summary_stats_combo( $xtr ) {
 				if (preg_match( '/^(firewall_(\d{4})-(\d\d)\.php)$/', $file, $match ) ) {
 					$log_stat = stat( NFW_LOG_DIR . '/nfwlog/' . $file );
 					if ( $log_stat['size'] < 10 ) { continue; }
-					$month = date('F', mktime(0, 0, 0, $match[3], 1, 2000) );
+					$month = ucfirst( date_i18n('F', mktime(0, 0, 0, $match[3], 1, 2000) ) );
 					$avail_logs[$match[1] ] = $month . ' ' . $match[2];
 				}
 			}
