@@ -2,15 +2,15 @@
 /* 2015-03-13 23:16:07 */
 $lang = array (
 	'livelog'			=>	'Live Log',
-	'resp_err'			=>	"Error: le serveur n\'a pas retourné la réponse attendue.",
+	'resp_err'			=>	"Erreur : le serveur n\'a pas retourné la réponse attendue.",
 	'disabled'			=>	'Erreur : NinjaFirewall doit être activé pour que Live Log puisse fonctionner.',
-	'notwhitelisted'	=>	'Erreur: Vous devez être dans la liste blanche afin de pouvoir utiliser Live Log.' .
+	'notwhitelisted'	=>	'Erreur : Vous devez être dans la liste blanche afin de pouvoir utiliser Live Log.' .
 								'<br />' .
 								"Cliquez sur le menu %s Contrôle d'Accès %s et assurez vous que l'option \"Ajouter l'Administrateur à la liste blanche\" est activée.",
 	'loading'			=>	'Chargement...',
-	'no_log'				=>	'Erreur: impossible de trouver le fichier log. Essayez de recharger cette page.',
-	'http_err'			=>	"Erreur: le serveur HTTP a retourné le code d\'erreur suivant : ",
-	'404'					=>	"Erreur: l\'URL ne semble pas valide: ",
+	'no_log'				=>	'Erreur : impossible de trouver le fichier log. Essayez de recharger cette page.',
+	'http_err'			=>	"Erreur : le serveur HTTP a retourné le code d\'erreur suivant : ",
+	'404'					=>	"Erreur : l\'URL ne semble pas valide: ",
 	'no_traffic'		=>	'Aucun visiteur actuellement, veuillez patienter...',
 	'sleeping'			=>	'Rafraîchissement dans',
 	'on'					=>	'Activer',
@@ -22,7 +22,7 @@ $lang = array (
 	'options'			=>	'Options',
 	'log_format'		=>	"Format d'affichage",
 	'custom'				=>	'Autre',
-	'format_err'		=>	"Erreur: veuillez entrer le format d'affichage.",
+	'format_err'		=>	"Erreur : veuillez entrer le format d'affichage.",
 	'help'				=>	"Consultez l'aide contextuelle pour avoir plus d'information sur les formats disponibles.",
 	'display'			=>	'Afficher',
 	'http'				=>	'Trafic HTTP uniquement',

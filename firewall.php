@@ -5,7 +5,7 @@
 // | (c) NinTechNet - http://nintechnet.com/                             |
 // |                                                                     |
 // +---------------------------------------------------------------------+
-// | REVISION: 2015-06-26 21:17:09                                       |
+// | REVISION: 2015-08-15 16:51:41                                       |
 // +---------------------------------------------------------------------+
 // | This program is free software: you can redistribute it and/or       |
 // | modify it under the terms of the GNU General Public License as      |
@@ -392,7 +392,7 @@ function nfw_check_upload() {
       }
       if ( $tmp ) {
 			// Log and block :
-			nfw_log('File upload attempt', rtrim($tmp, ' '), 3, 0);
+			nfw_log('Blocked file upload attempt', rtrim($tmp, ' '), 3, 0);
 			nfw_block(3);
 		}
 	// Uploads are allowed :

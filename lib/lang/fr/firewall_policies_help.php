@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-20 02:04:28 */
+/* 2015-08-13 19:07:10 */
 $title = 'Pare-Feu > Politique';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -13,7 +13,7 @@ Parcequ'il agit en amont de votre application, NinjaFirewall peut intercepter, s
 
 <h3><strong>Filtrer &amp; Nettoyer</strong></h3>
 Vous pouvez choisir de filtrer et rejeter les requêtes HTTP dangereuses, mais aussi de les nettoyer. Ces deux actions sont différentes et peuvent être combinées pour plus de sécurité.<br />
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Filtrer :</strong> lorsqu'il détecte une requête dangereuse, NinjaFirewall la bloque et retourne un message et code d'erreur HTTP. La requête ne pourra pas aboutir et la connexion sera fermée imméditement.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Filtrer :</strong> lorsqu'il détecte une requête dangereuse, NinjaFirewall la bloque et retourne un message et code d'erreur HTTP. La requête ne pourra pas aboutir et la connexion sera fermée immédiatement.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Nettoyer :</strong> cette action ne bloque pas la requête mais l'analyse afin d'y trouver des caractères pouvant être dangereux, par exemple pour injecter du code dans la base de données (<code>'</code>, <code>"</code>, <code>\</code>, <code>\n</code>, <code>\r</code>, <code>`</code>, <code>\x1a</code>, <code>\x00</code>) et, le cas échéant, nettoie cette requête en y insérant des caractères d'échappement. S'il s'agit d'une variable et de sa valeur (<code>?variable=valeur</code>), les deux éléments seront nettoyés.<br />
 Veuillez noter que cette action est effectuée en dernier, après le filtrage, juste avant que NinjaFirewall fasse suivre la requête à votre application PHP.</p>
 
@@ -29,7 +29,7 @@ Veuillez noter que cette action est effectuée en dernier, après le filtrage, j
 
 <h3><strong>Téléchargements</strong></h3>
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Autoriser les téléchargements :</strong> vous pouvez autoriser ou interdire tout téléchargement de fichiers vers votre site, ou bien les autoriser sauf s'il s'agit de fichiers potentiellement dangereux&nbsp;: scripts (PHP, CGI, Ruby, Python, bash/shell), code source C/C++, ELF (fichiers exécutables pour Unix/Linux) et certains fichiers systèmes (<code>.htaccess</code>, <code>.htpasswd</code> et PHP INI).</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Autoriser les téléchargements :</strong> vous pouvez autoriser ou interdire les téléchargements de fichier vers votre site, ou bien les autoriser sauf s'il s'agit de fichiers potentiellement dangereux&nbsp;: scripts (PHP, CGI, Ruby, Python, bash/shell), code source C/C++, ELF (fichiers exécutables pour Unix/Linux) et certains fichiers systèmes (<code>.htaccess</code>, <code>.htpasswd</code> et PHP INI).</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Nettoyer le nom des fichiers :</strong> si le nom du fichier contient un caractère qui n'est pas une lettre <code>a-zA-Z</code>, un chiffre <code>0-9</code>, un point <code>.</code>, un trait d'union <code>-</code> ou un caractère de soulignement <code>_</code>, celui-si sera remplacé par le caractère <code>X</code>.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Taille maximale autorisée :</strong> vous pouvez sélectionner la taille maximale d'un fichier téléchargé. Tout fichier plus grand que cette taille sera rejeté. Notez que si votre configuration de PHP utilise la directive <code>upload_max_filesize</code>, celle-ci sera prioritaire.</p>
 
@@ -101,15 +101,15 @@ Veuillez noter que cette action est effectuée en dernier, après le filtrage, j
 
 <h3><strong>Divers</strong></h3>
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les requêtes HTTP contenants la variable <code>DOCUMENT_ROOT</code>&nbsp;:</strong> cette option bloque toute tentative de passer la variable <code>DOCUMENT_ROOT</code> dans une requête <code>GET</code> ou <code>POST</code>. Les pirates utilisent souvent des scripts qui nécessitent d'utiliser cette variable, mais pas la plupart des applications légitimes (hormis certains scripts d'installation ou de configuration).
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les requêtes HTTP contenant la variable <code>DOCUMENT_ROOT</code>&nbsp;:</strong> cette option bloque toute tentative de passer la variable <code>DOCUMENT_ROOT</code> dans une requête <code>GET</code> ou <code>POST</code>. Les pirates utilisent souvent des scripts qui nécessitent d'utiliser cette variable, mais pas la plupart des applications légitimes (hormis certains scripts d'installation ou de configuration).
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer le caractère ASCII 0x00 (NULL byte) :</strong> toute requête <code>GET</code> ou <code>POST</code>, ainsi que toute variable <code>COOKIE</code>, <code>HTTP_USER_AGENT</code>, <code>REQUEST_URI</code>, <code>PHP_SELF</code>, <code>PATH_INFO</code> contenant le caractère ASCI 0x00 (NULL byte) sera bloquée immédiatement. Ce caractère est dangereux et devrait toujours être rejecté.
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer le caractère ASCII 0x00 (NULL byte) :</strong> toute requête <code>GET</code> ou <code>POST</code>, ainsi que toute variable <code>COOKIE</code>, <code>HTTP_USER_AGENT</code>, <code>REQUEST_URI</code>, <code>PHP_SELF</code>, <code>PATH_INFO</code> contenant le caractère ASCI 0x00 (NULL byte) sera bloquée immédiatement. Ce caractère est dangereux et devrait toujours être rejeté.
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les caractères de contrôle ASCII 1 à 8 et 14 à 31&nbsp;:</strong> dans la plupart des cas, ces caractères de contrôle de l'ASCII ne sont pas nécessaires et devraient être rejetés.
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les requêtes <code>GET/POST</code> contenants l'IP localhost&nbsp;:</strong> cette option bloque toute requête <code>GET</code> ou <code>POST</code> contenant l'IP localhost (127.0.0.1). Cela peut s'avérer utile pour bloquer les programmes malveillants. Attention toutefois à ne pas bloquer certains scripts d'installation ou de configuration si vous l'activez.
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les requêtes <code>GET/POST</code> contenant l'IP localhost&nbsp;:</strong> cette option bloque toute requête <code>GET</code> ou <code>POST</code> contenant l'IP localhost (127.0.0.1). Cela peut s'avérer utile pour bloquer les programmes malveillants. Attention toutefois à ne pas bloquer certains scripts d'installation ou de configuration si vous l'activez.
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les requêtes HTTP dont l'en-tête <code>HTTP_HOST</code> contient une IP&nbsp;:</strong> cette option rejette toute requête HTTP contenant une addresse IP au lieu d'un nom de domaine dans son en-tête <code>Host</code>. Sauf si vous avez besoin de vous connecter à votre site en utilisant son adresse IP (ex: http://172.16.0.1/index.php), activer cette option bloquera de nombreux scanners de vulnérabilité car ces application trouvent les sites en scannant les plages d'adresses IP plutôt que les noms de domaine.
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les requêtes HTTP dont l'en-tête <code>HTTP_HOST</code> contient une IP&nbsp;:</strong> cette option rejette toute requête HTTP contenant une adresse IP au lieu d'un nom de domaine dans son en-tête <code>Host</code>. Sauf si vous avez besoin de vous connecter à votre site en utilisant son adresse IP (ex: http://172.16.0.1/index.php), activer cette option bloquera de nombreux scanners de vulnérabilité car ces application trouvent les sites en scannant les plages d'adresses IP plutôt que les noms de domaine.
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Accepter les méthodes HTTP :</strong> par défaut, NinjaFirewall n'accepte que les méthodes <code>GET</code>, <code>POST</code> et <code>HEAD</code>.
 

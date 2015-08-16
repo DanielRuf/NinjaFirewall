@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-04-15 22:57:32                                       |
+ | REVISION: 2015-07-31 15:56:14                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -89,20 +89,20 @@ foreach ( $nfw_rules as $rule_key => $rule_value ) {
 						foreach ( $enabled_rules as $key ) {
 							// grey-out those ones, they can be changed in the Firewall Policies section:
 							if ( ( $key == 2 ) || ( $key > 499 ) && ( $key < 600 ) ) {
-								echo '<option value="0" disabled="disabled">' . $lang['rule'] . htmlspecialchars($key) . ' (firewall policies)</option>';
+								echo '<option value="0" disabled="disabled">' . $lang['rule'] . htmlspecialchars($key) . ' Firewall policy</option>';
 							} else {
 								if ( $key < 100 ) {
-									$desc = ' (remote/local file inclusion)';
+									$desc = ' Remote/local file inclusion';
 								} elseif ( $key < 150 ) {
-									$desc = ' (cross-site scripting/XSS)';
+									$desc = ' Cross-site scripting';
 								} elseif ( $key < 200 ) {
-									$desc = ' (code injection)';
+									$desc = ' Code injection';
 								} elseif ( $key < 250 ) {
-									$desc = ' (SQL injection)';
+									$desc = ' SQL injection';
 								} elseif ( $key < 350 ) {
-									$desc = ' (various)';
+									$desc = ' Various vulnerability';
 								} elseif ( $key < 400 ) {
-									$desc = ' (backdoor shells)';
+									$desc = ' Backdoor/shell';
 								}
 								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
 								$count++;
@@ -122,20 +122,20 @@ foreach ( $nfw_rules as $rule_key => $rule_value ) {
 						foreach ( $disabled_rules as $key ) {
 							// grey-out those ones, they can be changed in the Firewall Policies section:
 							if ( ( $key == 2 ) || ( $key > 499 ) && ( $key < 600 ) ) {
-								echo '<option value="0" disabled="disabled">' . $lang['rule'] . htmlspecialchars($key) . ' (firewall policies)</option>';
+								echo '<option value="0" disabled="disabled">' . $lang['rule'] . htmlspecialchars($key) . ' Firewall policy</option>';
 							} else {
 								if ( $key < 100 ) {
-									$desc = ' (remote/local file inclusion)';
+									$desc = ' Remote/local file inclusion';
 								} elseif ( $key < 150 ) {
-									$desc = ' (cross-site scripting/XSS)';
+									$desc = ' Cross-site scripting';
 								} elseif ( $key < 200 ) {
-									$desc = ' (code injection)';
+									$desc = ' Code injection';
 								} elseif ( $key < 250 ) {
-									$desc = ' (SQL injection)';
+									$desc = ' SQL injection';
 								} elseif ( $key < 350 ) {
-									$desc = ' (various)';
+									$desc = ' Various vulnerability';
 								} elseif ( $key < 400 ) {
-									$desc = ' (backdoor shells)';
+									$desc = ' Backdoor/shell';
 								}
 								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
 								$count++;

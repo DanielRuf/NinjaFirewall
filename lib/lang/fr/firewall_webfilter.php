@@ -1,5 +1,5 @@
 <?php
-/* 2014-09-14 19:56:25 */
+/* 2015-08-13 18:03:42 */
 $lang = array (
 	'error'				=> 'Erreur',
 	'yes'					=> 'Oui',
@@ -14,7 +14,7 @@ $lang = array (
 	'js_empty'			=>	'Votre liste est vide !',
 	'js_novalue'		=>	'Entrez au moins 4 caractères !',
 	'js_inlist'			=>	' est déjà dans votre liste.',
-	'js_length'			=>	'Le mots-clé doit avoir une longueur comprise entre 4 to 150 caractères.',
+	'js_length'			=>	'Le mots-clé doit avoir une longueur comprise entre 4 et 150 caractères.',
 	'js_notallowed'	=>	'Le symole \'|\' est interdit.',
 	'js_atleastone'	=>	'Entrez au moins un mot-clé ou désactivez Web Filter.',
 

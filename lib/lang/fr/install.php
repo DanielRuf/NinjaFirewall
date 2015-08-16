@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-08 19:00:02 */
+/* 2015-08-15 22:34:02 */
 $lang = array (
 
 	'next'					=> 'Suivant',
@@ -138,5 +138,15 @@ $lang = array (
 									'Assurez-vous que ce fichier n\'est pas en lecture seule.',
 	'error_rules'			=> 'Impossible d\'écrire dans le fichier de configuration <code>/conf/rules.php</code>. ' .
 									'Assurez-vous que ce fichier n\'est pas en lecture seule.',
+
+	'mail_subject'			=>	'Guide d\'Installation et de Dépannage',
+	'hi'						=>	'Bonjour,',
+	'hi2'						=>	'Je suis l\'installateur de NinjaFirewall. Voici quelques informations et liens qui pourraient vous être utiles (en langue anglaise) :',
+	'hi3'						=>	'Vous êtes bloqué par NinjaFirewall et ne pouvez plus accéder à votre site, ou celui-ci plante juste après l\'installation NinjaFirewall ? Suivez ce lien :',
+	'hi4'						=>	'NinjaFirewall affiche le message d\'erreur "le pare-feu n\'est pas activé" ? Suivez ce lien :',
+	'hi5'						=>	'Tester NinjaFirewall sans bloquer vos visiteurs :',
+	'hi6'						=>	'Info sur les mises à jour via Twitter :',
+	'hi7'						=>	'Vous pouvez aussi consulter notre FAQ et Aide à l\'installation :',
+
 );
 

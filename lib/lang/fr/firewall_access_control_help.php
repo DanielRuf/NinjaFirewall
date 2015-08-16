@@ -1,5 +1,5 @@
 <?php
-/* 2015-03-14 21:26:30 */
+/* 2015-08-13 19:31:18 */
 $title = 'Pare-Feu > Contrôle d\'Accès';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -82,7 +82,7 @@ Exemple de code PHP à ajouter à vos scripts pour géolocaliser vos visiteurs&n
 }</textarea>
 </center>
 
-<p><img src="static/icon_warn.png">&nbsp;Si NinjaFirewall ne peut pas identifer le code à deux lettres du pays, il le remplacera par deux traits d'union (<code>--</code>).</p>
+<p><img src="static/icon_warn.png">&nbsp;Si NinjaFirewall ne peut pas identifier le code à deux lettres du pays, il le remplacera par deux traits d'union (<code>--</code>).</p>
 
 <hr class="dotted" size="1">
 

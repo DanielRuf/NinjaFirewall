@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-08 18:59:55 */
+/* 2015-08-15 22:33:46 */
 $lang = array (
 
 	'next'					=> 'Next',
@@ -137,6 +137,15 @@ $lang = array (
 									'Please make this file writable.',
 	'error_rules'			=> 'Cannot write to the <code>/conf/rules.php</code> configuration file. ' .
 									'Please make this file writable.',
+
+	'mail_subject'			=>	'Installation & Troubleshooting Guide',
+	'hi'						=>	'Hi,',
+	'hi2'						=>	'This is NinjaFirewall\'s installer. Below are some info and links that can be helpful:',
+	'hi3'						=>	'You are locked out of your site, blocked by NinjaFirewall or your site crashed right after installing NinjaFirewall? Follow this link:',
+	'hi4'						=>	'NinjaFirewall returns a "firewall is not loaded" error message? Follow this link:',
+	'hi5'						=>	'Testing NinjaFirewall without blocking your visitors:',
+	'hi6'						=>	'Updates info are available via Twitter:',
+	'hi7'						=>	'You can also check our FAQ and Installation Help:',
 
 );
 

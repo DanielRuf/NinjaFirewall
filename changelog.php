@@ -1,6 +1,10 @@
 <?php
 $changelog = <<<'EOT'
 
+= 2.1.3 =
+* Updated security rules.
+* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 2.1.2 =
 * Fixed a bug in the firewall that could corrupt the content
   of a POST or GET array.

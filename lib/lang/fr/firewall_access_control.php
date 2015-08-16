@@ -1,10 +1,10 @@
 <?php
-/* 2015-01-20 16:03:32 */
+/* 2015-08-13 20:07:39 */
 $lang = array (
 	'error'				=> 'Erreur',
 	'yes'					=> 'Oui',
 	'no'					=> 'Non',
-	'default'			=> ' (defaut)',
+	'default'			=> ' (défaut)',
 	'disabled'			=> 'Désactivé',
 	'eg'					=> 'ex:',
 	'pro_only'			=>	'Cette fonctionnalité n\'est disponible que dans la version <font color="#FF0000">Pro+</font> Edition de NinjaFirewall',
@@ -30,7 +30,7 @@ $lang = array (
 								'Voir Aide contextuelle pour plus d\'informations.',
 	'js_blockcn'		=>	'Sélectionner un pays à bloquer.',
 	'js_unblockcn'		=>	'Sélectionner un pays à supprimer.',
-	'js_bot_default'	=>	'Restaurer les valeurs par défaut de la liste des bots',
+	'js_bot_default'	=>	'Restaurer les valeurs par défaut de la liste des bots ?',
 	'js_method'			=>	'Erreur : vous devez sélectionner au moins une méthode HTTP.',
 	'js_sourceip'		=>	'Erreur : vous devez entrer une valeur pour le champ [IP Source > Autre].',
 	'js_geoipip'		=>	'Erreur : vous devez entrer une valeur pour le champ [ Contrôle d\'accès par Géolocalisation > Variable PHP ].',
@@ -98,7 +98,7 @@ $lang = array (
 	'bot_default'		=>	'Restaurer les valeurs par défaut',
 
 	'default_js'		=>	'Tous les champs vont être réinitialisés avec leur valeur par défaut.\nContinuer ?',
-	'default_button'	=>	'Rétablir les valeurs par defaut',
+	'default_button'	=>	'Rétablir les valeurs par défaut',
 
 	'save_conf'			=> 'Sauvegarder les modifications',
 	'saved_conf'		=> 'Les modifications ont été enregistrées',
