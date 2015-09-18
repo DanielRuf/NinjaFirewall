@@ -1264,20 +1264,52 @@ function nfw_activation_test() {
 		// Send an email to the admin with links and info about NinjaFirewall:
 		if (! empty($_SESSION['admin_email']) ) {
 			$subject = '[NinjaFirewall] ' . $lang['mail_subject'];
+
 			$message = $lang['hi'] . "\n\n";
+
 			$message.= $lang['hi2'] . "\n\n";
-			$message.= "------------------------------------------------------------------------\n\n";
-			$message.= $lang['hi3'] . "\n   http://ninjafirewall.com/pro/help.php#troubleshooting\n\n";
-			$message.= "------------------------------------------------------------------------\n\n";
-			$message.= $lang['hi4'] . "\n   http://ninjafirewall.com/pro/help.php#failed\n\n";
-			$message.= "------------------------------------------------------------------------\n\n";
-			$message.= $lang['hi5'] . "\n   http://blog.nintechnet.com/testing-ninjafirewall-without-blocking-your-visitors/\n\n";
-			$message.= "------------------------------------------------------------------------\n\n";
-			$message.= $lang['hi6'] . "\n   https://twitter.com/nintechnet\n\n";
-			$message.= "------------------------------------------------------------------------\n\n";
-			$message.= $lang['hi7'] . ' http://ninjafirewall.com/pro/help.php' . "\n\n";
-			$message.= 'NinjaFirewall (Pro edition) - http://ninjafirewall.com/' . "\n";
-			$message.= 'Help Desk: http://nintechnet.com/helpdesk/' . "\n";
+
+			$message.= '1) ' . $lang['hi3'] . "\n";
+			$message.= 'http://nintechnet.com/ninjafirewall/pro-edition/help/?troubleshooting ' . "\n\n";
+
+			$message.= $lang['hi4'] . "\n";
+			$message.= $lang['hi5'] . "\n";
+			$message.= $lang['hi6'] . "\n";
+			$message.= $lang['hi7'] . "\n\n";
+
+			$message.= '2) ' . $lang['hi8'] . "\n";
+			$message.= 'http://nintechnet.com/share/pro-check.txt ' . "\n\n";
+			$message.=  $lang['hi9'] . "\n";
+			$message.=  $lang['hi10'] . "\n";
+			$message.=  $lang['hi11'] . "\n";
+			$message.=  $lang['hi12'] . "\n\n";
+
+			$message.= '3) '. $lang['hi13'] . "\n";
+			$message.= 'http://nintechnet.com/ninjafirewall/pro-edition/help/?faq ' . "\n\n";
+
+			$message.= $lang['hi14'] . "\n";
+			$message.= $lang['hi15'] . "\n";
+			$message.= $lang['hi16'] . "\n";
+			$message.= $lang['hi17'] . "\n";
+			$message.= $lang['hi18'] . "\n";
+			$message.= $lang['hi19'] . "\n";
+			$message.= $lang['hi20'] . "\n";
+			$message.= $lang['hi21'] . "\n";
+			$message.= $lang['hi22'] . "\n\n";
+
+			$message.= '4) '. $lang['hi23'] . "\n\n";
+
+			$message.= $lang['hi24'] . "\n";
+			$message.= 'http://blog.nintechnet.com/testing-ninjafirewall-without-blocking-your-visitors/ ' . "\n";
+
+			$message.= $lang['hi25'] . "\n";
+			$message.= 'http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ' . "\n\n";
+
+			$message.= '5) '. $lang['hi26'] . "\n\n";
+
+			$message.= $lang['hi27'] . "\n";
+			$message.= $lang['hi28'] . " https://twitter.com/nintechnet \n";
+			$message.= '-NinjaFirewall (Pro edition) - http://ninjafirewall.com/ ' . "\n";
 
 			$headers = 'From: "'. $_SESSION['admin_email'] .'" <'. $_SESSION['admin_email'] .'>' . "\r\n";
 			$headers .= "Content-Transfer-Encoding: 7bit\r\n";
@@ -1285,7 +1317,6 @@ function nfw_activation_test() {
 			$headers .= "MIME-Version: 1.0\r\n";
 			mail($_SESSION['admin_email'], $subject, $message, $headers, '-f'. $_SESSION['admin_email']);
 		}
-
 		session_destroy();
 	}
 	echo '</body></html>';

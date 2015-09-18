@@ -5,7 +5,7 @@
 // | (c) NinTechNet - http://nintechnet.com/                             |
 // |                                                                     |
 // +---------------------------------------------------------------------+
-// | REVISION: 2015-08-15 16:51:41                                       |
+// | REVISION: 2015-09-17 15:26:52                                       |
 // +---------------------------------------------------------------------+
 // | This program is free software: you can redistribute it and/or       |
 // | modify it under the terms of the GNU General Public License as      |
@@ -26,7 +26,7 @@ if (defined('NFW_STATUS')) { return; }
 $nfw_['fw_starttime'] = microtime(true);
 
 // Optional NinjaFirewall configuration file
-// ( see http://ninjafirewall.com/pro/htninja/ ) :
+// ( see http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
 if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja') ||
 	@file_exists($nfw_['file'] = $_SERVER['DOCUMENT_ROOT'] .'/.htninja') ) {
 	$nfw_['res'] = @include($nfw_['file']);
@@ -405,6 +405,7 @@ function nfw_check_upload() {
 					' KB' , $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 1, 0);
 				nfw_block(1);
 			}
+			$data = 0;
 			// Reject scripts, ELF and system files ?
 			if ( $nfw_['nfw_options']['uploads'] == 2 ) {
 				// System files :
@@ -423,6 +424,15 @@ function nfw_check_upload() {
 					nfw_log('Attempt to upload a script', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
 					nfw_block(3);
 				}
+			}
+			// Look for EICAR test file :
+			if (! $data) {
+				$data = file_get_contents($f_uploaded[$key]['tmp_name'], NULL, NULL, NULL, 68);
+			}
+			if ( substr($data, 0, 68) == 'X5O!P%@AP' . '[4\PZX54(P^)7CC)7}$EIC' . 'AR-STANDARD-ANTIVIRUS-TEST-FILE!$H' . '+H*' ) {
+				nfw_log('EICAR Standard Anti-Virus Test File blocked', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
+				// Always block it, even if we allow uploads:
+				nfw_block(3);
 			}
 
 			// Sanitise filename ?
@@ -479,7 +489,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 	if ( defined('NFW_STATUS') ) { return; }
 
-	$b64_post = array();
+	$nf_decode = array();
 
 	foreach ($nfw_rules as $rules_id => $rules_values) {
 		// Ignored disabled rules :
@@ -496,12 +506,19 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 						$reqvalue = $res;
 						$rules_values['what'] = '(?m:'. $rules_values['what'] .')';
 					} else {
-						if (! empty($nfw_options['post_b64']) && $where == 'POST' && $reqvalue && ! isset($b64_post[$reqkey]) ) {
-							$b64_post[$reqkey] = 1;
+						if (! empty($nfw_options['post_b64']) && $where == 'POST' && $reqvalue && ! isset($nf_decode[$reqkey]['b64']) ) {
 							nfw_check_b64($reqkey, $reqvalue);
+							$nf_decode[$reqkey]['b64'] = 1;
 						}
 					}
 					if (! $reqvalue) { continue; }
+
+					// Decode potential double-encoding (applies to XSS and SQLi attempts only):
+					if ( (($rules_id > 99 && $rules_id < 150) || ($rules_id > 199 && $rules_id < 250)) && ! isset($nf_decode[$reqkey]['url']) ) {
+						$reqvalue = urldecode($reqvalue);
+						$nf_decode[$reqkey]['url'] = 1;
+					}
+
 					if ( preg_match('`'. $rules_values['what'] .'`', $reqvalue) ) {
 						// Extra rule :
 						if (! empty($rules_values['extra'])) {
@@ -581,7 +598,7 @@ function nfw_check_b64( $reqkey, $string ) {
 	if (! $string || strlen($string) % 4 != 0) { return; }
 
 	if ( base64_encode( $decoded = base64_decode($string) ) === $string ) {
-		if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|preg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|system|unlink)\s*\(|\becho\s*[\'"]|<\s*(?i:applet|div|embed|i?frame(?:set)?|img|meta|marquee|object|script|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php)`', $decoded) ) {
+		if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|preg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|system|unlink)\s*\(|\becho\s*[\'"]|<\s*(?i:applet|div|embed|i?frame(?:set)?|img|meta|marquee|object|script|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php)|(?i:select\b.+?from\b.+?where|insert\b.+?into\b)`', $decoded) ) {
 			nfw_log('base64-encoded injection', 'POST:' . $reqkey . ' = ' . $string, '3', 0);
 			nfw_block(3);
 		}
@@ -606,7 +623,7 @@ function nfw_sanitise( $str, $msg ) {
 		// to the DB from the .htninja file. The DB link should be stored in
 		// the $nfw_['dblink'] variable:
 		//
-		// .htninja example (see http://ninjafirewall.com/pro/htninja/) :
+		// .htninja example (see http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
 		// ----------------------------- 8< -----------------------------
 		// <?php
 		//		@$nfw_['dblink'] = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);

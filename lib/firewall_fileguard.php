@@ -25,7 +25,7 @@ if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 require ('./lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
 html_header();
-echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://ninjafirewall.com/pro/order.php">'. $lang['lic_upgrade'] . '</a>).</p></div>';
+echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>).</p></div>';
 ?>
 <br />
 	<fieldset><legend>&nbsp;<b><?php echo $lang['fg'] ?></b>&nbsp;</legend>

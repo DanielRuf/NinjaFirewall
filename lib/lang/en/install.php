@@ -1,5 +1,5 @@
 <?php
-/* 2015-08-15 22:33:46 */
+/* 2015-09-12 23:01:28 */
 $lang = array (
 
 	'next'					=> 'Next',
@@ -138,14 +138,41 @@ $lang = array (
 	'error_rules'			=> 'Cannot write to the <code>/conf/rules.php</code> configuration file. ' .
 									'Please make this file writable.',
 
-	'mail_subject'			=>	'Installation & Troubleshooting Guide',
+	'mail_subject'			=>	'Quick Start, FAQ & Troubleshooting Guide',
 	'hi'						=>	'Hi,',
-	'hi2'						=>	'This is NinjaFirewall\'s installer. Below are some info and links that can be helpful:',
-	'hi3'						=>	'You are locked out of your site, blocked by NinjaFirewall or your site crashed right after installing NinjaFirewall? Follow this link:',
-	'hi4'						=>	'NinjaFirewall returns a "firewall is not loaded" error message? Follow this link:',
-	'hi5'						=>	'Testing NinjaFirewall without blocking your visitors:',
-	'hi6'						=>	'Updates info are available via Twitter:',
-	'hi7'						=>	'You can also check our FAQ and Installation Help:',
+	'hi2'						=>	'This is NinjaFirewall\'s installer. Below are some helpful info and links you may consider reading before using NinjaFirewall.',
+
+	'hi3'						=>	'Troubleshooting:',
+	'hi4'						=>	'-Failed installation ("Error: the firewall is not loaded")?',
+	'hi5'						=>	'-How to disable NinjaFirewall?',
+	'hi6'						=>	'-Blocked visitors?',
+	'hi7'						=>	'-I lost my administrator password. How can I recover it?',
+
+	'hi8'						=>	'NinjaFirewall (Pro/Pro+ Edition) troubleshooter script:',
+	'hi9'						=>	'-Rename this file to "pro-check.php".',
+	'hi10'					=>	'-Upload it into yourwebsite root folder.',
+	'hi11'					=>	'-Goto http://YOUR WEBSITE/pro-check.php.',
+	'hi12'					=>	'-Delete it afterwards.',
+
+	'hi13'					=>	'FAQ:',
+	'hi14'					=>	'-Do I need root privileges to install NinjaFirewall?',
+	'hi15'					=>	'-Does it work with Nginx?',
+	'hi16'					=>	'-Do I need to alter my PHP scripts?',
+	'hi17'					=>	'-Will NinjaFirewall detect the correct IP of my visitors if I am behind a CDN service like Cloudflare or Incapsula?',
+	'hi18'					=>	'-Will it slow down my site?',
+	'hi19'					=>	'-Is there any Windows version?',
+	'hi20'					=>	'-Can I add/write my own security rules?',
+	'hi21'					=>	'-Can I migrate my site(s) with NinjaFirewall installed?',
+	'hi22'					=>	'-How can I protect Joomla with NinjaFirewall?',
+
+	'hi23'					=>	'Must Read:',
+	'hi24'					=>	'-Testing NinjaFirewall without blocking your visitors.',
+	'hi25'					=>	'-Add your own code to the firewall: the ".htninja" file.',
+
+	'hi26'					=>	'Help & Support Links:',
+	'hi27'					=>	'-Each page of NinjaFirewall includes a contextual help: click on the "Help" menu tab located in the upper right corner of the corresponding page.',
+	'hi28'					=>	'-Updates info are available via Twitter:',
+
 
 );
 

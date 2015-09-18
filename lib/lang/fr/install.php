@@ -1,5 +1,5 @@
 <?php
-/* 2015-08-15 22:34:02 */
+/* 2015-09-12 23:01:35 */
 $lang = array (
 
 	'next'					=> 'Suivant',
@@ -139,14 +139,42 @@ $lang = array (
 	'error_rules'			=> 'Impossible d\'écrire dans le fichier de configuration <code>/conf/rules.php</code>. ' .
 									'Assurez-vous que ce fichier n\'est pas en lecture seule.',
 
-	'mail_subject'			=>	'Guide d\'Installation et de Dépannage',
+
+	'mail_subject'			=>	'Guide d\'Utilisation, Installation et Dépannage',
 	'hi'						=>	'Bonjour,',
-	'hi2'						=>	'Je suis l\'installateur de NinjaFirewall. Voici quelques informations et liens qui pourraient vous être utiles (en langue anglaise) :',
-	'hi3'						=>	'Vous êtes bloqué par NinjaFirewall et ne pouvez plus accéder à votre site, ou celui-ci plante juste après l\'installation NinjaFirewall ? Suivez ce lien :',
-	'hi4'						=>	'NinjaFirewall affiche le message d\'erreur "le pare-feu n\'est pas activé" ? Suivez ce lien :',
-	'hi5'						=>	'Tester NinjaFirewall sans bloquer vos visiteurs :',
-	'hi6'						=>	'Info sur les mises à jour via Twitter :',
-	'hi7'						=>	'Vous pouvez aussi consulter notre FAQ et Aide à l\'installation :',
+	'hi2'						=>	'Je suis l\'installateur de NinjaFirewall. Voici quelques informations et liens qui pourraient vous être utiles (en langue anglaise).',
+
+	'hi3'						=>	'Dépannage :',
+	'hi4'						=>	'-Échec de l\'installation ("Erreur : le pare-feu n\'est pas activé.") ?',
+	'hi5'						=>	'-Comment désactiver NinjaFirewall ?',
+	'hi6'						=>	'-Vos visiteurs sont bloqués par erreur ?',
+	'hi7'						=>	'-Vous avez perdu le mot de passe de votre interface d\'administration ?',
+
+	'hi8'						=>	'Script de dépannage (Pro/Pro+ Edition) :',
+	'hi9'						=>	'-Renommez ce fichier en "pro-check.php".',
+	'hi10'					=>	'-Téléchargez-le dans le repertoire racine de votre site.',
+	'hi11'					=>	'-Rendez-vous sur http://YOUR WEBSITE/pro-check.php.',
+	'hi12'					=>	'-Supprimez-le lorsque vous avez fini.',
+
+	'hi13'					=>	'FAQ:',
+	'hi14'					=>	'-Ai-je besoin d\'avoir les privilèges root pour installer NinjaFirewall ?',
+	'hi15'					=>	'-Est-ce qu\'il fonctionne avec Nginx ?',
+	'hi16'					=>	'-Dois-je modifier mes script PHP ?',
+	'hi17'					=>	'-Est-ce que NinjaFirewall détectera la bonne adresse IP de mes visiteurs si j\'utilise un service CDN comme Cloudflare ou Incapsula ?',
+	'hi18'					=>	'-Est-ce qu\'il va ralentir mon site ?',
+	'hi19'					=>	'-Existe-t-il une version pour Windows ?',
+	'hi20'					=>	'-Puis-je ajouter / écrire mes propres règles de sécurité ?',
+	'hi21'					=>	'-Est-ce que je peux migrer mon site lorsque NinjaFirewall est installé ?',
+	'hi22'					=>	'-Comment protéger Joomla avec NinjaFirewall ?',
+
+	'hi23'					=>	'A lire aussi :',
+	'hi24'					=>	'-Tester NinjaFirewall sans bloquer vos visiteurs :',
+	'hi25'					=>	'-Ajoutez votre code au pare-feu: le fichier ".htninja".',
+
+	'hi26'					=>	'Aide & Support :',
+	'hi27'					=>	'-Si vous avez besoin d\'aide, cliquez sur l\'onglet "Aide" situé dans le coin supérieur droit de chaque page.',
+	'hi28'					=>	'-Les info de mise à jour sont disponible via Twitter :',
+
 
 );
 

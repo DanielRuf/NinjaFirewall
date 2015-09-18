@@ -35,7 +35,7 @@ html_header();
 			</tr>
 			<tr>
 				<td width="55%" align="left"><?php echo $lang['lic_number'] ?></td>
-				<td width="45%"><?php echo $lang['lic_free'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://ninjafirewall.com/pro/order.php">'. $lang['lic_upgrade'] . '</a>)' ?></td>
+				<td width="45%"><?php echo $lang['lic_free'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>)' ?></td>
 			</tr>
 			<tr>
 				<td width="55%">&nbsp;</td>

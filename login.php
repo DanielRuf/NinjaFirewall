@@ -133,8 +133,7 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 						"- IP   : ". $_SERVER['REMOTE_ADDR'] . "\n" .
 						"- Date : ". date('F j, Y @ g:i a') . ' (UTC '. date('O') . ")\n" .
 						"- URL  : " . $http . "://". $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'] . "\n\n" .
-						'NinjaFirewall - http://ninjafirewall.com/' . "\n" .
-						'Help Desk: http://nintechnet.com/helpdesk/' . "\n";
+						'NinjaFirewall - http://ninjafirewall.com/' . "\n";
 
 		$headers = 'From: "'. $nfw_options['admin_email'] .'" <'. $nfw_options['admin_email'] .'>' . "\r\n";
 		$headers .= "Content-Transfer-Encoding: 7bit\r\n";
@@ -218,11 +217,11 @@ function login_page($err) {
 			<table width="100%" align="center" border="0" class="smallblack" cellpadding="10" style="border:none;">
 				<tr>
 					<td align="right" width="50%"><?php echo $lang['username'] ?></td>
-					<td width="50%"><input id="username" class="input" type="text" size="15" name="admin_name" maxlength="20"></td>
+					<td width="50%"><input id="username" class="input" type="text" size="15" name="admin_name" maxlength="20" autocomplete="off"></td>
 				</tr>
 				<tr>
 					<td align="right" width="50%"><?php echo $lang['password'] ?></td>
-					<td width="50%"><input id="password" class="input" type="password" size="15" name="admin_pass" maxlength="20"></td>
+					<td width="50%"><input id="password" class="input" type="password" size="15" name="admin_pass" maxlength="20" autocomplete="off"></td>
 				</tr>
 				<tr>
 					<td width="50%">&nbsp;</td>

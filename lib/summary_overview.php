@@ -54,7 +54,7 @@ if (NF_DISABLED) {
 	?>
 	<tr valign="middle">
 		<td width="45%"><?php echo $lang['firewall'] ?></td>
-		<td width="10%" align="center"><img src="static/icon_ok.png" border="0" width="21" height="21"></td>
+		<td width="10%" align="center">&nbsp;</td>
 		<td width="45%"><?php echo $lang['enabled'] ?></td>
 	</tr>
 	<?php
@@ -127,9 +127,8 @@ if ($_SESSION['ver'] == 0) {
 			</tr>
       <?php
 		} else {
-			?>
-			<img src="static/icon_ok.png" border="0" width="21" height="21"></td>
-			<td width="45%"><?php echo $lang['lic_free'] . ' ' . NFW_ENGINE_VERSION . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://ninjafirewall.com/pro/order.php">'. $lang['lic_upgrade'] . '</a>)' ?></td>
+			?>&nbsp;</td>
+			<td width="45%"><?php echo $lang['lic_free'] . ' ' . NFW_ENGINE_VERSION . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>)' ?></td>
 			</tr>
 			<?php
 		}
@@ -193,7 +192,7 @@ if ( NFW_EDN == 2 ) {
 	}
 } else {
 	// Pro edn :
-	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://ninjafirewall.com/pro/htninja/">';
+	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja">';
 }
 
 if ( empty($user_ip) ) {
@@ -295,7 +294,7 @@ if (! is_writable('./conf') ) {
 	<?php
 }
 // Optional NinjaFirewall .htninja configuration file
-// ( see http://ninjafirewall.com/pro/htninja/ ) :
+// ( see http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
 if ( @file_exists( $file = dirname($_SERVER['DOCUMENT_ROOT'] ) . '/.htninja') ||
 		@file_exists( $file = $_SERVER['DOCUMENT_ROOT'] . '/.htninja') ) {
 	?>
@@ -310,7 +309,7 @@ if ( @file_exists( $file = dirname($_SERVER['DOCUMENT_ROOT'] ) . '/.htninja') ||
 	<?php
 	} else {
 	?>
-		<td width="10%" align="center"><img src="static/icon_ok.png" border="0" width="21" height="21"></td>
+		<td width="10%" align="center">&nbsp;</td>
 		<td><code><?php echo $file ?></code></td>
 	</tr>
 	<?php

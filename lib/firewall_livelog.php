@@ -8,10 +8,15 @@
  +---------------------------------------------------------------------+
  | REVISION: 2015-03-14 00:28:38                                       |
  +---------------------------------------------------------------------+
- | IMPORTANT: This is a commercial software product, please read its   |
- |            license agreement. If you did not receive a copy, please |
- |            consult : <http://ninjafirewall.com/license_pro.txt>     |
- |            This notice may not be removed from the source code.     |
+ | This program is free software: you can redistribute it and/or       |
+ | modify it under the terms of the GNU General Public License as      |
+ | published by the Free Software Foundation, either version 3 of      |
+ | the License, or (at your option) any later version.                 |
+ |                                                                     |
+ | This program is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
+ | GNU General Public License for more details.                        |
  +---------------------------------------------------------------------+
 */
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
@@ -20,7 +25,7 @@ if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 require ('./lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
 html_header();
-echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://ninjafirewall.com/pro/order.php">'. $lang['lic_upgrade'] . '</a>).</p></div>';
+echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>).</p></div>';
 ?>
 <br />
 <fieldset><legend>&nbsp;<b><?php echo $lang['livelog'] ?></b>&nbsp;</legend>

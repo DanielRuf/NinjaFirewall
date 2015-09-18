@@ -1,5 +1,5 @@
 <?php
-/* 2015-08-13 19:31:18 */
+/* 2015-08-13 19:31:22 */
 $title = 'Pare-Feu > Contrôle d\'Accès';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -12,7 +12,7 @@ Le Contrôle d'Accès est un puissant ensemble de directives qui peut être util
 Afin de pouvoir optimiser son utilisation, il est important de bien comprendre l'ordre dans lequel NinjaFirewall traite ces directives&nbsp;:
 <p><img src="static/bullet_off.gif">&nbsp;Requête HTTP entrante :</p>
 <ol>
-	<li>Fichier de configuration <code><a href="http://ninjafirewall.com/pro/htninja/" class="links" style="border-bottom:dotted 1px #FDCD25;" target="_blank">.htninja</a></code>.</li>
+	<li>Fichier de configuration <code><a href="http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja" class="links" style="border-bottom:dotted 1px #FDCD25;" target="_blank">.htninja</a></code>.</li>
 	<li>Adresses IP temporairement bloquées ("Pare-Feu > Options > Bannir les IP incriminées").</li>
 
 	<li><strong>Contrôle d'Accès :</strong></li>

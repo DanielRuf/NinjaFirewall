@@ -1,6 +1,16 @@
 <?php
 $changelog = <<<'EOT'
 
+= 2.2 =
+* Improved firewall engine to handle double-encoding used
+  in query strings to perform advanced SQLi and XSS attempts.
+* Improved Base64-encoded injection detection.
+* Updated links and doc.
+* Removed green 'OK' icons from the Overview page. Only warning
+  and error icons will be used.
+* Updated security rules.
+* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 2.1.3 =
 * Updated security rules.
 * [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
@@ -74,7 +84,7 @@ $changelog = <<<'EOT'
 * [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
 * It is now possible to create the ".htninja" optional configuration
   file in either the document root or its parent directory (see
-  http://ninjafirewall.com/pro/htninja/).
+  http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja).
 
 = 2.0.5 =
 * Updated security rules.

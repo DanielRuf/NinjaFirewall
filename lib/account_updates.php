@@ -196,7 +196,7 @@ $twitter = 'Updates info:<br /><a href="https://twitter.com/nintechnet"><img bor
 							echo '<img src="static/icon_warn.png" border="0" width="21" height="21">&nbsp;' . $lang['failed_check'];
 						} else {
 							// OK
-							echo '<img src="static/icon_ok.png" border="0" width="21" height="21">&nbsp;' . $lang['up2date'];
+							echo '&nbsp;' . $lang['up2date'];
 						}
 					}
 					?>
