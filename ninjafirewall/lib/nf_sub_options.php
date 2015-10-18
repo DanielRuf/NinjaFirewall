@@ -1,11 +1,11 @@
 <?php
 /*
  +---------------------------------------------------------------------+
- | NinjaFirewall (WP edition)                                          |
+ | NinjaFirewall (WP Edition)                                          |
  |                                                                     |
  | (c) NinTechNet - http://nintechnet.com/                             |
  +---------------------------------------------------------------------+
- | REVISION: 2015-09-17 17:32:06                                       |
+ | REVISION: 2015-10-14 19:31:35                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -32,6 +32,17 @@ function preview_msg() {
 	var t1 = document.option_form.elements[\'nfw_options[blocked_msg]\'].value.replace(\'%%REM_ADDRESS%%\',\'' . htmlspecialchars($_SERVER['REMOTE_ADDR']) . '\');
 	var t2 = t1.replace(\'%%NUM_INCIDENT%%\',\'1234567\');
 	var t3 = t2.replace(\'%%NINJA_LOGO%%\',\'<img src="' . plugins_url() . '/ninjafirewall/images/ninjafirewall_75.png" width="75" height="75" title="NinjaFirewall">\');
+	var ns;
+	if ( t3.match(/<style/i) ) {
+		ns = "'. __('CSS style sheets', 'ninjafirewall') .'";
+	}
+	if ( t3.match(/<script/i) ) {
+		ns = "'. __('Javascript code', 'ninjafirewall') .'";
+	}
+	if ( ns ) {
+		alert("'. sprintf( __('Your message seems to contain %s. For security reason, it cannot be previewed from the admin dashboard.', 'ninjafirewall'), '"+ ns +"'). '");
+		return false;
+	}
 	document.getElementById(\'out_msg\').innerHTML = t3;
 	document.getElementById(\'td_msg\').style.display = \'\';
 	document.getElementById(\'btn_msg\').value = \'' . __('Refresh preview', 'ninjafirewall') . '\';
@@ -194,6 +205,10 @@ function nf_sub_options_save() {
 	$nfw_options = get_option( 'nfw_options' );
 
 	if ( empty( $_POST['nfw_options']['enabled']) ) {
+		if (! empty($nfw_options['enabled']) ) {
+			// Alert the admin :
+			nf_sub_options_alert(1);
+		}
 		$nfw_options['enabled'] = 0;
 
 		// Disable cron jobs:
@@ -202,6 +217,9 @@ function nf_sub_options_save() {
 		}
 		if ( wp_next_scheduled('nfsecupdates') ) {
 			wp_clear_scheduled_hook('nfsecupdates');
+		}
+		if ( wp_next_scheduled('nfdailyreport') ) {
+			wp_clear_scheduled_hook('nfdailyreport');
 		}
 		// Disable brute-force protection :
 		if ( file_exists( NFW_LOG_DIR . '/nfwlog/cache/bf_conf.php' ) ) {
@@ -238,6 +256,14 @@ function nf_sub_options_save() {
 			}
 			wp_schedule_event( time() + 90, $schedtype, 'nfsecupdates');
 		}
+		// Re-enable daily report, if needed :
+		if (! empty($nfw_options['a_52']) ) {
+			if ( wp_next_scheduled('nfdailyreport') ) {
+				wp_clear_scheduled_hook('nfdailyreport');
+			}
+			nfw_get_blogtimezone();
+			wp_schedule_event( strtotime( date('Y-m-d 00:00:05', strtotime("+1 day")) ), 'daily', 'nfdailyreport');
+		}
 		// Reenable brute-force protection :
 		if ( file_exists( NFW_LOG_DIR . '/nfwlog/cache/bf_conf_off.php' ) ) {
 			rename(NFW_LOG_DIR . '/nfwlog/cache/bf_conf_off.php', NFW_LOG_DIR . '/nfwlog/cache/bf_conf.php');
@@ -260,6 +286,10 @@ function nf_sub_options_save() {
 	if ( empty( $_POST['nfw_options']['debug']) ) {
 		$nfw_options['debug'] = 0;
 	} else {
+		if ( empty($nfw_options['debug']) ) {
+			// Alert the admin :
+			nf_sub_options_alert(2);
+		}
 		$nfw_options['debug'] = 1;
 	}
 
@@ -318,6 +348,31 @@ function nf_sub_options_import() {
 		wp_clear_scheduled_hook('nfscanevent');
 	}
 
+	// Re-enable auto updates, if needed :
+	if ( wp_next_scheduled('nfsecupdates') ) {
+		// Clear old one :
+		wp_clear_scheduled_hook('nfsecupdates');
+	}
+	if (! empty($nfw_options['enable_updates']) ) {
+		if ($nfw_options['sched_updates'] == 1) {
+			$schedtype = 'hourly';
+		} elseif ($nfw_options['sched_updates'] == 2) {
+			$schedtype = 'twicedaily';
+		} else {
+			$schedtype = 'daily';
+		}
+		wp_schedule_event( time() + 90, $schedtype, 'nfsecupdates');
+	}
+	// Re-enable daily report, if needed :
+	if ( wp_next_scheduled('nfdailyreport') ) {
+		// Clear old one :
+		wp_clear_scheduled_hook('nfdailyreport');
+	}
+	if (! empty($nfw_options['a_52']) ) {
+		nfw_get_blogtimezone();
+		wp_schedule_event( strtotime( date('Y-m-d 00:00:05', strtotime("+1 day")) ), 'daily', 'nfdailyreport');
+	}
+
 	// Check compatibility before importing HSTS headers configration
 	// or unset the option :
 	if (! function_exists('header_register_callback') || ! function_exists('headers_list') || ! function_exists('header_remove') ) {
@@ -352,7 +407,58 @@ function nf_sub_options_import() {
 	// Save rules :
 	update_option( 'nfw_rules', $nfw_rules);
 
+	// Alert the admin :
+	nf_sub_options_alert(3);
+
 	return;
+}
+
+/* ------------------------------------------------------------------ */
+
+function nf_sub_options_alert( $what ) {
+
+	$nfw_options = get_option( 'nfw_options' );
+
+	if ( ( is_multisite() ) && ( $nfw_options['alert_sa_only'] == 2 ) ) {
+		$recipient = get_option('admin_email');
+	} else {
+		$recipient = $nfw_options['alert_email'];
+	}
+
+	global $current_user;
+	$current_user = wp_get_current_user();
+
+	// Get timezone :
+	nfw_get_blogtimezone();
+
+	$subject = __('[NinjaFirewall] Alert: Firewall is disabled', 'ninjafirewall');
+	if ( is_multisite() ) {
+		$url = __('-Blog :', 'ninjafirewall') .' '. network_home_url('/') . "\n\n";
+	} else {
+		$url = __('-Blog :', 'ninjafirewall') .' '. home_url('/') . "\n\n";
+	}
+	// Disabled ?
+	if ($what == 1) {
+		$message = __('Someone disabled NinjaFirewall from your WordPress admin dashboard:', 'ninjafirewall') . "\n\n";
+	// Debugging mode :
+	} elseif ($what == 2) {
+		$message = __('NinjaFirewall is disabled because someone enabled debugging mode from your WordPress admin dashboard:', 'ninjafirewall') . "\n\n";
+	// Imported configuration ?
+	} elseif ($what == 3) {
+		$subject = __('[NinjaFirewall] Alert: Firewall override settings', 'ninjafirewall');
+		$message = __('Someone imported a new configuration which overrode the firewall settings:', 'ninjafirewall') . "\n\n";
+	} else {
+		// Should never reach this line!
+		return;
+	}
+
+	$message .= __('-User :', 'ninjafirewall') .' '. $current_user->user_login . ' (' . $current_user->roles[0] . ")\n" .
+		__('-IP   :', 'ninjafirewall') .' '. $_SERVER['REMOTE_ADDR'] . "\n" .
+		__('-Date :', 'ninjafirewall') .' '. ucfirst( date_i18n('F j, Y @ H:i:s O') ) ."\n" .
+		$url .
+		'NinjaFirewall (WP Edition) - http://ninjafirewall.com/' . "\n" .
+		__('Support forum:', 'ninjafirewall') . ' http://wordpress.org/support/plugin/ninjafirewall' . "\n";
+	wp_mail( $recipient, $subject, $message );
 }
 
 /* ------------------------------------------------------------------ */

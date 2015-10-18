@@ -1,7 +1,7 @@
 <?php
 /*
  +---------------------------------------------------------------------+
- | NinjaFirewall (WP edition)                                          |
+ | NinjaFirewall (WP Edition)                                          |
  |                                                                     |
  | (c) NinTechNet - http://nintechnet.com/                             |
  +---------------------------------------------------------------------+
@@ -104,6 +104,7 @@ function nfw_query( $query ) { // i18n
 		} else {
 			return;
 		}
+		@session_destroy();
 		$query->set('author_name', '0');
 		nfw_log2('User enumeration scan (author archives)', $tmp, 2, 0);
 		wp_redirect( home_url('/') );
@@ -210,14 +211,14 @@ function nf_check_dbdata() {
 		$message.= sprintf(__('Total administrators : %s', 'ninjafirewall'), count($adm_users) ) . "\n\n";
 		foreach( $adm_users as $obj => $adm ) {
 			$message.= 'Admin ID : ' . $adm->ID . "\n";
-			$message.= '- user_login : ' . $adm->user_login . "\n";
-			$message.= '- user_nicename : ' . $adm->user_nicename . "\n";
-			$message.= '- user_email : ' . $adm->user_email . "\n";
-			$message.= '- user_registered : ' . $adm->user_registered . "\n";
-			$message.= '- display_name : ' . $adm->display_name . "\n\n";
+			$message.= '-user_login : ' . $adm->user_login . "\n";
+			$message.= '-user_nicename : ' . $adm->user_nicename . "\n";
+			$message.= '-user_email : ' . $adm->user_email . "\n";
+			$message.= '-user_registered : ' . $adm->user_registered . "\n";
+			$message.= '-display_name : ' . $adm->display_name . "\n\n";
 		}
 		$message.= "\n" . __('If you cannot see any modifications in the above fields, it is likely that the administrator password was changed.', 'ninjafirewall'). "\n\n";
-		$message.= 	'NinjaFirewall (WP edition) - http://ninjafirewall.com/' . "\n" .
+		$message.= 	'NinjaFirewall (WP Edition) - http://ninjafirewall.com/' . "\n" .
 						'Support forum: http://wordpress.org/support/plugin/ninjafirewall' . "\n";
 		wp_mail( $recipient, $subject, $message );
 

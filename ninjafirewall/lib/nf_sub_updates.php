@@ -1,11 +1,11 @@
 <?php
 /*
  +---------------------------------------------------------------------+
- | NinjaFirewall (WP edition)                                          |
+ | NinjaFirewall (WP Edition)                                          |
  |                                                                     |
  | (c) NinTechNet - http://nintechnet.com/                             |
  +---------------------------------------------------------------------+
- | REVISION: 2015-08-01 17:53:59                                       |
+ | REVISION: 2015-10-12 18:28:12                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -47,12 +47,23 @@ if (! empty($_POST['nfw_act']) ) {
 	if ( empty($_POST['nfwnonce']) || ! wp_verify_nonce($_POST['nfwnonce'], 'updates_save') ) {
 		wp_nonce_ays('updates_save');
 	}
-	if ($_POST['nfw_act'] == 1) {
-		nf_sub_updates_save();
-	} elseif ($_POST['nfw_act'] == 2) {
-		nf_sub_updates_clearlog($update_log);
+	// Check updates now :
+	if  ($_POST['nfw_act'] == 3) {
+		if ( $res = nf_sub_do_updates($update_url, $update_log) ) {
+			echo '<div class="updated notice is-dismissible"><p>' . __('Security rules have been updated.', 'ninjafirewall') . '</p></div>';
+		} else {
+			echo '<div class="updated notice is-dismissible"><p>' . __('No update available.', 'ninjafirewall') . '</p></div>';
+		}
+		// Enable flag to display log :
+		$tmp_showlog = 1;
+	} else {
+		if ($_POST['nfw_act'] == 1) {
+			nf_sub_updates_save();
+		} elseif ($_POST['nfw_act'] == 2) {
+			nf_sub_updates_clearlog($update_log);
+		}
+		echo '<div class="updated notice is-dismissible"><p>' . __('Your changes have been saved.', 'ninjafirewall') . '</p></div>';
 	}
-	echo '<div class="updated notice is-dismissible"><p>' . __('Your changes have been saved.', 'ninjafirewall') . '</p></div>';
 }
 
 $nfw_options = get_option('nfw_options');
@@ -86,7 +97,7 @@ function toogle_table(off) {
 }
 </script>
 <br />
-<form method="post">
+<form method="post" name="fupdates">
 	<?php wp_nonce_field('updates_save', 'nfwnonce', 0); ?>
 	<table class="form-table">
 		<tr style="background-color:#F9F9F9;border: solid 1px #DFDFDF;">
@@ -146,11 +157,11 @@ function toogle_table(off) {
 	</table>
 
 	<input type="hidden" name="nfw_act" value="1" />
-	<p><input type="submit" class="button-primary" value="<?php _e('Save Updates Options', 'ninjafirewall') ?>" /></p>
+	<p><input type="submit" class="button-primary" value="<?php _e('Save Updates Options', 'ninjafirewall') ?>" />&nbsp;&nbsp;<input type="submit" class="button-secondary" onClick="document.fupdates.nfw_act.value=3" value="<?php _e('Check For Updates Now!', 'ninjafirewall') ?>" /></p>
 	</form>
 
 	<?php
-	if (! empty($nfw_options['enable_updates']) ) {
+	if (! empty($nfw_options['enable_updates']) || ! empty($tmp_showlog) ) {
 		$log_data = array();
 		if ( file_exists($update_log) ) {
 			$log_data = file($update_log);
@@ -313,6 +324,7 @@ function nf_sub_do_updates($update_url, $update_log) {
 	if (! empty($nfw_options['notify_updates']) ) {
 		nf_sub_updates_notification($new_rules_version);
 	}
+	return 1;
 }
 
 /* ------------------------------------------------------------------ */
@@ -332,6 +344,18 @@ function nf_sub_updates_getversion($update_url, $rules_version, $update_log) {
 		if ( $res['response']['code'] == 200 ) {
 			// Get the rules version :
 			$new_version =  explode('|', rtrim($res['body']), 2);
+
+			// Ensure that the rules are compatible :
+			$curr_version = explode(':', $new_version[0], 2);
+			if ( isset($curr_version[1]) && $curr_version[1] > 1) {
+				// This version of NinjaFirewall may be too old :
+				nf_sub_updates_log(
+					$update_log,
+					__('Error: Your version of NinjaFirewall is too old and is not compatible with those rules. Please upgrade it.', 'ninjafirewall')
+				);
+				return 0;
+			}
+
 			if (! preg_match('/^\d{8}\.\d+$/', $new_version[1]) ) {
 				// Not what we were expecting:
 				nf_sub_updates_log(
@@ -452,7 +476,7 @@ function nf_sub_updates_notification($new_rules_version) {
 	}
 	$msg .=__('Rules version:', 'ninjafirewall') .' '. preg_replace('/(\d{4})(\d\d)(\d\d)/', '$1-$2-$3', $new_rules_version) . "\n";
 	$msg .= sprintf( __('Date: %s', 'ninjafirewall'), ucfirst(date_i18n('M d, Y @ H:i:s O')) ) . "\n\n" .
-			'NinjaFirewall (WP edition) - http://ninjafirewall.com/' . "\n" .
+			'NinjaFirewall (WP Edition) - http://ninjafirewall.com/' . "\n" .
 			__('Support forum:', 'ninjafirewall') .' http://wordpress.org/support/plugin/ninjafirewall' . "\n";
 	wp_mail( $recipient, $subject, $msg );
 

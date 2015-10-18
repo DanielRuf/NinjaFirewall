@@ -1,10 +1,10 @@
 <?php
 // +---------------------------------------------------------------------+
-// | NinjaFirewall (WP edition)                                          |
+// | NinjaFirewall (WP Edition)                                          |
 // |                                                                     |
 // | (c) NinTechNet - http://nintechnet.com/                             |
 // +---------------------------------------------------------------------+
-// | REVISION: 2015-09-17 15:26:36                                       |
+// | REVISION: 2015-10-11 15:26:36                                       |
 // +---------------------------------------------------------------------+
 // | This program is free software: you can redistribute it and/or       |
 // | modify it under the terms of the GNU General Public License as      |
@@ -457,7 +457,7 @@ if (! empty($nfw_['nfw_options']['fg_enable']) ) {
 	if ( empty($nfw_['nfw_options']['fg_exclude']) || strpos($_SERVER['SCRIPT_FILENAME'], $nfw_['nfw_options']['fg_exclude']) === FALSE ) {
 		// Stat() the requested script :
 		if ( $nfw_['nfw_options']['fg_stat'] = stat( $_SERVER['SCRIPT_FILENAME'] ) ) {
-			// Was is created/modified lately ?
+			// Was it created/modified lately ?
 			if ( time() - $nfw_['nfw_options']['fg_mtime'] * 3660 < $nfw_['nfw_options']['fg_stat']['ctime'] ) {
 				// Did we check it already ?
 				if (! file_exists( $nfw_['log_dir'] . '/cache/fg_' . $nfw_['nfw_options']['fg_stat']['ino'] . '.php' ) ) {
@@ -478,7 +478,7 @@ if (! empty($nfw_['nfw_options']['fg_enable']) ) {
 						'Last changed on: ' . date('F j, Y @ H:i:s', $nfw_['nfw_options']['fg_stat']['ctime'] ) . ' (UTC '. date('O') . ")\n" .
 						'REQUEST_URI    : ' . $_SERVER['REQUEST_URI'] . "\n" .
 						'REMOTE_ADDR    : ' . $_SERVER['REMOTE_ADDR'] . "\n\n" .
-						'NinjaFirewall (WP edition) - http://ninjafirewall.com/' . "\n" .
+						'NinjaFirewall (WP Edition) - http://ninjafirewall.com/' . "\n" .
 						'Support forum: http://wordpress.org/support/plugin/ninjafirewall' . "\n";
 					mail( $nfw_['nfw_options']['alert_email'], $nfw_['nfw_options']['m_subject'], $nfw_['nfw_options']['m_msg'], $nfw_['nfw_options']['m_headers']);
 					// Remember it so that we don't spam the admin each time the script is requested :
@@ -497,16 +497,27 @@ if (! empty($nfw_['nfw_options']['no_host_ip']) && @filter_var(parse_url('http:/
    nfw_block();
 }
 
-// block POST without Referer header ?
+// Block POST without Referer header ?
 if ( (! empty($nfw_['nfw_options']['referer_post']) ) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (! isset($_SERVER['HTTP_REFERER'])) ) {
 	nfw_log('POST method without Referer header', $_SERVER['REQUEST_METHOD'], 1, 0);
    nfw_block();
 }
 
-// Block access to WordPress XML-RPC API ?
-if ( (! empty($nfw_['nfw_options']['no_xmlrpc'])) && (strpos($_SERVER['SCRIPT_NAME'], $nfw_['nfw_options']['no_xmlrpc']) !== FALSE) ) {
-	nfw_log('Access to WordPress XML-RPC API', $_SERVER['SCRIPT_NAME'], 2, 0);
-   nfw_block();
+// Access to WordPress XML-RPC API (Firewall Policies) ?
+if ( strpos($_SERVER['SCRIPT_NAME'], '/xmlrpc.php' ) !== FALSE ) {
+	// Always block ?
+	if (! empty($nfw_['nfw_options']['no_xmlrpc']) ) {
+		nfw_log('Access to WordPress XML-RPC API', $_SERVER['SCRIPT_NAME'], 2, 0);
+		nfw_block();
+	}
+	// Block only if the 'system.multicall' method is used ?
+	if (! empty($nfw_['nfw_options']['no_xmlrpc_multi']) ) {
+		// Check the raw POST data:
+		if ( @strpos( @file_get_contents('php://input'), 'system.multicall') !== FALSE ) {
+			nfw_log('Access to WordPress XML-RPC API (system.multicall method)', $_SERVER['SCRIPT_NAME'], 2, 0);
+			nfw_block();
+		}
+	}
 }
 
 // POST request in the themes folder ?
@@ -721,9 +732,13 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 					if (! $reqvalue) { continue; }
 
 					// Decode potential double-encoding (applies to XSS and SQLi attempts only):
-					if ( (($rules_id > 99 && $rules_id < 150) || ($rules_id > 199 && $rules_id < 250)) && ! isset($nf_decode[$reqkey]['url']) ) {
-						$reqvalue = urldecode($reqvalue);
-						$nf_decode[$reqkey]['url'] = 1;
+					if ( ($rules_id > 99 && $rules_id < 150) || ($rules_id > 199 && $rules_id < 250) ) {
+						if (! isset($nf_decode[$reqkey]['url']) ) {
+							$reqvalue = urldecode($reqvalue);
+							$nf_decode[$reqkey]['url'] = $reqvalue;
+						} else{
+							$reqvalue = $nf_decode[$reqkey]['url'];
+						}
 					}
 
 					if ( preg_match('`'. $rules_values['what'] .'`', $reqvalue) ) {
@@ -924,6 +939,8 @@ function nfw_block() {
 	$tmp = str_replace( '%%NUM_INCIDENT%%', $nfw_['num_incident'],  base64_decode($nfw_['nfw_options']['blocked_msg']) );
 	$tmp = @str_replace( '%%NINJA_LOGO%%', '<img title="NinjaFirewall" src="' . $nfw_['nfw_options']['logo'] . '" width="75" height="75">', $tmp );
 	$tmp = str_replace( '%%REM_ADDRESS%%', $_SERVER['REMOTE_ADDR'], $tmp );
+
+	@session_destroy();
 
 	if (! headers_sent() ) {
 		header('HTTP/1.1 ' . $http_codes[$nfw_['nfw_options']['ret_code']] );
