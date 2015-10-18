@@ -1,6 +1,6 @@
 <?php
 
-/* 2014-12-15 18:32:54 */
+/* 2015-09-25 20:08:50 */
 $lang = array (
 
 	'default'			=> ' (default)',
@@ -23,6 +23,10 @@ $lang = array (
 	'preview'			=>	'Preview message',
 	'refresh'			=>	'Refresh preview',
 	'default_msg'		=>	'Default message',
+	'ns'					=>	'Your message seems to contain ',
+	'ns_js'				=>	'Javascript code',
+	'ns_css'				=>	'CSS style sheets',
+	'ns2'					=>	'For security reason, it cannot be previewed from the admin dashboard.',
 
 	'stealth'			=>	'Stealth mode',
 

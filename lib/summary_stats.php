@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2014-11-12 16:46:28                                       |
+ | REVISION: 2015-09-18 23:36:17                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -59,14 +59,16 @@ if ($fh = @fopen($fw_log, 'r') ) {
 					$banned_ip++;
 				}
 			}
-			if ($match[1] > $slow) {
-				$slow = $match[1];
+			if ($match[1]) {
+				if ( $match[1] > $slow) {
+					$slow = $match[1];
+				}
+				if ( $match[1] < $fast) {
+					$fast = $match[1];
+				}
+				$speed += $match[1];
+				$tot_bench++;
 			}
-			if ($match[1] < $fast) {
-				$fast = $match[1];
-			}
-			$speed += $match[1];
-			$tot_bench++;
 		}
 	}
 	fclose($fh);

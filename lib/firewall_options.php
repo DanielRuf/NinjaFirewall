@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-03-21 18:32:31                                       |
+ | REVISION: 2015-09-25 19:47:22                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -41,6 +41,17 @@ if (! empty($_POST['post']) ) {
 function preview_msg() {
 	var t1 = document.option_form.blocked_msg.value.replace('%%REM_ADDRESS%%', '<?php echo $_SERVER['REMOTE_ADDR'] ?>');
 	var t2 = t1.replace('%%NUM_INCIDENT%%','1234567');
+	var ns;
+	if ( t2.match(/<style/i) ) {
+		ns = "<?php echo $lang['ns_css'] ?>";
+	}
+	if ( t2.match(/<script/i) ) {
+		ns = "<?php echo $lang['ns_js'] ?>";
+	}
+	if ( ns ) {
+		alert("<?php echo $lang['ns'] ?>"+ ns +". <?php echo $lang['ns2'] ?>");
+		return false;
+	}
 	document.getElementById('out_msg').innerHTML = t2 + '<br /><br /><br />';
 	document.getElementById('td_msg').style.display = '';
 	document.getElementById('btn_msg').value = '<?php echo $lang['refresh'] ?>';

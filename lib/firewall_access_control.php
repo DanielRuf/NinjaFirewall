@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-01-20 18:11:20                                       |
+ | REVISION: 2015-10-10 18:11:20                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -259,7 +259,7 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 			<tr>
 				<td width="25%" align="left"><?php echo $lang['url_allow'] ?></td>
 				<td width="35%" align="center">
-					<input type="text" class="input" disabled="disabled" maxlength="45" style="width:200px;" placeholder="<?php echo $lang['eg'] ?> /index.php" />
+					<input type="text" class="input" disabled="disabled" maxlength="45" style="width:200px;" placeholder="<?php echo $lang['eg'] ?> /script.php" />
 					<br />
 					<i><?php echo $lang['url_note'] ?></i>
 					<br /><br />

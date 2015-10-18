@@ -1,6 +1,6 @@
 <?php
 
-/* 2014-12-15 18:33:04 */
+/* 2015-09-25 20:08:45 */
 $lang = array (
 
 	'default'			=> ' (defaut)',
@@ -23,6 +23,10 @@ $lang = array (
 	'preview'			=>	'Prévisualiser',
 	'refresh'			=>	'Réactualiser',
 	'default_msg'		=>	'Message par défaut',
+	'ns'					=>	'Votre message semble contenir ',
+	'ns_js'				=>	'du code Javascript',
+	'ns_css'				=>	'des feuilles de style CSS',
+	'ns2'					=>	'Pour des raisons de sécurité, il ne peut pas être prévisualisé à partir du tableau de bord d\'administration.',
 
 	'stealth'			=>	'Mode furtif',
 

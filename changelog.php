@@ -1,6 +1,16 @@
 <?php
 $changelog = <<<'EOT'
 
+= 2.2.1 =
+* Fixed a bug in the "Summarys > Statistics" page that could
+  display an empty value in the benchmarks "Fastest request" field.
+* Fixed a bug in the firewall double-encoding detection routine.
+* Updated security rules.
+* Minor fixes and improvements.
+* [Pro+ Edition] Added the server IP(s)  in the "Access Control >
+  Source IP" section.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 2.2 =
 * Improved firewall engine to handle double-encoding used
   in query strings to perform advanced SQLi and XSS attempts.
@@ -9,19 +19,19 @@ $changelog = <<<'EOT'
 * Removed green 'OK' icons from the Overview page. Only warning
   and error icons will be used.
 * Updated security rules.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.1.3 =
 * Updated security rules.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.1.2 =
 * Fixed a bug in the firewall that could corrupt the content
   of a POST or GET array.
-* [Pro+ edition] Whitelisted and blacklisted IPs are sorted using
+* [Pro+ Edition] Whitelisted and blacklisted IPs are sorted using
   "natural order" algorithm in the "Access Control" page.
 * Updated security rules.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.1.1 =
 * The firewall will no longer sanitise user input when running
@@ -29,20 +39,20 @@ $changelog = <<<'EOT'
 * Fixed PHP warning on systems that do not support exclusive locks.
 * Loosened Base64 decoder rules to reduce the risk of false-positives.
 * Updated security rules.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.1 =
-* [Pro+ edition] The Live Log "Refresh Rate" and "Autoscrolling"
+* [Pro+ Edition] The Live Log "Refresh Rate" and "Autoscrolling"
   options will be remembered when changed.
-* [Pro+ edition] Live Log will now use the timezone defined in
+* [Pro+ Edition] Live Log will now use the timezone defined in
   the "Account > Options > Regional Settings" menu.
 * The firewall will always ensure that "REMOTE_ADDR" contains
   only one IP or will remove any extra IP.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 * It is possible to set the Strict-Transport-Security (HSTS)
   header if the client has the `HTTP_X_FORWARDED_PROTO` set to
   'https' (Firewall Policies > HTTP response headers).
-* [Pro+ edition] "File Guard" email alert will contain the date/time
+* [Pro+ Edition] "File Guard" email alert will contain the date/time
   the file was last changed, rather than the date/time the detection
   occurred.
 * Minor fixes and improvements.
@@ -52,19 +62,19 @@ $changelog = <<<'EOT'
   in order to provide a better/more accurate filtering mechanism.
 * Updated security rules.
 * Session handling was modified for sites running PHP 5.4+.
-* [Pro+ edition] Added a new option to Live Log that allows you
+* [Pro+ Edition] Added a new option to Live Log that allows you
   to select which traffic you want to view (HTTP and/or HTTPS).
 * Minor fixes and improvements.
 
 = 2.0.8 =
 * Updated security rules.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.0.7 =
 * Added a new HTTP response header: "Strict-Transport-Security",
   to defend against cookie hijacking and Man-in-the-middle attacks
   (see "Firewall > Policies > HTTP response headers").
-* [Pro+ edition] Added an option to customize the log format in
+* [Pro+ Edition] Added an option to customize the log format in
   Live Log (see "Live Log > Options > Log format").
 * Fixed an "Undefined index: php_ini_type" PHP notice during the
   installation process.
@@ -74,14 +84,14 @@ $changelog = <<<'EOT'
 * Fixed some minor typos and bugs.
 
 = 2.0.6 =
-* [Pro edition] Fixed a bug in the "Block suspicious bots/scanners"
+* [Pro Edition] Fixed a bug in the "Block suspicious bots/scanners"
   option: it was not possible to disable it.
-* [Pro+ edition] Added a new feature: "Live Log". It lets you watch
+* [Pro+ Edition] Added a new feature: "Live Log". It lets you watch
   your website traffic in real time.
 * The firewall "Log" menu was renamed to "Security Log".
 * Increased the line height in all textarea elements for better
   readability.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 * It is now possible to create the ".htninja" optional configuration
   file in either the document root or its parent directory (see
   http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja).
@@ -93,13 +103,13 @@ $changelog = <<<'EOT'
   on HHVM (http://nin.link/hhvm).
 * If the 'auto_prepend_file' PHP directive is already in use, the
   installer will not stop but will attempt to override it instead.
-* [Pro+ edition] Added an option to exclude a folder from being
+* [Pro+ Edition] Added an option to exclude a folder from being
   monitored by File Guard (see "Firewall > File Guard" menu).
-* [Pro+ edition] On new installations, File Guard will be enabled
+* [Pro+ Edition] On new installations, File Guard will be enabled
   by default.
-* [Pro+ edition] Added an option to whitelist the administrator(see
+* [Pro+ Edition] Added an option to whitelist the administrator(see
   "Firewall > Access Control > Administrator" and its contextual help).
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.0.4 =
 * Added an option to view and flush all banned IPs (see "Firewall >
@@ -108,7 +118,7 @@ $changelog = <<<'EOT'
   process.
 * Loosened cookies sanitizing rules to reduce the risk of false
   positives.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.0.3 =
 * Added a new set of options that can hook the HTTP response headers,
@@ -119,11 +129,11 @@ $changelog = <<<'EOT'
 * Fixed a bug in the Firewall Stats page that could return erroneous
   results.
 * Added a link to the changelog in the "Account > Update" page.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 2.0.2 =
 * Updated security rules.
-* [Pro+ edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 * Fixed the "Login Security" checkbox alert that was unnecessarily
   displayed when the site was already in HTTPS mode.
 * Added specific headers to prevent the firewall blocked page from
@@ -144,9 +154,9 @@ $changelog = <<<'EOT'
 = 2.0 =
 * Improved performance: NinjaFirewall no longer uses MySQL, but plain
   text files to stores its configuration into the "conf/" folder.
-* [Pro+ edition] Added "Access Control".
-* [Pro+ edition] Added "Web Filter".
-* [Pro+ edition] Added "File Guard".
+* [Pro+ Edition] Added "Access Control".
+* [Pro+ Edition] Added "Web Filter".
+* [Pro+ Edition] Added "File Guard".
 * Changed "Firewall Policies" to better suit most sites; new features
   were added and deprecated ones were removed.
 * Added possibility to edit the message to display to blocked users
