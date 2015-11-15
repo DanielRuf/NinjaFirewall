@@ -3,7 +3,7 @@ Contributors: nintechnet, bruandet
 Tags: admin, attack, backdoor, botnet, brute force, brute force attack, brute force protection, denial, firewall, hack, hhvm, infection, injection, login, malware, nginx, nintechnet, ninja, phishing, prevention, protection, security, shellshock, soaksoak, trojan, user enumeration, virus, WAF, Web application firewall, widget, wp-login, XML-RPC, xmlrpc, XSS
 Requires at least: 3.3.0
 Tested up to: 4.3.1
-Stable tag: 1.8
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -218,6 +218,9 @@ NinjaFirewall works on Unix-like servers only. There is no Microsoft Windows ver
 
 
 == Changelog ==
+
+= 1.8.1 =
+* Removed the `update_core` capability that was required to access NinjaFirewall settings because if the `DISALLOW_FILE_MODS` option from the "Firewall Policies" page was enabled, the admin could no longer access NinjaFirewall.
 
 = 1.8 =
 * The firewall decoding routine was rewritten to be much more efficient. It is faster and can better detect advanced evasion techniques.
