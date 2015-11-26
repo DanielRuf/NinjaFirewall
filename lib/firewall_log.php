@@ -22,7 +22,7 @@
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
 // Load current language file :
-require ('./lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
 html_header();
 

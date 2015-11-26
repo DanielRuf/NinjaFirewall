@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-03-13 18:44:12                                       |
+ | REVISION: 2015-11-24 23:33:00                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -215,6 +215,13 @@ if ($mid == 99) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_livelog_help.php');
 	}
 	require(__DIR__ . '/lib/firewall_livelog.php');
+
+// menu Firewall > File Check
+} elseif ($mid == 38) {
+	if (! empty($_GET['help']) ) {
+		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_filecheck_help.php');
+	}
+	require(__DIR__ . '/lib/firewall_filecheck.php');
 
 } elseif ($mid == 90) {
    raw_admin_log();
@@ -433,13 +440,14 @@ function html_header() {
 		34 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_wf'],
 		35 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_edit'],
 		36 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_log'],
-		37 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_livelog']
+		37 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_livelog'],
+		38 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_fc']
 	);
 	$m10 = $m11 = $m12 =
 	$m20 = $m21 = $m22 =
 	$m30 = $m31 = $m32 =
 	$m33 = $m34 = $m35 =
-	$m36 = $m37 = 'static/bullet_off.gif';
+	$m36 = $m37 = $m38 = 'static/bullet_off.gif';
 
 	if    ( $GLOBALS['mid'] == 10 ) $m10 = 'static/bullet_on.gif';
 	elseif( $GLOBALS['mid'] == 11 ) $m11 = 'static/bullet_on.gif';
@@ -454,6 +462,7 @@ function html_header() {
 	elseif( $GLOBALS['mid'] == 35 ) $m35 = 'static/bullet_on.gif';
 	elseif( $GLOBALS['mid'] == 36 ) $m36 = 'static/bullet_on.gif';
 	elseif( $GLOBALS['mid'] == 37 ) $m37 = 'static/bullet_on.gif';
+	elseif( $GLOBALS['mid'] == 38 ) $m38 = 'static/bullet_on.gif';
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -541,6 +550,11 @@ function html_header() {
 				<tr>
 					<td class="tinyblack">
 						<img src="'. $m33 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=33&token='.$_REQUEST['token'].'">' . $lang['fwl_fg'] . ' (<font color="#FF0000">Pro+</font>)</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="tinyblack">
+						<img src="'. $m38 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=38&token='.$_REQUEST['token'].'">' . $lang['fwl_fc'] . '</a>
 					</td>
 				</tr>
 				<tr>

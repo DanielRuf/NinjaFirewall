@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-03 23:03:06 */
+/* 2015-11-24 21:47:30 */
 $language = 'English/English';
 $author   = 'NinTechNet';
 
@@ -26,6 +26,7 @@ $lang = array (
 	'fwl_ac'			=> 'Access Control',
 	'fwl_wf'			=> 'Web Filter',
 	'fwl_fg'			=> 'File Guard',
+	'fwl_fc'			=> 'File Check',
 	'fwl_edit'		=> 'Rules Editor',
 	'fwl_log'		=> 'Security Log',
 	'fwl_livelog'	=> 'Live Log',

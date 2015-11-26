@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-20 00:49:08 */
+/* 2015-10-28 19:05:58 */
 $lang = array (
 
 	'error'				=> 'Error',
@@ -71,6 +71,7 @@ $lang = array (
 	'httponly'			=>	'Force HttpOnly flag on all cookies to mitigate XSS attacks',
 	'missing_funct'	=>	'This option is disabled because the %s PHP function is not available on your server.',
 	'hsts'				=>	'Set Strict-Transport-Security (HSTS) to enforce secure connections to the server',
+	'reset'				=>	'Set <code>max-age</code> to 0',
 	'1_month'			=>	'1 month',
 	'6_months'			=>	'6 months',
 	'1_year'				=>	'1 year',

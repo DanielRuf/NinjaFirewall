@@ -22,7 +22,7 @@
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
 // Load current language file :
-require ('./lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
 html_header();
 echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>).</p></div>';

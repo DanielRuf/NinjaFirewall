@@ -22,7 +22,7 @@
 
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
-require ( './lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
 $critical = $high = $medium = $slow = $benchmark =
 $tot_bench = $speed = $upload = $banned_ip = 0;

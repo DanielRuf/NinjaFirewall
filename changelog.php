@@ -1,13 +1,25 @@
 <?php
 $changelog = <<<'EOT'
 
+= 2.3 =
+* Added a new option: File Check. It lets you perform file integrity
+  monitoring upon request.
+* The Strict-Transport-Security response header in the Firewall
+  Policies page has a new option to send an empty "max-age"
+  to signal the user-agent to cease regarding the host as a known
+  HSTS Host, while disabling the HSTS option will not return any
+  header at all.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Updated security rules.
+* Minor fixes and improvements.
+
 = 2.2.1 =
-* Fixed a bug in the "Summarys > Statistics" page that could
+* Fixed a bug in the "Summary > Statistics" page that could
   display an empty value in the benchmarks "Fastest request" field.
 * Fixed a bug in the firewall double-encoding detection routine.
 * Updated security rules.
 * Minor fixes and improvements.
-* [Pro+ Edition] Added the server IP(s)  in the "Access Control >
+* [Pro+ Edition] Added the server IP(s) in the "Access Control >
   Source IP" section.
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 

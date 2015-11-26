@@ -38,14 +38,14 @@ if ( $handle = opendir('./lib/lang') ) {
 ksort($reg);
 
 // Load current language file :
-require ('./lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
 // Saved options ?
 if (! empty($_POST['post']) ) {
 	$err_msg = save_account_options();
 
 	// Reload language file :
-	require ('./lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+	require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 	html_header();
 
 	if ($err_msg) {

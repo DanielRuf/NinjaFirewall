@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-03-13 18:44:12                                       |
+ | REVISION: 2015-10-24 18:17:37                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -19,6 +19,14 @@
  | GNU General Public License for more details.                        |
  +---------------------------------------------------------------------+
 */
+
+// Prevent search engine from caching the login page:
+if (! empty($_SERVER["HTTP_USER_AGENT"]) && preg_match('/Googlebot|Yahoo|msnbot|baidu/i', $_SERVER["HTTP_USER_AGENT"]) ) {
+	header('HTTP/1.1 404 Not Found');
+	header('Status: 404 Not Found');
+	die('404 Not Found');
+}
+
 if (! @include(__DIR__ . '/conf/options.php') ) {
 	// Probably a fresh install; redirect it to the installer :
 	if ( file_exists('install.php') ) {
@@ -70,9 +78,11 @@ if (version_compare(PHP_VERSION, '5.4', '<') ) {
 }
 
 header('X-Frame-Options: DENY');
-// Don't cache anything :
+header('X-Content-Type-Options: nosniff');
+header('X-XSS-Protection: 1; mode=block');
+// Prevent caching :
 header('Pragma: no-cache');
-header('Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate, proxy-revalidate');
+header('Cache-Control: no-store, max-age=0, must-revalidate, proxy-revalidate');
 header('Expires: Mon, 01 Sep 2014 01:01:01 GMT');
 
 // Clear installation flag:
@@ -179,6 +189,9 @@ function login_page($err) {
 		<title>NinjaFirewall : Admin login</title>
 		<link href="static/styles.css" rel="stylesheet" type="text/css">
 		<link rel="Shortcut Icon" type="image/gif" href="static/favicon.ico">
+		<meta http-equiv="cache-control" content="no-store" />
+		<meta http-equiv="expires" content="Mon, 01 Sep 2014 01:01:01 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
 	</head>
 	<body bgcolor="white" <?php if ($err < 2) { echo 'onload="document.wl.username.focus();"'; } ?>>
    <br />
@@ -250,6 +263,9 @@ function warn_login( $msg, $lev ) {
 		<title>NinjaFirewall</title>
 		<link href="static/styles.css?<?php echo time() ?>" rel="stylesheet" type="text/css">
 		<link rel="Shortcut Icon" type="image/gif" href="static/favicon.ico">
+		<meta http-equiv="cache-control" content="no-store" />
+		<meta http-equiv="expires" content="Mon, 01 Sep 2014 01:01:01 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
 	</head>
 	<body bgcolor="white">
 		<br /><br /><br /><br /><br /><br />

@@ -1511,7 +1511,7 @@ function fw_conf_options() {
 		// Firewall > Policies :
 		'scan_protocol' 		=> 3,
 		'uploads' 				=> 0,
-		'sanitise_fn' 			=> 1,
+		'sanitise_fn' 			=> 0,
 		'upload_maxsize' 		=> 1048576,
 		'get_scan' 				=> 1,
 		'get_sanitise' 		=> 0,

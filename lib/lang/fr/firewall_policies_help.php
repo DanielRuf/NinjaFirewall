@@ -1,5 +1,5 @@
 <?php
-/* 2015-08-13 19:07:10 */
+/* 2015-08-13 19:07:15 */
 $title = 'Pare-Feu > Politique';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'

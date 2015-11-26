@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-05-06 23:36:34                                       |
+ | REVISION: 2015-10-28 19:24:52                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -22,7 +22,7 @@
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
 // Load current language file :
-require ('./lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
 html_header();
 
@@ -460,6 +460,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 				<td width="55%" align="left" class="dotted"><?php echo $lang['hsts'] ?></td>
 				<td width="45%" align="left" class="dotted">
 					<p><label><input type="radio" name="strict_transport" value="0"<?php checked( $nfw_options['response_headers'][4], 0 ); disabled($err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p><?php echo $err_msg ?>
+					<p><label><input type="radio" name="strict_transport" value="4"<?php checked( $nfw_options['response_headers'][4], 4 ); disabled($err, 1); ?>><?php echo $lang['reset'] ?></label></p>
 					<p><label><input type="radio" name="strict_transport" value="1"<?php checked( $nfw_options['response_headers'][4], 1 ); disabled($err, 1); ?>><?php echo $lang['1_month'] ?></label></p>
 					<p><label><input type="radio" name="strict_transport" value="2"<?php checked( $nfw_options['response_headers'][4], 2 ); disabled($err, 1); ?>><?php echo $lang['6_months'] ?></label></p>
 					<p><label><input type="radio" name="strict_transport" value="3"<?php checked( $nfw_options['response_headers'][4], 3 ); disabled($err, 1); ?>><?php echo $lang['1_year'] ?></label></p>
@@ -672,7 +673,7 @@ function restore_firewall_policies() {
 
 	$nfw_options['scan_protocol'] = 3;
 	$nfw_options['uploads'] = 0;
-	$nfw_options['sanitise_fn'] = 1;
+	$nfw_options['sanitise_fn'] = 0;
 	$nfw_options['upload_maxsize'] = 1048576;
 	$nfw_options['get_scan'] = 1;
 	$nfw_options['get_sanitise'] = 0;
@@ -859,8 +860,10 @@ function save_firewall_policies() {
 			$nfw_options['response_headers'][4] = 1;
 		} elseif ( $_POST['strict_transport'] == 2) {
 			$nfw_options['response_headers'][4] = 2;
-		} else {
+		} elseif ( $_POST['strict_transport'] == 3) {
 			$nfw_options['response_headers'][4] = 3;
+		} else {
+			$nfw_options['response_headers'][4] = 4;
 		}
 	}
 
