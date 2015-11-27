@@ -1,0 +1,1239 @@
+msgid ""
+msgstr "MIME-Version: 1.0\n"
+
+#. Name.
+msgid "NinjaFirewall (WP Edition)"
+msgstr ""
+
+#. Short description.
+msgid "A true Web Application Firewall to protect and secure WordPress."
+msgstr ""
+
+#. Screenshot description.
+msgid "The firewall options page."
+msgstr ""
+
+#. Screenshot description.
+msgid "NinjaFirewall Statistics. A dashboard widget is also available."
+msgstr ""
+
+#. Screenshot description.
+msgid "Firewall Policies page (1/2): NinjaFirewall has a large list of powerful and unique policies that you can tweak accordingly to your needs."
+msgstr ""
+
+#. Screenshot description.
+msgid "Firewall Policies page (2/2): NinjaFirewall has a large list of powerful and unique policies that you can tweak accordingly to your needs."
+msgstr ""
+
+#. Screenshot description.
+msgid "File Guard is a totally unique feature, because it can detect, in real-time, any access to a PHP file that was recently modified or created, and alert you about this."
+msgstr ""
+
+#. Screenshot description.
+msgid "File Check lets you perform file integrity monitoring upon request or on a specific interval (hourly, twicedaily, daily)."
+msgstr ""
+
+#. Screenshot description.
+msgid "Live Log lets you watch your website traffic in real time. It is fast, light and it does not affect your server load, even if you set its refresh rate to the lowest value (5 seconds)."
+msgstr ""
+
+#. Screenshot description.
+msgid "NinjaFirewall Login Protection is the fastest and most efficient brute-force attack protection for WordPress."
+msgstr ""
+
+#. Screenshot description.
+msgid "Event Notifications can alert you by email on specific events triggered within your blog."
+msgstr ""
+
+#. Screenshot description.
+msgid "The firewall log displays blocked and sanitised requests as well as some useful information."
+msgstr ""
+
+#. Found in description header.
+msgid "Web Application Firewall"
+msgstr ""
+
+#. Found in description header.
+msgid "Fastest and most efficient brute-force attack protection for WordPress"
+msgstr ""
+
+#. Found in description header.
+msgid "Real-time detection"
+msgstr ""
+
+#. Found in description header.
+msgid "File integrity monitoring"
+msgstr ""
+
+#. Found in description header.
+msgid "Watch your website traffic in real time"
+msgstr ""
+
+#. Found in description header.
+msgid "Events Notification"
+msgstr ""
+
+#. Found in description header.
+msgid "Stay protected against the latest WordPress security vulnerabilities"
+msgstr ""
+
+#. Found in description header.
+msgid "IPv6 compatibility"
+msgstr ""
+
+#. Found in description header.
+msgid "Multi-site support"
+msgstr ""
+
+#. Found in description header.
+msgid "Possibility to prepend your own PHP code to the firewall"
+msgstr ""
+
+#. Found in description header.
+msgid "Low Footprint Firewall"
+msgstr ""
+
+#. Found in description header.
+msgid "Non-Intrusive User Interface"
+msgstr ""
+
+#. Found in description header.
+msgid "Contextual Help"
+msgstr ""
+
+#. Found in description header.
+msgid "Strong Privacy Policy"
+msgstr ""
+
+#. Found in description header.
+msgid "Supported Languages"
+msgstr ""
+
+#. Found in description header.
+msgid "Need more security ?"
+msgstr ""
+
+#. Found in description header.
+msgid "Requirements"
+msgstr ""
+
+#. Found in description list item.
+msgid "Full standalone web application firewall. Works before WordPress is loaded."
+msgstr ""
+
+#. Found in description list item.
+msgid "Protects against remote file inclusion, local file inclusion, cross-site scripting, code execution, SQL injections, brute-force scanners, shell scripts, backdoors etc."
+msgstr ""
+
+#. Found in description list item.
+msgid "Scans and sanitises GET/POST requests, HTTP/HTTPS traffic, cookies, server variables (<code>HTTP_USER_AGENT</code>, <code>HTTP_REFERER</code>, <code>PHP_SELF</code>, <code>PATH_TRANSLATED</code>, <code>PATH_INFO</code>)."
+msgstr ""
+
+#. Found in description list item.
+msgid "Sanitises variables names and values."
+msgstr ""
+
+#. Found in description list item.
+msgid "Advanced filtering options to block ASCII control characters, NULL bytes and PHP built-in wrappers."
+msgstr ""
+
+#. Found in description list item.
+msgid "Decodes and scans Base64-encoded POST requests to detect backdoors and code injection attempts."
+msgstr ""
+
+#. Found in description list item.
+msgid "Hooks and secures HTTP reponse headers to prevent XSS, phishing and clickjacking attempts (<code>X-Content-Type-Options</code>, <code>X-Frame-Options</code>, <code>X-XSS-Protection</code>, <code>Strict-Transport-Security</code>)."
+msgstr ""
+
+#. Found in description list item.
+msgid "Hooks and modifies cookies to set the <code>HttpOnly</code> flag."
+msgstr ""
+
+#. Found in description list item.
+msgid "Blocks username enumeration scanning attempts through the author archives and the login page."
+msgstr ""
+
+#. Found in description list item.
+msgid "Blocks/allows uploads, sanitises uploaded file names."
+msgstr ""
+
+#. Found in description list item.
+msgid "Blocks suspicious bots and scanners."
+msgstr ""
+
+#. Found in description list item.
+msgid "Hides PHP error and notice messages."
+msgstr ""
+
+#. Found in description list item.
+msgid "Blocks direct access to PHP scripts located inside specific directories (e.g., <code>/wp-content/uploads/</code>)."
+msgstr ""
+
+#. Found in description list item.
+msgid "Protects WordPress XML-RPC API."
+msgstr ""
+
+#. Found in description list item.
+msgid "Whitelist option for WordPress administrator(s), localhost and private IP address spaces."
+msgstr ""
+
+#. Found in description list item.
+msgid "Configurable HTTP return code and message."
+msgstr ""
+
+#. Found in description list item.
+msgid "Rules editor to enable/disable built-in security rules."
+msgstr ""
+
+#. Found in description list item.
+msgid "Activity log and statistics."
+msgstr ""
+
+#. Found in description list item.
+msgid "Debugging mode."
+msgstr ""
+
+#. Found in description list item.
+msgid "And many more..."
+msgstr ""
+
+#. Found in description list item.
+msgid "<p><a href=\"http://blog.nintechnet.com/wordpress-brute-force-attack-detection-plugins-comparison/\" title=\"\">WordPress brute-force attack detection plugins comparison</a></p>"
+msgstr ""
+
+#. Found in description list item.
+msgid "<p><a href=\"http://blog.nintechnet.com/brute-force-attack-protection-in-a-production-environment/\" title=\"\">WordPress brute-force attack protection in a production environment</a></p>"
+msgstr ""
+
+#. Found in description list item.
+msgid "<p><a href=\"http://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/#benchmarks\" title=\"\">Benchmarks with PHP 5.5.6 and Hip-Hop VM 3.4.2</a></p>"
+msgstr ""
+
+#. Found in description list item.
+msgid "Administrator login."
+msgstr ""
+
+#. Found in description list item.
+msgid "Modification of any administrator account in the database."
+msgstr ""
+
+#. Found in description list item.
+msgid "Plugins upload, installation, (de)activation, update, deletion."
+msgstr ""
+
+#. Found in description list item.
+msgid "Themes upload, installation, activation, deletion."
+msgstr ""
+
+#. Found in description list item.
+msgid "WordPress update."
+msgstr ""
+
+#. Found in description list item.
+msgid "English"
+msgstr ""
+
+#. Found in description list item.
+msgid "French"
+msgstr ""
+
+#. Found in description list item.
+msgid "Unix shared memory use for inter-process communication and blazing fast performances."
+msgstr ""
+
+#. Found in description list item.
+msgid "IP-based Access Control."
+msgstr ""
+
+#. Found in description list item.
+msgid "Role-based Access Control."
+msgstr ""
+
+#. Found in description list item.
+msgid "Country-based Access Control via geolocation."
+msgstr ""
+
+#. Found in description list item.
+msgid "URL-based Access Control."
+msgstr ""
+
+#. Found in description list item.
+msgid "Bot-based Access Control."
+msgstr ""
+
+#. Found in description list item.
+msgid "Antispam for comment and user regisration forms."
+msgstr ""
+
+#. Found in description list item.
+msgid "Rate limiting option to block aggressive bots, crawlers, web scrapers and HTTP attacks."
+msgstr ""
+
+#. Found in description list item.
+msgid "Response body filter to scan the output of the HTML page right before it is sent to your visitors browser."
+msgstr ""
+
+#. Found in description list item.
+msgid "Better File uploads management."
+msgstr ""
+
+#. Found in description list item.
+msgid "Better logs management."
+msgstr ""
+
+#. Found in description list item.
+msgid "WordPress 3.3+"
+msgstr ""
+
+#. Found in description list item.
+msgid "PHP 5.3+ (5.4 or higher recommended) or <a href=\"http://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/\" title=\"\">HHVM 3.4+</a>"
+msgstr ""
+
+#. Found in description list item.
+msgid "MySQLi extension"
+msgstr ""
+
+#. Found in description list item.
+msgid "Apache / Nginx / LiteSpeed"
+msgstr ""
+
+#. Found in description list item.
+msgid "Unix-like OS (Linux, BSD) only. NinjaFirewall is <strong>NOT</strong> compatible with Microsoft Windows."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "NinjaFirewall (WP Edition) is a true Web Application Firewall. Although it can be installed and configured just like a plugin, it is a stand-alone firewall that sits in front of WordPress."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "It allows any blog administrator to benefit from very advanced and powerful security features that usually aren't available at the WordPress level, but only in security applications such as the Apache <a href=\"http://www.modsecurity.org/\" title=\"\">ModSecurity</a> module or the PHP <a href=\"http://suhosin.org/\" title=\"\">Suhosin</a> extension."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "NinjaFirewall requires at least PHP 5.3 (5.4 or higher recommended to enable all its features), MySQLi extension and is only compatible with Unix-like OS (Linux, BSD). It is not compatible with Microsoft Windows."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "NinjaFirewall can hook, scan, sanitise or reject any HTTP/HTTPS request sent to a PHP script before it reaches WordPress or any of its plugins. All scripts located inside the blog installation directories and sub-directories will be protected, including those that aren't part of the WordPress package. Even encoded PHP scripts, hackers shell scripts and backdoors will be filtered by NinjaFirewall."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Some of its features are:"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "By processing incoming HTTP requests before your blog and any of its plugins, NinjaFirewall is the only plugin for WordPress able to protect it against very large brute-force attacks, including distributed attacks coming from several thousands of different IPs."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "See our benchmarks and stress-tests:"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "<a href=\"http://blog.nintechnet.com/wordpress-brute-force-attack-detection-plugins-comparison/\" title=\"\">WordPress brute-force attack detection plugins comparison</a>"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "<a href=\"http://blog.nintechnet.com/brute-force-attack-protection-in-a-production-environment/\" title=\"\">WordPress brute-force attack protection in a production environment</a>"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "<a href=\"http://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/#benchmarks\" title=\"\">Benchmarks with PHP 5.5.6 and Hip-Hop VM 3.4.2</a>"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "The protection applies to the <code>wp-login.php</code> script but can be extended to the <code>xmlrpc.php</code> one. The incident can also be written to the server <code>AUTH</code> log, which can be useful to the system administrator for monitoring purposes or banning IPs at the server level (e.g., Fail2ban)."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "<strong>File Guard</strong> real-time detection is a totally unique feature provided by NinjaFirewall: it can detect, in real-time, any access to a PHP file that was recently modified or created, and alert you about this. If a hacker uploaded a shell script to your site (or injected a backdoor into an already existing file) and tried to directly access that file using his browser or a script, NinjaFirewall would hook the HTTP request and immediately detect that the file was recently modified or created. It would send you an alert with all details (script name, IP, request, date and time)."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "<strong>File Check</strong> lets you perform file integrity monitoring by scanning your website hourly, twicedaily or daily. Any modification made to a file will be detected: file content, file permissions, file ownership, timestamp as well as file creation and deletion."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "<strong>Live Log</strong> lets you watch your website traffic in real time. It displays connections in a format similar to the one used by most HTTP server logs. Because it communicates directly with the firewall, i.e., without loading WordPress, <strong>Live Log</strong> is fast, light and it will not affect your server load, even if you set its refresh rate to the lowest value."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "NinjaFirewall can alert you by email on specific events triggered within your blog. Some of those alerts are enabled by default and it is highly recommended to keep them enabled. It is not unusual for a hacker, after breaking into your WordPress admin console, to install or just to upload a backdoored plugin or theme in order to take full control of your website."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Monitored events:"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "To get the most efficient protection, NinjaFirewall can automatically update its security rules daily, twice daily or even hourly. Each time a new vulnerability is found in WordPress or one of its plugins/themes, a new set of security rules will be made available to protect your blog immediately."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Because we respect our users privacy, security rules updates are downloaded from wordpress.org repo only. There is no connection to NinTechNet's servers (A.K.A \"phoning home\") during the update process."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "IPv6 compatibility is a mandatory feature for a security plugin: if it supports only IPv4, <strong>hackers can easily bypass the plugin by using an IPv6</strong>. NinjaFirewall natively supports IPv4 and IPv6 protocols, for both public and private addresses."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "NinjaFirewall is multi-site compatible. It will protect all sites from your network and its configuration interface will be accessible only to the Super Admin from the network main site."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "You can prepend your own PHP code to the firewall with the help of an <a href=\"http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja\">optional user configuration file</a>. It will be processed <strong>before WordPress and all its plugins are loaded</strong>. This is a very powerful feature, and there is almost no limit to what you can do: add your own security rules, manipulated HTTP requests, variables etc."
+msgstr ""
+
+#. Found in description paragraph.
+msgid ""
+"NinjaFirewall is very fast, optimised, compact, and requires very low system resource.\n"
+"See for yourself: download and install <a href=\"http://wordpress.org/plugins/p3-profiler/\" title=\"\">GoDaddy's P3 Plugin Performance Profiler</a> and compare NinjaFirewall performances with other security plugins."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "NinjaFirewall looks and feels like a built-in WordPress feature. It does not contain intrusive banners, warnings or flashy colors. It uses the WordPress simple and clean interface and is also smartphone-friendly."
+msgstr ""
+
+#. Found in description paragraph.
+msgid ""
+"Each NinjaFirewall menu page has a contextual help screen with useful information about how to use and configure it.\n"
+"If you need help, click on the <em>Help</em> menu tab located in the upper right corner of each page in your admin panel."
+msgstr ""
+
+#. Found in description paragraph.
+msgid ""
+"<a href=\"http://nintechnet.com/\" title=\"NinTechNet\">NinTechNet</a> strictly follows the <a href=\"http://wordpress.org/plugins/about/guidelines/\" title=\"\">WordPress Plugin Developer guidelines</a>: our software, <a href=\"http://nintechnet.com/ninjafirewall/\" title=\"NinjaFirewall\">NinjaFirewall (WP Edition)</a>, is 100% free, 100% open source and 100% fully functional, no \"trialware\", no \"obfuscated code\", no \"crippleware\", no \"phoning home\".\n"
+"It does not require a registration process or an activation key to be installed or used.\n"
+"Because <strong>we do not collect any user data</strong>, we do not even know that you are using (and hopefully enjoying !) our product."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Check out our new supercharged edition: <a href=\"http://nintechnet.com/ninjafirewall/wp-edition/\" title=\"NinjaFirewall WP+\">NinjaFirewall WP+</a>"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "<a href=\"http://nintechnet.com/ninjafirewall/wp-edition/\" title=\"\">Learn more</a> about the WP+ Edition unique features. <a href=\"http://nintechnet.com/ninjafirewall/wp-edition/?comparison\" title=\"\">Compare</a> the WP and WP+ Editions."
+msgstr ""
+
+#. Found in installation list item.
+msgid "Upload <code>ninjafirewall</code> folder to the <code>/wp-content/plugins/</code> directory."
+msgstr ""
+
+#. Found in installation list item.
+msgid "Activate the plugin through the 'Plugins' menu in WordPress."
+msgstr ""
+
+#. Found in installation list item.
+msgid "Plugin settings are located in 'NinjaFirewall' menu."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed UI compatibility issues with WordPress 4.4."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed an \"undefined offset\" PHP notice while creating the daily activity report."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug in \"File Check\" where the processing time was not updated after creating a snapshot."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug in \"File Check\" where the symlinks option was not displayed if the exclusion list was empty."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug where non-admin users were blocked from accessing the editor if the \"Protect against username enumeration &gt; Through the author archives\" firewall policy was enabled."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Removed the <code>update_core</code> capability that was required to access NinjaFirewall settings because if the <code>DISALLOW_FILE_MODS</code> option from the \"Firewall Policies\" page was enabled, the admin could no longer access NinjaFirewall."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The firewall decoding routine was rewritten to be much more efficient. It is faster and can better detect advanced evasion techniques."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new constant: NFW_DONT_USE_SSL. Because NinjaFirewall downloads its rules over an HTTPS secure connection, if your server does not support SSL you can ask it to use a non-secure connection by adding the following directive to your wp-config.php file: <code>define('NFW_DONT_USE_SSL', 1);</code>"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The security rules are no longer included inside the install.php script because some security scanners could wrongly flag them as suspicious. Instead, they will be downloaded from the WordPress repo during the installation or update of NinjaFirewall."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The Strict-Transport-Security response header in the Firewall Policies page has a new option to send an empty <code>max-age</code> to signal the user-agent to cease regarding the host as a known HSTS Host, while disabling the HSTS option will not return any header at all."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Accessing NinjaFirewall menu and settings will now require the following three capabilities: manage_options, update_core and unfiltered_html. Previously, only the manage_options capability was needed (see our blog for more info about it: http://nin.link/nfwaa )."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new constant: NFW_ALLOWED_ADMIN. It can be used to allow only selected administrators to access NinjaFirewall configuration (see our blog for more info about it: http://nin.link/nfwaa )."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall will prevent any user, including the administrator, to edit its code from the WordPress built-in plugin editor."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] Updated IPv4/IPv6 GeoIP databases."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated security rules."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added protection to block WordPress XMLRPC brute-force amplification attacks using the <code>system.multicall</code> method (see \"Firewall Policies &gt; WordPress XML-RPC API\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "A daily report will be sent to the administrator every morning. It is enabled by default and can be disabled from the \"Event Notifications &gt; Daily report\" menu."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a button to immediately update the firewall security rules (See \"Updates &gt; Check For updates Now!\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug with the \"Import Configuration\" option: NinjaFirewall updates cronjob was not re-enabled when importing its configuration."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] Fixed a bug in the Overview page that could show contradictory messages about whitelisted administrator."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] Added the server IP(s) to the \"Access Control &gt; Source IP\" section."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Minor fixes and improvements."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improved firewall engine to handle double-encoding used in query strings to perform advanced SQLi and XSS attempts."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improved Base64-encoded injection detection."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated links and doc."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Removed green 'OK' icons from the Overview page. Only warning and error icons will be used."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Internationalization support. The POT file is included in the <code>/languages/</code> folder."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "French (fr_FR) language added."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug in the firewall that could corrupt the content of a POST or GET array."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "It is now possible to send notifications and alerts to multiple recipients (see \"Event Notifications &gt; Contact email\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "After each scan, \"File Check\" will always keep the list of the previous changes rather than deleting it."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updates log is sorted in reverse order."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] Whitelisted and blacklisted IPs are sorted using \"natural order\" algorithm in the \"Access Control\" page."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The path to NinjaFirewall's log/cache directory can be changed with the <code>NFW_LOG_DIR</code> constant (see http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja for more details)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Disabling NinjaFirewall will disable the brute-force protection as well."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "When importing its configuration, NinjaFirewall will ensure that the server is compatible with the HTTP response headers option, otherwise it will disable that option."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The installer will return an error message if the PHP mysqli extension is not loaded."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed PHP warning on systems that do not support exclusive locks."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed potential PHP warning when headers are wrongly sent by another plugin before NinjaFirewall starts a PHP session."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Loosened Base64 decoder rules to reduce the risk of false-positives."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] Added a warning to the antispam protection about caching plugins."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "\"File Guard\" email alert will contain the date/time the file was last changed, rather than the date/time the detection occurred."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The \"Refresh Rate\" and \"Autoscrolling\" options from the \"Live Log\" menu will be remembered when changed."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "\"Live Log\" has a new option to select the timezone to display."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The firewall will always ensure that <code>REMOTE_ADDR</code> contains only one IP or will remove any extra IP."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall will not block but only warn if <code>DISABLE_WP_CRON</code> is defined (applies to \"File Check\" and \"Updates\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "It is possible to set the Strict-Transport-Security (HSTS) header if the client has the <code>HTTP_X_FORWARDED_PROTO</code> set to 'https' (Firewall Policies &gt; HTTP response headers)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Notification emails will either use the <code>home_url()</code> or <code>site_url()</code> function depending on the type of notification."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The firewall will no longer sanitise user input when running in \"Debugging Mode\", but will only write the event to its log."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] The antispam will not block any message if NinjaFirewall is running in \"Debugging Mode\"."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new feature: \"Updates\". It can automatically update NinjaFirewall's built-in security rules in order to keep your blog protected against the latest WordPress vulnerabilities, without having to update the whole plugin. For more info, please see <a href=\"http://blog.nintechnet.com/ninjafirewall-wpwp-introduces-automatic-updates-for-security-rules/\" title=\"\">NinjaFirewall WP/WP+ introduces automatic updates for security rules</a>."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The firewall can now use some very specific rules to block an action from the logged in administrator even if he/she is whitelisted. Such rules will only be used to protect against CSRF and maliciously crafted links specifically targeting the administrator."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The firewall engine can now chain two different security rules in order to provide a better and more accurate filtering mechanism."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Session handling was slightly modified for sites running PHP 5.4+."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall will display a warning in the \"Overview\" page if it detects that a buggy plugin may have destroyed the current PHP session."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new option to \"Live Log\" that allows you to select which traffic you want to view (HTTP and/or HTTPS)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated security rules to block several new vulnerabilities (e.g., WordPress SEO by Yoast)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed PHP error (blank screen after last update) for sites running PHP 5.3. NOTE: if you are still using PHP 5.3 consider upgrading your PHP version because it is no longer supported since Aug 2014 and using older versions may expose you to security vulnerabilities and bugs that have been fixed in more recent versions of PHP. In addition, you won't be able to use some features of NinjaFirewall that require at least PHP 5.4."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to customize the log format in Live Log (see \"Live Log &gt; Options &gt; Log format\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new HTTP response header: <code>Strict-Transport-Security</code>, to defend against cookie hijacking and Man-in-the-Middle attacks (see \"Firewall Policies &gt; HTTP response headers\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "When importing NinjaFirewall configuration from another site, File Check configuration will not be imported."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed an \"Undefined index: php_ini_type\" PHP notice during the installation process."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed some minor typos and bugs."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new feature: \"Live Log\". It lets you watch your website traffic in real time."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug in the \"Event Notifications\" email alert: after an update, the name of the (re)activated plugin was missing."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "It is now possible to create the \".htninja\" optional configuration file in either the document root or its parent directory (see http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja )."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall will not block access to the TinyMCE WYSIWYG editor even if the option to block direct access to any PHP file located in the <code>/wp-includes/</code> folder is enabled (see \"Firewall Policies\" page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added protection against the FancyBox for WordPress 0-day vulnerability."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to select HHVM (HipHop Virtual Machine) during the installation process. See our blog about installing NinjaFirewall on HHVM (http://nin.link/hhvm)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The plugin and theme editors will no longer be disabled by default."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The maximum length of the username and password from the \"Login Protection\" option was increased to 32 characters."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to exclude a folder from being monitored by File Guard (see \"File Guard &gt; Exclude the following folder\" option)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The installer will send an email to the administrator with some info and links that could be helpful if there was a problem or crash during NinajFirewall installation/activation."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The installer will comment out any <code>auto_prepend_file</code> directive that may be found in the PHP INI file prior to insert its own one."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The database monitoring option will save its data to a file whose name will be based on the <code>blog_id</code> and <code>site_id</code> variables to prevent potential false detection alerts."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] The priority of the antispam <code>add filter</code> and <code>add_action</code> hooks was lowered in order to execute them earlier."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new option to monitor the database and send an alert if an administrator account is created, modified or deleted (see \"Event Notifications &gt; Database\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a \"Processing time\" legend to File Check snapshot description to display the time it took to perform the scan."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "On new installations, File Guard will be enabled by default."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall will refuse to install if the WordPress <code>/plugins/</code> directory was renamed."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug in File Check scheduled scan: it was not disabled when deactivating NinjaFirewall."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "File Check can now run scheduled scans on a specific interval (hourly, twicedaily or daily) and send reports by email (see \"File Check &gt; Options\" menu and its contextual help)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to select Apache/suPHP SAPI during the installation process."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to write all events/alerts to the firewall log (see \"Event Notifications &gt; Log\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Loosened cookies sanitizing rules to reduce the risk of false-positives."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated security rules to protect against new Slider Revolution/Showbiz Pro shell upload exploit (http://nin.link/fd78)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new set of options that can hook the HTTP response headers, including cookies, and modify them on-the-fly to help mitigate threats such as XSS, phishing and clickjacking attacks (see \"Firewall Policies &gt; HTTP response headers\")."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The function detecting if the firewall is enabled was rewritten and is more accurate and flexible."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "File Check will display date &amp; time using the blog timezone rather than the user localtime."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new feature that can detect changes made to your files (see \"File Check\" menu and its contextual help)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a drop-down menu to the \"Statistics\" page to select and view stats from the previous months."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a drop-down menu to the \"Firewall Log\" page to select and view logs from the previous months."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New simpler and intuitive installer."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed the FORCE_SSL_ADMIN alert that was unnecessarily displayed when the site was already in HTTPS mode."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a potential bug in the user enumeration protection that could block a legitimate user."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a warning to WordPress admin console if the log directory does not exist."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added missing MIME and charset headers to all emails sent by the firewall."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated \"File Guard\" contextual help."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed various small bugs and typos."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to import/export NinjaFirewall configuration (see \"Firewall Options\" page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The firewall logs will be saved to the <code>wp-content/nfwlog/</code> folder, to prevent WordPress from deleting them during an update."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a warning to the \"Overview\" page if the administrator is not whitelisted by the firewall."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Non-RFC compliant uppercase IPv6 addresses found in the X_FORWARDED_FOR header will no longer be blocked by the firewall (rule #312)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Rules #151 and #152 (HTTP header injection) were removed to prevent false positives from occurring."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The \"AUTH log\" option from the \"Login Protection\" page will be disabled if the server does not support it."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Cookies and GET variable sanitizing, as well as HTTP_REFERER scan will be disabled by default in the Firewall Policies page."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a rule to protect against the <code>shellshock</code> bash code injection vulnerability (CVE-2014-6271)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new option to record brute-force attacks to the server AUTH log (see Login Protection &gt; AUTH log)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall is now able to parse the wp-config.php script if the DB_HOST constant is using a \"host:port\", \"host:socket\" or \"host:port:socket\" format."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed installer bug that could corrupt the .htaccess."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed Cloudflare and Incapsula detection warning in the \"Overview\" page. It will not be displayed when the correct IP is used."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "We opened a Twitter account for all updates and upgrades: @nintechnet."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed IE browsers italic text bug in the File Guard page."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Cleaned-up installer and removed useless lines of code."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added rules description to the enabled and disabled rules drop-down lists (see Rules Editor)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed \"Invalid argument supplied for foreach\" PHP notice."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed \"Undefined variable: auth_pass\" (potential) PHP notice."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed the XML-RPC checkbox in the \"Login Protection\" page. It is now visible when the protection is set to \"Always ON\"."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added reverse proxy/load balancer detection. A message in the \"Overview\" page will warn the admin about setting up the server or NinjaFirewall in order to use the correct IP."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed login protection rejecting username/password on some servers running Apache PHP-CGI with suExec. NinjaFirewall will now use its own very fast authentication scheme rather than relying on the server HTTP Basic authentication."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The length of the firewall log lines was increased from 100 to 200 characters."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed potential 500 Internal Server error during installation on Apache servers that do not have the mod_env module loaded."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added Cloudflare and Incapsula detection. A message in the \"Overview\" page will warn the admin about setting up the server or NinjaFirewall in order to use the correct IP."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The brute-force attack protection was extended to the XML-RPC API script (xmlrpc.php). See the \"Login Protection\" page and its contextual help."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed error when multibyte characters were used in the firewall \"Blocked user message\"."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a couple of bugs in the UI (smartphone users)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Security update: added protection against the new ThimThumb vulnerability (WebShot Remote Code Execution)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a new feature that can detect, in real-time, any access to a PHP file that was recently modified or created, and can alert the administrator (see new \"File Guard\" menu and its contextual help)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a call to <code>stripslashes()</code> to prevent WordPress from escaping quotes in the \"Login Protection\" password."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The length of the \"Login Protection\" message (realm) was increased from 100 to 150 characters."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Removed a small piece of code from the \"Login Protection\" that could block some browsers."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug introduced in v1.1.9 : login alerts were not sent. Sorry for the inconvenience."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall is now fully compatible with IPv6."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "All logs will have a .php extension in order to be protected by NinjaFirewall if the HTTP server does not support .htaccess (Nginx, Lighttpd, Cherokee, OpenLiteSpeed etc)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a small JS issue in the \"Login Protection\" page (the 'onChange' event wasn't working well with IE browsers)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The firewall blocked message will now return by default around 700 bytes only, instead of 8Kb."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Introducing a new supercharded edition of NinjaFirewall (see \"WP+ Edition\" page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Updated firewall rules."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug where notifications were not sent to the contact email address given by the user (\"Event Notifications\" page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The \"Protect against username enumeration\" option (\"Firewall Policies\" page) will not be enabled by default, to prevent Google bot from being blocked."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Modified the handling of session_start."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a stats file to summarize the firewall log statistics in order to speed up the display of the dashboard widget when the log is huge."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added new features to the <code>.htninja</code> file to quickly allow or block visitors. See http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja for full details."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Tweaked security rules ID 100 and 300 to reduce false positives."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed some code and minor errors."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to sanitise HTTP REQUEST variables (\"Firewall Policies\" page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added NinjaFirewall Statistics widget to WP dashboard."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed multiple file upload error."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug where login alerts were sent even when NinjaFirewall was disabled from the \"Firewall Options\" menu."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall status icon in the admin bar (multi-site installation) will always be visible to the Super Admin, even when it is disabled."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Log file and stats will be saved and restored after upgrading NinjaFirewall."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improved admin UI to offer better smartphones compatibility."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug where the localhost IP was not blacklisted."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug where some disabled Firewall Policies options were wrongly accessible from the Rules Editor."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Renamed <code>E-mail Alerts</code> menu to <code>Event Notifications</code>."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed potential session timeout for the logged-in admin."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed dead links in doc."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improved installer/uninstaller."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a warning to the firewall status page if the <code>log</code> directory is not writable."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed an undefined <code>NFW_DOC_ROOT</code> constant warning."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to block username enumeration scanning attempts through the author archives and the login page (Firewall Policies page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to always enforce HTTP Basic authentication to protect the login page and the possibility to set a custom 'realm' message (Login Protection page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an optional configuration file that can be used to tell NinjaFirewall where is located the <code>wp-config.php</code> file, in the case it was moved to another directory (see http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja for full details)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a warning about blocking direct access to PHP scripts located in the <code>/wp-includes/</code> directory because it could prevent non-admin users from using the TinyMCE WYSIWYG editor."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to block access to WordPress XML-RPC API (Firewall Policies page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Better error handling (critical errors will be displayed in the admin console only)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug where NinjaFirewall brute-force protection was always triggered by the login modals introduced in WordPress 3.6."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Firewall rules and options are now using <code>WP_CONTENT_DIR</code> constant."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "The installer will attempt to detect if WordPress files were installed into a subdirectory different from the root directory."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added protection against very large brute-force attacks, including distributed attacks coming from several thousands of different IPs (see new <code>Login Protection</code> menu)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed firewall initialisation error due to user defined <code>WP_CONTENT_DIR</code>."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a bug where an extended ASCII code could make the log unreadable from WP admin console."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added multi-site network support."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an option to decode and scan Base64 encoded values in POST requests (Firewall Policies page)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added an <code>E-mail Alerts</code> configuration page to send alerts on specific events (users login, themes/plugins installation, activation, deletion etc)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added <code>Privacy Policy</code> to the About page and to the installer."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a <code>Rules Editor</code> menu to enable/disable built-in rules individually."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed installation issue with Listespeed HTTP server when using Apache-style configuration directives (<code>php_value</code>)."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added a call to <code>stripslashes()</code> to prevent WordPress from escaping quotes in the \"Blocked user message\" textarea."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Added extensive contextual help to the Firewall Policies page."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed some code, minor errors and typos."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Fixed a <code>Call to undefined function flatten()</code> error message."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "NinjaFirewall will warn and refuse to install if <code>SAFE_MODE</code> is enabled with PHP 5.3+."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Initial release."
+msgstr ""
+
+#. Found in faq header.
+msgid "Why is NinjaFirewall different from other security plugins for WordPress ?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Do I need root privileges to install NinjaFirewall ?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Does it work with Nginx ?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Do I need to alter my PHP scripts ?"
+msgstr ""
+
+#. Found in faq header.
+msgid "I moved my wp-config.php file to another directory. Will it work with NinjaFirewall ?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Will NinjaFirewall detect the correct IP of my visitors if I am behind a CDN service like Cloudflare ?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Will it slow down my site ?"
+msgstr ""
+
+#. Found in faq header.
+msgid "Is there any Microsoft Windows version ?"
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "NinjaFirewall sits between the attacker and WordPress. It can filter requests before they reach your blog and any of its plugins. This is how it works :"
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "And this is how all WordPress plugins work :"
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Unlike other security plugins, it will protect all PHP scripts, including those that aren't part of the WordPress package."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "NinjaFirewall does not require any root privilege and is fully compatible with shared hosting accounts. You can install it from your WordPress admin console, just like a regular plugin."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "NinjaFirewall works with Nginx and others Unix-based HTTP servers (Apache, LiteSpeed etc). Its installer will detect it."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "You do not need to make any modifications to your scripts. NinjaFirewall hooks all requests before they reach your scripts. It will even work with encoded scripts (ionCube, ZendGuard, SourceGuardian etc)."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "Since version 1.1.3, you can use an optional configuration file to tell NinjaFirewall where is located your WordPress configuration file, wp-config.php, if you moved it to another directory. Please <a href=\"http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja\" title=\"\">follow these steps</a>."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "You can use an optional configuration file to tell NinjaFirewall which IP to use. Please <a href=\"http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja\" title=\"\">follow these steps</a>."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid ""
+"Your visitors will not notice any difference with or without NinjaFirewall. From WordPress administration console, you can click \"NinjaFirewall &gt; Status\" menu to see the benchmarks and statistics (the fastest, slowest and average time per request). NinjaFirewall is very fast, optimised, compact, requires very low system resources and <a href=\"http://blog.nintechnet.com/wordpress-brute-force-attack-detection-plugins-comparison/\" title=\"\">outperforms all other security plugins</a>.\n"
+"By blocking dangerous requests and bots before WordPress is loaded, it will save bandwidth and reduce server load."
+msgstr ""
+
+#. Found in faq paragraph.
+msgid "NinjaFirewall works on Unix-like servers only. There is no Microsoft Windows version and we do not expect to release any."
+msgstr ""
