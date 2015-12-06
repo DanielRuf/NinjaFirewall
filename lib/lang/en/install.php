@@ -1,5 +1,5 @@
 <?php
-/* 2015-09-12 23:01:28 */
+/* 2015-12-06 00:30:27 */
 $lang = array (
 
 	'next'					=> 'Next',
@@ -168,6 +168,7 @@ $lang = array (
 	'hi23'					=>	'Must Read:',
 	'hi24'					=>	'-Testing NinjaFirewall without blocking your visitors.',
 	'hi25'					=>	'-Add your own code to the firewall: the ".htninja" file.',
+	'hi25b'					=>	'-Upgrading to PHP 7 with NinjaFirewall installed.',
 
 	'hi26'					=>	'Help & Support Links:',
 	'hi27'					=>	'-Each page of NinjaFirewall includes a contextual help: click on the "Help" menu tab located in the upper right corner of the corresponding page.',

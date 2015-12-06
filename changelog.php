@@ -1,6 +1,14 @@
 <?php
 $changelog = <<<'EOT'
 
+= 2.3.1 =
+* If you want to upgrade your server from PHP 5 to PHP 7, please
+  check our blog for potential issues: http://nin.link/php7/
+* During the installation process, NinjaFirewall will add the correct
+  PHP 5 or PHP 7 directive to the .htaccess if the server is running
+  Apache with mod_php.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 2.3 =
 * Added a new option: File Check. It lets you perform file integrity
   monitoring upon request.

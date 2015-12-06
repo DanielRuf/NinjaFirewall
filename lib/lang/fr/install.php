@@ -1,5 +1,5 @@
 <?php
-/* 2015-09-12 23:01:35 */
+/* 2015-12-06 00:30:24 */
 $lang = array (
 
 	'next'					=> 'Suivant',
@@ -170,6 +170,7 @@ $lang = array (
 	'hi23'					=>	'A lire aussi :',
 	'hi24'					=>	'-Tester NinjaFirewall sans bloquer vos visiteurs :',
 	'hi25'					=>	'-Ajoutez votre code au pare-feu: le fichier ".htninja".',
+	'hi25b'					=>	'-Mise à niveau de PHP 5 vers PHP 7 avec NinjaFirewall installé.',
 
 	'hi26'					=>	'Aide & Support :',
 	'hi27'					=>	'-Si vous avez besoin d\'aide, cliquez sur l\'onglet "Aide" situé dans le coin supérieur droit de chaque page.',

@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-06-17 21:59:02                                       |
+ | REVISION: 2015-12-05 17:08:00                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -760,7 +760,7 @@ function nfw_integration( $err ) {
 		$htaccess = 0;
 		$php_ini = 0;
 	} elseif ( preg_match('/apache/i', PHP_SAPI) ) {
-		// Apache running mod_php5 :
+		// Apache running mod_php5/7 :
 		$http_server = 1;
 		$s1 = $lang['recommended'];
 		$htaccess = 1;
@@ -814,7 +814,7 @@ function nfw_integration( $err ) {
 				break;
 			}
 		}
-		// Dont warn if user selected Apache/mod_php5 or HHVM
+		// Dont warn if user selected Apache/mod_php5/7 or HHVM
 		if (! ischecked && document.integration_form.http_server.value != 1 && document.integration_form.http_server.value != 7 ) {
 			alert('<?php echo $lang['js_phpini'] ?>');
 			return false;
@@ -858,7 +858,7 @@ function nfw_integration( $err ) {
 				<td width="10%" class="dotted">&nbsp;</td>
 				<td width="45%" align="left" class="dotted">
 					<select class="input" name="http_server" onchange="ini_toogle(this.value);">
-						<option value="1"<?php _selected($http_server, 1) ?>>Apache + PHP5 module<?php echo $s1 ?></option>
+						<option value="1"<?php _selected($http_server, 1) ?>>Apache + PHP module<?php echo $s1 ?></option>
 						<option value="2"<?php _selected($http_server, 2) ?>>Apache + CGI/FastCGI<?php echo $s2 ?></option>
 						<option value="6"<?php _selected($http_server, 6) ?>>Apache + suPHP</option>
 						<option value="3"<?php _selected($http_server, 3) ?>>Nginx + CGI/FastCGI<?php echo $s3 ?></option>
@@ -896,7 +896,7 @@ function nfw_integration( $err ) {
 				$php_ini_type = 3;
 			}
 			if ($http_server == 1 || $http_server == 7) {
-				// We don't need PHP INI if the server is running Apache/mod_php5 or HHVM :
+				// We don't need PHP INI if the server is running Apache/mod_php5/7 or HHVM :
 				echo '<tr id="trini" style="display:none;">';
 			} else {
 				echo '<tr id="trini">';
@@ -961,7 +961,7 @@ function nfw_integration_save() {
 		goto INTEGRATION_SAVE_END;
 	}
 
-	// We must have a PHP INI type, except if the server is running Apache/mod_php5 or HHVM:
+	// We must have a PHP INI type, except if the server is running Apache/mod_php5/7 or HHVM:
 	if ( preg_match('/^[2-6]$/', $_POST['http_server']) ) {
 		if ( empty($_POST['php_ini_type']) || ! preg_match('/^[1-3]$/', $_POST['php_ini_type']) ) {
 			$error_msg = $lang['phpini'];
@@ -1017,7 +1017,7 @@ function nfw_activation() {
 			<?php
 			$fdata = $height = '';
 			$bullet = '<img src="static/bullet_on.gif" border="0">&nbsp;';
-			// Apache mod_php5 : only .htaccess changes are required :
+			// Apache mod_php5/7 : only .htaccess changes are required :
 			if ($_SESSION['http_server'] == 1) {
 				echo '<p>' . sprintf( $lang['single_file'], '.htaccess') . '</p>';
 				if ( file_exists($_SESSION['document_root'] . '/.htaccess') ) {
@@ -1033,7 +1033,7 @@ function nfw_activation() {
 				}
 				echo '<br /><br /><center><pre style="background-color:#FAFAFA;border:1px solid #FDCD25;margin:0px;padding:6px;overflow:auto;width:90%;text-align:left;' . $height . '">' . "\n" .
 				$color_start . '# BEGIN NinjaFirewall' . "\n" .
-				'&lt;IfModule mod_php5.c&gt;' . "\n" .
+				'&lt;IfModule mod_php' . PHP_MAJOR_VERSION . '.c&gt;' . "\n" .
 				'   php_value auto_prepend_file ' . __DIR__ . '/firewall.php' . "\n" .
 				'&lt;/IfModule&gt;' . "\n" .
 				'# END NinjaFirewall' . "\n" .
@@ -1300,10 +1300,13 @@ function nfw_activation_test() {
 			$message.= '4) '. $lang['hi23'] . "\n\n";
 
 			$message.= $lang['hi24'] . "\n";
-			$message.= 'http://blog.nintechnet.com/testing-ninjafirewall-without-blocking-your-visitors/ ' . "\n";
+			$message.= 'http://blog.nintechnet.com/testing-ninjafirewall-without-blocking-your-visitors/ ' . "\n\n";
 
 			$message.= $lang['hi25'] . "\n";
 			$message.= 'http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ' . "\n\n";
+
+			$message.= $lang['hi25b'] . "\n";
+			$message.= 'http://blog.nintechnet.com/upgrading-to-php-7-with-ninjafirewall-installed/ ' . "\n\n";
 
 			$message.= '5) '. $lang['hi26'] . "\n\n";
 
