@@ -429,6 +429,18 @@ msgid "Plugin settings are located in 'NinjaFirewall' menu."
 msgstr ""
 
 #. Found in changelog list item.
+msgid "If you want to upgrade your server from PHP 5 to PHP 7, please check our blog for potential issues: http://nin.link/php7/"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "During the installation process, NinjaFirewall will add the correct PHP 5 or PHP 7 directive to the .htaccess if the server is running Apache with mod_php."
+msgstr ""
+
+#. Found in changelog list item.
+msgid "[WP+ Edition] Updated IPv4/IPv6 GeoIP databases."
+msgstr ""
+
+#. Found in changelog list item.
 msgid "Fixed UI compatibility issues with WordPress 4.4."
 msgstr ""
 
@@ -478,10 +490,6 @@ msgstr ""
 
 #. Found in changelog list item.
 msgid "NinjaFirewall will prevent any user, including the administrator, to edit its code from the WordPress built-in plugin editor."
-msgstr ""
-
-#. Found in changelog list item.
-msgid "[WP+ Edition] Updated IPv4/IPv6 GeoIP databases."
 msgstr ""
 
 #. Found in changelog list item.

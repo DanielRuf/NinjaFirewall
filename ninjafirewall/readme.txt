@@ -3,7 +3,7 @@ Contributors: nintechnet, bruandet
 Tags: admin, attack, backdoor, botnet, brute force, brute force attack, brute force protection, denial, firewall, hack, hhvm, infection, injection, login, malware, nginx, nintechnet, ninja, phishing, prevention, protection, security, shellshock, soaksoak, trojan, user enumeration, virus, WAF, Web application firewall, widget, wp-login, XML-RPC, xmlrpc, XSS
 Requires at least: 3.3.0
 Tested up to: 4.4
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -218,6 +218,11 @@ NinjaFirewall works on Unix-like servers only. There is no Microsoft Windows ver
 
 
 == Changelog ==
+
+= 1.8.3 =
+* If you want to upgrade your server from PHP 5 to PHP 7, please check our blog for potential issues: http://nin.link/php7/
+* During the installation process, NinjaFirewall will add the correct PHP 5 or PHP 7 directive to the .htaccess if the server is running Apache with mod_php.
+* [WP+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 1.8.2 =
 * Fixed UI compatibility issues with WordPress 4.4.
