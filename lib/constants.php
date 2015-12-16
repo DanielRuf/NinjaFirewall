@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-12-05 17:21:27                                       |
+ | REVISION: 2015-12-16 15:42:50                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -22,8 +22,8 @@
 
 /* ------------------------------------------------------------------ */
 
-define('NFW_ENGINE_VERSION', '2.3.1');
-define('NFW_RULES_VERSION', '20151205.1');
+define('NFW_ENGINE_VERSION', '2.3.2');
+define('NFW_RULES_VERSION', '20151216.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
@@ -50,11 +50,11 @@ define( 'NFW_LOOPBACK', 540);
 // Pro Edtion only :
 define('NFW_SCAN_BOTS', 531);
 // Pro+ Edtion only :
-define( 'NFW_BOT_LIST', 'acunetix|analyzer|AhrefsBot|backdoor|bandit|' .
+define('NFW_BOT_LIST', 'acunetix|analyzer|AhrefsBot|backdoor|bandit|' .
 	'blackwidow|BOT for JCE|collect|core-project|dts agent|emailmagnet|' .
 	'exploit|extract|flood|grabber|harvest|httrack|havij|hunter|indy library|' .
-	'inspect|LoadTimeBot|Microsoft URL Control|Miami Style|mj12bot|morfeus|nessus|pmafind|' .
-	'scanner|siphon|spbot|sqlmap|survey|teleport'
+	'inspect|LoadTimeBot|Microsoft URL Control|Miami Style|mj12bot|morfeus|' .
+	'nessus|pmafind|scanner|siphon|spbot|sqlmap|survey|teleport|updown_tester'
 );
 define( 'NFW_DEFAULT_MSG', '<br /><br /><br /><br /><center>Sorry ' .
 	'<b>%%REM_ADDRESS%%</b>, your request cannot be proceeded.<br />' .

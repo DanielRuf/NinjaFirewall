@@ -1,6 +1,9 @@
 <?php
 $changelog = <<<'EOT'
 
+= 2.3.2 =
+* Updated security rules.
+
 = 2.3.1 =
 * If you want to upgrade your server from PHP 5 to PHP 7, please
   check our blog for potential issues: http://nin.link/php7/
