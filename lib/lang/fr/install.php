@@ -1,5 +1,5 @@
 <?php
-/* 2015-12-06 00:30:24 */
+/* 2016-02-07 00:32:05 */
 $lang = array (
 
 	'next'					=> 'Suivant',
@@ -168,9 +168,10 @@ $lang = array (
 	'hi22'					=>	'-Comment protéger Joomla avec NinjaFirewall ?',
 
 	'hi23'					=>	'A lire aussi :',
+	'hi24_2'					=>	'-Présentation du moteur de filtrage de NinjaFirewall :',
 	'hi24'					=>	'-Tester NinjaFirewall sans bloquer vos visiteurs :',
-	'hi25'					=>	'-Ajoutez votre code au pare-feu: le fichier ".htninja".',
-	'hi25b'					=>	'-Mise à niveau de PHP 5 vers PHP 7 avec NinjaFirewall installé.',
+	'hi25'					=>	'-Ajoutez votre code au pare-feu: le fichier ".htninja" :',
+	'hi25b'					=>	'-Mise à niveau de PHP 5 vers PHP 7 avec NinjaFirewall installé :',
 
 	'hi26'					=>	'Aide & Support :',
 	'hi27'					=>	'-Si vous avez besoin d\'aide, cliquez sur l\'onglet "Aide" situé dans le coin supérieur droit de chaque page.',

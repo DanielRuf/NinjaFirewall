@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-03-21 16:19:03                                       |
+ | REVISION: 2016-01-30 01:43:20                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -51,15 +51,27 @@ if ( version_compare($nfw_options['rules_version'], NFW_RULES_VERSION, '<') ) {
 
 	foreach ( $nfw_rules_new as $new_key => $new_value ) {
 		foreach ( $new_value as $key => $value ) {
-			// if that rule exists already, we keep its 'on' flag value
+			// if that rule exists already, we keep its 'ena' flag value
 			// as it may have been changed by the user with the rules editor :
-			if ( ( isset( $nfw_rules[$new_key]['on'] ) ) && ( $key == 'on' ) ) {
-				$nfw_rules_new[$new_key]['on'] = $nfw_rules[$new_key]['on'];
+			// v3.x:
+			if ( ( isset( $nfw_rules[$new_key]['ena'] ) ) && ( $key == 'ena' ) ) {
+				$nfw_rules_new[$new_key]['ena'] = $nfw_rules[$new_key]['ena'];
+			}
+			// v2.x:
+			if ( ( isset( $nfw_rules[$new_key]['on'] ) ) && ( $key == 'ena' ) ) {
+				$nfw_rules_new[$new_key]['ena'] = $nfw_rules[$new_key]['on'];
 			}
 		}
 	}
-	$nfw_rules_new[NFW_DOC_ROOT]['what']= $nfw_rules[NFW_DOC_ROOT]['what'];
-	$nfw_rules_new[NFW_DOC_ROOT]['on']	= $nfw_rules[NFW_DOC_ROOT]['on'];
+	// v2.x:
+	if ( isset( $nfw_rules[NFW_DOC_ROOT]['what'] ) ) {
+		$nfw_rules_new[NFW_DOC_ROOT]['cha'][1]['wha']= str_replace( '/', '/[./]*', $nfw_rules[NFW_DOC_ROOT]['what'] );
+		$nfw_rules_new[NFW_DOC_ROOT]['ena']	= $nfw_rules[NFW_DOC_ROOT]['on'];
+	// v3.x:
+	} else {
+		$nfw_rules_new[NFW_DOC_ROOT]['cha'][1]['wha']= $nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'];
+		$nfw_rules_new[NFW_DOC_ROOT]['ena']	= $nfw_rules[NFW_DOC_ROOT]['ena'];
+	}
 
 	// v2.0.1 / 20140927 update --------------------------------------
 	// We delete rules #151 and #152

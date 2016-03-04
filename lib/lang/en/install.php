@@ -1,5 +1,5 @@
 <?php
-/* 2015-12-06 00:30:27 */
+/* 2016-02-07 00:32:10 */
 $lang = array (
 
 	'next'					=> 'Next',
@@ -166,9 +166,10 @@ $lang = array (
 	'hi22'					=>	'-How can I protect Joomla with NinjaFirewall?',
 
 	'hi23'					=>	'Must Read:',
-	'hi24'					=>	'-Testing NinjaFirewall without blocking your visitors.',
-	'hi25'					=>	'-Add your own code to the firewall: the ".htninja" file.',
-	'hi25b'					=>	'-Upgrading to PHP 7 with NinjaFirewall installed.',
+	'hi24_2'					=>	'-An introduction to NinjaFirewall filtering engine:',
+	'hi24'					=>	'-Testing NinjaFirewall without blocking your visitors:',
+	'hi25'					=>	'-Add your own code to the firewall: the ".htninja" file:',
+	'hi25b'					=>	'-Upgrading to PHP 7 with NinjaFirewall installed:',
 
 	'hi26'					=>	'Help & Support Links:',
 	'hi27'					=>	'-Each page of NinjaFirewall includes a contextual help: click on the "Help" menu tab located in the upper right corner of the corresponding page.',

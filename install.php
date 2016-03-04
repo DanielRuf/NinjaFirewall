@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-12-05 17:08:00                                       |
+ | REVISION: 2016-02-05 18:09:55                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -706,11 +706,11 @@ ADMIN_SAVE_END:
 
 	// Add the DOCUMENT_ROOT :
 	if ( strlen($_SERVER['DOCUMENT_ROOT']) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
+		$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', $_SERVER['DOCUMENT_ROOT'] );
 	} elseif ( strlen( getenv('DOCUMENT_ROOT') ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
+		$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', getenv( 'DOCUMENT_ROOT' ) );
 	} else {
-		$nfw_rules[NFW_DOC_ROOT]['on']  = 0;
+		$nfw_rules[NFW_DOC_ROOT]['ena']  = 0;
 	}
 
 	// Clear the rules for bad bots/UA if we are running the Pro+ edn,
@@ -861,8 +861,8 @@ function nfw_integration( $err ) {
 						<option value="1"<?php _selected($http_server, 1) ?>>Apache + PHP module<?php echo $s1 ?></option>
 						<option value="2"<?php _selected($http_server, 2) ?>>Apache + CGI/FastCGI<?php echo $s2 ?></option>
 						<option value="6"<?php _selected($http_server, 6) ?>>Apache + suPHP</option>
-						<option value="3"<?php _selected($http_server, 3) ?>>Nginx + CGI/FastCGI<?php echo $s3 ?></option>
-						<option value="4"<?php _selected($http_server, 4) ?>>Litespeed + LSAPI<?php echo $s4 ?></option>
+						<option value="3"<?php _selected($http_server, 3) ?>>Nginx<?php echo $s3 ?></option>
+						<option value="4"<?php _selected($http_server, 4) ?>>Litespeed<?php echo $s4 ?></option>
 						<option value="5"<?php _selected($http_server, 5) ?>><?php echo $lang['other'] . ' + CGI/FastCGI' . $s5 ?></option>
 						<option value="7"<?php _selected($http_server, 7) ?>><?php echo $lang['other'] . ' + HHVM' . $s7 ?></option>
 					</select>&nbsp;&nbsp;&nbsp;<a class="links" href="javascript:popup('?nfw_act=99',640,500,0);" style="border-bottom:dotted 1px #FDCD25;"><?php echo $lang['phpinfo'] ?></a>
@@ -1299,6 +1299,9 @@ function nfw_activation_test() {
 
 			$message.= '4) '. $lang['hi23'] . "\n\n";
 
+			$message.= $lang['hi24_2'] . "\n";
+			$message.= 'http://blog.nintechnet.com/introduction-to-ninjafirewall-filtering-engine/ ' . "\n\n";
+
 			$message.= $lang['hi24'] . "\n";
 			$message.= 'http://blog.nintechnet.com/testing-ninjafirewall-without-blocking-your-visitors/ ' . "\n\n";
 
@@ -1567,19 +1570,19 @@ function fw_conf_rules() {
 
 	// Try to get the document root :
 	if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 1;
+		$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', $_SERVER['DOCUMENT_ROOT'] );
+		$nfw_rules[NFW_DOC_ROOT]['ena'] = 1;
 	} elseif ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 1;
+		$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', getenv( 'DOCUMENT_ROOT' ) );
+		$nfw_rules[NFW_DOC_ROOT]['ena'] = 1;
 	} else {
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 0;
+		$nfw_rules[NFW_DOC_ROOT]['ena'] = 0;
 	}
 
-	$nfw_rules[NFW_WRAPPERS]['on'] 	= 1;
-	$nfw_rules[NFW_NULL_BYTE]['on'] 	= 1;
-	$nfw_rules[NFW_ASCII_CTRL]['on'] = 1;
-	$nfw_rules[NFW_LOOPBACK]['on'] 	= 0;
+	$nfw_rules[NFW_WRAPPERS]['ena'] 	= 1;
+	$nfw_rules[NFW_NULL_BYTE]['ena'] 	= 1;
+	$nfw_rules[NFW_ASCII_CTRL]['ena'] = 1;
+	$nfw_rules[NFW_LOOPBACK]['ena'] 	= 0;
 
 	return $nfw_rules;
 

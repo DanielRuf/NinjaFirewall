@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-10-28 19:24:52                                       |
+ | REVISION: 2016-01-30 01:43:26                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -299,7 +299,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 	if ( NFW_EDN == 1 ) {
 		// Pro Edn only, as this is managed by the
 		// Access Control page in the Pro+ Edn. :
-		if ( empty( $nfw_rules[NFW_SCAN_BOTS]['on']) ) {
+		if ( empty( $nfw_rules[NFW_SCAN_BOTS]['ena']) ) {
 			$block_bots = 0;
 		} else {
 			$block_bots = 1;
@@ -475,10 +475,10 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 	<br />
 
 	<?php
-	if ( empty( $nfw_rules[NFW_WRAPPERS]['on']) ) {
-		$nfw_rules[NFW_WRAPPERS]['on'] = 0;
+	if ( empty( $nfw_rules[NFW_WRAPPERS]['ena']) ) {
+		$nfw_rules[NFW_WRAPPERS]['ena'] = 0;
 	} else {
-		$nfw_rules[NFW_WRAPPERS]['on'] = 1;
+		$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
 	}
 	if ( empty( $nfw_options['php_errors']) ) {
 		$nfw_options['php_errors'] = 0;
@@ -506,8 +506,8 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left"><?php echo $lang['wrapper'] ?></td>
 				<td width="45%" align="left">
-					<p><label><input type="radio" name="php_wrappers" value="1"<?php checked( $nfw_rules[NFW_WRAPPERS]['on'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
-					<p><label><input type="radio" name="php_wrappers" value="0"<?php checked( $nfw_rules[NFW_WRAPPERS]['on'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
+					<p><label><input type="radio" name="php_wrappers" value="1"<?php checked( $nfw_rules[NFW_WRAPPERS]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
+					<p><label><input type="radio" name="php_wrappers" value="0"<?php checked( $nfw_rules[NFW_WRAPPERS]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
 				</td>
 			</tr>
 			<tr>
@@ -547,7 +547,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 	<?php
 	// If the document root is < 5 characters, grey out that option:
 	if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) < 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 0;
+		$nfw_rules[NFW_DOC_ROOT]['ena'] = 0;
 		$greyed = 'style="color:#bbbbbb"';
 		$disabled = 'disabled ';
 		$disabled_msg = '<br /><span class="description">&nbsp;' . $lang['disabled_msg'] . '</span>';
@@ -557,25 +557,25 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 		$disabled_msg = '';
 	}
 
-	if ( empty( $nfw_rules[NFW_DOC_ROOT]['on']) ) {
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 0;
+	if ( empty( $nfw_rules[NFW_DOC_ROOT]['ena']) ) {
+		$nfw_rules[NFW_DOC_ROOT]['ena'] = 0;
 	} else {
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 1;
+		$nfw_rules[NFW_DOC_ROOT]['ena'] = 1;
 	}
-	if ( empty( $nfw_rules[NFW_NULL_BYTE]['on']) ) {
-		$nfw_rules[NFW_NULL_BYTE]['on'] = 0;
+	if ( empty( $nfw_rules[NFW_NULL_BYTE]['ena']) ) {
+		$nfw_rules[NFW_NULL_BYTE]['ena'] = 0;
 	} else {
-		$nfw_rules[NFW_NULL_BYTE]['on'] = 1;
+		$nfw_rules[NFW_NULL_BYTE]['ena'] = 1;
 	}
-	if ( empty( $nfw_rules[NFW_ASCII_CTRL]['on']) ) {
-		$nfw_rules[NFW_ASCII_CTRL]['on'] = 0;
+	if ( empty( $nfw_rules[NFW_ASCII_CTRL]['ena']) ) {
+		$nfw_rules[NFW_ASCII_CTRL]['ena'] = 0;
 	} else {
-		$nfw_rules[NFW_ASCII_CTRL]['on'] = 1;
+		$nfw_rules[NFW_ASCII_CTRL]['ena'] = 1;
 	}
-	if ( empty( $nfw_rules[NFW_LOOPBACK]['on']) ) {
-		$nfw_rules[NFW_LOOPBACK]['on'] = 0;
+	if ( empty( $nfw_rules[NFW_LOOPBACK]['ena']) ) {
+		$nfw_rules[NFW_LOOPBACK]['ena'] = 0;
 	} else {
-		$nfw_rules[NFW_LOOPBACK]['on'] = 1;
+		$nfw_rules[NFW_LOOPBACK]['ena'] = 1;
 	}
 	if ( empty( $nfw_options['no_host_ip']) ) {
 		$nfw_options['no_host_ip'] = 0;
@@ -593,29 +593,29 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left"><?php echo $lang['block_docroot'] ?></td>
 				<td width="45%" align="left">
-					<p><label><input type="radio" name="block_doc_root" value="1"<?php checked( $nfw_rules[NFW_DOC_ROOT]['on'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
-					<p><label><input type="radio" name="block_doc_root" value="0"<?php checked( $nfw_rules[NFW_DOC_ROOT]['on'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
+					<p><label><input type="radio" name="block_doc_root" value="1"<?php checked( $nfw_rules[NFW_DOC_ROOT]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
+					<p><label><input type="radio" name="block_doc_root" value="0"<?php checked( $nfw_rules[NFW_DOC_ROOT]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
 				</td>
 			</tr>
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['block_nullbye'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="block_null_byte" value="1"<?php checked( $nfw_rules[NFW_NULL_BYTE]['on'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
-					<p><label><input type="radio" name="block_null_byte" value="0"<?php checked( $nfw_rules[NFW_NULL_BYTE]['on'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
+					<p><label><input type="radio" name="block_null_byte" value="1"<?php checked( $nfw_rules[NFW_NULL_BYTE]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
+					<p><label><input type="radio" name="block_null_byte" value="0"<?php checked( $nfw_rules[NFW_NULL_BYTE]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
 				</td>
 			</tr>
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['block_ascii'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="block_ctrl_chars" value="1"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['on'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
-					<p><label><input type="radio" name="block_ctrl_chars" value="0"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['on'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
+					<p><label><input type="radio" name="block_ctrl_chars" value="1"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
+					<p><label><input type="radio" name="block_ctrl_chars" value="0"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
 				</td>
 			</tr>
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['block_lo'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="no_localhost_ip" value="1"<?php checked( $nfw_rules[NFW_LOOPBACK]['on'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] ?></label></p>
-					<p><label><input type="radio" name="no_localhost_ip" value="0"<?php checked( $nfw_rules[NFW_LOOPBACK]['on'], 0 ) ?>>&nbsp;<?php echo $lang['no'] . $lang['default'] ?></label></p>
+					<p><label><input type="radio" name="no_localhost_ip" value="1"<?php checked( $nfw_rules[NFW_LOOPBACK]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] ?></label></p>
+					<p><label><input type="radio" name="no_localhost_ip" value="0"<?php checked( $nfw_rules[NFW_LOOPBACK]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] . $lang['default'] ?></label></p>
 				</td>
 			</tr>
 			<tr>
@@ -689,7 +689,7 @@ function restore_firewall_policies() {
 	$nfw_options['ua_accept'] = 0;
 	$nfw_options['ua_accept_lang'] = 0;
 	if ( NFW_EDN == 1 ) {
-		$nfw_rules[NFW_SCAN_BOTS]['on'] = 1;
+		$nfw_rules[NFW_SCAN_BOTS]['ena'] = 1;
 	}
 	$nfw_options['referer_scan'] = 0;
 	if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
@@ -697,25 +697,25 @@ function restore_firewall_policies() {
 	}
 	$nfw_options['referer_sanitise'] = 1;
 	$nfw_options['referer_post'] = 0;
-	$nfw_rules[NFW_WRAPPERS]['on'] = 1;
+	$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
 	$nfw_options['php_errors'] = 1;
 	$nfw_options['php_self'] = 1;
 	$nfw_options['php_path_t'] = 1;
 	$nfw_options['php_path_i'] = 1;
 
 	if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
-		$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
+		$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', $_SERVER['DOCUMENT_ROOT'] );
+		$nfw_rules[NFW_DOC_ROOT]['ena']	= 1;
 	} elseif ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
-		$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
-		$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
+		$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', getenv( 'DOCUMENT_ROOT' ) );
+		$nfw_rules[NFW_DOC_ROOT]['ena']	= 1;
 	} else {
-		$nfw_rules[NFW_DOC_ROOT]['on']	= 0;
+		$nfw_rules[NFW_DOC_ROOT]['ena']	= 0;
 	}
 
-	$nfw_rules[NFW_NULL_BYTE]['on'] = 1;
-	$nfw_rules[NFW_ASCII_CTRL]['on'] = 1;
-	$nfw_rules[NFW_LOOPBACK]['on'] = 0;
+	$nfw_rules[NFW_NULL_BYTE]['ena'] = 1;
+	$nfw_rules[NFW_ASCII_CTRL]['ena'] = 1;
+	$nfw_rules[NFW_LOOPBACK]['ena'] = 0;
 	$nfw_options['no_host_ip'] = 0;
 	$nfw_options['request_method'] = 0;
 
@@ -927,10 +927,10 @@ function save_firewall_policies() {
 	if ( NFW_EDN == 1 ) {
 		// Block suspicious bots/scanners ?
 		if ( empty( $_POST['block_bots']) ) {
-			$nfw_rules[NFW_SCAN_BOTS]['on'] = 0;
+			$nfw_rules[NFW_SCAN_BOTS]['ena'] = 0;
 		} else {
 			// Default: yes
-			$nfw_rules[NFW_SCAN_BOTS]['on'] = 1;
+			$nfw_rules[NFW_SCAN_BOTS]['ena'] = 1;
 		}
 	}
 
@@ -1005,54 +1005,54 @@ function save_firewall_policies() {
 
 	// Block the DOCUMENT_ROOT server variable in GET/POST requests (#ID 510) :
 	if ( empty( $_POST['block_doc_root']) ) {
-		$nfw_rules[NFW_DOC_ROOT]['on'] = 0;
+		$nfw_rules[NFW_DOC_ROOT]['ena'] = 0;
 	} else {
 		// Default: yes
 		// We need to ensure that the document root is at least
 		// 5 characters, otherwise this option could block a lot
 		// of legitimate requests:
 		if ( strlen( $_SERVER['DOCUMENT_ROOT'] ) > 5 ) {
-			$nfw_rules[NFW_DOC_ROOT]['what'] = $_SERVER['DOCUMENT_ROOT'];
-			$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
+			$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', $_SERVER['DOCUMENT_ROOT'] );
+			$nfw_rules[NFW_DOC_ROOT]['ena']	= 1;
 		} elseif ( strlen( getenv( 'DOCUMENT_ROOT' ) ) > 5 ) {
-			$nfw_rules[NFW_DOC_ROOT]['what'] = getenv( 'DOCUMENT_ROOT' );
-			$nfw_rules[NFW_DOC_ROOT]['on']	= 1;
+			$nfw_rules[NFW_DOC_ROOT]['cha'][1]['wha'] = str_replace( '/', '/[./]*', getenv( 'DOCUMENT_ROOT' ) );
+			$nfw_rules[NFW_DOC_ROOT]['ena']	= 1;
 		// we must disable that option:
 		} else {
-			$nfw_rules[NFW_DOC_ROOT]['on']	= 0;
+			$nfw_rules[NFW_DOC_ROOT]['ena']	= 0;
 		}
 	}
 
 	// Block NULL byte 0x00 (#ID 2) :
 	if ( empty( $_POST['block_null_byte']) ) {
-		$nfw_rules[NFW_NULL_BYTE]['on'] = 0;
+		$nfw_rules[NFW_NULL_BYTE]['ena'] = 0;
 	} else {
 		// Default: yes
-		$nfw_rules[NFW_NULL_BYTE]['on'] = 1;
+		$nfw_rules[NFW_NULL_BYTE]['ena'] = 1;
 	}
 
 	// Block ASCII control characters 1 to 8 and 14 to 31 (#ID 500) :
 	if ( empty( $_POST['block_ctrl_chars']) ) {
-		$nfw_rules[NFW_ASCII_CTRL]['on'] = 0;
+		$nfw_rules[NFW_ASCII_CTRL]['ena'] = 0;
 	} else {
 		// Default: yes
-		$nfw_rules[NFW_ASCII_CTRL]['on'] = 1;
+		$nfw_rules[NFW_ASCII_CTRL]['ena'] = 1;
 	}
 
 	// Block localhost IP in GET/POST requests (#ID 540) :
 	if ( empty( $_POST['no_localhost_ip']) ) {
 		// Default: no
-		$nfw_rules[NFW_LOOPBACK]['on'] = 0;
+		$nfw_rules[NFW_LOOPBACK]['ena'] = 0;
 	} else {
-		$nfw_rules[NFW_LOOPBACK]['on'] = 1;
+		$nfw_rules[NFW_LOOPBACK]['ena'] = 1;
 	}
 
 	// Block PHP built-in wrappers (#ID 520) :
 	if ( empty( $_POST['php_wrappers']) ) {
-		$nfw_rules[NFW_WRAPPERS]['on'] = 0;
+		$nfw_rules[NFW_WRAPPERS]['ena'] = 0;
 	} else {
 		// Default: yes
-		$nfw_rules[NFW_WRAPPERS]['on'] = 1;
+		$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
 	}
 
 	// Save changes to 'conf/admin.php' :

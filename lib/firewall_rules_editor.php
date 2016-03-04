@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-07-31 15:56:14                                       |
+ | REVISION: 2016-01-30 01:53:14                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -37,7 +37,7 @@ if (! empty($_POST) ) {
 		} else if (! isset( $nfw_rules[$_POST['sel_e_r']] ) ) {
 			$err_msg = $lang['no_exist'];
 		} else {
-			$nfw_rules[$_POST['sel_e_r']]['on'] = 0;
+			$nfw_rules[$_POST['sel_e_r']]['ena'] = 0;
 			$is_update = 1;
 			$ok_msg = sprintf($lang['ok_disabled'], htmlspecialchars($_POST['sel_e_r']));
 		}
@@ -49,7 +49,7 @@ if (! empty($_POST) ) {
 		} else if (! isset( $nfw_rules[$_POST['sel_d_r']] ) ) {
 			$err_msg = $lang['no_exist'];
 		} else {
-			$nfw_rules[$_POST['sel_d_r']]['on'] = 1;
+			$nfw_rules[$_POST['sel_d_r']]['ena'] = 1;
 			$is_update = 1;
 			$ok_msg = sprintf($lang['ok_enabled'], htmlspecialchars($_POST['sel_d_r']));
 		}
@@ -66,7 +66,7 @@ if (! empty($_POST) ) {
 
 $disabled_rules = $enabled_rules = array();
 foreach ( $nfw_rules as $rule_key => $rule_value ) {
-	if (! empty( $nfw_rules[$rule_key]['on'] ) ) {
+	if (! empty( $nfw_rules[$rule_key]['ena'] ) ) {
 		$enabled_rules[] =  $rule_key;
 	} else {
 		$disabled_rules[] = $rule_key;
@@ -97,12 +97,14 @@ foreach ( $nfw_rules as $rule_key => $rule_value ) {
 									$desc = ' Cross-site scripting';
 								} elseif ( $key < 200 ) {
 									$desc = ' Code injection';
-								} elseif ( $key < 250 ) {
+								} elseif (  $key > 249 && $key < 300 ) {
 									$desc = ' SQL injection';
 								} elseif ( $key < 350 ) {
 									$desc = ' Various vulnerability';
 								} elseif ( $key < 400 ) {
 									$desc = ' Backdoor/shell';
+								} elseif ( $key > 999 && $key < 1300 ) {
+									$desc = ' Application specific';
 								}
 								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
 								$count++;
@@ -130,12 +132,14 @@ foreach ( $nfw_rules as $rule_key => $rule_value ) {
 									$desc = ' Cross-site scripting';
 								} elseif ( $key < 200 ) {
 									$desc = ' Code injection';
-								} elseif ( $key < 250 ) {
+								} elseif (  $key > 249 && $key < 300 ) {
 									$desc = ' SQL injection';
 								} elseif ( $key < 350 ) {
 									$desc = ' Various vulnerability';
 								} elseif ( $key < 400 ) {
 									$desc = ' Backdoor/shell';
+								} elseif ( $key > 999 && $key < 1300 ) {
+									$desc = ' Application specific';
 								}
 								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
 								$count++;
