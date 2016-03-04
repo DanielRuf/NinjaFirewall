@@ -1,6 +1,9 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.0.1 =
+* Updated security rules.
+
 = 3.0 =
 * This is a major update: NinjaFirewall has a brand new, powerful
   and awesome filtering engine. Please see our blog for a complete
