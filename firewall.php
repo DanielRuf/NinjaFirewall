@@ -134,7 +134,7 @@ if (! empty($nfw_['nfw_options']['ban_ip']) ) {
 		$nfw_['stat'] = stat($nfw_['ipbk']);
 		if ( time() - $nfw_['stat']['mtime'] > $nfw_['nfw_options']['ban_time'] * 60 ) {
 			// Too old, clear the banned IP and let it go :
-			unlink($nfw_['ipbk']);
+			@unlink($nfw_['ipbk']);
 		} else {
 			// Keep it blocked :
 			nfw_block(0);

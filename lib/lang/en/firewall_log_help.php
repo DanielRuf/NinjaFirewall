@@ -12,7 +12,7 @@ $nfw_help = <<<'EOT'
 <p><img src="static/bullet_off.gif">&nbsp;<strong>RULE :</strong> reference of the NinjaFirewall built-in security rule that triggered the action. A hyphen (<code>-</code>) instead of a number means it was a rule from your own Firewall Policies or Access Control page.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>IP :</strong> the blocked user remote address.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>REQUEST :</strong> the HTTP request including offending variables & values as well as the reason the action was logged.</p>
-
+<p>The log can also be exported as a TSV (tab-separated values) text file.</p>
 <hr class="dotted" size="1">
 
 <h3><strong>Log Options</strong></h3>

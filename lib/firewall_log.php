@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-02-19 01:44:08                                       |
+ | REVISION: 2016-03-11 14:16:07                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -24,9 +24,23 @@ if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 // Load current language file :
 require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
+$log_dir = './nfwlog/';
+$monthly_log = 'firewall_' . date( 'Y-m' ) . '.php';
+
+// Export log?
+if ( isset($_GET['nfw_export']) && ! empty($_GET['nfw_sort']) ) {
+	nfw_export_log( $log_dir );
+}
+
 html_header();
 
-$log_dir = './nfwlog/';
+$err_msg = '';
+
+// Delete log ?
+if ( isset($_GET['nfw_delete']) && isset($_GET['nfw_sort']) ) {
+	nfw_delete_log($log_dir, $monthly_log);
+}
+
 // Find all available logs :
 $avail_logs = array();
 if ( is_dir( $log_dir ) ) {
@@ -44,7 +58,7 @@ krsort($avail_logs);
 if (! empty($_GET['nfw_sort']) && isset( $avail_logs[$_GET['nfw_sort']] ) ) {
 	$selected_log = $_GET['nfw_sort'];
 } else {
-	$selected_log ='firewall_' . date( 'Y-m' ) . '.php';
+	$selected_log = $monthly_log;
 	// If there is no current log, we try to display the one
 	// from the previous month (if any) :
 	if (! file_exists( $log_dir . $selected_log ) && ! empty($avail_logs) ) {
@@ -71,54 +85,9 @@ if ($err_msg) {
 	echo '<br /><div class="error"><p>' . $err_msg .'</p></div>';
 }
 
+// Save options ?
 if ( isset($_POST['save']) ) {
-	$err_msg = '';
-	// Delete log ?
-	if ( $_POST['save'] == $lang['del_log'] ) {
-		// Delete the current month log :
-		$cur_log = $log_dir . 'firewall_' . date('Y-m') . '.php';
-		if ( file_exists( $cur_log ) ) {
-			if (! $fh = fopen( $cur_log, 'w') ) {
-				$err_msg = $lang['cannot_delete'];
-			} else {
-				fwrite( $fh,'[' . time() . '] [0] [' . $_SERVER['SERVER_NAME'] .
-					'] [#0000000] [0] [6] ' . '[' . $_SERVER['REMOTE_ADDR'] . '] ' .
-					'[200 OK] ' . '[' . $_SERVER['REQUEST_METHOD'] . '] ' .
-					'[' . $_SERVER['SCRIPT_NAME'] . '] ' . '[Log deleted by admin] ' .
-					'[' . $nfw_options['admin_name'] . ': ' . $cur_log . ']' . "\n"
-				);
-				fclose($fh);
-			}
-		}
-
-	// Save options ?
-	} elseif ( $_POST['save'] == $lang['save_conf'] ) {
-		// Update options :
-		if (empty( $_POST['logging']) ) {
-			$nfw_options['logging'] = 0;
-		} else {
-			$nfw_options['logging'] = 1;
-		}
-		if ( empty($_POST['log_rotate']) ) {
-			$nfw_options['log_rotate'] = 0;
-			$nfw_options['log_maxsize'] = 2 * 1048576;
-		} else {
-			$nfw_options['log_rotate'] = 1;
-			if ( empty($_POST['log_maxsize']) || ! preg_match('/^([1-9]?[0-9])$/', $_POST['log_maxsize']) ) {
-				$nfw_options['log_maxsize'] = 2 * 1048576;
-			} else {
-				$nfw_options['log_maxsize'] = $_POST['log_maxsize'] * 1048576;
-			}
-		}
-		$err_msg = save_firewall_log();
-	} else {
-		$err_msg = 'Unknown request';
-	}
-	if ($err_msg) {
-		echo '<br /><div class="error"><p>' . $err_msg .'</p></div>';
-	} else {
-		echo '<br /><div class="success"><p>'. $lang['saved_conf'] . '</p></div>';
-	}
+	nfw_save_log_options();
 }
 ?>
 <script>
@@ -129,13 +98,6 @@ function is_number(id) {
 		alert("<?php echo $lang['js_digit'] ?>");
 		e.value = e.value.substring(0, e.value.length-1);
 	}
-}
-function del_log() {
-   if (confirm("<?php echo $lang['js_del_log'] ?>")){
-      return true;
-   }else{
-		return false;
-   }
 }
 </script>
 <?php
@@ -188,11 +150,10 @@ $severity = array( 0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 
 while (! feof( $fh ) ) {
 	$line = fgets( $fh );
 	if ( $skip <= 0 ) {
-		// We must use a funky regex to parse the log because NinjaFirewall v1.x
-		// and v2.x logs do not have the same format :/
-		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})(?:-|\]\s+\[)(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+)\]$/', $line, $match ) ) {
+		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})\]\s+\[(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+)\]$/', $line, $match ) ) {
 			if ( empty( $match[4]) ) { $match[4] = '-'; }
-			$res = date( 'd/M/y H:i:s', $match[1] ) . '  ' . $match[3] . '  ' . str_pad( $levels[$match[5]], 8 , ' ', STR_PAD_RIGHT) .'  ' .
+			$res = date( 'd/M/y H:i:s', $match[1] ) . '  ' . $match[3] . '  ' .
+			str_pad( $levels[$match[5]], 8 , ' ', STR_PAD_RIGHT) .'  ' .
 			str_pad( $match[4], 4 , ' ', STR_PAD_LEFT) . '  ' . str_pad( $match[6], 15, ' ', STR_PAD_RIGHT) . '  ' .
 			$match[7] . ' ' . $match[8] . ' - ' .	$match[9] . ' - [' . $match[10] . '] - ' . $match[2];
 			echo 'myArray[' . $i . '] = "' . rawurlencode($res) . '";' . "\n";
@@ -236,7 +197,7 @@ function filter_log() {
 		return true;
 	}
 	// Put it all together :
-	var nf_reg = new RegExp('^[^\\s]+\\s+[^\\s]+\\s+[^\\s]+\\s+' + '(' + nf_tmp.slice(0, - 1) + ')' + '\\s');
+	var nf_reg = new RegExp('^\\S+\\s+\\S+\\s+\\S+\\s+' + '(' + nf_tmp.slice(0, - 1) + ')' + '\\s');
 	var nb = 0;
 	var decodearray;
 	for ( i = 0; i < myArray.length; i++ ) {
@@ -269,7 +230,7 @@ foreach ($avail_logs as $log_name => $tmp) {
 	echo '>' . str_replace('.php', '', $log_name) . ' (' . number_format($log_stat['size']) . ' bytes)</option>';
 }
 ?>
-	</select></center>
+	</select>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" value="<?php echo $lang['js_exp_log'] ?>" onclick='window.location="?mid=<?php echo $GLOBALS['mid'] ?>&token=<?php echo $_REQUEST['token'] ?>&nfw_export=1&nfw_sort=<?php echo $selected_log ?>"'>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" value="<?php echo $lang['js_del_log'] ?>" onclick='if (confirm("<?php echo $lang['js_del_log'] ?> [<?php echo $selected_log ?>]?")){window.location="?mid=<?php echo $GLOBALS['mid'] ?>&token=<?php echo $_REQUEST['token'] ?>&nfw_delete=1&nfw_sort=<?php echo $selected_log ?>"}'></center>
 	<br />
 	<form name="frmlog">
 		<table width="100%" class="smallblack" border="0" cellpadding="0" cellspacing="0">
@@ -338,7 +299,6 @@ function firewall_log_options($is_log) {
 			<td width="45%" align="left">
 				<p><label><input type="radio" name="logging" value="1"<?php checked($nfw_options['logging'], 1) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
 				<p><label><input type="radio" name="logging" value="0"<?php checked($nfw_options['logging'], 0) ?>>&nbsp;<?php echo $lang['no'] ?></label>&nbsp;<?php echo $img ?></p>
-
 			</td>
 		</tr>
 		<tr>
@@ -349,17 +309,9 @@ function firewall_log_options($is_log) {
 			</td>
 		</tr>
 	</table>
-
 </fieldset>
 	<br />
-	<center>
-	<input type="submit" class="button" name="save" value="<?php echo $lang['save_conf'] ?>">
-	<?php
-	if ( $is_log ) {
-		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" value="'. $lang['del_log'] . '" name="save" onclick="return del_log();" title="Delete the current log" />';
-	}
-	?>
-	</center>
+	<center><input type="submit" class="button" name="save" value="<?php echo $lang['save_conf'] ?>"></center>
 </form>
 <br />
 
@@ -368,10 +320,40 @@ function firewall_log_options($is_log) {
 
 /* ------------------------------------------------------------------ */
 
-function save_firewall_log() {
+function nfw_save_log_options() {
 
-	global $lang;
-	global $nfw_options;
+	global $nfw_options, $lang;
+
+	// Update options :
+	if (empty( $_POST['logging']) ) {
+		$nfw_options['logging'] = 0;
+	} else {
+		$nfw_options['logging'] = 1;
+	}
+	if ( empty($_POST['log_rotate']) ) {
+		$nfw_options['log_rotate'] = 0;
+		$nfw_options['log_maxsize'] = 2 * 1048576;
+	} else {
+		$nfw_options['log_rotate'] = 1;
+		if ( empty($_POST['log_maxsize']) || ! preg_match('/^([1-9]?[0-9])$/', $_POST['log_maxsize']) ) {
+			$nfw_options['log_maxsize'] = 2 * 1048576;
+		} else {
+			$nfw_options['log_maxsize'] = $_POST['log_maxsize'] * 1048576;
+		}
+	}
+	$err_msg = nfw_write_conf();
+	if ($err_msg) {
+		echo '<br /><div class="error"><p>' . $err_msg .'</p></div>';
+	} else {
+		echo '<br /><div class="success"><p>'. $lang['saved_conf'] . '</p></div>';
+	}
+}
+
+/* ------------------------------------------------------------------ */
+
+function nfw_write_conf() {
+
+	global $lang, $nfw_options;
 
 	// Config file must be writable :
 	if (! is_writable('./conf/options.php') ) {
@@ -386,6 +368,80 @@ function save_firewall_log() {
 	fclose($fh);
 
 	return;
+}
+
+/* ------------------------------------------------------------------ */
+
+function nfw_delete_log($log_dir, $monthly_log) {
+
+	global $nfw_options, $lang;
+	$err_msg = '';
+
+	$log = trim($_GET['nfw_sort']);
+	if (! preg_match( '/^(firewall_\d{4}-\d\d(?:\.\d+)?\.)php$/', $log ) ) {
+		$err_msg = $lang['cannot_delete'] . ' (#1)';
+	}
+	if (! file_exists( $log_dir . $log) ) {
+		$err_msg = $lang['cannot_delete'] . ' (#2)';
+	}
+	if (! $err_msg ) {
+		// Delete the requested log:
+		@unlink($log_dir . $log);
+		// Write the event to the current log:
+		if ( file_exists($log_dir . $monthly_log) ) {
+			$first_line = '';
+		} else {
+			$first_line = "<?php exit; ?>\n";
+		}
+		$fh = fopen($log_dir . $monthly_log, 'a');
+		fwrite( $fh, $first_line . '[' . time() . '] [0] [' . $_SERVER['SERVER_NAME'] .
+			'] [#0000000] [0] [6] ' . '[' . $_SERVER['REMOTE_ADDR'] . '] ' .
+			'[200 OK] ' . '[' . $_SERVER['REQUEST_METHOD'] . '] ' .
+			'[' . $_SERVER['SCRIPT_NAME'] . '] ' . '[Log deleted by admin] ' .
+			'[' . $nfw_options['admin_name'] . ': ' . $log . ']' . "\n"
+		);
+		fclose($fh);
+	}
+	// Clear log name:
+	unset($_GET['nfw_sort']);
+	if ($err_msg) {
+		echo '<br /><div class="error"><p>' . $err_msg .'</p></div>';
+	} else {
+		echo '<br /><div class="success"><p>'. $lang['log_deleted'] . '</p></div>';
+	}
+}
+
+/* ------------------------------------------------------------------ */
+
+function nfw_export_log( $log_dir ) {
+
+	$log = trim($_GET['nfw_sort']);
+	if (! preg_match( '/^(firewall_\d{4}-\d\d(?:\.\d+)?\.)php$/', $log, $match ) ) {
+		die('Unknown request (#1)');
+	}
+	$name = $match[1];
+	if (! file_exists( $log_dir . $log) ) {
+		die('Unknown request (#2)');
+	}
+	$data = file( $log_dir . $log);
+	$res = "Date\tIncident\tLevel\tRule\tIP\tRequest\tEvent\tHost\n";
+	$levels = array( '', 'medium', 'high', 'critical', 'error', 'upload', 'info', 'DEBUG_ON' );
+	$severity = array( 0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
+	foreach( $data as $line ) {
+		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})(?:-|\]\s+\[)(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+)\]$/', $line, $match ) ) {
+			if ( empty( $match[4]) ) { $match[4] = '-'; }
+			$res .= date( 'd/M/y H:i:s', $match[1] ) . "\t" . $match[3] . "\t" .
+			$levels[$match[5]] . "\t" . $match[4] . "\t" . $match[6] . "\t" .
+			$match[7] . ' ' . $match[8] . "\t" .	$match[9] .
+			' - [' . $match[10] . "]\t" . $match[2] . "\n";
+		}
+	}
+	header('Content-Type: text/tab-separated-values');
+	header('Content-Length: '. strlen( $res ) );
+	header('Content-Disposition: attachment; filename="' . $name . 'tsv"');
+	echo $res;
+	exit;
+
 }
 
 /* ------------------------------------------------------------------ */

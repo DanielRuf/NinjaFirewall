@@ -12,7 +12,7 @@ $nfw_help = <<<'EOT'
 <p><img src="static/bullet_off.gif">&nbsp;<strong>RULE :</strong> le numéro de référence de la règle de sécurité qui a été utilisée pour bloquer la requête HTTP. Un trait d'union (<code>-</code>) à la place d'un numéro signifie que la règle provient soit de votre configuration personnelle "Politique" ou "Contrôle d'Accès" du menu "Pare-Feu".</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>IP :</strong> l'adresse IP de l'utilisateur bloqué.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>REQUEST :</strong> la requête HTTP avec ses variables et valeurs, ainsi que la raison qui a déclenché l'incident.</p>
-
+<p>Le journal peut également être exporté dans un fichier au format TSV (valeurs séparées par des tabulations).</p>
 <hr class="dotted" size="1">
 
 <h3><strong>Options du journal</strong></h3>

@@ -1,5 +1,5 @@
 <?php
-/* 2015-03-14 21:26:36 */
+/* 2016-03-10 00:28:42 */
 $title = 'Firewall > Access Control';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -69,6 +69,8 @@ You can filter and block traffic coming from specific countries.
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Retrieve ISO 3166 country code from:</strong> this is the two-letter country code that is used to define a country (e.g., US, UK, FR, DE etc), based on the visitors IP. NinjaFirewall can either retrieve it from its database, or from a predefined PHP variable added by your HTTP server (e.g., <code>GEOIP_COUNTRY_CODE</code>).</p>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Available/Blocked countries:</strong> you can add/remove any country from the two listboxes. For more information about some specific ISO 3166 codes (A1, A2, AP, EU etc), you may want to consult the <a href="http://dev.maxmind.com/geoip/legacy/codes/iso3166/" class="links" style="border-bottom:dotted 1px #FDCD25;" target="_blank">MaxMind GeoIP online help</a>. By default, no country is blocked.</p>
+
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Geolocation should apply to the whole site or specific URLs only:</strong> whether geolocation should apply to the whole site or to specific URLs only (e.g., <code>/xmlrpc.php</code> etc). Leave all fields empty if you want it to apply to the whole site.</p>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Add <code>NINJA_COUNTRY_CODE</code> to PHP headers:</strong> after retrieving the two-letter country code, NinjaFirewall can add it to the PHP headers in the <code>$_SERVER["NINJA_COUNTRY_CODE"]</code> variable. If you have an application, theme or a plugin that needs to know your visitors location, simply use that variable.</p>
 

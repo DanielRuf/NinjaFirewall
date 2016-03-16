@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-10-10 18:11:20                                       |
+ | REVISION: 2016-03-11 15:48:27                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -149,6 +149,36 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 
 					<td align="center" style="vertical-align:top;"><?php echo $lang['geoip_blocked'] ?> :<br />
 						<select multiple="multiple" size="8" style="width:230px;height:200px;font-family:monospace;"></select>
+					</td>
+				</tr>
+			</table>
+
+			<br />
+			<div width="100%" class="dotted"></div>
+			<br />
+
+			<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
+				<tr>
+					<td width="25%" align="left">
+						<?php echo $lang['geourlallow'] ?>
+						<br />
+						<br />
+						<i><?php echo $lang['geourlblank'] ?></i>
+					</td>
+					<td width="35%" align="center">
+						<input type="text" class="input" disabled="disabled" style="width:200px;" value="" placeholder="<?php echo $lang['eg'] ?> /script.php" />
+						<br />
+						<i><?php echo $lang['url_note'] ?></i>
+						<br /><br />
+						<input type="button" style="width:150px" class="button" value="<?php echo $lang['block'] ?> &#187;" disabled="disabled" />
+						<br /><br />
+						<input type="button" style="width:150px" class="button" value="&#171; <?php echo $lang['unblock'] ?>" disabled="disabled" />
+					</td>
+					<td width="40%" align="center">
+						<?php echo $lang['url_blocked'] ?> :
+						<br />
+						<select multiple="multiple" size="8" style="width:230px;height:200px;font-family:monospace;"></select>
+						<br />&nbsp;
 					</td>
 				</tr>
 			</table>

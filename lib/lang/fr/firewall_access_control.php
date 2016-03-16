@@ -1,5 +1,5 @@
 <?php
-/* 2015-08-13 20:07:43 */
+/* 2016-03-09 21:46:31 */
 $lang = array (
 	'error'				=> 'Erreur',
 	'yes'					=> 'Oui',
@@ -59,6 +59,8 @@ $lang = array (
 								'pensez à désactiver cette option.',
 	'geoip_var_err'	=>	'Votre serveur ne semble pas utiliser la variable %s.',
 	'geoip_db_err'		=>	'La base de données GeoIP est introuvable&nbsp;!',
+	'geourlallow'		=>	'Appliquer la Géolocalisation à tout le site ou à certains scripts uniquement ?',
+	'geourlblank'		=>	'(laissez ces champs vides pour l\'appliquer à tout le site)',
 
 	'block'				=>	'Bloquer',
 	'unblock'			=>	'Supprimer',

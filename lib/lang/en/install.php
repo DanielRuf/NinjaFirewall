@@ -1,5 +1,5 @@
 <?php
-/* 2016-02-07 00:32:10 */
+/* 2016-03-10 00:56:05 */
 $lang = array (
 
 	'next'					=> 'Next',
@@ -87,6 +87,7 @@ $lang = array (
 	'js_phpini'				=>	'Please select the PHP initialization file supported by your server.',
 	'docroot'				=>	'Enter the directory to be protected by NinjaFirewall.<br />By default, it is <code>%s</code>',
 	'httpsapi'				=>	'Select your HTTP server and PHP SAPI',
+	'cgifpm'					=>	'CGI or PHP-FPM',
 	'other'					=>	'Other webserver',
 	'phpinfo'				=>	'view PHPINFO',
 	'phpini'					=>	'Select the PHP initialization file supported by your server',

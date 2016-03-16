@@ -1,5 +1,5 @@
 <?php
-/* 2016-02-07 00:32:05 */
+/* 2016-03-10 00:56:08 */
 $lang = array (
 
 	'next'					=> 'Suivant',
@@ -87,6 +87,7 @@ $lang = array (
 	'docroot'				=>	'Entrez le répertoire qui sera protégé par NinjaFirewall.<br />Par défaut, il s\'agit de <code>%s</code>',
 	'httpsapi'				=>	'Sélectionnez votre serveur HTTP et PHP SAPI',
 	'other'					=>	'Autre serveur HTTP',
+	'cgifpm'					=>	'CGI ou PHP-FPM',
 	'phpinfo'				=>	'voir PHPINFO',
 	'phpini'					=>	'Sélectionnez le type de fichier de configuration PHP utilisé par votre serveur',
 	'ini_1'					=>	'Utilisé par la plupart des hébergements mutualisés',

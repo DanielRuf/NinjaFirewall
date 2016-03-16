@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-02-05 18:09:55                                       |
+ | REVISION: 2016-03-11 15:35:05                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -628,7 +628,7 @@ function nfw_admin_setup_save() {
 	$_SESSION['admin_pass']  = @$_POST['admin_pass'];
 	$_SESSION['admin_pass2'] = @$_POST['admin_pass2'];
 	$_SESSION['admin_email'] = @$_POST['admin_email'];
-	$_SESSION['lic']         = @$_POST['lic'];
+	$_SESSION['lic']         = @trim( @$_POST['lic'] );
 
 	if ( empty($_POST['admin_name']) || ! preg_match('/^\w{6,20}$/', $_POST['admin_name']) ) {
 		$error_msg = $lang['js_admin_name_char'];
@@ -659,11 +659,14 @@ function nfw_admin_setup_save() {
 		$error_msg = $lang['js_license'];
 		goto ADMIN_SAVE_END;
 	}
+	$_POST['lic'] = trim( $_POST['lic'] );
 	$_SESSION['lic'] = $_POST['lic'];
 	$error_msg = '';
-	$domain = strtolower( $_SERVER['SERVER_NAME'] );
+
+	$domain = strtolower($_SERVER['HTTP_HOST']);
 	$data  = 'action=checklicense';
 	$data .= '&host=' . urlencode( $domain );
+	$data .= '&name=' . urlencode( strtolower($_SERVER['SERVER_NAME']) );
 	$data .= '&lic=' . urlencode( $_POST['lic'] );
 	$data .= '&ver=' . urlencode( NFW_ENGINE_VERSION );
 
@@ -861,7 +864,7 @@ function nfw_integration( $err ) {
 						<option value="1"<?php _selected($http_server, 1) ?>>Apache + PHP module<?php echo $s1 ?></option>
 						<option value="2"<?php _selected($http_server, 2) ?>>Apache + CGI/FastCGI<?php echo $s2 ?></option>
 						<option value="6"<?php _selected($http_server, 6) ?>>Apache + suPHP</option>
-						<option value="3"<?php _selected($http_server, 3) ?>>Nginx<?php echo $s3 ?></option>
+						<option value="3"<?php _selected($http_server, 3) ?>>Nginx + <?php echo $lang['cgifpm'] . $s3 ?></option>
 						<option value="4"<?php _selected($http_server, 4) ?>>Litespeed<?php echo $s4 ?></option>
 						<option value="5"<?php _selected($http_server, 5) ?>><?php echo $lang['other'] . ' + CGI/FastCGI' . $s5 ?></option>
 						<option value="7"<?php _selected($http_server, 7) ?>><?php echo $lang['other'] . ' + HHVM' . $s7 ?></option>
@@ -1581,7 +1584,7 @@ function fw_conf_rules() {
 
 	$nfw_rules[NFW_WRAPPERS]['ena'] 	= 1;
 	$nfw_rules[NFW_NULL_BYTE]['ena'] 	= 1;
-	$nfw_rules[NFW_ASCII_CTRL]['ena'] = 1;
+	$nfw_rules[NFW_ASCII_CTRL]['ena'] = 0;
 	$nfw_rules[NFW_LOOPBACK]['ena'] 	= 0;
 
 	return $nfw_rules;

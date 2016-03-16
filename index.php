@@ -160,7 +160,7 @@ if ($mid == 99) {
 	}
 	require(__DIR__ . '/lib/account_updates.php');
 
-// menu Firewall > Otions
+// menu Firewall > Options
 } elseif ($mid == 30) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_options_help.php');

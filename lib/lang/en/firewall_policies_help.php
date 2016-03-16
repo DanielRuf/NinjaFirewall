@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-20 02:04:34 */
+/* 2016-03-08 22:54:40 */
 $title = 'Firewall > Policies';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -107,7 +107,7 @@ This action will be performed when the filtering process is over, right before N
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Block ASCII character 0x00 (NULL byte):</strong> this option will reject any <code>GET</code> or <code>POST</code> request, <code>COOKIE</code>, <code>HTTP_USER_AGENT</code>, <code>REQUEST_URI</code>, <code>PHP_SELF</code>, <code>PATH_INFO</code> variables containing the ASCII character 0x00 (NULL byte). Such a character is dangerous and should always be rejected.
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Block ASCII control characters 1 to 8 and 14 to 31:</strong> in most cases, those control characters are not needed and should be rejected as well.
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Block ASCII control characters 1 to 8 and 14 to 31:</strong> in most cases, those control characters are not needed.
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Block localhost IP in <code>GET/POST</code> requests:</strong> this option will block any <code>GET</code> or <code>POST</code> request containing the localhost IP (127.0.0.1). It can be useful to block SQL dumpers and various hacker's shell scripts.
 

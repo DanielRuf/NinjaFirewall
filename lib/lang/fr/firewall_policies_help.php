@@ -1,5 +1,5 @@
 <?php
-/* 2015-08-13 19:07:15 */
+/* 2016-03-08 22:54:44 */
 $title = 'Pare-Feu > Politique';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -105,7 +105,7 @@ Veuillez noter que cette action est effectuée en dernier, après le filtrage, j
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer le caractère ASCII 0x00 (NULL byte) :</strong> toute requête <code>GET</code> ou <code>POST</code>, ainsi que toute variable <code>COOKIE</code>, <code>HTTP_USER_AGENT</code>, <code>REQUEST_URI</code>, <code>PHP_SELF</code>, <code>PATH_INFO</code> contenant le caractère ASCI 0x00 (NULL byte) sera bloquée immédiatement. Ce caractère est dangereux et devrait toujours être rejeté.
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les caractères de contrôle ASCII 1 à 8 et 14 à 31&nbsp;:</strong> dans la plupart des cas, ces caractères de contrôle de l'ASCII ne sont pas nécessaires et devraient être rejetés.
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les caractères de contrôle ASCII 1 à 8 et 14 à 31&nbsp;:</strong> dans la plupart des cas, ces caractères de contrôle de l'ASCII ne sont pas nécessaires.
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les requêtes <code>GET/POST</code> contenant l'IP localhost&nbsp;:</strong> cette option bloque toute requête <code>GET</code> ou <code>POST</code> contenant l'IP localhost (127.0.0.1). Cela peut s'avérer utile pour bloquer les programmes malveillants. Attention toutefois à ne pas bloquer certains scripts d'installation ou de configuration si vous l'activez.
 

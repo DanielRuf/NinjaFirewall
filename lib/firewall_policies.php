@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-01-30 01:43:26                                       |
+ | REVISION: 2016-03-08 21:36:18                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -607,8 +607,8 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['block_ascii'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="block_ctrl_chars" value="1"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
-					<p><label><input type="radio" name="block_ctrl_chars" value="0"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
+					<p><label><input type="radio" name="block_ctrl_chars" value="1"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] ?></label></p>
+					<p><label><input type="radio" name="block_ctrl_chars" value="0"<?php checked( $nfw_rules[NFW_ASCII_CTRL]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] . $lang['default'] ?></label></p>
 				</td>
 			</tr>
 			<tr>
@@ -714,7 +714,7 @@ function restore_firewall_policies() {
 	}
 
 	$nfw_rules[NFW_NULL_BYTE]['ena'] = 1;
-	$nfw_rules[NFW_ASCII_CTRL]['ena'] = 1;
+	$nfw_rules[NFW_ASCII_CTRL]['ena'] = 0;
 	$nfw_rules[NFW_LOOPBACK]['ena'] = 0;
 	$nfw_options['no_host_ip'] = 0;
 	$nfw_options['request_method'] = 0;
@@ -1033,9 +1033,9 @@ function save_firewall_policies() {
 
 	// Block ASCII control characters 1 to 8 and 14 to 31 (#ID 500) :
 	if ( empty( $_POST['block_ctrl_chars']) ) {
+		// Default: no
 		$nfw_rules[NFW_ASCII_CTRL]['ena'] = 0;
 	} else {
-		// Default: yes
 		$nfw_rules[NFW_ASCII_CTRL]['ena'] = 1;
 	}
 

@@ -1,5 +1,5 @@
 <?php
-/* 2015-08-13 19:31:22 */
+/* 2016-03-10 00:28:36 */
 $title = 'Pare-Feu > Contrôle d\'Accès';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -71,6 +71,8 @@ Vous pouvez filtrer et bloquer le trafic en provenance de pays spécifiques.
 
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Pays disponibles/bloqués :</strong> vous pouvez ajouter/supprimer les pays à bloquer depuis ce menu. Pour plus d'information au sujet de certains codes ISO 3166 spécifiques (A1, A2, AP, EU etc),vous pouvez consulter <a href="http://dev.maxmind.com/geoip/legacy/codes/iso3166/" class="links" style="border-bottom:dotted 1px #FDCD25;" target="_blank">l'aide en ligne de MaxMind GeoIP</a>. Aucun pays n'est bloqué par défaut.</p>
+
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Appliquer la Géolocalisation à tout le site ou certains scripts uniquement&nbsp;:</strong> s'il faut appliquer la Géolocalisation à tout le site ou certains scripts uniquement (ex: <code>/xmlrpc.php</code> etc). Laissez tous les champs vides pour l'appliquer à tout le site.</p>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Ajouter <code>NINJA_COUNTRY_CODE</code> aux en-têtes PHP&nbsp;:</strong> NinjaFirewall peut ajouter le code à deux lettres du pays aux en-têtes PHP, dans la variable <code>$_SERVER["NINJA_COUNTRY_CODE"]</code>. Si vous avez une application PHP qui nécessite de géolocaliser vos visiteurs, activez cette option.</p>
 
