@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-25 18:11:39 */
+/* 2016-03-25 18:11:39 */
 $title = 'Pare-Feu > File Guard';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -11,7 +11,7 @@ File Guard peut détecter, en temps réel, tout accès à un script PHP ayant é
 
 <p>Les modifications détectées par NinjaFirewall incluent <code>mtime</code> (création ou modification du contenu d'un fichier) et <code>ctime</code> (propriétés, permissions etc).</p>
 
-<p>Si vous souhaitez exclure un répertoire, vous pouvez entrer son chemin complet ou une partie de celui-ci (ex. <code>/var/www/public_html/cache/</code>, <code>/cache/</code> etc). NinjaFirewall comparera cette valeur à la variable <code>$_SERVER["SCRIPT_FILENAME"]</code> et, si elle correspond, l'ignorera.</p>
+<p>Si vous souhaitez exclure un répertoire, vous pouvez entrer son chemin complet ou une partie de celui-ci (ex. <code>/var/www/public_html/cache/</code>, <code>/cache/</code> etc). NinjaFirewall comparera cette valeur à la variable <code>$_SERVER["SCRIPT_FILENAME"]</code> et, si elle correspond, l'ignorera.<br />Plusieurs valeurs doivent être séparées par des virgules.</p>
 
 EOT;
 

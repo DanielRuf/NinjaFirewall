@@ -21,8 +21,7 @@
 */
 
 /* ------------------------------------------------------------------ */
-
-define('NFW_ENGINE_VERSION', '3.1.1');
+define('NFW_ENGINE_VERSION', '3.1.2');
 define('NFW_RULES_VERSION', '20160323.1');
 define('NFW_EDN', 1);
 

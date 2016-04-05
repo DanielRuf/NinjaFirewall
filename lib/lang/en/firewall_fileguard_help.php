@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-25 18:11:43 */
+/* 2016-03-25 18:11:43 */
 $title = 'Firewall > File Guard';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -11,7 +11,7 @@ File Guard can detect, in real-time, any access to a PHP script that was recentl
 
 <p>Modifications detected by NinjaFirewall include <code>mtime</code> (saved or updated content of a file) and <code>ctime</code> (permissions, ownership etc).</p>
 
-<p>If you do not want to monitor a folder, you can exclude its full path or a part of it (e.g., <code>/var/www/public_html/cache/</code>, <code>/cache/</code> etc). NinjaFirewall will compare this value to the <code>$_SERVER["SCRIPT_FILENAME"]</code> server variable and, if it matches, will ignore it.</p>
+<p>If you do not want to monitor a folder, you can exclude its full path or a part of it (e.g., <code>/var/www/public_html/cache/</code>, <code>/cache/</code> etc). NinjaFirewall will compare this value to the <code>$_SERVER["SCRIPT_FILENAME"]</code> server variable and, if it matches, will ignore it.<br />Multiple values must be comma-separated.</p>
 
 EOT;
 

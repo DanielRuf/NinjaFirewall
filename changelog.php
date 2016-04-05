@@ -1,12 +1,20 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.1.2 =
+* Added an option to select the number of log lines to display (see "Firewall > Security Log > Log Options").
+* The "X-XSS-Protection" and "HttpOnly flag" options from the "Firewall Policies" page will be enabled by default with new installations of NinjaFirewall.
+* The "Firewall Policies" sanitise options (GET, COOKIE etc) will replace all "<" and ">" characters with their corresponding HTML entities "&lt;" and "&gt;".
+* Minor fixes and adjustments.
+* [Pro+ Edition] It is possible to exclude multiple files/folders in the "File Guard" options page (multiple values must be comma-separated).
+* Updated security rules.
+
 = 3.1.1 =
 * Speed improvements. The latest set of security rules was optimized to drastically speed up the firewall engine.
 * Tweaked two anti-XSS rules to prevent attempts to bypass them using HTML events inside truncated/unclosed HTML tags. Thanks to Sven Morgenroth for reporting the issue.
 * [Pro+ Edition] The File Guard and Live Log functions were moved from the firewall main script to two separate scripts inside the /lib/ folder.
 * Updated security rules.
-* The MJ12bot user-agent was removed from the firewall blacklist. This bot DOES follow the robots.txt and hence there is no reason to blacklist it by default.
+* The MJ12bot user-agent was removed from the firewall blacklist. This bot DOES follow the robots.txt and hence there is no reason to blacklist it.
 
 = 3.1 =
 * [Pro+ Edition] Geolocation access control can apply to the whole site or to some specific URLs only (e.g., /script.php etc). See

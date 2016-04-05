@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-08 22:54:40 */
+/* 2016-03-25 22:54:40 */
 $title = 'Firewall > Policies';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -14,7 +14,7 @@ Use the options below to enable, disable or to tweak these rules according to yo
 <h3><strong>Scan &amp; Sanitise</strong></h3>
 You can choose to scan and reject dangerous content but also to sanitise requests and variables. Those 2 actions are different and can be combined together for better security.<br />
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Scan :</strong> if anything suspicious is detected, NinjaFirewall will block the request and return an HTTP error code and message. The user request will fail and the connection will be closed immediately.</p>
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Sanitise :</strong> this option will not block but sanitise the user request by escaping characters that can be used to perform code or SQL injections (<code>'</code>, <code>"</code>, <code>\</code>, <code>\n</code>, <code>\r</code>, <code>`</code>, <code>\x1a</code>, <code>\x00</code>) and various exploits (XSS etc). If it is a variable, i.e. <code>?name=value</code>, both its name and value will be sanitised.<br />
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Sanitise :</strong> this option will not block but sanitise the user request by escaping characters that can be used to exploit vulnerabilities (<code>'</code>, <code>"</code>, <code>\</code>, <code>\n</code>, <code>\r</code>, <code>`</code>, <code>\x1a</code>, <code>\x00</code>) and replacing <code>&lt;</code> and <code>&gt;</code> with their corresponding HTML entities (<code>&amp;lt;</code>, <code>&amp;gt;</code>). If it is a variable, i.e. <code>?name=value</code>, both its name and value will be sanitised.<br />
 This action will be performed when the filtering process is over, right before NinjaFirewall forwards the request to your PHP script.</p>
 
 

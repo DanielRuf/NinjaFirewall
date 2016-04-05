@@ -65,7 +65,7 @@ $lang = array (
 	'geoip_var_err'	=>	'Your server does not seem to support the %s variable.',
 	'geoip_db_err'		=>	'GeoIP database not found!',
 	'geourlallow'		=>	'Geolocation should apply to the whole site or specific URLs only?',
-	'geourlblank'		=>	'(leave this blank if you want geolocation to apply to the whole site)',
+	'geourlblank'		=>	'(leave it blank if you want geolocation to apply to the whole site)',
 
 	'block'				=>	'Block',
 	'unblock'			=>	'Unblock',

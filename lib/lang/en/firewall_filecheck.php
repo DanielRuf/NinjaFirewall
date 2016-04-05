@@ -6,7 +6,7 @@ $lang = array (
 								'Please make this file writable.',
 	'fwl_fc'				=> 'File Check',
 	'create_snap'		=>	'Create a snapshot of all files stored in that directory',
-	'excl_dirs'			=>	'Exclude the following files/folders',
+	'excl_dirs'			=>	'Exclude the following files/folders (optional)',
 	'eg'					=>	'e.g.,',
 	'excl_dirs_help'	=>	'Full or partial case-sensitive string(s). Multiple values must be comma-separated',
 	'no_follow'			=>	'Do not follow symbolic links (default)',

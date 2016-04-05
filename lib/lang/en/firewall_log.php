@@ -1,6 +1,6 @@
 <?php
 
-/* 2016-03-10 23:13:30 */
+/* 2016-03-28 23:13:30 */
 $lang = array (
 
 	'yes'					=>	'Yes',
@@ -32,6 +32,9 @@ $lang = array (
 
 	'rotate_size'		=>	'1st day of the month, or if bigger than %s MB',
 	'rotate'				=>	'1st day of the month, regardless of its size',
+
+	'max_line_1'		=>	'Show the most recent',
+	'max_line_2'		=>	'lines',
 
 	'today'				=>	'Today',
 	'critical'			=> 'Critical',

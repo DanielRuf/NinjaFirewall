@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-08 22:54:44 */
+/* 2016-03-25 22:54:44 */
 $title = 'Pare-Feu > Politique';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -14,7 +14,7 @@ Parcequ'il agit en amont de votre application, NinjaFirewall peut intercepter, s
 <h3><strong>Filtrer &amp; Nettoyer</strong></h3>
 Vous pouvez choisir de filtrer et rejeter les requêtes HTTP dangereuses, mais aussi de les nettoyer. Ces deux actions sont différentes et peuvent être combinées pour plus de sécurité.<br />
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Filtrer :</strong> lorsqu'il détecte une requête dangereuse, NinjaFirewall la bloque et retourne un message et code d'erreur HTTP. La requête ne pourra pas aboutir et la connexion sera fermée immédiatement.</p>
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Nettoyer :</strong> cette action ne bloque pas la requête mais l'analyse afin d'y trouver des caractères pouvant être dangereux, par exemple pour injecter du code dans la base de données (<code>'</code>, <code>"</code>, <code>\</code>, <code>\n</code>, <code>\r</code>, <code>`</code>, <code>\x1a</code>, <code>\x00</code>) et, le cas échéant, nettoie cette requête en y insérant des caractères d'échappement. S'il s'agit d'une variable et de sa valeur (<code>?variable=valeur</code>), les deux éléments seront nettoyés.<br />
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Nettoyer :</strong> cette action ne bloque pas la requête mais l'analyse afin d'y trouver des caractères pouvant être dangereux, par exemple pour injecter du code dans la base de données (<code>'</code>, <code>"</code>, <code>\</code>, <code>\n</code>, <code>\r</code>, <code>`</code>, <code>\x1a</code>, <code>\x00</code>) et, le cas échéant, nettoie cette requête en y insérant des caractères d'échappement ou, dans le cas des caractères <code>&lt;</code> et <code>&gt;</code>, en les remplaçant par leurs entités HTML correspondantes. S'il s'agit d'une variable et de sa valeur (<code>?variable=valeur</code>), les deux éléments seront nettoyés.<br />
 Veuillez noter que cette action est effectuée en dernier, après le filtrage, juste avant que NinjaFirewall fasse suivre la requête à votre application PHP.</p>
 
 

@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-08 21:36:18                                       |
+ | REVISION: 2016-03-25 18:44:03                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -228,6 +228,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 				<td width="45%" align="left">
 					<p><label><input type="radio" name="request_sanitise" value="1"<?php checked( $nfw_options['request_sanitise'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] ?></label></p>
 					<p><label><input type="radio" name="request_sanitise" value="0"<?php checked( $nfw_options['request_sanitise'], 0 ) ?>>&nbsp;<?php echo $lang['no'] . $lang['default'] ?></label></p>
+					<i class="tinyblack">&nbsp;<?php echo $lang['sanit_warn'] ?></i>
 				</td>
 			</tr>
 		</table>
@@ -435,15 +436,15 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['x_x_p'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="x_xss_protection" value="1"<?php checked( $nfw_options['response_headers'][3], 1 ); disabled($err, 1); ?>><?php echo $lang['yes']; ?></label></p>
-					<p><label><input type="radio" name="x_xss_protection" value="0"<?php checked( $nfw_options['response_headers'][3], 0 ); disabled($err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p><?php echo $err_msg ?>
+					<p><label><input type="radio" name="x_xss_protection" value="1"<?php checked( $nfw_options['response_headers'][3], 1 ); disabled($err, 1); ?>><?php echo $lang['yes'] . $lang['default']; ?></label></p>
+					<p><label><input type="radio" name="x_xss_protection" value="0"<?php checked( $nfw_options['response_headers'][3], 0 ); disabled($err, 1); ?>><?php echo $lang['no']; ?></label></p><?php echo $err_msg ?>
 				</td>
 			</tr>
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['httponly'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="cookies_httponly" value="1"<?php checked( $nfw_options['response_headers'][0], 1 ); disabled($err, 1); ?> onclick="return httponly();">&nbsp;<?php echo $lang['yes']; ?></label></p>
-					<p><label><input type="radio" name="cookies_httponly" value="0"<?php checked( $nfw_options['response_headers'][0], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo $lang['no'] . $lang['default']; ?></label></p><?php echo $err_msg ?>
+					<p><label><input type="radio" name="cookies_httponly" value="1"<?php checked( $nfw_options['response_headers'][0], 1 ); disabled($err, 1); ?> onclick="return httponly();">&nbsp;<?php echo $lang['yes'] . $lang['default']; ?></label></p>
+					<p><label><input type="radio" name="cookies_httponly" value="0"<?php checked( $nfw_options['response_headers'][0], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo $lang['no']; ?></label></p><?php echo $err_msg ?>
 				</td>
 			</tr>
 			<?php
@@ -693,7 +694,8 @@ function restore_firewall_policies() {
 	}
 	$nfw_options['referer_scan'] = 0;
 	if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-		$nfw_options['response_headers'] = '000000';
+		// We enable X-XSS-Protection and HttpOnly flag:
+		$nfw_options['response_headers'] = '100100';
 	}
 	$nfw_options['referer_sanitise'] = 1;
 	$nfw_options['referer_post'] = 0;

@@ -1,5 +1,5 @@
 <?php
-/* 2015-01-21 19:18:45 */
+/* 2016-03-28 19:18:45 */
 $lang = array (
 
 	'error'				=> 'Erreur',
@@ -11,8 +11,8 @@ $lang = array (
 	'fg'					=>	'File Guard',
 	'enable_fg'			=>	'Activer File Guard',
 	'detection'			=>	'Détection en temps réel',
-	'exclude_title'	=>	'Exclure le dossier suivant (optionnel)',
-	'exclude_desc'		=>	'Chaîne de caractères complète ou partielle, sensible à la casse, 150 caractères max.',
+	'exclude_title'	=>	'Exclure les fichiers / dossiers suivants (optionnel)',
+	'exclude_desc'		=>	'Chaîne de caractères complète ou partielle, sensible à la casse. Plusieurs valeurs doivent être séparées par des virgules.',
 	'eg'					=>	'e.g.,',
 
 	'monitor'			=>	'Surveiller et alerter par e-mail lorsqu\'un visiteur accède à un script PHP ' .

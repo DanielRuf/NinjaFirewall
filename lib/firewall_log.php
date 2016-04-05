@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-11 14:16:07                                       |
+ | REVISION: 2016-03-27 17:03:20                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -116,23 +116,26 @@ if (! $fh = @fopen( $log_dir . $selected_log, 'r' ) ) {
 	html_footer();
 	exit;
 }
-
-// We will only display the last $max_lines lines,
-// and will warn about it if the log is bigger :
+// We will only display the last $max_lines lines, and will warn about it
+// if the log is bigger :
+if ( empty($nfw_options['log_line']) || ! ctype_digit($nfw_options['log_line']) ) {
+	$max_lines = $nfw_options['log_line'] = 1500;
+} else {
+	$max_lines = $nfw_options['log_line'];
+}
 $count = 0;
-$max_lines = 1500;
 while (! feof( $fh ) ) {
 	fgets( $fh );
 	$count++;
 }
-// Skip last empty line :
-$count--;
+// Skip the first (PHP code) and the last (empty) line :
+$count -= 2;
 fclose( $fh );
-if ( $count < $max_lines ) {
+if ( $count <= $max_lines ) {
 	$skip = 0;
 } else  {
 	echo '<br /><div class="warning"><p>' . sprintf($lang['too_big'], $count, $max_lines) .'</p></div>';
-	$skip = $count - $max_lines;
+	$skip = $count - $max_lines + 1;
 }
 
 $levels = array( '', 'medium', 'high', 'critical', 'error', 'upload', 'info', 'DEBUG_ON' );
@@ -257,12 +260,12 @@ foreach ($avail_logs as $log_name => $tmp) {
 <br />
 <?php
 
-firewall_log_options(1);
+firewall_log_options(1, $max_lines);
 html_footer();
 
 /* ------------------------------------------------------------------ */
 
-function firewall_log_options($is_log) {
+function firewall_log_options($is_log, $max_lines = 1500) {
 
 	// Need to refresh options :
 	global $nfw_options;
@@ -308,6 +311,12 @@ function firewall_log_options($is_log) {
 				<p><label><input type="radio" name="log_rotate" value="0"<?php checked($nfw_options['log_rotate'], 0) ?>>&nbsp;<?php echo $lang['rotate'] ?></label></p>
 			</td>
 		</tr>
+		<tr>
+			<td width="55%" align="left" class="dotted"><?php echo $lang['max_line_1'] ?></td>
+			<td width="45%" align="left" class="dotted">
+				<p><input name="nfw_options[log_line]" step="50" min="50" value="<?php echo $max_lines ?>" class="input" type="number"> <?php echo $lang['max_line_2'] ?></p>
+			</td>
+		</tr>
 	</table>
 </fieldset>
 	<br />
@@ -341,6 +350,12 @@ function nfw_save_log_options() {
 			$nfw_options['log_maxsize'] = $_POST['log_maxsize'] * 1048576;
 		}
 	}
+	if ( empty($_POST['nfw_options']['log_line']) || $_POST['nfw_options']['log_line'] < 50 || ! ctype_digit($_POST['nfw_options']['log_line']) ) {
+		$nfw_options['log_line'] = 1500;
+	} else {
+		$nfw_options['log_line'] = $_POST['nfw_options']['log_line'];
+	}
+
 	$err_msg = nfw_write_conf();
 	if ($err_msg) {
 		echo '<br /><div class="error"><p>' . $err_msg .'</p></div>';

@@ -1,5 +1,5 @@
 <?php
-/* 2015-11-24 11:57:52 */
+/* 2016-03-28 11:57:52 */
 $lang = array (
 	'error'				=> 'Erreur',
 	'error_cache'		=> 'Impossible d\'écrire dans le répertoire du cache <code>/nfwlog/cache</code>. ' .
@@ -7,7 +7,7 @@ $lang = array (
 
 	'fwl_fc'				=> 'File Check',
 	'create_snap'		=>	'Créer un instantané de tous les fichiers se trouvant dans ce répertoire',
-	'excl_dirs'			=>	'Exclure les fichiers / dossiers suivants',
+	'excl_dirs'			=>	'Exclure les fichiers / dossiers suivants (optionnel)',
 	'eg'					=>	'par ex.',
 	'excl_dirs_help'	=>	'Chaîne de caractères complète ou partielle, sensible à la casse. Plusieurs valeurs doivent être séparées par des virgules',
 	'no_follow'			=>	'Ne pas suivre les liens symboliques (défaut)',

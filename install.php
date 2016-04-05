@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-11 15:35:05                                       |
+ | REVISION: 2016-03-28 15:35:05                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -185,7 +185,7 @@ function nfw_regional_settings() {
 					<select name="admin_lang" class="input" style="width:250px">
 					<?php
 					foreach ($reg as $key => $value) {
-						echo '<option value ="' . $key . '"';
+						echo '<option value ="' . htmlentities($key) . '"';
 						if ( $key == $tmp_lang ) {
 							echo ' selected';
 						}
@@ -569,28 +569,28 @@ function nfw_admin_setup( $err ) {
 			<tr>
 				<td width="55%" align="left"><br /><?php echo $lang['admin_name'] ?><br />&nbsp;</td>
 				<td width="45%" align="left">
-					<input class="input" size="20" maxlength="20" name="admin_name" type="text" value="<?php echo $admin_name ?>">
+					<input class="input" size="20" maxlength="20" name="admin_name" type="text" value="<?php echo htmlentities($admin_name) ?>">
 				</td>
 			</tr>
 
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['admin_pass'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted">
-					<input class="input" size="20" maxlength="20" name="admin_pass" type="password" value="<?php echo $admin_pass ?>">
+					<input class="input" size="20" maxlength="20" name="admin_pass" type="password" value="<?php echo htmlentities($admin_pass) ?>">
 				</td>
 			</tr>
 
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['admin_pass2'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted">
-					<input class="input" size="20" maxlength="20" name="admin_pass2" type="password" value="<?php echo $admin_pass2 ?>">
+					<input class="input" size="20" maxlength="20" name="admin_pass2" type="password" value="<?php echo htmlentities($admin_pass2) ?>">
 				</td>
 			</tr>
 
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['admin_email'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted">
-					<input class="input" size="20" maxlength="500" name="admin_email" type="text" value="<?php echo $admin_email ?>">
+					<input class="input" size="20" maxlength="500" name="admin_email" type="text" value="<?php echo htmlentities($admin_email) ?>">
 				</td>
 			</tr>
 
@@ -598,7 +598,7 @@ function nfw_admin_setup( $err ) {
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['nf_license'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted">
-					<input class="input" maxlength="500" size="40" name="lic" type="text" value="<?php echo $lic ?>">
+					<input class="input" maxlength="500" size="40" name="lic" type="text" value="<?php echo htmlentities($lic) ?>">
 				</td>
 			</tr>
 			<?php } ?>
@@ -853,7 +853,7 @@ function nfw_integration( $err ) {
 				</td>
 				<td width="10%">&nbsp;</td>
 				<td width="45%" align="left">
-					<p><input class="input" size="40" name="document_root" type="text" value="<?php echo $document_root ?>"><p>
+					<p><input class="input" size="40" name="document_root" type="text" value="<?php echo htmlentities($document_root) ?>"><p>
 				</td>
 			</tr>
 			<tr>
@@ -1555,10 +1555,14 @@ function fw_conf_options() {
 		'logging' 				=> 1,
 		'log_rotate' 			=> 1,
 		'log_maxsize' 			=> 2097152,
+		'log_line'				=>	1500,
 	);
-
+	// Some compatibility checks:
+	// 1. header_register_callback(): requires PHP >=5.4
+	// 2. headers_list() and header_remove(): some hosts may disable
 	if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-		$nfw_options['response_headers'] = '000000';
+		// We enable X-XSS-Protection and HttpOnly flag:
+		$nfw_options['response_headers'] = '100100';
 	}
 	return $nfw_options;
 }

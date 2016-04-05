@@ -1,5 +1,5 @@
 <?php
-/* 2015-01-21 19:18:40 */
+/* 2016-03-28 19:18:40 */
 $lang = array (
 
 	'error'				=> 'Error',
@@ -12,8 +12,8 @@ $lang = array (
 	'fg'					=>	'File Guard',
 	'enable_fg'			=>	'Enable File Guard',
 	'detection'			=>	'Real-time detection',
-	'exclude_title'	=>	'Exclude the following folder (optional)',
-	'exclude_desc'		=>	'A full or partial case-sensitive string, max 150 characters.',
+	'exclude_title'	=>	'Exclude the following files/folders (optional)',
+	'exclude_desc'		=>	'Full or partial case-sensitive string(s). Multiple values must be comma-separated.',
 	'eg'					=>	'e.g.,',
 
 	'monitor'			=>	'Monitor file activity and send an alert when someone is accessing ' .

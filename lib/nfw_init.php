@@ -26,7 +26,8 @@ if ( version_compare($nfw_options['engine_version'], NFW_ENGINE_VERSION, '<') ) 
 	// v2.0.3 update -------------------------------------------------
 	if (empty($nfw_options['response_headers']) ) {
 		if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-			$nfw_options['response_headers'] = '000000';
+			// We enable X-XSS-Protection and HttpOnly flag:
+			$nfw_options['response_headers'] = '100100';
 		}
 	}
 	// v2.0.5 update -------------------------------------------------

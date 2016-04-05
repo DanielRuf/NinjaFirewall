@@ -406,7 +406,7 @@ function nfw_check_upload() {
 					' KB' , $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 1, 0);
 				nfw_block(1);
 			}
-			$data = 0;
+			$data = '';
 			// Reject scripts, ELF and system files ?
 			if ( $nfw_['nfw_options']['uploads'] == 2 ) {
 				// System files :
@@ -426,14 +426,25 @@ function nfw_check_upload() {
 					nfw_block(3);
 				}
 			}
-			// Look for EICAR test file :
-			if (! $data) {
-				$data = file_get_contents($f_uploaded[$key]['tmp_name'], NULL, NULL, NULL, 68);
-			}
-			if ( substr($data, 0, 68) == 'X5O!P%@AP' . '[4\PZX54(P^)7CC)7}$EIC' . 'AR-STANDARD-ANTIVIRUS-TEST-FILE!$H' . '+H*' ) {
-				nfw_log('EICAR Standard Anti-Virus Test File blocked', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
-				// Always block it, even if we allow uploads:
-				nfw_block(3);
+
+			// Look for EICAR AV test file :
+			// -The file must start with the 68-bytes EICAR signature.
+			// -It can be appended by any combination of whitespace characters
+			//  with the total file length not exceeding 128 characters. The only
+			//  whitespace characters allowed are the space character, tab, LF, CR, CTRL-Z.
+			//	(See: http://blog.nintechnet.com/anatomy-of-the-eicar-antivirus-test-file/)
+			if ( $f_uploaded[$key]['size'] > 67 && $f_uploaded[$key]['size'] < 129 ) {
+				// Read it:
+				if ( empty($data) ) {
+					$data = file_get_contents( $f_uploaded[$key]['tmp_name'] );
+				}
+				if ( preg_match('`X5O!P%@AP' . '\[4\\\PZX54\(P\^\)7CC\)7}\$EIC' .
+				                'AR-STANDARD-ANTIVI' . 'RUS-TEST-FILE!\$H' . '\+H\*' .
+				                '[\x09\x10\x13\x20\x1A]*`', $data) ) {
+					nfw_log('EICAR Standard Anti-Virus Test File blocked', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
+					// Always block it, even if we allow uploads:
+					nfw_block(3);
+				}
 			}
 
 			// Sanitise filename ?
@@ -717,10 +728,7 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 	}
 
 	// Check if it matches:
-	$res = nfw_operator( $val, $rules['cha'][$subid]['wha'], $rules['cha'][$subid]['ope']	);
-
-	// Matching rule?
-	if ( isset($res[0]) ) {
+	if ( nfw_operator( $val, $rules['cha'][$subid]['wha'], $rules['cha'][$subid]['ope']	) ) {
 		// Check if there is one or more subrules left to check:
 		if ( isset( $rules['cha'][$subid+1]) ) {
 			return 1;
@@ -746,40 +754,36 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 
 function nfw_operator( $val, $what, $op ) {
 
-	$ret = array ( null, null);
-
 	// Check operator:
 	if ( $op == 2 ) { // '!='
 		if ( $val != $what ) {
-			$ret[0] = true;
+			return true;
 		}
 	} elseif ( $op == 3 ) { // 'strpos'
 		if ( strpos($val, $what) !== FALSE ) {
-			$ret[0] = true;
+			return true;
 		}
 	} elseif ( $op == 4 ) { // 'stripos'
 		if ( stripos($val, $what) !== FALSE ) {
-			$ret[0] = true;
+			return true;
 		}
 	} elseif ( $op == 5 ) { // 'rx'
 		if ( preg_match("`$what`", $val ) ) {
-			$ret[0] = true;
+			return true;
 		}
 	} elseif ( $op == 6 ) { // '!rx'
 		if (! preg_match("`$what`", $val) ) {
-			$ret[0] = true;
+			return true;
 		}
 	} elseif ( $op == 7 ) { // '*'
 		// Always return true:
-		$ret[0] = true;
+		return true;
 
 	} else { // '=='
 		if ( $val == $what ) {
-			$ret[0] = true;
+			return true;
 		}
 	}
-
-	return $ret;
 }
 
 // =====================================================================
@@ -1118,13 +1122,13 @@ function nfw_sanitise( $str, $msg ) {
 		// We sanitise variables **value** either with :
 		// -mysql_real_escape_string* to escape [\x00], [\n], [\r], [\],
 		//	 ['], ["] and [\x1a] *IF* we have a DB link.
-		//	-str_replace to escape backtick [`]
+		//	-str_replace to escape backtick [`] and replace '<', '>' with HTML entities.
 		//	Applies to $_GET, $_POST, $_SERVER['HTTP_USER_AGENT']
 		//	and $_SERVER['HTTP_REFERER']
 		//
 		// Or:
 		//
-		// -str_replace to escape [<], [>], ["], ['], [`] and , [\]
+		// -str_replace to escape ["], ['], [`], [\] and replace '<', '>' with HTML entities.
 		//	-str_replace to replace [\n], [\r], [\x1a] and [\x00] with [X]
 		//	Applies to $_SERVER['PATH_INFO'], $_SERVER['PATH_TRANSLATED']
 		//	and $_SERVER['PHP_SELF']
@@ -1133,21 +1137,22 @@ function nfw_sanitise( $str, $msg ) {
 		//
 		// -str_replace to escape ['], [`] and , [\]
 		//	-str_replace to replace [\x1a] and [\x00] with [X]
+		//	-str_replace to replace [<] and with [&lt;]
 		//	Applies to $_COOKIE only
 		//
 
 		// COOKIE ?
-		if ($str == 'COOKIE') {
-			$str2 = str_replace(	array('\\', "'", "\x00", "\x1a", '`'),
-				array('\\\\', "\\'", 'X', 'X', '\\`'),	$str);
+		if ($msg == 'COOKIE') {
+			$str2 = str_replace(	array('\\', "'", "\x00", "\x1a", '`', '<'),
+				array('\\\\', "\\'", 'X', 'X', '\\`', '&lt;'),	$str);
 		// Use mysql_real_escape_string if we have a DB link :
 		} elseif (! empty($nfw_['dblink']) ) {
 			$str2 = $nfw_['dblink']->real_escape_string($str);
-			$str2 = str_replace('`', '\`', $str2);
+			$str2 = str_replace(	array(  '`', '<', '>'), array( '\\`', '&lt;', '&gt;'),	$str2);
 		// DIY :
 		} else {
 			$str2 = str_replace(	array('\\', "'", '"', "\x0d", "\x0a", "\x00", "\x1a", '`', '<', '>'),
-				array('\\\\', "\\'", '\\"', 'X', 'X', 'X', 'X', '\\`', '\\<', '\\>'),	$str);
+				array('\\\\', "\\'", '\\"', 'X', 'X', 'X', 'X', '\\`', '&lt;', '&gt;'),	$str);
 		}
 		// Don't sanitised the string if we are running in Debug Mode :
 		if (! empty($nfw_['nfw_options']['debug']) ) {
