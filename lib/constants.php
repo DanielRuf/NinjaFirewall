@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-11 15:26:59                                       |
+ | REVISION: 2016-03-23 17:00:50                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -22,8 +22,8 @@
 
 /* ------------------------------------------------------------------ */
 
-define('NFW_ENGINE_VERSION', '3.1');
-define('NFW_RULES_VERSION', '20160311.1');
+define('NFW_ENGINE_VERSION', '3.1.1');
+define('NFW_RULES_VERSION', '20160323.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
@@ -53,7 +53,7 @@ define('NFW_SCAN_BOTS', 531);
 define('NFW_BOT_LIST', 'acunetix|analyzer|AhrefsBot|backdoor|bandit|' .
 	'blackwidow|BOT for JCE|collect|core-project|dts agent|emailmagnet|' .
 	'exploit|extract|flood|grabber|harvest|httrack|havij|hunter|indy library|' .
-	'inspect|LoadTimeBot|Microsoft URL Control|Miami Style|mj12bot|morfeus|' .
+	'inspect|LoadTimeBot|Microsoft URL Control|Miami Style|morfeus|' .
 	'nessus|pmafind|scanner|siphon|spbot|sqlmap|survey|teleport|updown_tester'
 );
 define( 'NFW_DEFAULT_MSG', '<br /><br /><br /><br /><center>Sorry ' .
