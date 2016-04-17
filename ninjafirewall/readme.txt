@@ -3,7 +3,7 @@ Contributors: nintechnet, bruandet
 Tags: admin, attack, backdoor, botnet, brute force, brute force attack, brute force protection, denial, firewall, hack, hhvm, infection, injection, login, malware, nginx, nintechnet, ninja, phishing, prevention, protection, security, shellshock, soaksoak, trojan, user enumeration, virus, WAF, Web application firewall, widget, wp-login, XML-RPC, xmlrpc, XSS
 Requires at least: 3.3.0
 Tested up to: 4.5
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -114,7 +114,7 @@ You can prepend your own PHP code to the firewall with the help of an [optional 
 = Low Footprint Firewall =
 
 NinjaFirewall is very fast, optimised, compact, and requires very low system resource.
-See for yourself: download and install the [P3 Plugin Performance Profiler](http://wordpress.org/plugins/p3-profiler/ "") and compare NinjaFirewall performances with other security plugins.
+See for yourself: download and install [P3 Plugin Performance Profiler](http://wordpress.org/plugins/p3-profiler/ "") or [Query Monitor](https://wordpress.org/plugins/query-monitor/ "") and compare NinjaFirewall performances with other security plugins.
 
 = Non-Intrusive User Interface =
 
@@ -227,6 +227,15 @@ NinjaFirewall works on Unix-like servers only. There is no Microsoft Windows ver
 
 
 == Changelog ==
+
+= 3.1.3 =
+
+* Fixed a bug in the "Daily Report": on the first day of each month, the report was empty because of the monthly log rotation.
+* Fixed a bug in the "Plugins" page where NinjaFirewall "Settings" link was not accessible in a multisite environment.
+* [WP+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* It is possible to import the configuration from the WP Edition to the WP+ Edition.
+* Minor fixes and adjustments.
+* NinjaFirewall's icon displayed in the admin dashboard menu was converted to grayscale.
 
 = 3.1.2 =
 
