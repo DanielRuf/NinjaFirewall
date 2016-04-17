@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-23 17:00:50                                       |
+ | REVISION: 2016-04-16 17:00:50                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -21,8 +21,9 @@
 */
 
 /* ------------------------------------------------------------------ */
-define('NFW_ENGINE_VERSION', '3.1.2');
-define('NFW_RULES_VERSION', '20160323.1');
+
+define('NFW_ENGINE_VERSION', '3.1.3');
+define('NFW_RULES_VERSION', '20160416.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
@@ -37,7 +38,7 @@ $err_fw = array(
 	2	=>	'<i>unable to read NinjaFirewall options file (<code>conf/options.php</code>)</i>',
 	3	=>	'<i>unable to find NinjaFirewall rules file (<code>conf/rules.php</code>)</i>',
 	4	=>	'<i>unable to read NinjaFirewall rules file (<code>conf/rules.php</code>)</i>',
-	5	=>	'<i>firewall has been disabled from the <a style="text-decoration:underline" href="?mid=30&token='. @$_REQUEST['token'] . '">administration console</a></i>',
+	5	=>	'<i>firewall has been disabled from the <a style="text-decoration:underline" href="?mid=30&token='. @htmlspecialchars( $_REQUEST['token'] ) . '">administration console</a></i>',
 	10	=>	'<i>unable to communicate with the firewall. Please check your PHP INI settings</i>',
 );
 

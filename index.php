@@ -72,7 +72,8 @@ if ( empty($_SESSION['timeout']) || empty($_SESSION['nfadmpro']) ||
    exit;
 }
 
-if ($_SESSION['nftoken'] != sha1($_REQUEST['token']) ) {
+if ($_SESSION['nftoken'] != sha1($_REQUEST['token']) ||
+	! preg_match('/^[a-f0-9]{40}$/', $_REQUEST['token'] ) ) {
 	session_destroy();
    header('Location: login.php?3');
    exit;

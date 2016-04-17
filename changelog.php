@@ -1,6 +1,12 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.1.3 =
+* Updated security rules.
+* Minor fixes and adjustments.
+* Added a warning in the "Overview" page if a PHP opcode cache is enabled.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 3.1.2 =
 * Added an option to select the number of log lines to display (see "Firewall > Security Log > Log Options").
 * The "X-XSS-Protection" and "HttpOnly flag" options from the "Firewall Policies" page will be enabled by default with new installations of NinjaFirewall.

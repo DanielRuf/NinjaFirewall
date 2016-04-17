@@ -22,7 +22,6 @@ if ( strpos($_SERVER['SCRIPT_NAME'], '/nfwlog/') !== FALSE
 	|| $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) { die('Forbidden'); }
 if (defined('NFW_STATUS')) { return; }
 
-// Used for benchmarks purpose :
 $nfw_['fw_starttime'] = microtime(true);
 
 // Optional NinjaFirewall configuration file
@@ -30,13 +29,11 @@ $nfw_['fw_starttime'] = microtime(true);
 if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja') ||
 	@file_exists($nfw_['file'] = $_SERVER['DOCUMENT_ROOT'] .'/.htninja') ) {
 	$nfw_['res'] = @include($nfw_['file']);
-	// Allow and stop filtering :
 	if ( $nfw_['res'] == 'ALLOW' ) {
 		define( 'NFW_STATUS', 22 );
 		unset($nfw_);
 		return;
 	}
-	// Reject immediately :
 	if ( $nfw_['res'] == 'BLOCK' ) {
 		header('HTTP/1.1 403 Forbidden');
 		header('Status: 403 Forbidden');
@@ -44,43 +41,34 @@ if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja
 	}
 }
 
-// Get our options :
 if (! @include( __DIR__ . '/conf/options.php') ) {
-	// Set the error flag and return :
 	define( 'NFW_STATUS', 1 );
 	unset($nfw_);
 	return;
 }
 
 $nfw_['nfw_options'] = @unserialize($nfw_options);
-// Ensure we have something or return an error :
 if (! isset( $nfw_['nfw_options']['enabled']) ) {
-	// Set the error flag and return :
 	define( 'NFW_STATUS', 2 );
 	unset($nfw_);
 	return;
 }
 
-// Are we supposed to do anything ?
 if ( empty($nfw_['nfw_options']['enabled']) ) {
 	define( 'NFW_STATUS', 22 );
 	unset($nfw_);
 	return;
 }
 
-// Response headers hook :
 if (! empty($nfw_['nfw_options']['response_headers']) && function_exists('header_register_callback')) {
 	define('NFW_RESHEADERS', $nfw_['nfw_options']['response_headers']);
 	header_register_callback('nfw_response_headers');
 }
 
-// Ensure with have a proper and single IP (a user may wrongly use
-// the .htninja file and redirect HTTP_X_FORWARDED_FOR to REMOTE_ADDR):
 if (strpos($_SERVER['REMOTE_ADDR'], ',') !== false) {
 	$nfw_['match'] = array_map('trim', @explode(',', $_SERVER['REMOTE_ADDR']));
 	foreach($nfw_['match'] as $nfw_['m']) {
 		if ( filter_var($nfw_['m'], FILTER_VALIDATE_IP) )  {
-			// Fix it, so that other apps can use it:
 			$_SERVER['REMOTE_ADDR'] = $nfw_['m'];
 			break;
 		}
@@ -88,19 +76,16 @@ if (strpos($_SERVER['REMOTE_ADDR'], ',') !== false) {
 }
 $nfw_['user_ip'] = $_SERVER['REMOTE_ADDR'];
 
-// Hide PHP notice/error messages ?
 if (! empty($nfw_['nfw_options']['php_errors']) ) {
 	@error_reporting(0);
 	@ini_set('display_errors', 0);
 }
 
-// Scan HTTP traffic only... ?
 if ( @$nfw_['nfw_options']['scan_protocol'] == 1 && $_SERVER['SERVER_PORT'] == 443 ) {
 	define( 'NFW_STATUS', 22 );
 	unset($nfw_);
 	return;
 }
-// ...or HTTPS only ?
 if ( @$nfw_['nfw_options']['scan_protocol'] == 2 && $_SERVER['SERVER_PORT'] != 443 ) {
 	define( 'NFW_STATUS', 22 );
 	unset($nfw_);
@@ -108,18 +93,13 @@ if ( @$nfw_['nfw_options']['scan_protocol'] == 2 && $_SERVER['SERVER_PORT'] != 4
 }
 
 if ( $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/index.php' || $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/login.php' || $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/install.php' ) {
-	// Before returning, let's check if there is any
-	// error with the rules, so that we can display it
-	// in the administration interface :
 	if (! @include( __DIR__ . '/conf/rules.php') ) {
 		define( 'NFW_STATUS', 3 );
 	} else {
 		$nfw_['nfw_rules'] = @unserialize($nfw_rules);
 		if (! isset( $nfw_['nfw_rules']['1']) ) {
-			// Set the error flag :
 			define( 'NFW_STATUS', 4 );
 		} else {
-			// Everything is fine, let it go :
 			define( 'NFW_STATUS', 22 );
 		}
 	}
@@ -127,22 +107,18 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/index.php' || $_SERVER['SCRIPT_FI
 	return;
 }
 
-// Check if that IP has been temporarily banned :
 if (! empty($nfw_['nfw_options']['ban_ip']) ) {
 	$nfw_['ipbk'] = __DIR__ .'/nfwlog/cache/ipbk.'. $_SERVER['SERVER_NAME'] .'_-_'. $nfw_['user_ip'] .'.php';
 	if (file_exists($nfw_['ipbk']) ) {
 		$nfw_['stat'] = stat($nfw_['ipbk']);
 		if ( time() - $nfw_['stat']['mtime'] > $nfw_['nfw_options']['ban_time'] * 60 ) {
-			// Too old, clear the banned IP and let it go :
 			@unlink($nfw_['ipbk']);
 		} else {
-			// Keep it blocked :
 			nfw_block(0);
 		}
 	}
 }
 
-// Is that method allowed ?
 if (! empty($nfw_['nfw_options']['request_method']) ) {
 	if ( strpos('GETPOSTHEAD', $_SERVER['REQUEST_METHOD']) === false ) {
 		nfw_log('REQUEST_METHOD is not allowed by policy', $_SERVER['REQUEST_METHOD'], 2, 0);
@@ -150,58 +126,47 @@ if (! empty($nfw_['nfw_options']['request_method']) ) {
 	}
 }
 
-// HTTP_HOST is an IP ?
 if (! empty($nfw_['nfw_options']['no_host_ip']) && @filter_var(parse_url('http://'.$_SERVER['HTTP_HOST'], PHP_URL_HOST), FILTER_VALIDATE_IP) ) {
 	nfw_log('HTTP_HOST is an IP', $_SERVER['HTTP_HOST'], 2, 0);
    nfw_block(2);
 }
 
-// Block POST requests...
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	// ...without a HTTP_REFERER header ?
 	if (! empty($nfw_['nfw_options']['referer_post']) && empty($_SERVER['HTTP_REFERER']) ) {
 		nfw_log('POST method without HTTP_REFERER header', 'N/A', 1, 0);
 		nfw_block(1);
 	}
 	$ua = ! empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'N/A';
-	// ...without a Mozilla-compatible signature ?
 	if (! empty($nfw_['nfw_options']['ua_mozilla']) && stripos($ua, 'Mozilla') === FALSE ) {
 		nfw_log('POST method from user-agent without Mozilla-compatible signature', $ua, 1, 0);
 		nfw_block(1);
 	}
-	// ...without a HTTP_ACCEPT header ?
 	if (! empty($nfw_['nfw_options']['ua_accept']) && empty($_SERVER['HTTP_ACCEPT']) ) {
 		nfw_log('POST method without HTTP_ACCEPT header', 'N/A', 1, 0);
 		nfw_block(1);
 	}
-	// ...without HTTP_ACCEPT_LANGUAGE header ?
 	if (! empty($nfw_['nfw_options']['ua_accept_lang']) && empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ) {
 		nfw_log('POST method without HTTP_ACCEPT_LANGUAGE header', 'N/A', 1, 0);
 		nfw_block(1);
 	}
 }
 
-// Look for upload:
 nfw_check_upload();
 
-// Get our rules :
 if (! include( __DIR__ . '/conf/rules.php') ) {
 	define( 'NFW_STATUS', 3 );
 	unset($nfw_);
 	return;
 }
 $nfw_['nfw_rules'] = @unserialize($nfw_rules);
-// Ensure we have something, or return an error :
 if (! isset( $nfw_['nfw_rules']['1']) ) {
 	define( 'NFW_STATUS', 4 );
 	unset($nfw_);
 	return;
 }
 
-// Parse all requests and server variables :
 nfw_check_request( $nfw_['nfw_rules'], $nfw_['nfw_options'] );
 
-// Sanitise requests/variables if needed :
 if (! empty($nfw_['nfw_options']['get_sanitise']) && ! empty($_GET) ){
 	$_GET = nfw_sanitise( $_GET, 'GET');
 }
@@ -230,14 +195,10 @@ if (! empty($nfw_['nfw_options']['php_self']) && ! empty($_SERVER['PHP_SELF']) )
 	$_SERVER['PHP_SELF'] = nfw_sanitise( $_SERVER['PHP_SELF'], 'PHP_SELF');
 }
 
-// If we have a SQL link, close it :
 if (! empty($nfw_['dblink']) ) { @$nfw_['dblink']->close(); }
-// Clear all our variables :
 unset($nfw_);
-// Return OK status :
 define( 'NFW_STATUS', 22 );
 
-// That's all, folks !
 return;
 
 // =====================================================================
@@ -246,35 +207,28 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 
 	global $nfw_;
 
-	// Info/sanitise ? Don't block and do not issue any incident number :
 	if ( $loglevel == 6) {
 		$nfw_['num_incident'] = '0000000';
 		$http_ret_code = '200';
 	} else {
-		// Debugging ? Don't block and do not issue any incident number
-		// but set loglevel to 7 (will display 'DEBUG_ON' in log) :
 		if (! empty($nfw_['nfw_options']['debug']) ) {
 			$nfw_['num_incident'] = '0000000';
 			$loglevel = 7;
 			$http_ret_code = '200';
-		// Create a random incident number :
 		} else {
 			$nfw_['num_incident'] = mt_rand(1000000, 9000000);
 			$http_ret_code = $nfw_['nfw_options']['ret_code'];
 		}
 	}
 
-	// Return if logging is disabled :
 	if (empty($nfw_['nfw_options']['logging']) ) {
 		return;
 	}
 
-	// Prepare the line to log :
    if (strlen($logdata) > 200) { $logdata = mb_substr($logdata, 0, 200, 'utf-8') . '...'; }
 	$res = '';
 	$string = str_split($logdata);
 	foreach ( $string as $char ) {
-		// Allow only ASCII printable characters :
 		if ( ord($char) < 32 || ord($char) > 126 ) {
 			$res .= '%' . bin2hex($char);
 		} else {
@@ -282,7 +236,6 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 		}
 	}
 
-	// Set the date timezone (used for log name only) :
 	if (empty($nfw_['nfw_options']['tzset']) ) {
 		date_default_timezone_set($nfw_['nfw_options']['timezone']);
 	}
@@ -291,12 +244,10 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 	$log_file = __DIR__ . '/nfwlog/firewall_' . $cur_month;
 	$log_file_ext = $log_file . '.php';
 
-	// Check whether we should rotate the log :
 	if (! empty($nfw_['nfw_options']['log_rotate']) && @ctype_digit($nfw_['nfw_options']['log_maxsize']) ) {
 		if ( file_exists($log_file_ext) ) {
 			$log_stat = stat($log_file_ext);
 			if ( $log_stat['size'] > $nfw_['nfw_options']['log_maxsize']) {
-				// Rotate it :
 				$log_ext = 1;
 				while ( file_exists($log_file . '.' . $log_ext . '.php' ) ) {
 					$log_ext++;
@@ -331,7 +282,6 @@ function nfw_block( $lev ) {
 
 	global $nfw_;
 
-	// We don't block anyone if we are running in debugging mode :
 	if (! empty($nfw_['nfw_options']['debug']) ) {
 		return;
 	}
@@ -342,15 +292,12 @@ function nfw_block( $lev ) {
       500 => '500 Internal Server Error', 503 => '503 Service Unavailable',
    );
 
-	// Prepare the page to display to the blocked user :
 	if (empty($nfw_['num_incident']) ) { $nfw_['num_incident'] = '000000'; }
 	$tmp = str_replace( '%%NUM_INCIDENT%%', $nfw_['num_incident'],  base64_decode($nfw_['nfw_options']['blocked_msg']) );
-	// Add the right IP to the message :
 	$tmp = str_replace( '%%REM_ADDRESS%%', $nfw_['user_ip'], $tmp );
 	if (! headers_sent() ) {
 		header('HTTP/1.0 ' . $http_codes[$nfw_['nfw_options']['ret_code']] );
 		header('Status: ' .  $http_codes[$nfw_['nfw_options']['ret_code']] );
-		// Prevent caching :
 		header('Pragma: no-cache');
 		header('Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate, proxy-revalidate');
 		header('Expires: Mon, 01 Sep 2014 01:01:01 GMT');
@@ -360,12 +307,9 @@ function nfw_block( $lev ) {
 		'<html><head><title>' . $http_codes[$nfw_['nfw_options']['ret_code']] .
 		'</title><style>body{font-family:sans-serif;font-size:13px;color:#000000;}</style><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body bgcolor="white">' . $tmp . '</body></html>';
 
-	// Check if we must block that IP for a while :
 	if ($lev > 0 && $lev < 4 && $nfw_['nfw_options']['ban_ip']) {
 		if ( $nfw_['nfw_options']['ban_ip'] == 3 || ($nfw_['nfw_options']['ban_ip'] == 2 && $lev > 1) || ($nfw_['nfw_options']['ban_ip'] == 1 && $lev == 3) ) {
-			// Add it to our cache :
 			touch( __DIR__ .'/nfwlog/cache/ipbk.'. $_SERVER['SERVER_NAME'] .'_-_'. $nfw_['user_ip'] .'.php');
-			// Log it :
 			nfw_log('Banning IP for ' . $nfw_['nfw_options']['ban_time'] . ' minute(s)', 'REMOTE_ADDR : '. $nfw_['user_ip'], 6, 0);
 		}
 	}
@@ -380,61 +324,44 @@ function nfw_check_upload() {
 
 	global $nfw_;
 
-	// Fetch uploaded files, if any :
 	$f_uploaded = nfw_fetch_uploads();
 	$tmp = '';
-	// Uploads are not allowed :
 	if ( empty($nfw_['nfw_options']['uploads']) ) {
 		$tmp = '';
 		foreach ($f_uploaded as $key => $value) {
-			// Empty field ?
 			if (! $f_uploaded[$key]['name']) { continue; }
 			$tmp .= $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes ';
       }
       if ( $tmp ) {
-			// Log and block :
 			nfw_log('Blocked file upload attempt', rtrim($tmp, ' '), 3, 0);
 			nfw_block(3);
 		}
-	// Uploads are allowed :
 	} else {
 		foreach ($f_uploaded as $key => $value) {
 			if (! $f_uploaded[$key]['name']) { continue; }
-			// Check its size :
 			if ( $f_uploaded[$key]['size'] > $nfw_['nfw_options']['upload_maxsize'] ) {
 				nfw_log('Attempt to upload a file > ' . ($nfw_['nfw_options']['upload_maxsize'] / 1024) .
 					' KB' , $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 1, 0);
 				nfw_block(1);
 			}
 			$data = '';
-			// Reject scripts, ELF and system files ?
 			if ( $nfw_['nfw_options']['uploads'] == 2 ) {
-				// System files :
 				if (preg_match('/\.ht(?:access|passwd)|(?:php\d?|\.user)\.ini|\.ph(?:p[345]?|t|tml)\b/', $f_uploaded[$key]['name']) ) {
 					nfw_log('Attempt to upload a script or system file', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
 					nfw_block(3);
 				}
 				$data = file_get_contents($f_uploaded[$key]['tmp_name']);
-				// ELF :
 				if (preg_match('`^\x7F\x45\x4C\x46`', $data) ) {
 					nfw_log('Attempt to upload a Linux binary file (ELF)', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
 					nfw_block(3);
 				}
-				// Scripts :
 				if (preg_match('`<\?(?i:php)|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\b(?i:array_map|base64_(?:de|en)code|eval|file(?:_get_contents)?|fsockopen|gzinflate|move_uploaded_file|passthru|preg_replace|phpinfo|system|(?:shell_)?exec)\s*\(|\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[]|\W\$\{\s*[\'"]\w+[\'"]`', $data) ) {
 					nfw_log('Attempt to upload a script', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
 					nfw_block(3);
 				}
 			}
 
-			// Look for EICAR AV test file :
-			// -The file must start with the 68-bytes EICAR signature.
-			// -It can be appended by any combination of whitespace characters
-			//  with the total file length not exceeding 128 characters. The only
-			//  whitespace characters allowed are the space character, tab, LF, CR, CTRL-Z.
-			//	(See: http://blog.nintechnet.com/anatomy-of-the-eicar-antivirus-test-file/)
 			if ( $f_uploaded[$key]['size'] > 67 && $f_uploaded[$key]['size'] < 129 ) {
-				// Read it:
 				if ( empty($data) ) {
 					$data = file_get_contents( $f_uploaded[$key]['tmp_name'] );
 				}
@@ -442,12 +369,10 @@ function nfw_check_upload() {
 				                'AR-STANDARD-ANTIVI' . 'RUS-TEST-FILE!\$H' . '\+H\*' .
 				                '[\x09\x10\x13\x20\x1A]*`', $data) ) {
 					nfw_log('EICAR Standard Anti-Virus Test File blocked', $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 3, 0);
-					// Always block it, even if we allow uploads:
 					nfw_block(3);
 				}
 			}
 
-			// Sanitise filename ?
 			if (! empty($nfw_['nfw_options']['sanitise_fn']) ) {
 				$tmp = '';
 				$f_uploaded[$key]['name'] = preg_replace('/[^\w\.\-]/i', 'X', $f_uploaded[$key]['name'], -1, $count);
@@ -463,7 +388,6 @@ function nfw_check_upload() {
 					}
 				}
 			}
-			// Log and let it go :
 			nfw_log('Uploading file' . $tmp , $f_uploaded[$key]['name'] . ', ' . number_format($f_uploaded[$key]['size']) . ' bytes', 5, 0);
 		}
 	}
@@ -503,40 +427,31 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 	global $nfw_;
 
-	// Loop through each rule:
 	foreach ( $nfw_rules as $id => $rules ) {
 
-		// Ignored disabled rules:
 		if ( empty( $rules['ena']) ) {
 			continue;
 		}
 
-		// Check the first subrule (chained rules):
 		$wherelist = explode('|', $rules['cha'][1]['whe']);
 
 		foreach ($wherelist as $where) {
 
-			// Check it this type of scan is disabled (POST, GET, COOKIE,
-			// as well as HTTP_USER_AGENT, HTTP_REFERER):
 			if ( nfw_disabled_scan( $where, $nfw_options ) ) { continue; }
 
 			// =================================================================
-			// RAW POST data:
 			if ( $where == 'RAW' ) {
-				// Obviously, we only want to deal with POST requests:
 				if ( $_SERVER['REQUEST_METHOD'] != 'POST' ) { continue; }
 
 				$RAW_POST = file_get_contents( 'php://input' );
 
 				if ( nfw_matching( 'RAW', 'POST', $nfw_rules, $rules, 1, $id, $RAW_POST, $nfw_options ) ) {
-					// Rule matches, check next subrule:
 					nfw_check_subrule( 'RAW', 'POST', $nfw_rules, $nfw_options, $rules, $id );
 				}
 				continue;
 			}
 
 			// =================================================================
-			// GET, POST, COOKIE, SERVER...:
 			if ( $where == 'POST' || $where == 'GET' || $where == 'COOKIE' ||
 				$where == 'SERVER' || $where == 'REQUEST' || $where == 'FILES' ||
 				$where == 'SESSION'
@@ -544,33 +459,28 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 				if ( empty($GLOBALS['_' . $where]) ) {continue;}
 
-				// Loop through the array:
 				foreach ($GLOBALS['_' . $where] as $key => $val) {
 
 					if ( nfw_matching( $where, $key, $nfw_rules, $rules, 1, $id, null, $nfw_options ) ) {
-						// Rule matches, check next subrule:
 						nfw_check_subrule( $where, $key, $nfw_rules, $nfw_options, $rules, $id );
 					}
 
 				}
 
 				continue;
-			}// GET, POST, COOKIE, SERVER...
+			}
 
 			// =================================================================
-			// HTTP_USER_AGENT, HTTP_REFERER, PHP_SELF, REQUEST_URI etc
 
 			if ( isset( $_SERVER[$where] ) ) {
 
 				if ( nfw_matching( 'SERVER', $where, $nfw_rules, $rules, 1, $id, null, $nfw_options ) ) {
-					// Rule matches, check next subrule:
 					nfw_check_subrule( 'SERVER', $where, $nfw_rules, $nfw_options, $rules, $id );
 				}
 				continue;
 			}
 
 			// =================================================================
-			// POST:xx, GET:xx, COOKIE:xxx, SERVER:xxx...:
 
 			$w = explode(':', $where);
 
@@ -579,15 +489,14 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 			}
 
 			if ( nfw_matching( $w[0], $w[1], $nfw_rules, $rules, 1, $id, null, $nfw_options ) ) {
-				// Rule matches, check next subrule:
 				nfw_check_subrule( $w[0], $w[1], $nfw_rules, $nfw_options, $rules, $id );
 			}
 
 			// =================================================================
 
-		} // foreach ($wherelist as $where) {
+		}
 
-	} // 	foreach ($nfw_rules as $rules_id => $rules_values) {
+	}
 
 }
 
@@ -595,7 +504,6 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 function nfw_check_subrule( $w0, $w1, $nfw_rules, $nfw_options, $rules, $id ) {
 
-	// Capture ?
 	if ( isset( $rules['cha'][1]['cap'] ) ) {
 		nfw_matching( $w0, $w1, $nfw_rules, $rules, 2, $id, null, $nfw_options );
 
@@ -603,7 +511,6 @@ function nfw_check_subrule( $w0, $w1, $nfw_rules, $nfw_options, $rules, $id ) {
 		$w = explode(':', $rules['cha'][2]['whe']);
 
 		if (! isset( $w[1] ) ) {
-			// RAW POST: we handle it separately:
 			if ( $w[0] == 'RAW' ) {
 				if ( nfw_disabled_scan( 'POST', $nfw_options) || $_SERVER['REQUEST_METHOD'] != 'POST' ) {
 					return;
@@ -611,7 +518,6 @@ function nfw_check_subrule( $w0, $w1, $nfw_rules, $nfw_options, $rules, $id ) {
 				nfw_matching( 'POST', 'RAW', $nfw_rules, $rules, 2, $id, file_get_contents( 'php://input' ), $nfw_options );
 				return;
 			}
-			// HTTP_USER_AGENT, HTTP_REFERER, REQUEST_URI & al.:
 			$w[2] = $w[1] = $w[0];
 			$w[0] = 'SERVER';
 		} else {
@@ -635,7 +541,7 @@ function nfw_check_subrule( $w0, $w1, $nfw_rules, $nfw_options, $rules, $id ) {
 
 function nfw_disabled_scan( $where, $nfw_options, $extra = null ) {
 
-	if ( $extra ) { $where = $extra; }   // Extra: HTTP_USER_AGENT/HTTP_REFERER
+	if ( $extra ) { $where = $extra; }
 
 	if ( $where == 'POST' && empty($nfw_options['post_scan']) ||
 		$where == 'GET' && empty($nfw_options['get_scan']) ||
@@ -660,7 +566,6 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 		$val = $GLOBALS['_'.$where][$key];
 	}
 
-	// Is this an array?
 	if ( is_array($val) ) {
 		if ( isset( $nfw_['flattened'][$where][$key] ) ) {
 			$val = $nfw_['flattened'][$where][$key];
@@ -670,42 +575,33 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 		}
 	}
 
-	// Look for base64 encoded injection:
 	if ( $where == 'POST' && ! empty($nfw_options['post_b64']) && ! isset($nfw_['b64'][$where][$key]) && $val ) {
 		nfw_check_b64($key, $val);
 		$nfw_['b64'][$where][$key] = 1;
 	}
 
-	// Check if we need to execute a function:
 	if ( isset( $rules['cha'][$subid]['exe'] ) ) {
 		$val = @$rules['cha'][$subid]['exe']($val);
 	}
 
-	// Check if we need to normalized the data:
 	if ( isset( $rules['cha'][$subid]['nor'] ) ) {
-		// Check if normalized already (only if it wasn't modified by executing a function call):
 		if ( isset( $nfw_['normalized'][$where][$key] ) && ! isset( $rules['cha'][$subid]['exe'] ) ) {
 			$val = $nfw_['normalized'][$where][$key];
 		} else {
 			$val = nfw_normalize( $val, $nfw_rules );
-			// Don't cache it, if rule required executing a function:
 			if (! isset( $rules['cha'][$subid]['exe']) ) {
 				$nfw_['normalized'][$where][$key] = $val;
 			}
 		}
 	}
 
-	// Check if we need to transform/clean up the string from unwanted characters:
 	if ( isset( $rules['cha'][$subid]['tra'] ) ) {
-		//	Check if transformed already (only if it wasn't modified by executing a function call):
 		if ( isset( $nfw_['transformed'][$where][$key][ $rules['cha'][$subid]['tra'] ] )  && ! isset( $rules['cha'][$subid]['exe'] ) ) {
 			$val = $nfw_['transformed'][$where][$key][ $rules['cha'][$subid]['tra'] ];
 		} else {
 			$val = nfw_transform_string( $val, $rules['cha'][$subid]['tra'] );
 			if ( empty( $rules['cha'][$subid]['noc']) ) {
-				// Compress it now, so that it will be cached:
 				$val = nfw_compress_string( $val, $rules['cha'][$subid]['tra'] );
-				// Don't cache it, if rule required executing a function:
 				if (! isset( $rules['cha'][$subid]['exe']) ) {
 					$nfw_['transformed'][$where][$key][ $rules['cha'][$subid]['tra'] ] = $val;
 				}
@@ -713,13 +609,10 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 		}
 	} else {
 		if ( empty( $rules['cha'][$subid]['noc']) ) {
-			// Compress blocks of white space characters:
 			if ( isset( $nfw_['compressed'][$where][$key] ) && ! isset( $rules['cha'][$subid]['exe'] ) ) {
-				// Use cached copy only if rule wasn't modified by executing a function call:
 				$val = $nfw_['compressed'][$where][$key];
 			} else {
 				$val = nfw_compress_string( $val );
-				// Don't cache it, if rule required executing a function:
 				if (! isset( $rules['cha'][$subid]['exe']) ) {
 					$nfw_['compressed'][$where][$key] = $val;
 				}
@@ -727,21 +620,15 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 		}
 	}
 
-	// Check if it matches:
 	if ( nfw_operator( $val, $rules['cha'][$subid]['wha'], $rules['cha'][$subid]['ope']	) ) {
-		// Check if there is one or more subrules left to check:
 		if ( isset( $rules['cha'][$subid+1]) ) {
 			return 1;
 		} else {
-			// Write to the firewall log:
 			if ( isset( $nfw_['flattened'][$where][$key] ) ) {
-				// If it is an array, we write the flattened cached copy to the log:
 				nfw_log($rules['why'], $where .':' . $key . ' = ' . $nfw_['flattened'][$where][$key], $rules['lev'], $id);
 			} elseif ( isset( $RAW_POST ) ) {
-				// RAW POST ?
 				nfw_log($rules['why'], $where .':' . $key . ' = ' . $RAW_POST, $rules['lev'], $id);
 			} else {
-				// Anything else:
 				nfw_log($rules['why'], $where .':' . $key . ' = ' . $GLOBALS['_'.$where][$key], $rules['lev'], $id);
 			}
 			nfw_block($rules['lev']);
@@ -754,32 +641,30 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 
 function nfw_operator( $val, $what, $op ) {
 
-	// Check operator:
-	if ( $op == 2 ) { // '!='
+	if ( $op == 2 ) {
 		if ( $val != $what ) {
 			return true;
 		}
-	} elseif ( $op == 3 ) { // 'strpos'
+	} elseif ( $op == 3 ) {
 		if ( strpos($val, $what) !== FALSE ) {
 			return true;
 		}
-	} elseif ( $op == 4 ) { // 'stripos'
+	} elseif ( $op == 4 ) {
 		if ( stripos($val, $what) !== FALSE ) {
 			return true;
 		}
-	} elseif ( $op == 5 ) { // 'rx'
+	} elseif ( $op == 5 ) {
 		if ( preg_match("`$what`", $val ) ) {
 			return true;
 		}
-	} elseif ( $op == 6 ) { // '!rx'
+	} elseif ( $op == 6 ) {
 		if (! preg_match("`$what`", $val) ) {
 			return true;
 		}
-	} elseif ( $op == 7 ) { // '*'
-		// Always return true:
+	} elseif ( $op == 7 ) {
 		return true;
 
-	} else { // '=='
+	} else {
 		if ( $val == $what ) {
 			return true;
 		}
@@ -848,113 +733,20 @@ function nfw_html_decode( $norm ) {
 
 	global $nfw_;
 
-	// We don't use html_entity_decode with ENT_HTML5 because it is not
-	// compatible with PHP 5.3, and it does not decode some entities that
-	// could be used to evade WAF filters:
 	$nfw_['entity_in'] = array (
-		'&Tab;',					//		&#x00009;	&#9;
-		'&NewLine;',			//		&#x0000A;	&#10;
-		'&excl;',				//		&#x00021;	&#33;
-		'&quot;',				//	" 	&#x00022;	&#34;
-		'&QUOT;',
-		'&num;',					//	#	&#x00023;	&#35;
-		'&dollar;',				//	$	&#x00024;	&#36;
-		'&percnt;',				//	%	&#x00025;	&#37;
-		'&amp;',					//	&	&#x00026;	&#38;
-		'&AMP;',
-		'&apos;',				//	'	&#x00027;	&#39;
-		'&lpar;',				//	(	&#x00028;	&#40;
-		'&rpar;',				//	)	&#x00029;	&#41;
-		'&ast;',					//	*	&#x0002A;	&#42;
-		'&midast;',
-		'&plus;',				//	+	&#x0002B;	&#43;
-		'&comma;',				//	,	&#x0002C;	&#44;
-		'&period;',				//	.	&#x0002E;	&#46;
-		'&sol;',					//	/	&#x0002F;	&#47;
-		'&colon;',				//	:	&#x0003A;	&#58;
-		'&semi;',				//	;	&#x0003B;	&#59;
-		'&lt;',					//	<	&#x0003C;	&#60;
-		'&LT;',
-		'&equals;',				//	=	&#x0003D;	&#61;
-		'&gt;',					//	>	&#x0003E;	&#62;
-		'&GT;',
-		'&quest;',				//	?	&#x0003F;	&#63;
-		'&commat;',				//	@	&#x00040;	&#64;
-		'&lsqb;',				//	[	&#x0005B;	&#91;
-		'&lbrack;',
-		'&bsol;',				//	\	&#x0005C;	&#92;
-		'&rsqb;',				//	]	&#x0005D;	&#93;
-		'&rbrack;',
-		'&Hat;',					//	^	&#x0005E;	&#94;
-		'&lowbar;',				//	_	&#x0005F;	&#95;
-		'&grave;',				//	`	&#x00060;	&#96;
-		'&DiacriticalGrave;',
-		'&lcub;',				//	{	&#x0007B;	&#123;
-		'&lbrace;',
-		'&verbar;',				//	|	&#x0007C;	&#124;
-		'&vert;',
-		'&VerticalLine;',
-		'&rcub;',				//	}	&#x0007D;	&#125;
-		'&rbrace;',
-		'&nbsp;',				//	' ' &#x000A0;	&#160;
-		'&NonBreakingSpace;',
-		// While we are here, we modify these ones too:
-		'&nvlt;',
-		'&nvgt;',
-		"\xa0",
-
+		'&Tab;','&NewLine;','&excl;','&quot;','&QUOT;','&num;','&dollar;',
+		'&percnt;','&amp;','&AMP;','&apos;','&lpar;','&rpar;','&ast;',
+		'&midast;','&plus;','&comma;','&period;','&sol;','&colon;','&semi;',
+		'&lt;','&LT;','&equals;','&gt;','&GT;','&quest;','&commat;','&lsqb;',
+		'&lbrack;','&bsol;','&rsqb;','&rbrack;','&Hat;','&lowbar;','&grave;',
+		'&DiacriticalGrave;','&lcub;','&lbrace;','&verbar;','&vert;','&VerticalLine;',
+		'&rcub;','&rbrace;','&nbsp;','&NonBreakingSpace;','&nvlt;','&nvgt;',"\xa0",
 	);
 
 	$nfw_['entity_out'] = array (
-		'',		//	&Tab;
-		'',		//	&NewLine;
-		'!',		//	&excl;
-		'"',		//	&quot;
-		'"',		// &QUOT;
-		'#',		//	&num;
-		'$',		//	&dollar;
-		'%',		//	&percnt;
-		'&',		//	&amp;
-		'&',		//	&AMP;
-		"'",		//	&apos;
-		'(',		//	&lpar;
-		')',		//	&rpar;
-		'*',		//	&ast;
-		'*',		//	&midast;
-		'+',		//	&plus;
-		',',		//	&comma;
-		'.',		//	&period;
-		'/',		//	&sol;
-		':',		//	&colon;
-		';',		//	&semi;
-		'<',		//	&lt;
-		'<',		//	&LT;
-		'=',		//	&equals;
-		'>',		//	&gt;
-		'>',		//	&GT;
-		'?',		//	&quest;
-		'@',		//	&commat;
-		'[',		//	&lsqb;
-		'[',		//	&lbrack;
-		'\\',		//	&bsol;
-		']',		//	&rsqb;
-		']',		//	&rbrack;
-		'^',		//	&Hat;
-		'_',		//	&lowbar;
-		'`',		//	&grave;
-		'`',		//	&DiacriticalGrave;
-		'{',		//	&lcub;
-		'{',		//	&lbrace;
-		'|',		//	&verbar;
-		'|',		//	&vert;
-		'|',		//	&VerticalLine;
-		'}',		//	&rcub;
-		'}',		//	&rbrace;
-		' ',		//	&nbsp;
-		' ',		//	&NonBreakingSpace;'
-		'',		// &nvlt;
-		'',		// &nvgt;
-		' '		// NBSP
+		'','','!','"','"','#','$','%','&','&',"'",'(',')','*','*','+',',','.','/',
+		':',';','<','<','=','>','>','?','@','[','[','\\',']',']','^','_','`','`',
+		'{','{','|','|','|','}','}',' ',' ','','',' '
 	);
 
 	$normout = str_replace( $nfw_['entity_in'], $nfw_['entity_out'], $norm);
@@ -968,9 +760,9 @@ function nfw_html_decode( $norm ) {
 
 function nfw_compress_string( $string, $where = null ) {
 
-	if ( $where == 1 ) { // SQL
+	if ( $where == 1 ) {
 		$replace = ' ';
-	} else { // Anything else
+	} else {
 		$replace = '';
 	}
 
@@ -985,11 +777,8 @@ function nfw_compress_string( $string, $where = null ) {
 
 function nfw_transform_string( $string, $where ) {
 
-	// 1 == MySQL
 	if ( $where == 1 ) {
 		// Heavily modified version of JsShrink (http://vrana.github.io/JsShrink/)
-		// to use to remove MySQL comments (instead of JS ones) and some unwanted characters,
-		// as well as to trim the output and convert it to lower cases:
 		$norm = trim( preg_replace_callback('((^([^a-z/&|#]*)|([\'"])(?:\\\\.|[^\n\3\\\\])*?\3|(?:[0-9a-z_$]+)|.)'.
 			'(?:\s|--[^\n]*+\n|/\*(?:[^*!]|\*(?!/))*+\*/)*'.
 			'(?:(?:\#|--(?:[\x00-\x20\x7f]|$)|/\*$)[^\n]*+\n|/\*!(?:\d{5})?|\*/|/\*(?:[^*!]|\*(?!/))*+\*/)*)si',
@@ -997,19 +786,12 @@ function nfw_transform_string( $string, $where ) {
 		$norm = preg_replace('/[\'"]\x20*\+?\x20*[\'"]/', '', $norm);
 		$norm = strtolower( str_replace(	array('+', "'", '"', "(", ')', '`', ',', ';'), ' ', $norm) );
 
-	// 2 == JS
 	} elseif ( $where == 2 ) {
-		// Same as above but for JS comments.
-		// Note:	-It should be used ONLY with pure JS (sub)string,
-		//			otherwise it could be bypassed easily.
-		// 		-JS being case-sensitive, we don't change the case.
 		$norm = trim( preg_replace_callback('((^|([\'"])(?:\\\\.|[^\n\2\\\\])*?\2|(?:[0-9a-z_$]+)|.)'.
 			'(?://[^\n]*+\n|/\*(?:[^*]|\*(?!/))*+\*/)*)si',
 			'nfw_delcomments2',  $string . "\n") );
-		// Remove/replace spaces first, then comments left and obfuscated string:
 		$norm = preg_replace( array('/[\n\r\t\f\v]/', '`/\*\s*\*/`', '/[\'"`]\x20*[+.]?\x20*[\'"`]/'),
 				array('', ' ', ''), $norm);
-	// 3 == Path
 	} elseif ( $where == 3 ) {
 		$norm = preg_replace( array('`/(\./)+`','`/{2,}`', '`/(.+?)/\.\./\1\b`'), array('/', '/', '/\1'), $string );
 	}
@@ -1067,8 +849,6 @@ function nfw_flatten( $glue, $pieces ) {
       if ( is_array($r_pieces)) {
          $ret[] = nfw_flatten($glue, $r_pieces);
       } else {
-			// Ignore empty keys, otherwise they would be
-			// replaced with a white space character:
 			if (! empty($r_pieces) ) {
 				$ret[] = $r_pieces;
 			}
@@ -1102,91 +882,41 @@ function nfw_sanitise( $str, $msg ) {
 
 	global $nfw_;
 
-	// String :
 	if (is_string($str) ) {
-		// By default, we don't have a SQL connection and cannot use
-		// the mysql_real_escape_string function. This could be a problem
-		// if the DB is using GBK charset. However, it is possible to connect
-		// to the DB from the .htninja file. The DB link should be stored in
-		// the $nfw_['dblink'] variable:
-		//
-		// .htninja example (see http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
-		// ----------------------------- 8< -----------------------------
-		// <?php
-		//		@$nfw_['dblink'] = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
-		//		if ($nfw_['dblink']->connect_error) {
-		//			die('MySQL connection error: '. $nfw_['dblink']->connect_error);
-		//		}
-		// ----------------------------- 8< -----------------------------
-
-		// We sanitise variables **value** either with :
-		// -mysql_real_escape_string* to escape [\x00], [\n], [\r], [\],
-		//	 ['], ["] and [\x1a] *IF* we have a DB link.
-		//	-str_replace to escape backtick [`] and replace '<', '>' with HTML entities.
-		//	Applies to $_GET, $_POST, $_SERVER['HTTP_USER_AGENT']
-		//	and $_SERVER['HTTP_REFERER']
-		//
-		// Or:
-		//
-		// -str_replace to escape ["], ['], [`], [\] and replace '<', '>' with HTML entities.
-		//	-str_replace to replace [\n], [\r], [\x1a] and [\x00] with [X]
-		//	Applies to $_SERVER['PATH_INFO'], $_SERVER['PATH_TRANSLATED']
-		//	and $_SERVER['PHP_SELF']
-		//
-		// Or:
-		//
-		// -str_replace to escape ['], [`] and , [\]
-		//	-str_replace to replace [\x1a] and [\x00] with [X]
-		//	-str_replace to replace [<] and with [&lt;]
-		//	Applies to $_COOKIE only
-		//
-
-		// COOKIE ?
 		if ($msg == 'COOKIE') {
 			$str2 = str_replace(	array('\\', "'", "\x00", "\x1a", '`', '<'),
-				array('\\\\', "\\'", 'X', 'X', '\\`', '&lt;'),	$str);
-		// Use mysql_real_escape_string if we have a DB link :
+				array('\\\\', "\\'", '-', '-', '\\`', '&lt;'),	$str);
 		} elseif (! empty($nfw_['dblink']) ) {
 			$str2 = $nfw_['dblink']->real_escape_string($str);
 			$str2 = str_replace(	array(  '`', '<', '>'), array( '\\`', '&lt;', '&gt;'),	$str2);
-		// DIY :
 		} else {
 			$str2 = str_replace(	array('\\', "'", '"', "\x0d", "\x0a", "\x00", "\x1a", '`', '<', '>'),
-				array('\\\\', "\\'", '\\"', 'X', 'X', 'X', 'X', '\\`', '&lt;', '&gt;'),	$str);
+				array('\\\\', "\\'", '\\"', '-', '-', '-', '-', '\\`', '&lt;', '&gt;'),	$str);
 		}
-		// Don't sanitised the string if we are running in Debug Mode :
 		if (! empty($nfw_['nfw_options']['debug']) ) {
 			if ($str2 != $str) {
 				nfw_log('Sanitising user input', $msg . ': ' . $str, 7, 0);
 			}
 			return $str;
 		}
-		// Log and return the sanitised string :
 		if ($str2 != $str) {
 			nfw_log('Sanitising user input', $msg . ': ' . $str, 6, 0);
 		}
 		return $str2;
 
-	// Array :
 	} else if (is_array($str) ) {
 		foreach($str as $key => $value) {
-			// COOKIE ?
 			if ($msg == 'COOKIE') {
 				$key2 = str_replace(	array('\\', "'", "\x00", "\x1a", '`', '<', '>'),
-					array('\\\\', "\\'", 'X', 'X', '\\`', '&lt;', '&gt;'),	$key, $occ);
+					array('\\\\', "\\'", '-', '-', '\\`', '&lt;', '&gt;'),	$key, $occ);
 			} else {
-				// We sanitise variables **name** using :
-				// -str_replace to escape [\], ['] and ["]
-				// -str_replace to replace [\n], [\r], [\x1a] and [\x00] with [X]
-				//	-str_replace to replace [`], [<] and [>] with their HTML entities (&#96; &lt; &gt;)
 				$key2 = str_replace(	array('\\', "'", '"', "\x0d", "\x0a", "\x00", "\x1a", '`', '<', '>'),
-					array('\\\\', "\\'", '\\"', 'X', 'X', 'X', 'X', '&#96;', '&lt;', '&gt;'),	$key, $occ);
+					array('\\\\', "\\'", '\\"', '-', '-', '-', '-', '&#96;', '&lt;', '&gt;'),	$key, $occ);
 			}
 			if ($occ) {
 				unset($str[$key]);
 				nfw_log('Sanitising user input', $msg . ': ' . $key, 6, 0);
 			}
-			// Sanitise the value :
 			$str[$key2] = nfw_sanitise($value, $msg);
 		}
 		return $str;
@@ -1199,38 +929,20 @@ function nfw_response_headers() {
 
 	if (! defined('NFW_RESHEADERS') ) { return; }
 	$NFW_RESHEADERS = NFW_RESHEADERS;
-	// NFW_RESHEADERS:
-	// 000000
-	// ||||||_ Strict-Transport-Security (includeSubDomains) [0-1]
-	// |||||__ Strict-Transport-Security [0-3]
-	// ||||___ X-XSS-Protection [0-1]
-	// |||____ X-Frame-Options [0-2]
-	// ||_____ X-Content-Type-Options [0-1]
-	// |______ HttpOnly cookies [0-1]
-
 	$rewrite = array();
 
 	if ($NFW_RESHEADERS[0] == 1) {
-		// Parse all response headers :
 		foreach (headers_list() as $header) {
-			// Ignore it if it is not a cookie :
 			if (strpos($header, 'Set-Cookie:') === false) { continue; }
-			// Does it have the HttpOnly flag on ?
 			if (stripos($header, '; httponly') !== false) {
-				// Save it...
 				$rewrite[] = $header;
-				// and check next header :
 				continue;
 			}
-			// Append the HttpOnly flag and save it :
 			$rewrite[] = $header . '; httponly';
 		}
-		// Shall we rewrite cookies ?
 		if (! empty($rewrite) ) {
-			// Remove all original cookies first:
 			header_remove('Set-Cookie');
 			foreach($rewrite as $cookie) {
-				// Inject ours instead :
 				header($cookie, false);
 			}
 		}
@@ -1251,24 +963,18 @@ function nfw_response_headers() {
 	}
 
 	if ($NFW_RESHEADERS[4] == 0) { return; }
-	// We don't send HSTS headers over HTTP :
 	if ( $_SERVER['SERVER_PORT'] != 443 &&
 	(! isset( $_SERVER['HTTP_X_FORWARDED_PROTO']) ||
 	$_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') ) {
 		return;
 	}
 	if ($NFW_RESHEADERS[4] == 1) {
-		// 1 month :
 		$max_age = 'max-age=2628000';
 	} elseif ($NFW_RESHEADERS[4] == 2) {
-		// 6 months :
 		$max_age = 'max-age=15768000';
 	} elseif ($NFW_RESHEADERS[4] == 3) {
-		// 12 months
 		$max_age = 'max-age=31536000';
 	} elseif ($NFW_RESHEADERS[4] == 4) {
-		// Send an empty max-age to signal the UA to
-		// cease regarding the host as a known HSTS Host :
 		$max_age = 'max-age=0';
 	}
 	if ($NFW_RESHEADERS[5] == 1) {

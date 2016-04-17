@@ -1,5 +1,5 @@
 <?php
-/* 2015-01-19 17:50:25 */
+/* 2016-04-13 11:59:59 */
 $lang = array (
 	'error'					=> 'Erreur',
 	'info'					=> 'Info',
@@ -44,14 +44,14 @@ $lang = array (
 	'cdn_title'				=>	'Détection CDN',
 
 	// FREE
-	'cdn_clouflare_free'	=>	'<code>HTTP_CF_CONNECTING_IP</code> detecté&nbsp;: vous semblez utiliser les services de Cloudflare. Assurez-vous d\'avoir configuré votre serveur HTTP pour qu\'il utilise la bonne adresse IP, sinon, utilisez le fichier <code>' . '%s' . '.htninja</a></code> prévu à cet effet.',
+	'cdn_clouflare_free'	=>	'<code>HTTP_CF_CONNECTING_IP</code> détecté&nbsp;: vous semblez utiliser les services de Cloudflare. Assurez-vous d\'avoir configuré votre serveur HTTP pour qu\'il utilise la bonne adresse IP, sinon, utilisez le fichier <code>' . '%s' . '.htninja</a></code> prévu à cet effet.',
 	// PRO
-	'cdn_clouflare_pro'	=>	'<code>HTTP_CF_CONNECTING_IP</code> detecté&nbsp;: vous semblez utiliser les services de Cloudflare. Assurez-vous que l\'option ' . '%s' . 'IP source</a> a bien été configurée correctement.',
+	'cdn_clouflare_pro'	=>	'<code>HTTP_CF_CONNECTING_IP</code> détecté&nbsp;: vous semblez utiliser les services de Cloudflare. Assurez-vous que l\'option ' . '%s' . 'IP source</a> a bien été configurée correctement.',
 
 	// FREE
-	'cdn_incapsula_free'	=>	'<code>HTTP_INCAP_CLIENT_IP</code> detecté&nbsp;: vous semblez utiliser les services de Incapsula. Assurez-vous d\'avoir configuré votre serveur HTTP pour qu\'il utilise la bonne adresse IP, sinon, utilisez le fichier <code>' . '%s' . '.htninja</a></code> prévu à cet effet.',
+	'cdn_incapsula_free'	=>	'<code>HTTP_INCAP_CLIENT_IP</code> détecté&nbsp;: vous semblez utiliser les services de Incapsula. Assurez-vous d\'avoir configuré votre serveur HTTP pour qu\'il utilise la bonne adresse IP, sinon, utilisez le fichier <code>' . '%s' . '.htninja</a></code> prévu à cet effet.',
 	// PRO
-	'cdn_incapsula_pro'	=>	'<code>HTTP_INCAP_CLIENT_IP</code> detecté&nbsp;: vous semblez utiliser les services de Incapsula. Assurez-vous que l\'option ' . '%s' . 'IP source</a> a bien été configurée correctement.',
+	'cdn_incapsula_pro'	=>	'<code>HTTP_INCAP_CLIENT_IP</code> détecté&nbsp;: vous semblez utiliser les services de Incapsula. Assurez-vous que l\'option ' . '%s' . 'IP source</a> a bien été configurée correctement.',
 
 
 	'admin'					=>	'Administrateur',
@@ -62,6 +62,9 @@ $lang = array (
 
 	'htninja'				=>	'Fichier de configuration',
 	'htninja_writable'	=>	'%s est accessible en écriture. Pensez à changer ses permissions en lecture seule.',
+
+	'is_opcache'			=> 'Cache opcode PHP',
+	'opcache_detected'	=> 'Un cache opcode a été détecté : %s. Assurez-vous de le désactiver pour le répertoire %s, sinon tout changement dans votre configuration ne pourrait pas prendre effet immédiatement.',
 
 	'log_dir'				=> 'Répertoire des Fichier Journaux',
 	'cache_dir'				=> 'Répertoire du Cache',

@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-06-17 22:08:26                                       |
+ | REVISION: 2016-04-13 12:10:41                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -295,8 +295,9 @@ if (! is_writable('./conf') ) {
 }
 // Optional NinjaFirewall .htninja configuration file
 // ( see http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
-if ( @file_exists( $file = dirname($_SERVER['DOCUMENT_ROOT'] ) . '/.htninja') ||
-		@file_exists( $file = $_SERVER['DOCUMENT_ROOT'] . '/.htninja') ) {
+$doc_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
+if ( @file_exists( $file = dirname($doc_root ) . '/.htninja') ||
+		@file_exists( $file = $doc_root . '/.htninja') ) {
 	?>
 	<tr>
 		<td width="45%"><?php echo $lang['htninja'] ?></td>
@@ -315,6 +316,29 @@ if ( @file_exists( $file = dirname($_SERVER['DOCUMENT_ROOT'] ) . '/.htninja') ||
 	<?php
 	}
 }
+
+// Check if there is an opcode cache enabled
+if ( ini_get('xcache.cacher') ) {
+	$opcode = 'xcache.cacher';
+} elseif ( ini_get('eaccelerator.enable') ) {
+	$opcode = 'eaccelerator.enable';
+} elseif ( ini_get('zend_optimizerplus.enable') ) {
+	$opcode = 'zend_optimizerplus.enable';
+} elseif ( ini_get('opcache.enable') ) {
+	$opcode = 'opcache.enable';
+}elseif ( ini_get('apc.enabled') ) {
+	$opcode = 'apc.enabled';
+}
+if ( isset($opcode) ) {
+	?>
+	<tr valign="middle">
+		<td width="45%"><?php echo $lang['is_opcache'] ?></td>
+		<td width="10%" align="center"><img src="static/icon_warn.png" border="0" width="21" height="21"></td>
+		<td width="45%"><?php printf( $lang['opcache_detected'], '<code>' .$opcode. '</code>', '<code>' . dirname(__DIR__) . '/conf/</code>' ) ?></td>
+	</tr>
+<?php
+}
+
 // Check admin log :
 if ( file_exists('./nfwlog/admin.php') ) {
 	$nfw_stat = file( './nfwlog/admin.php', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
