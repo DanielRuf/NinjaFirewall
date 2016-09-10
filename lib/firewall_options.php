@@ -39,7 +39,7 @@ if (! empty($_POST['post']) ) {
 ?>
 <script>
 function preview_msg() {
-	var t1 = document.option_form.blocked_msg.value.replace('%%REM_ADDRESS%%', '<?php echo $_SERVER['REMOTE_ADDR'] ?>');
+	var t1 = document.option_form.blocked_msg.value.replace('%%REM_ADDRESS%%', '<?php echo NFW_REMOTE_ADDR ?>');
 	var t2 = t1.replace('%%NUM_INCIDENT%%','1234567');
 	var ns;
 	if ( t2.match(/<style/i) ) {

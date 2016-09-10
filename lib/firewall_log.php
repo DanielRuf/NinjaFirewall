@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-27 17:03:20                                       |
+ | REVISION: 2016-09-01 17:03:20                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -153,12 +153,13 @@ $severity = array( 0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 
 while (! feof( $fh ) ) {
 	$line = fgets( $fh );
 	if ( $skip <= 0 ) {
-		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})\]\s+\[(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+)\]$/', $line, $match ) ) {
+		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})\]\s+\[(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(hex:)?(.+)\]$/', $line, $match ) ) {
 			if ( empty( $match[4]) ) { $match[4] = '-'; }
+			if ( $match[10] == 'hex:' ) { $match[11] = pack('H*', $match[11]); }
 			$res = date( 'd/M/y H:i:s', $match[1] ) . '  ' . $match[3] . '  ' .
 			str_pad( $levels[$match[5]], 8 , ' ', STR_PAD_RIGHT) .'  ' .
 			str_pad( $match[4], 4 , ' ', STR_PAD_LEFT) . '  ' . str_pad( $match[6], 15, ' ', STR_PAD_RIGHT) . '  ' .
-			$match[7] . ' ' . $match[8] . ' - ' .	$match[9] . ' - [' . $match[10] . '] - ' . $match[2];
+			$match[7] . ' ' . $match[8] . ' - ' .	$match[9] . ' - [' . $match[11] . '] - ' . $match[2];
 			echo 'myArray[' . $i . '] = "' . rawurlencode($res) . '";' . "\n";
 			$logline .= htmlentities( $res ."\n" );
 			$i++;
@@ -410,7 +411,7 @@ function nfw_delete_log($log_dir, $monthly_log) {
 		}
 		$fh = fopen($log_dir . $monthly_log, 'a');
 		fwrite( $fh, $first_line . '[' . time() . '] [0] [' . $_SERVER['SERVER_NAME'] .
-			'] [#0000000] [0] [6] ' . '[' . $_SERVER['REMOTE_ADDR'] . '] ' .
+			'] [#0000000] [0] [6] ' . '[' . NFW_REMOTE_ADDR . '] ' .
 			'[200 OK] ' . '[' . $_SERVER['REQUEST_METHOD'] . '] ' .
 			'[' . $_SERVER['SCRIPT_NAME'] . '] ' . '[Log deleted by admin] ' .
 			'[' . $nfw_options['admin_name'] . ': ' . $log . ']' . "\n"

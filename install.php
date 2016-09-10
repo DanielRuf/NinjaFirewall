@@ -212,7 +212,7 @@ function nfw_regional_settings() {
 			</tr>
 		</table>
 	</fieldset>
-	<p><input type="submit" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
+	<p><input type="submit" class="button" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
 	<input type="hidden" name="nfw_act" value="2" />
 	</form>
 	<?php
@@ -414,7 +414,7 @@ function nfw_system_requirements() {
 	<?php
 	if (! $critical ) {
 	?>
-		<p><input type="submit" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
+		<p><input type="submit" class="button" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
 		<input type="hidden" name="nfw_act" value="3" />
 	<?php
 	} else {
@@ -450,7 +450,7 @@ function nfw_changelog() {
 			</tr>
 		</table>
 	</fieldset>
-	<p><input type="submit" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
+	<p><input type="submit" class="button" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
 	<input type="hidden" name="nfw_act" value="4" />
 	</form>
 	<?php
@@ -480,7 +480,7 @@ function nfw_license() {
 		</table>
 	</fieldset>
 	<p><label><input type=checkbox name=eul>&nbsp;<?php echo $lang['license_checkbox'] ?></label></p>
-	<p><input type="submit" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
+	<p><input type="submit" class="button" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
 	<input type="hidden" name="nfw_act" value="5" />
 	</form>
 	<?php
@@ -605,7 +605,7 @@ function nfw_admin_setup( $err ) {
 
 		</table>
 	</fieldset>
-	<p><input type="submit" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
+	<p><input type="submit" class="button" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
 	<input type="hidden" name="nfw_act" value="5" />
 	<input type="hidden" name="save" value="1" />
 	</form>
@@ -915,7 +915,7 @@ function nfw_integration( $err ) {
 			</tr>
 		</table>
 	</fieldset>
-	<p><input type="submit" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
+	<p><input type="submit" class="button" style="width:100px;" value="<?php echo $lang['next'] . ' &#187;' ?>" /></p>
 	<input type="hidden" name="nfw_act" value="6" />
 	</form>
 	<?php
@@ -1154,7 +1154,7 @@ function nfw_activation() {
 			</tr>
 		</table>
 	</fieldset>
-	<p><input type="button" value="<?php echo $lang['test_button'] ?> &#187" name="test_nfw" onclick="popup('?nfw_act=98',550,450,0)" /></p>
+	<p><input type="button" class="button" value="<?php echo $lang['test_button'] ?> &#187" name="test_nfw" onclick="popup('?nfw_act=98',550,450,0)" /></p>
 
 	<?php
 	install_footer();
@@ -1231,7 +1231,7 @@ function nfw_activation_test() {
 		<br />
 		<a style="border-bottom:dotted 1px #FDCD25;" class="links" href="http://blog.nintechnet.com/troubleshoot-ninjafirewall-installation-problems/" target="_blank">Troubleshoot NinjaFirewall installation problems</a>.</p>
 		</fieldset>
-		<p style="text-align:center"><input type="button" value="<?php echo $lang['try_again'] ?>" onClick="location.reload(); " /></p>
+		<p style="text-align:center"><input type="button" class="button" value="<?php echo $lang['try_again'] ?>" onClick="location.reload(); " /></p>
 
 		<?php
 	} elseif ( NFW_STATUS != 22 ) {
@@ -1250,7 +1250,7 @@ function nfw_activation_test() {
 		</center>
 		</td></tr></table>
 		</fieldset>
-		<p style="text-align:center"><input type="button" style="width:100px" value="<?php echo $lang['close'] ?>" onClick="window.close();" /></p>
+		<p style="text-align:center"><input type="button" class="button" style="width:100px" value="<?php echo $lang['close'] ?>" onClick="window.close();" /></p>
 		<?php
 	} else {
 		// Everything is fine. We redirect user to the login page :
@@ -1262,7 +1262,7 @@ function nfw_activation_test() {
 		</center>
 		</td></tr></table>
 		</fieldset>
-		<p style="text-align:center"><input type="button" style="width:100px" value="<?php echo $lang['next'] .  ' &#187' ?>" onClick="opener.location.href='login.php';window.close();" /></p>
+		<p style="text-align:center"><input type="button" class="button" style="width:100px" value="<?php echo $lang['next'] .  ' &#187' ?>" onClick="opener.location.href='login.php';window.close();" /></p>
 		<?php
 		// Send an email to the admin with links and info about NinjaFirewall:
 		if (! empty($_SESSION['admin_email']) ) {
@@ -1603,7 +1603,7 @@ function account_license_connect($data) {
 
 	global $lang;
 	global $domain;
-	require(__DIR__ . '/lib/misc.php');
+	require_once(__DIR__ . '/lib/misc.php');
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_USERAGENT, 'NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN . '; ' . $domain );

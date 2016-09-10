@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-07-30 16:58:59                                       |
+ | REVISION: 2016-08-17 17:18:35                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -28,6 +28,12 @@ if (! @include(__DIR__ . '/conf/options.php') ) {
 	exit;
 }
 $nfw_options = unserialize($nfw_options);
+
+// Get the user defined IP (if any):
+if (! defined( 'NFW_REMOTE_ADDR') ) {
+	require_once(__DIR__ . '/lib/misc.php' );
+	nfw_select_ip();
+}
 
 date_default_timezone_set( $nfw_options['timezone'] );
 
@@ -352,7 +358,7 @@ function flush_admin_log() {
 
 	if ($fh = fopen(__DIR__ . '/nfwlog/admin.php', 'w') ) {
 		fwrite($fh, date('[d/M/Y H:i:s O] ') . '[' . $nfw_options['admin_name'] . '] ' .
-		'[' . $_SERVER['REMOTE_ADDR'] . '] ' . '[OK] ' .  "\n" );
+		'[' . NFW_REMOTE_ADDR . '] ' . '[OK] ' .  "\n" );
 		fclose($fh);
 	}
 }

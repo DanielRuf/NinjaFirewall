@@ -245,7 +245,7 @@ html_footer();
 function check_account_update() {
 
 	global $lang;
-	require('./lib/misc.php');
+	require_once('./lib/misc.php');
 
 	$tmp = '';
 	if (! NFW_UPDATE ) {
@@ -307,7 +307,7 @@ function download_account_update() {
 	global $lang;
 	global $nfw_options;
 	global $updafe_file;
-	require('./lib/misc.php');
+	require_once('./lib/misc.php');
 
 	$data  = 'action=update';
 	$data .= '&edn=' . urlencode( NFW_EDN );

@@ -70,6 +70,10 @@ legend { border: 1px solid #ffd821;}
 
 input:not([type=submit]):not([type=button]):focus {background-color: #FDCD25;}
 
+.button {
+	font-size: 13px;
+}
+
 .tinyblack {
    font-size: 11px;
    color: #222;

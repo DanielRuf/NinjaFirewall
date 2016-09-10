@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-07-30 16:58:59                                       |
+ | REVISION: 2016-08-17 17:37:52                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -41,6 +41,12 @@ if (! @include(__DIR__ . '/conf/options.php') ) {
 $nfw_options = unserialize($nfw_options);
 date_default_timezone_set($nfw_options['timezone']);
 require (__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+
+// Get the user defined IP (if any):
+if (! defined( 'NFW_REMOTE_ADDR') ) {
+	require_once(__DIR__ . '/lib/misc.php' );
+	nfw_select_ip();
+}
 
 // "install/" directory left from previous upgrade (v1.x to v2.x) ?
 if (is_dir('install/') ) {
@@ -92,7 +98,7 @@ $_SESSION['nfw_install'] = '';
 $max_attempt = 5;
 $max_bantime = 5; // minutes
 $fdat = 0;
-$file =  __DIR__ . '/nfwlog/cache/login_' . $_SERVER['REMOTE_ADDR'] . '.php';
+$file =  __DIR__ . '/nfwlog/cache/login_' . NFW_REMOTE_ADDR . '.php';
 if ( file_exists($file) ) {
 	// Check when it was last modified :
 	$stat = stat($file);
@@ -128,7 +134,7 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 
 	// Write to log :
 	@file_put_contents( __DIR__ . '/nfwlog/admin.php',
-		date('[d/M/Y H:i:s O] ') . '[' . $nfw_options['admin_name'] . '] [' . $_SERVER['REMOTE_ADDR'] . "] [OK]\n",
+		date('[d/M/Y H:i:s O] ') . '[' . $nfw_options['admin_name'] . '] [' . NFW_REMOTE_ADDR . "] [OK]\n",
 		FILE_APPEND | LOCK_EX);
 
 	// Send an alert to the admin, if required :
@@ -140,7 +146,7 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 		}
       $subject = 	'[NinjaFirewall] Admin console login';
       $message = 	"Someone just logged in to your NinjaFirewall admin interface:\n\n".
-						"- IP   : ". $_SERVER['REMOTE_ADDR'] . "\n" .
+						"- IP   : ". NFW_REMOTE_ADDR . "\n" .
 						"- Date : ". date('F j, Y @ g:i a') . ' (UTC '. date('O') . ")\n" .
 						"- URL  : " . $http . "://". $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'] . "\n\n" .
 						'NinjaFirewall - http://ninjafirewall.com/' . "\n";
@@ -165,7 +171,7 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 // Wrong credentials : log and display the login page again
 @file_put_contents( __DIR__ . '/nfwlog/admin.php',
 	date('[d/M/Y H:i:s O] ') . '[' . htmlentities( $_POST['admin_name'] ) . '] [' .
-	$_SERVER['REMOTE_ADDR'] . "] [***FAILED***]\n",
+	NFW_REMOTE_ADDR . "] [***FAILED***]\n",
 	FILE_APPEND | LOCK_EX);
 
 if ( file_exists($file) ) {

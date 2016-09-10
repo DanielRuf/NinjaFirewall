@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2014-08-21 23:04:25                                       |
+ | REVISION: 2016-08-17 17:18:43                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -69,3 +69,26 @@ $http_err_code = array(
 	523 => "Origin is unreachable",
 	524 => "A Timeout occured",
 );
+
+/* ------------------------------------------------------------------ */
+
+function nfw_select_ip() {
+	// Ensure we have a proper and single IP (a user may use the .htninja file
+	// to redirect HTTP_X_FORWARDED_FOR, which may contain more than one IP,
+	// to REMOTE_ADDR):
+	if (strpos($_SERVER['REMOTE_ADDR'], ',') !== false) {
+		$nfw_match = array_map('trim', @explode(',', $_SERVER['REMOTE_ADDR']));
+		foreach($nfw_match as $nfw_m) {
+			if ( filter_var($nfw_m, FILTER_VALIDATE_IP) )  {
+				define( 'NFW_REMOTE_ADDR', $nfw_m);
+				break;
+			}
+		}
+	}
+	if (! defined('NFW_REMOTE_ADDR') ) {
+		define('NFW_REMOTE_ADDR', $_SERVER['REMOTE_ADDR']);
+	}
+}
+
+/* ------------------------------------------------------------------ */
+// EOF

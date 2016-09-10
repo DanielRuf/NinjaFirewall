@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-04-13 12:10:41                                       |
+ | REVISION: 2016-08-17 18:09:58                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -168,47 +168,20 @@ if (! $nfw_options['logging'] ) {
 if ( NFW_EDN == 2 ) {
 	// Pro+ edn :
 	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=32&token=' . $_REQUEST['token'] . '">';
-	// Check IP :
-	if ( empty($nfw_options['ac_ip']) || $nfw_options['ac_ip'] == 1 ) {
-		$user_ip = $_SERVER['REMOTE_ADDR'];
-	} elseif ( $nfw_options['ac_ip'] == 2 && ! empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
-		$nfw_match = array_map('trim', @explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
-		krsort($nfw_match);
-		foreach($nfw_match as $nfw_m) {
-			if ( filter_var($nfw_m, FILTER_VALIDATE_IP) )  {
-				$user_ip = $nfw_m;
-				break;
-			}
-		}
-	} elseif ( $nfw_options['ac_ip'] == 3 && ! empty($nfw_options['ac_ip_2']) && ! empty($_SERVER[$nfw_options['ac_ip_2']]) ) {
-		$nfw_match = array_map('trim', @explode(',', $_SERVER[$nfw_options['ac_ip_2']]));
-		krsort($nfw_match);
-		foreach($nfw_match as $nfw_m) {
-			if ( filter_var($nfw_m, FILTER_VALIDATE_IP) )  {
-				$user_ip = $nfw_m;
-				break;
-			}
-		}
-	}
 } else {
 	// Pro edn :
 	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja">';
 }
 
-if ( empty($user_ip) ) {
-	$user_ip = $_SERVER['REMOTE_ADDR'];
-}
-
-
 // Check IP and warn if localhost or private IP :
-if (! filter_var($user_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) ) {
+if (! filter_var(NFW_REMOTE_ADDR, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) ) {
 	?>
 	<tr valign="middle">
 		<td width="45%"><?php echo $lang['source_ip'] ?></td>
 		<td width="10%" align="center">
 			<img src="static/icon_warn.png" border="0" width="21" height="21">
 		</td>
-		<td width="45%"><?php echo $lang['lo_warn'] . ' ' . htmlspecialchars($user_ip) . '<br />' ?>
+		<td width="45%"><?php echo $lang['lo_warn'] . ' ' . htmlspecialchars(NFW_REMOTE_ADDR) . '<br />' ?>
 		<?php printf($lang['lo_check'], $IPlink) ?>
 		</td>
 	</tr>
@@ -218,7 +191,7 @@ if (! filter_var($user_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTE
 // Look for CDN's (Incapsula/Cloudflare) and warn the user about using
 // the correct IPs, unless it was added to the access control list :
 if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) ) {
-	if ( $user_ip != $_SERVER["HTTP_CF_CONNECTING_IP"] ) {
+	if ( NFW_REMOTE_ADDR != $_SERVER["HTTP_CF_CONNECTING_IP"] ) {
 		// CloudFlare :
 		?>
 		<tr valign="middle">
@@ -240,7 +213,7 @@ if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) ) {
 	}
 }
 if (! empty($_SERVER["HTTP_INCAP_CLIENT_IP"]) ) {
-	if ( $user_ip != $_SERVER["HTTP_INCAP_CLIENT_IP"] ) {
+	if ( NFW_REMOTE_ADDR != $_SERVER["HTTP_INCAP_CLIENT_IP"] ) {
 		// Incapsula :
 		?>
 		<tr valign="middle">

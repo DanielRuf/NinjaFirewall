@@ -1,6 +1,12 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.1.8 =
+* Updated security rules and improved XSS evasion techniques detection.
+* [Pro+ Edition] Fixed a bug where notifications sent or displayed by NinjaFirewall were showing the load balancer IP when an alternate address was defined in the "Access Control > Source IP" section.
+* Blocked threats written to the firewall log will be hexencoded, to lower false positives from antivirus scanners.
+* Minor fixes and adjustments.
+
 = 3.1.7 =
 * Updated security rules.
 

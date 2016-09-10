@@ -5,7 +5,7 @@
 // | (c) NinTechNet - http://nintechnet.com/                             |
 // |                                                                     |
 // +---------------------------------------------------------------------+
-// | REVISION: 2016-07-01 17:06:36                                       |
+// | REVISION: 2016-09-01 17:06:36                                       |
 // +---------------------------------------------------------------------+
 // | This program is free software: you can redistribute it and/or       |
 // | modify it under the terms of the GNU General Public License as      |
@@ -66,15 +66,20 @@ if (! empty($nfw_['nfw_options']['response_headers']) && function_exists('header
 }
 
 if (strpos($_SERVER['REMOTE_ADDR'], ',') !== false) {
+	// Ensure we have a proper and single IP (a user may use the .htninja file
+	// to redirect HTTP_X_FORWARDED_FOR, which may contain more than one IP,
+	// to REMOTE_ADDR):
 	$nfw_['match'] = array_map('trim', @explode(',', $_SERVER['REMOTE_ADDR']));
 	foreach($nfw_['match'] as $nfw_['m']) {
 		if ( filter_var($nfw_['m'], FILTER_VALIDATE_IP) )  {
-			$_SERVER['REMOTE_ADDR'] = $nfw_['m'];
+			define( 'NFW_REMOTE_ADDR', $nfw_['m']);
 			break;
 		}
 	}
 }
-$nfw_['user_ip'] = $_SERVER['REMOTE_ADDR'];
+if (! defined('NFW_REMOTE_ADDR') ) {
+	define('NFW_REMOTE_ADDR', $_SERVER['REMOTE_ADDR']);
+}
 
 if (! empty($nfw_['nfw_options']['php_errors']) ) {
 	@error_reporting(0);
@@ -108,7 +113,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/index.php' || $_SERVER['SCRIPT_FI
 }
 
 if (! empty($nfw_['nfw_options']['ban_ip']) ) {
-	$nfw_['ipbk'] = __DIR__ .'/nfwlog/cache/ipbk.'. $_SERVER['SERVER_NAME'] .'_-_'. $nfw_['user_ip'] .'.php';
+	$nfw_['ipbk'] = __DIR__ .'/nfwlog/cache/ipbk.'. $_SERVER['SERVER_NAME'] .'_-_'. NFW_REMOTE_ADDR .'.php';
 	if (file_exists($nfw_['ipbk']) ) {
 		$nfw_['stat'] = stat($nfw_['ipbk']);
 		if ( time() - $nfw_['stat']['mtime'] > $nfw_['nfw_options']['ban_time'] * 60 ) {
@@ -249,10 +254,10 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 			$log_stat = stat($log_file_ext);
 			if ( $log_stat['size'] > $nfw_['nfw_options']['log_maxsize']) {
 				$log_ext = 1;
-				while ( file_exists($log_file . '.' . $log_ext . '.php' ) ) {
+				while ( file_exists($log_file . '.' . sprintf('%02d', $log_ext) . '.php' ) ) {
 					$log_ext++;
 				}
-				rename($log_file_ext, $log_file . '.' . $log_ext . '.php');
+				rename($log_file_ext, $log_file . '.' . sprintf('%02d', $log_ext) . '.php');
 			}
 		}
 	}
@@ -267,10 +272,10 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
       $tmp . '[' . time() . '] ' . '[' . round( (microtime(true) - $nfw_['fw_starttime']), 5) . '] ' .
       '[' . $_SERVER['SERVER_NAME'] . '] ' . '[#' . $nfw_['num_incident'] . '] ' .
       '[' . $ruleid . '] ' .
-      '[' . $loglevel . '] ' . '[' . $nfw_['user_ip'] . '] ' .
+      '[' . $loglevel . '] ' . '[' . NFW_REMOTE_ADDR . '] ' .
       '[' . $http_ret_code . '] ' . '[' . $_SERVER['REQUEST_METHOD'] . '] ' .
       '[' . $_SERVER['SCRIPT_NAME'] . '] ' . '[' . $loginfo . '] ' .
-      '[' . $res . ']' . "\n", FILE_APPEND | LOCK_EX);
+      '[hex:' . array_shift( unpack('H*', $res) ) . ']' . "\n", FILE_APPEND | LOCK_EX);
 
 }
 
@@ -294,7 +299,7 @@ function nfw_block( $lev ) {
 
 	if (empty($nfw_['num_incident']) ) { $nfw_['num_incident'] = '000000'; }
 	$tmp = str_replace( '%%NUM_INCIDENT%%', $nfw_['num_incident'],  base64_decode($nfw_['nfw_options']['blocked_msg']) );
-	$tmp = str_replace( '%%REM_ADDRESS%%', $nfw_['user_ip'], $tmp );
+	$tmp = str_replace( '%%REM_ADDRESS%%', NFW_REMOTE_ADDR, $tmp );
 	if (! headers_sent() ) {
 		header('HTTP/1.0 ' . $http_codes[$nfw_['nfw_options']['ret_code']] );
 		header('Status: ' .  $http_codes[$nfw_['nfw_options']['ret_code']] );
@@ -309,8 +314,8 @@ function nfw_block( $lev ) {
 
 	if ($lev > 0 && $lev < 4 && $nfw_['nfw_options']['ban_ip']) {
 		if ( $nfw_['nfw_options']['ban_ip'] == 3 || ($nfw_['nfw_options']['ban_ip'] == 2 && $lev > 1) || ($nfw_['nfw_options']['ban_ip'] == 1 && $lev == 3) ) {
-			touch( __DIR__ .'/nfwlog/cache/ipbk.'. $_SERVER['SERVER_NAME'] .'_-_'. $nfw_['user_ip'] .'.php');
-			nfw_log('Banning IP for ' . $nfw_['nfw_options']['ban_time'] . ' minute(s)', 'REMOTE_ADDR : '. $nfw_['user_ip'], 6, 0);
+			touch( __DIR__ .'/nfwlog/cache/ipbk.'. $_SERVER['SERVER_NAME'] .'_-_'. NFW_REMOTE_ADDR .'.php');
+			nfw_log('Banning IP for ' . $nfw_['nfw_options']['ban_time'] . ' minute(s)', 'User IP: '. NFW_REMOTE_ADDR, 6, 0);
 		}
 	}
 	exit;
