@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-08-05 11:41:55                                       |
+ | REVISION: 2016-08-09 16:00:12                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -21,8 +21,8 @@
 */
 
 /* ------------------------------------------------------------------ */
-define('NFW_ENGINE_VERSION', '3.1.6');
-define('NFW_RULES_VERSION', '20160806.1');
+define('NFW_ENGINE_VERSION', '3.1.7');
+define('NFW_RULES_VERSION', '20160809.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server

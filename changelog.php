@@ -1,6 +1,9 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.1.7 =
+* Updated security rules.
+
 = 3.1.6 =
 * Updated security rules.
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
