@@ -1,6 +1,10 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.1.5 =
+* Updated security rules.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 3.1.4 =
 * Updated security rules to protect against a critical Magento vulnerability (CVE-2016-4010).
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
