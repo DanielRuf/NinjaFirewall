@@ -3,7 +3,7 @@
 Plugin Name: NinjaFirewall (WP Edition)
 Plugin URI: http://NinjaFirewall.com/
 Description: A true Web Application Firewall to protect and secure WordPress.
-Version: 3.2.2
+Version: 3.2.3
 Author: The Ninja Technologies Network
 Author URI: http://NinTechNet.com/
 License: GPLv2 or later
@@ -18,10 +18,10 @@ Domain Path: /languages
  |                                                                     |
  | (c) NinTechNet - http://nintechnet.com/                             |
  +---------------------------------------------------------------------+
- | REVISION: 2016-05-21 12:29:47                                       |
+ | REVISION: 2016-05-31 12:29:47                                       |
  +---------------------------------------------------------------------+
 */
-define( 'NFW_ENGINE_VERSION', '3.2.2' );
+define( 'NFW_ENGINE_VERSION', '3.2.3' );
 /*
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -691,6 +691,9 @@ function nfw_logout_hook() {
 	}
 	if (isset($_SESSION['nfw_livelog']) ) {
 		unset($_SESSION['nfw_livelog']);
+	}
+	if (isset($_SESSION['nfw_malscan']) ) {
+		unset($_SESSION['nfw_malscan']);
 	}
 }
 
@@ -2687,7 +2690,7 @@ function nf_sub_malwarescan() {
 }
 
 add_action('nfmalwarescan', 'nfmalwarescando');
-function nfmalwarescando( $sigs) {
+function nfmalwarescando( $sigs ) {
 
 	define('NFW_SCAN_SIGS', $sigs );
 	define('NFMALWARESCANDO', 1);
@@ -2699,10 +2702,20 @@ add_action( 'wp_ajax_nfw_msajax', 'nfw_msajax_callback' );
 function nfw_msajax_callback() {
 
 	if ( check_ajax_referer( 'nfw_msajax_javascript', 'nfw_sc_nonce', false ) && ! empty( $_POST['sigs'] ) ){
-		delete_transient('doing_cron');
 		$sigs = rtrim( $_POST['sigs'], ':' );
 		wp_schedule_single_event( time() - 1, 'nfmalwarescan', array( $sigs ) );
-		spawn_cron();
+		$doing_wp_cron = sprintf( '%.22F', microtime( true ) );
+		set_transient( 'doing_cron', $doing_wp_cron );
+		$cron_request = apply_filters( 'cron_request', array(
+			'url'  => add_query_arg( 'doing_wp_cron', $doing_wp_cron, site_url( 'wp-cron.php' ) ),
+			'key'  => $doing_wp_cron,
+			'args' => array(
+				'timeout'   => 0.01,
+				'blocking'  => false,
+				'sslverify' => apply_filters( 'https_local_ssl_verify', false )
+			)
+		), $doing_wp_cron );
+		wp_remote_post( $cron_request['url'], $cron_request['args'] );
 		echo 'OK';
 	} else {
 		echo '1';
