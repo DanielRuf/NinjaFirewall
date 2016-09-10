@@ -1,6 +1,12 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.1.6 =
+* Updated security rules.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Fixed a bug affecting the admin dashboard token.
+* Minor fixes and adjustments.
+
 = 3.1.5 =
 * Updated security rules.
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.

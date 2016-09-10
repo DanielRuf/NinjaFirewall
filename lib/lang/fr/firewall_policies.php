@@ -1,5 +1,5 @@
 <?php
-/* 2015-10-28 19:05:53 */
+/* 2016-08-04 18:05:40 */
 $lang = array (
 	'error'				=> 'Erreur',
 	'yes'					=> 'Oui',
@@ -64,7 +64,7 @@ $lang = array (
 	'sanit_referer'	=>	'Nettoyer HTTP_REFERER',
 	'post_referer'		=>	'Bloquer les requêtes POST qui n\'ont pas d\'en-tête HTTP_REFERER',
 
-	'httponly_warn'	=>	'Si vos scripts PHP envoient des cookies qui doivent être accessibles à partir de JavaScript, vous devez garder cette option désactivée. Continuer ?',
+	'httponly_warn'	=>	'Si vos scripts PHP envoient des cookies qui doivent être accessibles à partir de JavaScript, vous devez garder cette option désactivée.',
 	'httpresponse'		=>	'En-têtes de réponse HTTP',
 	'x_c_t_o'			=>	'Activer X-Content-Type-Options pour protéger contre les attaques basées sur la confusion du type MIME',
 	'x_f_o'				=>	'Activer X-Frame-Options pour protéger contre les attaques de détournement de clic (clickjacking)',

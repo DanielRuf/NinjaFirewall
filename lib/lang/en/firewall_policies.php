@@ -1,5 +1,5 @@
 <?php
-/* 2015-10-28 19:05:58 */
+/* 2016-08-04 18:05:59 */
 $lang = array (
 
 	'error'				=> 'Error',
@@ -63,7 +63,7 @@ $lang = array (
 	'sanit_referer'	=>	'Sanitise HTTP_REFERER',
 	'post_referer'		=>	'Block POST requests that do not have an HTTP_REFERER header',
 
-	'httponly_warn'	=>	'If your PHP scripts send cookies that need to be accessed from JavaScript, you should keep this option disabled. Go ahead?',
+	'httponly_warn'	=>	'If your PHP scripts send cookies that need to be accessed from JavaScript, you should keep this option disabled.',
 	'httpresponse'		=>	'HTTP response headers',
 	'x_c_t_o'			=>	'Set X-Content-Type-Options to protect against MIME type confusion attacks',
 	'x_f_o'				=>	'Set X-Frame-Options to protect against clickjacking attempts',

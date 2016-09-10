@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-25 18:44:03                                       |
+ | REVISION: 2016-08-04 18:07:42                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -44,12 +44,6 @@ if (! empty($_POST['post']) ) {
 
 ?>
 <script>
-function httponly() {
-	if (confirm("<?php echo $lang['httponly_warn'] ?>")){
-		return true;
-	}
-	return false;
-}
 function is_number(id) {
 	var e = document.getElementById(id);
 	if (! e.value ) { return }
@@ -443,8 +437,8 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['httponly'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="cookies_httponly" value="1"<?php checked( $nfw_options['response_headers'][0], 1 ); disabled($err, 1); ?> onclick="return httponly();">&nbsp;<?php echo $lang['yes'] . $lang['default']; ?></label></p>
-					<p><label><input type="radio" name="cookies_httponly" value="0"<?php checked( $nfw_options['response_headers'][0], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo $lang['no']; ?></label></p><?php echo $err_msg ?>
+					<p><label><input type="radio" name="cookies_httponly" value="1"<?php checked( $nfw_options['response_headers'][0], 1 ); disabled($err, 1); ?> >&nbsp;<?php echo $lang['yes'] . $lang['default']; ?></label></p>
+					<p><label><input type="radio" name="cookies_httponly" value="0"<?php checked( $nfw_options['response_headers'][0], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo $lang['no']; ?></label></p><i class="tinyblack">&nbsp;<?php echo $lang['httponly_warn'] ?></i><br /><?php echo $err_msg ?>
 				</td>
 			</tr>
 			<?php

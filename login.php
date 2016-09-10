@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-10-24 18:17:37                                       |
+ | REVISION: 2016-07-30 16:58:59                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -156,7 +156,7 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 	$_SESSION['nfadmpro'] = $nfw_options['admin_name'];
 	$_SESSION['timeout'] = time();
 	$token = sha1( time() );
-	$_SESSION['nftoken'] = sha1( $token );
+	$_SESSION['nftoken'] = sha1( $token . __DIR__ );
 	session_write_close();
 	header('Location: index.php?token=' . $token);
 	exit;

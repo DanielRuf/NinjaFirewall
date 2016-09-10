@@ -6,7 +6,7 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-11-24 23:33:00                                       |
+ | REVISION: 2016-07-30 16:58:59                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -72,7 +72,7 @@ if ( empty($_SESSION['timeout']) || empty($_SESSION['nfadmpro']) ||
    exit;
 }
 
-if ($_SESSION['nftoken'] != sha1($_REQUEST['token']) ||
+if ($_SESSION['nftoken'] != sha1($_REQUEST['token'] . __DIR__) ||
 	! preg_match('/^[a-f0-9]{40}$/', $_REQUEST['token'] ) ) {
 	session_destroy();
    header('Location: login.php?3');
