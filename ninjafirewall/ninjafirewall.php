@@ -3,7 +3,7 @@
 Plugin Name: NinjaFirewall (WP Edition)
 Plugin URI: http://NinjaFirewall.com/
 Description: A true Web Application Firewall to protect and secure WordPress.
-Version: 3.2.4
+Version: 3.2.5
 Author: The Ninja Technologies Network
 Author URI: http://NinTechNet.com/
 License: GPLv2 or later
@@ -18,10 +18,10 @@ Domain Path: /languages
  |                                                                     |
  | (c) NinTechNet - http://nintechnet.com/                             |
  +---------------------------------------------------------------------+
- | REVISION: 2016-08-07 13:36:50                                       |
+ | REVISION: 2016-09-02 15:43:32                                       |
  +---------------------------------------------------------------------+
 */
-define( 'NFW_ENGINE_VERSION', '3.2.4' );
+define( 'NFW_ENGINE_VERSION', '3.2.5' );
 /*
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -91,6 +91,10 @@ if (! empty($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT'] != '/' ) {
 /* ------------------------------------------------------------------ */	// i18n+
 
 require( plugin_dir_path(__FILE__) . 'lib/nfw_misc.php' );
+
+if (! defined( 'NFW_REMOTE_ADDR') ) {
+	nfw_select_ip();
+}
 
 /* ------------------------------------------------------------------ */	// i18n+
 
@@ -674,7 +678,7 @@ function nfw_send_loginemail( $user_login, $whoami ) {
 	}
 	$message = __('Someone just logged in to your WordPress admin console:', 'ninjafirewall') . "\n\n".
 				__('-User :', 'ninjafirewall') .' '. $user_login . ' (' . $whoami . ")\n" .
-				__('-IP   :', 'ninjafirewall') .' '. $_SERVER['REMOTE_ADDR'] . "\n" .
+				__('-IP   :', 'ninjafirewall') .' '. NFW_REMOTE_ADDR . "\n" .
 				__('-Date :', 'ninjafirewall') .' '. ucfirst(date_i18n('F j, Y @ H:i:s')) . ' (UTC '. date('O') . ")\n" .
 				$url .
 				'NinjaFirewall (WP Edition) - http://ninjafirewall.com/' . "\n" .
@@ -1040,17 +1044,17 @@ function nf_menu_main() {
 		<?php
 	}
 
-	if (! filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) ) {
+	if (! filter_var(NFW_REMOTE_ADDR, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) ) {
 		?>
 		<tr>
 			<th scope="row"><?php _e('Source IP', 'ninjafirewall') ?></th>
 			<td width="20" align="left"><img src="<?php echo plugins_url( '/images/icon_warn_16.png', __FILE__ )?>" border="0" height="16" width="16"></td>
-			<td><?php printf( __('You have a private IP : %s', 'ninjafirewall') .'<br />'. __('If your site is behind a reverse proxy or a load balancer, ensure that you have setup your HTTP server or PHP to forward the correct visitor IP, otherwise use the NinjaFirewall %s configuration file.', 'ninjafirewall'), htmlentities($_SERVER['REMOTE_ADDR']), '<code><a href="http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja">.htninja</a></code>') ?></td>
+			<td><?php printf( __('You have a private IP : %s', 'ninjafirewall') .'<br />'. __('If your site is behind a reverse proxy or a load balancer, ensure that you have setup your HTTP server or PHP to forward the correct visitor IP, otherwise use the NinjaFirewall %s configuration file.', 'ninjafirewall'), htmlentities(NFW_REMOTE_ADDR), '<code><a href="http://nintechnet.com/ninjafirewall/wp-edition/help/?htninja">.htninja</a></code>') ?></td>
 		</tr>
 		<?php
 	}
 	if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) ) {
-		if ( $_SERVER['REMOTE_ADDR'] != $_SERVER["HTTP_CF_CONNECTING_IP"] ) {
+		if ( NFW_REMOTE_ADDR != $_SERVER["HTTP_CF_CONNECTING_IP"] ) {
 		?>
 		<tr>
 			<th scope="row"><?php _e('CDN detection', 'ninjafirewall') ?></th>
@@ -1061,7 +1065,7 @@ function nf_menu_main() {
 		}
 	}
 	if (! empty($_SERVER["HTTP_INCAP_CLIENT_IP"]) ) {
-		if ( $_SERVER['REMOTE_ADDR'] != $_SERVER["HTTP_INCAP_CLIENT_IP"] ) {
+		if ( NFW_REMOTE_ADDR != $_SERVER["HTTP_INCAP_CLIENT_IP"] ) {
 		?>
 		<tr>
 			<th scope="row"><?php _e('CDN detection', 'ninjafirewall') ?></th>
@@ -2704,6 +2708,8 @@ function nfmalwarescando( $sigs ) {
 add_action( 'wp_ajax_nfw_msajax', 'nfw_msajax_callback' );
 function nfw_msajax_callback() {
 
+	@file_put_contents( NFW_LOG_DIR . '/nfwlog/cache/malscan.log', time() . ": [AX] Entering ajax callback\n" );
+
 	if ( check_ajax_referer( 'nfw_msajax_javascript', 'nfw_sc_nonce', false ) && ! empty( $_POST['sigs'] ) ){
 		$sigs = rtrim( $_POST['sigs'], ':' );
 		wp_schedule_single_event( time() - 1, 'nfmalwarescan', array( $sigs ) );
@@ -2720,7 +2726,9 @@ function nfw_msajax_callback() {
 		), $doing_wp_cron );
 		wp_remote_post( $cron_request['url'], $cron_request['args'] );
 		echo 'OK';
+		@file_put_contents( NFW_LOG_DIR . '/nfwlog/cache/malscan.log', time() . ": [AX] POSTing request to " . site_url( 'wp-cron.php' ) . "\n", FILE_APPEND );
 	} else {
+		@file_put_contents( NFW_LOG_DIR . '/nfwlog/cache/malscan.log', time() . ": [AX] ERROR: security nonces do not match\n", FILE_APPEND );
 		echo '1';
 	}
 	wp_die();
@@ -3174,7 +3182,7 @@ function nfw_log2($loginfo, $logdata, $loglevel, $ruleid) { // i18n
 	} else {
 		$SCRIPT_NAME = $_SERVER['SCRIPT_NAME'];
 		$REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
-		$REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
+		$REMOTE_ADDR = NFW_REMOTE_ADDR;
 	}
 
 	if (! file_exists($log_file) ) {
@@ -3190,7 +3198,7 @@ function nfw_log2($loginfo, $logdata, $loglevel, $ruleid) { // i18n
       '[' . $loglevel . '] ' . '[' . $REMOTE_ADDR . '] ' .
       '[' . $http_ret_code . '] ' . '[' . $REQUEST_METHOD . '] ' .
       '[' . $SCRIPT_NAME . '] ' . '[' . $loginfo . '] ' .
-      '[' . $res . ']' . "\n", FILE_APPEND | LOCK_EX);
+      '[hex:' . array_shift( unpack('H*', $res) ) . ']' . "\n", FILE_APPEND | LOCK_EX);
 }
 
 /* ------------------------------------------------------------------ */ // i18n+
@@ -3446,7 +3454,7 @@ function nfw_check_emailalert() {
 			'-' . $alert_array[$a_1][0] . ' ' . $alert_array[$a_1][$a_2] . "\n" .
 			'-' . $alert_array[$a_1]['label'] . ' : ' . $a_3 . "\n\n" .
 			__('-User :', 'ninjafirewall') .' '. $current_user->user_login . ' (' . $current_user->roles[0] . ")\n" .
-			__('-IP   :', 'ninjafirewall') .' '. $_SERVER['REMOTE_ADDR'] . "\n" .
+			__('-IP   :', 'ninjafirewall') .' '. NFW_REMOTE_ADDR . "\n" .
 			__('-Date :', 'ninjafirewall') .' '. ucfirst( date_i18n('F j, Y @ H:i:s O') ) ."\n" .
 			$url .
 			'NinjaFirewall (WP Edition) - http://ninjafirewall.com/' . "\n" .
@@ -3480,7 +3488,7 @@ if ( is_multisite() ) {
 
 /* ------------------------------------------------------------------ */ // i18n+
 
-function nf_not_allowed($block, $line) {
+function nf_not_allowed($block, $line = 0) {
 
 	if ( is_multisite() ) {
 		if ( current_user_can('manage_network') ) {
