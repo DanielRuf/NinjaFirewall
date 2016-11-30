@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-08-04 18:07:42                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -59,6 +57,14 @@ function san_onoff(what) {
 	} else {
 		document.fwrules.sanid.disabled = false;
 		document.fwrules.sizeid.disabled = false;
+	}
+}
+function csp_onoff(what, csp) {
+	if (what == 0) {
+		document.getElementById(csp).readOnly = true;
+	} else {
+		document.getElementById(csp).readOnly = false;
+		document.getElementById(csp).focus();
 	}
 }
 function restore() {
@@ -406,8 +412,8 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 		$err_msg = $err_img . sprintf($lang['missing_funct'], '<code>header_remove()</code>');
 		$err = 1;
 	}
-	if ( empty($nfw_options['response_headers']) || strlen($nfw_options['response_headers']) != 6 || $err_msg ) {
-		$nfw_options['response_headers'] = '000000';
+	if ( empty($nfw_options['response_headers']) || strlen($nfw_options['response_headers']) != 8 || $err_msg ) {
+		$nfw_options['response_headers'] = '00000000';
 	}
 	?>
 	<fieldset><legend>&nbsp;<b><?php echo $lang['httpresponse'] ?></b>&nbsp;</legend>
@@ -415,8 +421,8 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left"><?php echo $lang['x_c_t_o'] ?></td>
 				<td width="45%" align="left">
-					<p><label><input type="radio" name="x_content_type_options" value="1"<?php checked( $nfw_options['response_headers'][1], 1 ); disabled($err, 1); ?>><?php echo $lang['yes']; ?></label></p>
-					<p><label><input type="radio" name="x_content_type_options" value="0"<?php checked( $nfw_options['response_headers'][1], 0 ); disabled($err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p><?php echo $err_msg ?>
+					<p><label><input type="radio" name="x_content_type_options" value="1"<?php checked( $nfw_options['response_headers'][1], 1 ); disabled($err, 1); ?>><?php echo $lang['yes'] . $lang['default']; ?></label></p>
+					<p><label><input type="radio" name="x_content_type_options" value="0"<?php checked( $nfw_options['response_headers'][1], 0 ); disabled($err, 1); ?>><?php echo $lang['no']; ?></label></p><?php echo $err_msg ?>
 				</td>
 			</tr>
 			<tr>
@@ -437,32 +443,54 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['httponly'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="cookies_httponly" value="1"<?php checked( $nfw_options['response_headers'][0], 1 ); disabled($err, 1); ?> >&nbsp;<?php echo $lang['yes'] . $lang['default']; ?></label></p>
-					<p><label><input type="radio" name="cookies_httponly" value="0"<?php checked( $nfw_options['response_headers'][0], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo $lang['no']; ?></label></p><i class="tinyblack">&nbsp;<?php echo $lang['httponly_warn'] ?></i><br /><?php echo $err_msg ?>
+					<p><label><input type="radio" name="cookies_httponly" value="1"<?php checked( $nfw_options['response_headers'][0], 1 ); disabled($err, 1); ?> >&nbsp;<?php echo $lang['yes']; ?></label></p>
+					<p><label><input type="radio" name="cookies_httponly" value="0"<?php checked( $nfw_options['response_headers'][0], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo $lang['no'] . $lang['default']; ?></label></p><i class="tinyblack">&nbsp;<?php echo $lang['httponly_warn'] ?></i><br /><?php echo $err_msg ?>
 				</td>
 			</tr>
 			<?php
 			// We don't send HSTS headers over HTTP (only display this message if there
 			// is no other warning to display, $err==0 ):
 			if ($_SERVER['SERVER_PORT'] != 443 && ! $err && (! isset( $_SERVER['HTTP_X_FORWARDED_PROTO']) || $_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') ) {
-				$err = 1;
+				$hsts_err = 1;
 				$hsts_msg = '<p><img src="static/icon_warn.png" border="0" width="21" heigt="21">&nbsp;<i class="tinyblack">' . $lang['hsts_warn'] . '</i>';
 			} else {
+				$hsts_err = 0;
 				$hsts_msg = '';
 			}
 			?>
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['hsts'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="strict_transport" value="0"<?php checked( $nfw_options['response_headers'][4], 0 ); disabled($err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p><?php echo $err_msg ?>
-					<p><label><input type="radio" name="strict_transport" value="4"<?php checked( $nfw_options['response_headers'][4], 4 ); disabled($err, 1); ?>><?php echo $lang['reset'] ?></label></p>
-					<p><label><input type="radio" name="strict_transport" value="1"<?php checked( $nfw_options['response_headers'][4], 1 ); disabled($err, 1); ?>><?php echo $lang['1_month'] ?></label></p>
-					<p><label><input type="radio" name="strict_transport" value="2"<?php checked( $nfw_options['response_headers'][4], 2 ); disabled($err, 1); ?>><?php echo $lang['6_months'] ?></label></p>
-					<p><label><input type="radio" name="strict_transport" value="3"<?php checked( $nfw_options['response_headers'][4], 3 ); disabled($err, 1); ?>><?php echo $lang['1_year'] ?></label></p>
-					<p><label><input type="checkbox" name="strict_transport_sub" value="1"<?php checked( $nfw_options['response_headers'][5], 1 ); disabled($err, 1); ?>><?php echo $lang['subdomain'] ?></label></p>
+					<p><label><input type="radio" name="strict_transport" value="0"<?php checked( $nfw_options['response_headers'][4], 0 ); disabled($hsts_err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p><?php echo $err_msg ?>
+					<p><label><input type="radio" name="strict_transport" value="4"<?php checked( $nfw_options['response_headers'][4], 4 ); disabled($hsts_err, 1); ?>><?php echo $lang['reset'] ?></label></p>
+					<p><label><input type="radio" name="strict_transport" value="1"<?php checked( $nfw_options['response_headers'][4], 1 ); disabled($hsts_err, 1); ?>><?php echo $lang['1_month'] ?></label></p>
+					<p><label><input type="radio" name="strict_transport" value="2"<?php checked( $nfw_options['response_headers'][4], 2 ); disabled($hsts_err, 1); ?>><?php echo $lang['6_months'] ?></label></p>
+					<p><label><input type="radio" name="strict_transport" value="3"<?php checked( $nfw_options['response_headers'][4], 3 ); disabled($hsts_err, 1); ?>><?php echo $lang['1_year'] ?></label></p>
+					<p><label><input type="checkbox" name="strict_transport_sub" value="1"<?php checked( $nfw_options['response_headers'][5], 1 ); disabled($hsts_err, 1); ?>><?php echo $lang['subdomain'] ?></label></p>
 				<?php echo $hsts_msg; ?>
 				</td>
 			</tr>
+
+			<?php
+				if (! isset( $nfw_options['csp_frontend_data'] ) ) {
+					$nfw_options['csp_frontend_data'] = '';
+				}
+				if (! isset( $nfw_options['response_headers'][6] ) ) {
+					$nfw_options['response_headers'][6] = 0;
+				}
+			?>
+			<tr>
+				<td width="55%" align="left" class="dotted"><?php echo $lang['c_s_p'] ?></td>
+				<td width="45%" align="left" class="dotted">
+					<p><label><input type="radio" onclick="csp_onoff(1, 'csp')" name="csp_frontend" value="1"<?php checked( $nfw_options['response_headers'][6], 1 ); disabled($err, 1); ?>><?php echo $lang['yes'] ?></label></p>
+					<p><label><input type="radio" onclick="csp_onoff(0, 'csp')" name="csp_frontend" value="0"<?php checked( $nfw_options['response_headers'][6], 0 ); disabled($err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p>
+					<p>
+					<textarea name="csp_frontend_data" id="csp" style="font-family:monospace;font-size:13px;width:100%;border:1px solid #666666;" rows="4"<?php readonly( $err, 1 ); readonly( $nfw_options['response_headers'][6], 0 ) ?>><?php echo htmlspecialchars( $nfw_options['csp_frontend_data'] ) ?></textarea>
+					</p>
+					<?php echo $err_msg ?>
+				</td>
+			</tr>
+
 		</table>
 	</fieldset>
 
@@ -688,8 +716,9 @@ function restore_firewall_policies() {
 	}
 	$nfw_options['referer_scan'] = 0;
 	if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-		// We enable X-XSS-Protection and HttpOnly flag:
-		$nfw_options['response_headers'] = '100100';
+		// We enable X-XSS-Protection and X-Content-Type-Options:
+		$nfw_options['response_headers'] = '01010000';
+		$nfw_options['csp_frontend_data'] = '';
 	}
 	$nfw_options['referer_sanitise'] = 1;
 	$nfw_options['referer_post'] = 0;
@@ -816,7 +845,8 @@ function save_firewall_policies() {
 
 	// HTTP response headers:
 	if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-		$nfw_options['response_headers'] = '000000';
+		$nfw_options['response_headers'] = '00000000';
+		$nfw_options['csp_frontend_data'] = '';
 		// X-Content-Type-Options
 		if ( empty( $_POST['x_content_type_options']) ) {
 			$nfw_options['response_headers'][1] = 0;
@@ -860,6 +890,13 @@ function save_firewall_policies() {
 			$nfw_options['response_headers'][4] = 3;
 		} else {
 			$nfw_options['response_headers'][4] = 4;
+		}
+		// Content-Security-Policy ?
+		$nfw_options['csp_frontend_data'] = stripslashes( str_replace( array( '<', '>', "\x0a", "\x0d", '%', '$', '&') , '', $_POST['csp_frontend_data'] ) );
+		if ( empty( $_POST['csp_frontend']) || empty( $nfw_options['csp_frontend_data'] ) ) {
+			$nfw_options['response_headers'][6] = 0;
+		} else {
+			$nfw_options['response_headers'][6] = 1;
 		}
 	}
 

@@ -1,5 +1,5 @@
 <?php
-/* 2016-08-04 18:05:40 */
+/* 2016-09-27 16:43:32 */
 $lang = array (
 	'error'				=> 'Erreur',
 	'yes'					=> 'Oui',
@@ -66,6 +66,7 @@ $lang = array (
 
 	'httponly_warn'	=>	'Si vos scripts PHP envoient des cookies qui doivent être accessibles à partir de JavaScript, vous devez garder cette option désactivée.',
 	'httpresponse'		=>	'En-têtes de réponse HTTP',
+	'c_s_p'				=>	'Activer Content-Security-Policy',
 	'x_c_t_o'			=>	'Activer X-Content-Type-Options pour protéger contre les attaques basées sur la confusion du type MIME',
 	'x_f_o'				=>	'Activer X-Frame-Options pour protéger contre les attaques de détournement de clic (clickjacking)',
 	'x_x_p'				=>	"Activer X-XSS-Protection pour utiliser les filtres anti-XSS des navigateurs (IE, Chrome et Safari)",

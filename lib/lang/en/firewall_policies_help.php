@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-25 22:54:40 */
+/* 2016-09-27 22:40:31 */
 $title = 'Firewall > Policies';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -90,6 +90,7 @@ This action will be performed when the filtering process is over, right before N
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Force <code>HttpOnly</code> flag on all cookies to mitigate XSS attacks:</strong> adding this flag to cookies helps to mitigate the risk of cross-site scripting by preventing them from being accessed through client-side script. NinjaFirewall can hook all cookies sent by your blog, its plugins or any other PHP script, add the <code>HttpOnly</code> flag if it is missing, and re-inject those cookies back into your server HTTP response headers right before they are sent to your visitors.</p>
 <p><img src="static/icon_warn.png">&nbsp;If your PHP scripts send cookies that need to be accessed from JavaScript, you should keep that option disabled.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Set <code>Strict-Transport-Security</code> (HSTS) to enforce secure connections to the server:</strong> this policy enforces secure HTTPS connections to the server. Web browsers will not allow the user to access the web application over insecure HTTP protocol. It helps to defend against cookie hijacking and Man-in-the-middle attacks. Most recent browsers support HSTS headers.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Set <code>Content-Security-Policy</code>:</strong> this policy helps to mitigate threats such as XSS, phishing and clickjacking attacks. It covers JavaScript, CSS, HTML frames, web workers, fonts, images, objects (Java, ActiveX, audio and video files), and other HTML5 features.</p>
 
 <hr class="dotted" size="1">
 

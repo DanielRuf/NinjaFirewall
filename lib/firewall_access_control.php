@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-11 15:48:27                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -81,6 +79,8 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;GET<?php echo $lang['default'] ?></label></p>
 					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;POST<?php echo $lang['default'] ?></label></p>
 					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;HEAD<?php echo  $lang['default'] ?></label></p>
+					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;PUT<?php echo  $lang['default'] ?></label></p>
+					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;DELETE<?php echo  $lang['default'] ?></label></p>
 				</td>
 			</tr>
 		</table>

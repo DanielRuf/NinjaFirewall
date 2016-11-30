@@ -1,5 +1,5 @@
 <?php
-/* 2015-11-24 21:47:40 */
+/* 2016-09-14 21:47:40 */
 $language = 'French/Français';
 $author   = 'NinTechNet';
 
@@ -28,6 +28,7 @@ $lang = array (
 	'fwl_fc'			=> 'File Check',
 	'fwl_edit'		=> 'Editeur de Règles',
 	'fwl_log'		=> 'Journal de Sécurité',
+	'cent_log'		=>	'Centralisation des Logs',
 	'fwl_livelog'	=> 'Live Log',
 
 	// Log out message

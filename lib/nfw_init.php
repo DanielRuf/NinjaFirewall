@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-01-30 01:43:20                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -26,8 +24,8 @@ if ( version_compare($nfw_options['engine_version'], NFW_ENGINE_VERSION, '<') ) 
 	// v2.0.3 update -------------------------------------------------
 	if (empty($nfw_options['response_headers']) ) {
 		if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-			// We enable X-XSS-Protection and HttpOnly flag:
-			$nfw_options['response_headers'] = '100100';
+			// We enable X-XSS-Protection and X-Content-Type-Options flag:
+			$nfw_options['response_headers'] = '01010000';
 		}
 	}
 	// v2.0.5 update -------------------------------------------------
@@ -35,6 +33,14 @@ if ( version_compare($nfw_options['engine_version'], NFW_ENGINE_VERSION, '<') ) 
 		$nfw_options['admin_wl'] = 0;
 		$nfw_options['admin_wl_session'] = 0;
 		$nfw_options['fg_exclude'] = '';
+	}
+	// v3.2 update ---------------------------------------------------
+	if ( version_compare( $nfw_options['engine_version'], '3.2', '<' ) ) {
+		if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
+			if (! empty( $nfw_options['response_headers'] ) && strlen( $nfw_options['response_headers'] ) == 6 ) {
+				$nfw_options['response_headers'] .= '00';
+			}
+		}
 	}
 	// ---------------------------------------------------------------
 

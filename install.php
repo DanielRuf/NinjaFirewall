@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-03-28 15:35:05                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -1485,7 +1483,7 @@ function fw_conf_options() {
 		'ac_ip' 					=> 1,
 		'ac_ip_2' 				=> 0,
 		'ac_scan_loopback'	=> 1,
-		'ac_method' 			=> 'GETPOSTHEAD',
+		'ac_method' 			=> 'GETPOSTHEADPUTDELETE',
 		'ac_geoip' 				=> 0,
 		'ac_geoip_db' 			=> 1,
 		'ac_geoip_db2' 		=> '',
@@ -1561,8 +1559,7 @@ function fw_conf_options() {
 	// 1. header_register_callback(): requires PHP >=5.4
 	// 2. headers_list() and header_remove(): some hosts may disable
 	if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-		// We enable X-XSS-Protection and HttpOnly flag:
-		$nfw_options['response_headers'] = '100100';
+		$nfw_options['response_headers'] = '01010000';
 	}
 	return $nfw_options;
 }

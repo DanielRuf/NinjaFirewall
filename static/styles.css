@@ -74,6 +74,8 @@ input:not([type=submit]):not([type=button]):focus {background-color: #FDCD25;}
 	font-size: 13px;
 }
 
+textarea[readonly] { background-color: #ccc; }
+
 .tinyblack {
    font-size: 11px;
    color: #222;

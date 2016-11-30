@@ -21,4 +21,16 @@ $nfw_help = <<<'EOT'
 </br />
 Les journaux des mois précédents sont accessibles depuis le menu déroulant situé au dessus de la fenêtre.</p>
 
+
+<hr class="dotted" size="1">
+
+<h3><strong>Centralisation des Logs</strong></h3>
+
+<p>La Centralisation des Logs vous permet d’accéder, depuis votre site principal, au journal du pare-feu de chacun de vos sites protégés par NinjaFirewall. Vous n'avez plus besoin de vous connecter à chaque site pour analyser vos journaux. <a class="links" style="border-bottom:dotted 1px #FDCD25;" href="http://blog.nintechnet.com/centralized-logging-with-ninjafirewall/">Consultez notre blog pour plus d'informations à ce sujet</a>.</p>
+
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Entrez votre clé publique (optionnel):</strong> Il s'agit de la clé qui a été créée depuis le serveur principal.</p>
+
+<p><img src="static/icon_warn.png">&nbsp;L'option de centralisation des logs fonctionnera même si vous désactivez NinjaFirewall. Si vous souhaitez complètement désactiver cette option, supprimez votre clé publique.</p>
+
+
 EOT;

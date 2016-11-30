@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-10 00:28:42 */
+/* 2016-09-24 17:08:05 */
 $title = 'Firewall > Access Control';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -58,7 +58,7 @@ You will remain whitelisted even if you log out of the administration console.</
 
 <h3><strong>HTTP Methods</strong></h3>
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>All Access Control directives below should apply to:</strong> this option lets you select the HTTP method(s). All Access Control directives (Geolocation, IPs, bots and URLs) will only apply to the selected methods. It does not apply to the Firewall Policies options, which use their own ones.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>All Access Control directives below should apply to the following methods:</strong> this option lets you select the HTTP method(s). All Access Control directives (Geolocation, IPs, bots and URLs) will only apply to the selected methods. It does not apply to the Firewall Policies options, which use their own ones.</p>
 
 
 <hr class="dotted" size="1">

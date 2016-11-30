@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-08-17 17:18:35                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -230,6 +228,13 @@ if ($mid == 99) {
 	}
 	require(__DIR__ . '/lib/firewall_filecheck.php');
 
+// menu Firewall > Centralized Logging
+} elseif ($mid == 39) {
+	if (! empty($_GET['help']) ) {
+		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_centlog_help.php');
+	}
+	require(__DIR__ . '/lib/firewall_centlog.php');
+
 } elseif ($mid == 90) {
    raw_admin_log();
 } elseif ($mid == 91) {
@@ -246,7 +251,7 @@ if ($mid == 99) {
 
 exit;
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function is_nf_enabled() {
 
@@ -285,7 +290,7 @@ function is_nf_enabled() {
 
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function checked( $var, $val) {
 
@@ -295,7 +300,7 @@ function checked( $var, $val) {
 
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function selected( $var, $val) {
 
@@ -305,7 +310,7 @@ function selected( $var, $val) {
 
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function disabled( $var, $val) {
 
@@ -314,8 +319,17 @@ function disabled( $var, $val) {
 	}
 
 }
+/* ------------------------------------------------------------------ */
 
-/* ================================================================== */
+function readonly( $var, $val) {
+
+	if ( $var == $val ) {
+		echo " readonly='readonly'";
+	}
+
+}
+
+/* ------------------------------------------------------------------ */
 
 function raw_admin_log() {
 
@@ -350,7 +364,7 @@ function raw_admin_log() {
 
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function flush_admin_log() {
 
@@ -363,7 +377,7 @@ function flush_admin_log() {
 	}
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function nfw_help($what) {
 
@@ -397,7 +411,7 @@ exit;
 
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function nfw_changelog() {
 
@@ -426,7 +440,7 @@ exit;
 
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function html_header() {
 
@@ -448,13 +462,14 @@ function html_header() {
 		35 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_edit'],
 		36 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_log'],
 		37 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_livelog'],
-		38 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_fc']
+		38 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_fc'],
+		39 => $lang['fwl_main'] . ' &gt; ' . $lang['cent_log']
 	);
 	$m10 = $m11 = $m12 =
 	$m20 = $m21 = $m22 =
 	$m30 = $m31 = $m32 =
 	$m33 = $m34 = $m35 =
-	$m36 = $m37 = $m38 = 'static/bullet_off.gif';
+	$m36 = $m37 = $m38 = $m39 = 'static/bullet_off.gif';
 
 	if    ( $GLOBALS['mid'] == 10 ) $m10 = 'static/bullet_on.gif';
 	elseif( $GLOBALS['mid'] == 11 ) $m11 = 'static/bullet_on.gif';
@@ -470,6 +485,7 @@ function html_header() {
 	elseif( $GLOBALS['mid'] == 36 ) $m36 = 'static/bullet_on.gif';
 	elseif( $GLOBALS['mid'] == 37 ) $m37 = 'static/bullet_on.gif';
 	elseif( $GLOBALS['mid'] == 38 ) $m38 = 'static/bullet_on.gif';
+	elseif( $GLOBALS['mid'] == 39 ) $m39 = 'static/bullet_on.gif';
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -548,7 +564,9 @@ function html_header() {
 					<td class="tinyblack">
 						<img src="'. $m31 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=31&token='.$_REQUEST['token'].'">' . $lang['fwl_pol'] . '</a>
 					</td>
-				</tr>
+				</tr>';
+				if (! defined('DSPPM') ) {
+					echo '
 				<tr>
 					<td class="tinyblack">
 						<img src="'. $m32 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=32&token='.$_REQUEST['token'].'">' . $lang['fwl_ac'] . ' (<font color="#FF0000">Pro+</font>)</a>
@@ -558,17 +576,23 @@ function html_header() {
 					<td class="tinyblack">
 						<img src="'. $m33 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=33&token='.$_REQUEST['token'].'">' . $lang['fwl_fg'] . ' (<font color="#FF0000">Pro+</font>)</a>
 					</td>
-				</tr>
+				</tr>';
+				}
+				echo '
 				<tr>
 					<td class="tinyblack">
 						<img src="'. $m38 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=38&token='.$_REQUEST['token'].'">' . $lang['fwl_fc'] . '</a>
 					</td>
-				</tr>
+				</tr>';
+				if (! defined('DSPPM') ) {
+					echo '
 				<tr>
 					<td class="tinyblack">
 						<img src="'. $m34 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=34&token='.$_REQUEST['token'].'">' . $lang['fwl_wf'] . ' (<font color="#FF0000">Pro+</font>)</a>
 					</td>
-				</tr>
+				</tr>';
+				}
+				echo '
 				<tr>
 					<td class="tinyblack">
 						<img src="'. $m35 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=35&token='.$_REQUEST['token'].'">' . $lang['fwl_edit'] . '</a>
@@ -578,12 +602,21 @@ function html_header() {
 					<td class="tinyblack">
 						<img src="'. $m36 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=36&token='.$_REQUEST['token'].'">' . $lang['fwl_log'] . '</a>
 					</td>
+				</tr>';
+				if (! defined('DSPPM') ) {
+					echo '
+				<tr>
+					<td class="tinyblack">
+						<img src="'. $m39 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=39&token='.$_REQUEST['token'].'">' . $lang['cent_log'] . ' (<font color="#FF0000">Pro+</font>)</a>
+					</td>
 				</tr>
 				<tr>
 					<td class="tinyblack">
 						<img src="'. $m37 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=37&token='.$_REQUEST['token'].'">' . $lang['fwl_livelog'] . ' (<font color="#FF0000">Pro+</font>)</a>
 					</td>
-				</tr>
+				</tr>';
+				}
+				echo '
 				<tr>
 					<td style="text-align:center;"><p><img src="static/logopro_60.png" width="60" height="60"></p>
 					</td>
@@ -598,7 +631,7 @@ function html_header() {
 
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 
 function html_footer() {
 
@@ -631,5 +664,5 @@ function html_footer() {
    exit;
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 // EOF

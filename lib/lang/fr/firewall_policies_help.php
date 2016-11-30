@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-25 22:54:44 */
+/* 2016-09-27 22:40:39 */
 $title = 'Pare-Feu > Politique';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -84,10 +84,11 @@ Veuillez noter que cette action est effectuée en dernier, après le filtrage, j
 	<li><code>SAMEORIGIN</code>: un navigateur ne doit pas afficher le contenu dans une <code>&lt;frame&gt;</code> ou <code>&lt;iframe&gt;</code> d'une page d'origine différente que le contenu lui-même.</li>
 	<li><code>DENY</code>: un navigateur ne doit jamais afficher le contenu dans une <code>&lt;frame&gt;</code> ou <code>&lt;iframe&gt;</code>.</li>
 </ul>
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Activer <code>X-XSS-Protection</code> pour utiliser les filtres anti-XSS des navigateurs (IE, Chrome et Safari):</strong> cet en-tête permet aux navigateurs compatibles d'identifier et bloquer les attaques XSS en empêchant un script malveillant de s'exécuter. NinjaFirewall envoie cet en-tête avec la valeur <code>1; mode=block</code>.</p>
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Activer la propriété <code>HttpOnly</code> pour tous les cookies afin d'atténuer les menaces XSS qui génèrent des vols de cookies:</strong> cette protection permet de diminuer les risques d'attaques XSS en empêchant JavaScript d'accéder aux cookies de l'utilisateur. NinjaFirewall peut intercepter les cookies envoyés par vos scripts PHP, activer la propriété <code>HttpOnly</code> si elle est manquante, puis réinjecter les cookies dans la réponse HTTP juste avant que celle-ci ne soit envoyée à vos visiteurs.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Activer <code>X-XSS-Protection</code> pour utiliser les filtres anti-XSS des navigateurs (IE, Chrome et Safari) :</strong> cet en-tête permet aux navigateurs compatibles d'identifier et bloquer les attaques XSS en empêchant un script malveillant de s'exécuter. NinjaFirewall envoie cet en-tête avec la valeur <code>1; mode=block</code>.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Activer la propriété <code>HttpOnly</code> pour tous les cookies afin d'atténuer les menaces XSS qui génèrent des vols de cookies :</strong> cette protection permet de diminuer les risques d'attaques XSS en empêchant JavaScript d'accéder aux cookies de l'utilisateur. NinjaFirewall peut intercepter les cookies envoyés par vos scripts PHP, activer la propriété <code>HttpOnly</code> si elle est manquante, puis réinjecter les cookies dans la réponse HTTP juste avant que celle-ci ne soit envoyée à vos visiteurs.</p>
 <p><img src="static/icon_warn.png">&nbsp;Si vos scripts PHP envoient des cookies qui doivent être accessibles à partir de JavaScript, vous devez garder cette option désactivée.</p>
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Activer <code>Strict-Transport-Security</code> (HSTS) pour forcer les connexions sécurisées vers le serveur:</strong> cette politique force les connexions HTTPS sécurisées vers le serveur. Les navigateurs n'accepteront pas de se connecter au site si la connexion n'est pas sécurisée (HTTPS). Cela permet de se défendre contre les détournements de cookies ou les attaques du type "Man-in-the-middle". La plupart des navigateurs récents sont compatibles avec <code>Strict-Transport-Security</code>.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Activer <code>Strict-Transport-Security</code> (HSTS) pour forcer les connexions sécurisées vers le serveur :</strong> cette politique force les connexions HTTPS sécurisées vers le serveur. Les navigateurs n'accepteront pas de se connecter au site si la connexion n'est pas sécurisée (HTTPS). Cela permet de se défendre contre les détournements de cookies ou les attaques du type "Man-in-the-middle". La plupart des navigateurs récents sont compatibles avec cette politique.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Activer <code>Content-Security-Policy</code> :</strong> cette politique aide pour bloquer les attaques XSS notamment. Elle couvre le code JavaScript, les styles CSS, frames/iframes HTML, polices, images, objets (Java, ActiveX, fichiers audio et video), mais aussi les WebSocket.</p>
 
 <hr class="dotted" size="1">
 

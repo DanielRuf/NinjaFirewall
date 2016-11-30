@@ -1,5 +1,5 @@
 <?php
-/* 2016-04-13 11:59:59 */
+/* 2016-09-17 11:59:59 */
 $lang = array (
 	'error'					=> 'Erreur',
 	'info'					=> 'Info',
@@ -25,6 +25,13 @@ $lang = array (
 									'depuis les serveurs de NinjaFirewall',
 
 	'new_engine'			=> 'Une nouvelle version est disponible, cliquez ici pour l\'installer&nbsp;!',
+
+	'centlog'				=>	'Centralisation des Logs',
+	'invalid_key'			=>	'la clé publique est invalide. Veuillez vérifier ' .'%s'. 'votre configuration' .'%s.',
+	'no_ip'					=>	'Aucune restriction d\'accès par adresse IP.',
+	'allowed_ip'			=>	'L\'adresse IP %s est autorisée à accéder au journal du pare-feu de  NinjaFirewall.',
+	'invalid_ip'			=>	'l\'adresse IP est invalide. Veuillez vérifier ' .'%s'. 'votre configuration' .'%s.',
+	'err_centlog'			=>	'Erreur : %s',
 
 	'debugging'				=> 'Débogage',
 

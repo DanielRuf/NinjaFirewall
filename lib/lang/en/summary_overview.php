@@ -1,5 +1,5 @@
 <?php
-/* 2016-04-13 11:41:54 */
+/* 2016-09-17 11:41:54 */
 $lang = array (
 	'error'					=> 'Error',
 	'info'					=> 'Info',
@@ -25,6 +25,13 @@ $lang = array (
 	'failed_connect'		=> 'Unable to retrieve updates information from NinjaFirewall server',
 
 	'new_engine'			=> 'A new version is available, click here to update!',
+
+	'centlog'				=>	'Centralized Logging',
+	'invalid_key'			=>	'the public key is invalid. Please '.'%s'. 'check your configuration' .'%s.',
+	'no_ip'					=>	'No IP address restriction.',
+	'allowed_ip'			=>	'IP address %s is allowed to access NinjaFirewall\'s log on this server.',
+	'invalid_ip'			=>	'the whitelisted IP is not valid. Please '.'%s'. 'check your configuration' .'%s.',
+	'err_centlog'			=>	'Error: %s',
 
 	'debugging'				=> 'Debugging',
 

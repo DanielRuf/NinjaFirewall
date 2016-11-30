@@ -1,6 +1,16 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2 =
+* Added a new "Content-Security-Policy" option to the "Firewall Policies > HTTP response headers" section.
+* [Pro+ Edition] Added a new feature: "Centralized Logging". It allows you to remotely access the firewall log of all your NinjaFirewall protected websites from one single installation, without having to log in to individual servers to analyse your log data (see our blog for more info about that: http://nin.link/centlog/ ).
+* [Pro+ Edition] Added "PUT" and "DELETE" methods to the "NinjaFirewall > Access Control > HTTP Methods" section.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Fixed a bug in the firewall log: blocked threats were not hex-decoded before exporting the log.
+* The "X-Content-Type-Options" header will be enabled by default with new installations of NinjaFirewall.
+* Updated security rules.
+* Minor fixes and adjustments.
+
 = 3.1.8 =
 * Updated security rules and improved XSS evasion techniques detection.
 * [Pro+ Edition] Fixed a bug where notifications sent or displayed by NinjaFirewall were showing the load balancer IP when an alternate address was defined in the "Access Control > Source IP" section.

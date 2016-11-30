@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-03-14 00:28:38                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -33,7 +31,7 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 		<tr>
 			<td style="width:100%;text-align:center;">
 				<i class="tinyblack" id="loading">&nbsp;</i><br />
-				<textarea style="background-color:#ffffff;width:95%;height:250px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" wrap="off" disabled="disabled"></textarea>
+				<textarea style="background-color:#ffffff;width:95%;height:250px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" wrap="off" disabled="disabled"><?php echo $lang['no_traffic']; echo "\n"; ?></textarea>
 				<center>
 					<p>
 						<label><input type="radio" disabled="disabled"><?php echo $lang['on'] ?></label>&nbsp;&nbsp;<label><input type="radio" checked="checked" disabled="disabled"><?php echo $lang['off'] ?></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['refresh'] ?>

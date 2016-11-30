@@ -1,5 +1,5 @@
 <?php
-/* 2016-07-30 17:31:46 */
+/* 2016-07-30 17:33:40 */
 $title = 'Firewall > Live Log';
 $close = 'Close';
 $nfw_help = <<<'EOT'

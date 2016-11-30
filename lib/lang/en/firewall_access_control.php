@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-09 21:46:36 */
+/* 2016-09-24 17:07:46 */
 $lang = array (
 
 	'error'				=> 'Error',
@@ -50,7 +50,7 @@ $lang = array (
 	'http_method'		=> 'HTTP Methods',
 	'method'				=>'method',
 
-	'methods_txt'		=> 'All Access Control directives below should apply to',
+	'methods_txt'		=> 'All Access Control directives below should apply to the following HTTP methods',
 
 	'geoip'				=> 'Geolocation Access Control',
 	'geoip_txt'			=> 'Enable Geolocation',

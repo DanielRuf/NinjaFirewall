@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-08-17 17:18:43                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -86,7 +84,7 @@ function nfw_select_ip() {
 		}
 	}
 	if (! defined('NFW_REMOTE_ADDR') ) {
-		define('NFW_REMOTE_ADDR', $_SERVER['REMOTE_ADDR']);
+		define('NFW_REMOTE_ADDR', htmlspecialchars($_SERVER['REMOTE_ADDR']) );
 	}
 }
 

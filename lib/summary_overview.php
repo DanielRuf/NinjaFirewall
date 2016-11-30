@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-08-17 18:09:58                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -134,6 +132,45 @@ if ($_SESSION['ver'] == 0) {
 		}
 	}
 }
+
+// Centralized logging: remote server
+if ( ! empty( $nfw_options['clogs_pubkey'] ) ) {
+	$err_msg = $ok_msg = '';
+	if (! preg_match( '/^[a-f0-9]{40}:([a-f0-9:.]{3,39}|\*)$/', $nfw_options['clogs_pubkey'], $match ) ) {
+		$err_msg = sprintf( $lang['invalid_key'], '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=36&token='. $_REQUEST['token'] .'#clogs">', '</a>');
+
+	} else {
+		if ( $match[1] == '*' ) {
+			$ok_msg = $lang['no_ip'];
+
+		} elseif ( filter_var( $match[1], FILTER_VALIDATE_IP ) ) {
+			$ok_msg = sprintf( $lang['allowed_ip'], htmlspecialchars( $match[1]) );
+
+		} else {
+			$err_msg = sprintf( $lang['invalid_ip'], '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=36&token='. $_REQUEST['token'] .'#clogs">', '</a>');
+
+		}
+	}
+	?>
+	<tr>
+		<td width="45%"><?php echo $lang['centlog'] ?></th>
+		<?php
+		if ( $err_msg ) {
+			?>
+		<td width="10%" align="center"><img src="static/icon_error.png" border="0" width="21" height="21"></td>
+		<td width="45%"><?php printf( $lang['err_centlog'], $err_msg) ?></td>
+	</tr>
+		<?php
+		$err_msg = '';
+	} else {
+		?>
+			<td width="10%">&nbsp;</td>
+			<td width="45%"><a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=36&token=<?php echo $_REQUEST['token'] ?>#clogs"><?php echo $lang['enabled']; echo "</a>. $ok_msg"; ?></td>
+		</tr>
+	<?php
+	}
+}
+
 
 // Is debug mode on ?
 if ( $nfw_options['debug'] ) {
