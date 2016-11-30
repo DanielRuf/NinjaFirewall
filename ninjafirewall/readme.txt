@@ -3,7 +3,7 @@ Contributors: nintechnet, bruandet
 Tags: admin, attack, backdoor, botnet, brute force,  denial, firewall, hack, hhvm, infection, injection, login, malware, nginx, nintechnet, ninja, palomuuri, pare-feu, phishing, prevention, protection, security, sécurité, sécuriser, seguridad, segurança, sicherheit, sicurezza, veiligheid, shellshock, soaksoak, sqli, trojan, user enumeration, virus, WAF, Web application firewall, widget, wp-login, XML-RPC, xmlrpc, XSS
 Requires at least: 3.3.0
 Tested up to: 4.6
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -234,6 +234,16 @@ NinjaFirewall works on Unix-like servers only. There is no Microsoft Windows ver
 
 
 == Changelog ==
+
+= 3.3.2 =
+
+* Added "max_execution_time" directive to "File Check" to prevent time-out.
+* Updated Anti-Malware signatures.
+* The security rules updates option will be enabled by default with new installations of NinjaFirewall.
+* If the administrator is whitelisted by the brute-force protection, a notice will be displayed on the WordPress login page.
+* [WP+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* [WP+ Edition] The "Block scripts, ELF and system files upload" will also block Microsoft executable files (MZ header).
+* Minor fixes and adjustments.
 
 = 3.3.1 =
 
