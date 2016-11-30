@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-10 00:56:05 */
+/* 2016-11-02 22:00:21 */
 $lang = array (
 
 	'next'					=> 'Next',
@@ -20,7 +20,7 @@ $lang = array (
 	'php_error'				=>	'NinjaFirewall requires PHP v5.3 or greater, but your current version is %s.',
 
 	'php_os'					=>	'Operating system',
-	'windows'				=>	'NinjaFirewall is not compatible with Windows.',
+	'windows'				=>	'NinjaFirewall is not compatible with Microsoft Windows.',
 
 	'safemode'				=>	'safe_mode',
 	'safemode_ok'			=>	'Disabled',
@@ -161,7 +161,7 @@ $lang = array (
 	'hi16'					=>	'-Do I need to alter my PHP scripts?',
 	'hi17'					=>	'-Will NinjaFirewall detect the correct IP of my visitors if I am behind a CDN service like Cloudflare or Incapsula?',
 	'hi18'					=>	'-Will it slow down my site?',
-	'hi19'					=>	'-Is there any Windows version?',
+	'hi19'					=>	'-Is there any Microsoft Windows version?',
 	'hi20'					=>	'-Can I add/write my own security rules?',
 	'hi21'					=>	'-Can I migrate my site(s) with NinjaFirewall installed?',
 	'hi22'					=>	'-How can I protect Joomla with NinjaFirewall?',

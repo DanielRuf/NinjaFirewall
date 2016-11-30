@@ -322,7 +322,7 @@ function nfw_block( $lev ) {
 		header('HTTP/1.0 ' . $http_codes[$nfw_['nfw_options']['ret_code']] );
 		header('Status: ' .  $http_codes[$nfw_['nfw_options']['ret_code']] );
 		header('Pragma: no-cache');
-		header('Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate, proxy-revalidate');
+		header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate, proxy-revalidate');
 		header('Expires: Mon, 01 Sep 2014 01:01:01 GMT');
 	}
 
@@ -378,7 +378,7 @@ function nfw_check_upload() {
 					nfw_log('Attempt to upload a Linux binary file (ELF)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
-				if (preg_match('`<\?(?i:php)|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\b(?i:array_map|base64_(?:de|en)code|eval|file(?:_get_contents)?|fsockopen|gzinflate|move_uploaded_file|passthru|preg_replace|phpinfo|system|(?:shell_)?exec)\s*\(|\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[]|\W\$\{\s*[\'"]\w+[\'"]`', $data) ) {
+				if (preg_match('`<\?(?i:php|=)|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\b(?i:array_map|base64_(?:de|en)code|eval|file(?:_get_contents)?|fsockopen|gzinflate|move_uploaded_file|passthru|preg_replace|phpinfo|system|(?:shell_)?exec)\s*\(|\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[]|\W\$\{\s*[\'"]\w+[\'"]`', $data) ) {
 					nfw_log('Attempt to upload a script', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
@@ -609,38 +609,39 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 		$val = @$rules['cha'][$subid]['exe']($val);
 	}
 
+	$t = '';
+
 	if ( isset( $rules['cha'][$subid]['nor'] ) ) {
-		if ( isset( $nfw_['normalized'][$where][$key] ) && ! isset( $rules['cha'][$subid]['exe'] ) ) {
-			$val = $nfw_['normalized'][$where][$key];
+		$t .= 'N';
+		if ( isset( $nfw_[$t][$where][$key] ) && ! isset( $rules['cha'][$subid]['exe'] ) ) {
+			$val = $nfw_[$t][$where][$key];
 		} else {
 			$val = nfw_normalize( $val, $nfw_rules );
 			if (! isset( $rules['cha'][$subid]['exe']) ) {
-				$nfw_['normalized'][$where][$key] = $val;
+				$nfw_[$t][$where][$key] = $val;
 			}
 		}
 	}
 
 	if ( isset( $rules['cha'][$subid]['tra'] ) ) {
-		if ( isset( $nfw_['transformed'][$where][$key][ $rules['cha'][$subid]['tra'] ] )  && ! isset( $rules['cha'][$subid]['exe'] ) ) {
-			$val = $nfw_['transformed'][$where][$key][ $rules['cha'][$subid]['tra'] ];
+		$t .= 'T' . $rules['cha'][$subid]['tra'];
+		if ( isset( $nfw_[$t][$where][$key] )  && ! isset( $rules['cha'][$subid]['exe'] ) ) {
+			$val = $nfw_[$t][$where][$key];
 		} else {
 			$val = nfw_transform_string( $val, $rules['cha'][$subid]['tra'] );
-			if ( empty( $rules['cha'][$subid]['noc']) ) {
-				$val = nfw_compress_string( $val, $rules['cha'][$subid]['tra'] );
-				if (! isset( $rules['cha'][$subid]['exe']) ) {
-					$nfw_['transformed'][$where][$key][ $rules['cha'][$subid]['tra'] ] = $val;
-				}
+			if (! isset( $rules['cha'][$subid]['exe']) ) {
+				$nfw_[$t][$where][$key] = $val;
 			}
 		}
-	} else {
-		if ( empty( $rules['cha'][$subid]['noc']) ) {
-			if ( isset( $nfw_['compressed'][$where][$key] ) && ! isset( $rules['cha'][$subid]['exe'] ) ) {
-				$val = $nfw_['compressed'][$where][$key];
-			} else {
-				$val = nfw_compress_string( $val );
-				if (! isset( $rules['cha'][$subid]['exe']) ) {
-					$nfw_['compressed'][$where][$key] = $val;
-				}
+	}
+	if ( empty( $rules['cha'][$subid]['noc']) ) {
+		$t .= 'C';
+		if ( isset( $nfw_[$t][$where][$key] ) && ! isset( $rules['cha'][$subid]['exe'] ) ) {
+			$val = $nfw_[$t][$where][$key];
+		} else {
+			$val = nfw_compress_string( $val );
+			if (! isset( $rules['cha'][$subid]['exe']) ) {
+				$nfw_[$t][$where][$key] = $val;
 			}
 		}
 	}
@@ -891,7 +892,7 @@ function nfw_check_b64( $key, $string ) {
 	$decoded = base64_decode($string);
 	if ( strlen($decoded) < 4 ) { return; }
 
-	if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|preg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|substr|system|unlink)\s*\(|\becho\s*[\'"]|<(?i:a[\s/]|applet|div|embed|i?frame(?:set)?|img|meta|marquee|object|script|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php)|(?i:(?:\b|\d)select\b.+?from\b.+?(?:\b|\d)where|(?:\b|\d)insert\b.+?into\b|(?:\b|\d)union\b.+?(?:\b|\d)select\b|(?:\b|\d)update\b.+?(?:\b|\d)set\b)`', $decoded) ) {
+	if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|preg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|substr|system|unlink)\s*\(|\becho\s*[\'"]|<(?i:a[\s/]|applet|div|embed|i?frame(?:set)?|img|meta|marquee|object|script|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php|=)|(?i:(?:\b|\d)select\b.+?from\b.+?(?:\b|\d)where|(?:\b|\d)insert\b.+?into\b|(?:\b|\d)union\b.+?(?:\b|\d)select\b|(?:\b|\d)update\b.+?(?:\b|\d)set\b)`', $decoded) ) {
 		nfw_log('BASE64-encoded injection', 'POST:' . $key . ' = ' . $string, '3', 0);
 		nfw_block(3);
 	}

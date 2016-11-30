@@ -356,7 +356,7 @@ function raw_admin_log() {
 			echo htmlspecialchars($line);
 		}
 		fclose($fh);
-		echo '</textarea></center></fieldset><br /><center><form method="post" onsubmit="return dellog();"><input type="button" value="' . $lang['close'] . '" onClick="window.close();">&nbsp;&nbsp;&nbsp;<input type="hidden" name="mid" value="91"><input type="submit" value="' . $lang['del_log'] . '"></form></center><br /></body></html>';
+		echo '</textarea></center></fieldset><br /><center><form method="post" onsubmit="return dellog();"><input class="button" type="button" value="' . $lang['close'] . '" onClick="window.close();">&nbsp;&nbsp;&nbsp;<input type="hidden" name="mid" value="91"><input type="submit" class="button" value="' . $lang['del_log'] . '"></form></center><br /></body></html>';
 	} else {
 		echo '<font color="red">' . $lang['err_open_log'] . ' (/nfwlog/admin.php) !</font></fieldset><br /></body></html>';
 	}
@@ -432,7 +432,7 @@ require('changelog.php');
 		</tr>
 	</table>
 	<br />
-	<center><input type="button" value="Close" onclick="window.close()" /></center>
+	<center><input type="button" class="button" value="Close" onclick="window.close()" /></center>
 </body>
 </html>
 <?php

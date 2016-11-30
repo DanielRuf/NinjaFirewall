@@ -1,6 +1,14 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.2 =
+* Improved the filtering engine cache for better reliability and speed.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Updated security rules.
+* Fixed "Cache-Control" header in the firewall blocked message.
+* [Pro+ Edition] Fixed a "Undefined index: lic_exp" PHP notice.
+* Fixed a few CSS issues with Webkit-based browsers.
+
 = 3.2.1 =
 * Updated security rules.
 * Added "max_execution_time" directive to "File Check" to prevent time-out.

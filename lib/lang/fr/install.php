@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-10 00:56:08 */
+/* 2016-11-02 22:00:25 */
 $lang = array (
 
 	'next'					=> 'Suivant',
@@ -20,7 +20,7 @@ $lang = array (
 	'php_version'			=> 'Version PHP',
 	'php_error'				=>	'NinjaFirewall nécessite au minimum PHP v5.3, but votre version actuelle est %s.',
 	'php_os'					=>	'Système d\'exploitation',
-	'windows'				=>	'NinjaFirewall n\'est pas compatible avec Windows.',
+	'windows'				=>	'NinjaFirewall n\'est pas compatible avec Microsoft Windows.',
 	'safemode'				=>	'safe_mode',
 	'safemode_ok'			=>	'Désactivé',
 	'safemode_error'		=>	'Vous avez <code>safe_mode</code> activé, veuillez le désactiver. Cette fonctionnalité est devenue OBSOLETE depuis PHP 5.3 et a été SUPPRIMEE depuis PHP 5.4.',
@@ -163,7 +163,7 @@ $lang = array (
 	'hi16'					=>	'-Dois-je modifier mes script PHP ?',
 	'hi17'					=>	'-Est-ce que NinjaFirewall détectera la bonne adresse IP de mes visiteurs si j\'utilise un service CDN comme Cloudflare ou Incapsula ?',
 	'hi18'					=>	'-Est-ce qu\'il va ralentir mon site ?',
-	'hi19'					=>	'-Existe-t-il une version pour Windows ?',
+	'hi19'					=>	'-Existe-t-il une version pour Microsoft Windows ?',
 	'hi20'					=>	'-Puis-je ajouter / écrire mes propres règles de sécurité ?',
 	'hi21'					=>	'-Est-ce que je peux migrer mon site lorsque NinjaFirewall est installé ?',
 	'hi22'					=>	'-Comment protéger Joomla avec NinjaFirewall ?',

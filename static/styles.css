@@ -23,10 +23,13 @@ textarea {
 	direction:ltr
 }
 code{
-	padding:3px 5px 2px;
+	padding-left:3px;
+	padding-right:3px;
 	margin:0 1px;
 	background:#FAFAFA;
-	font-size:13px
+	font-size:13px;
+	border:1px solid #E5E3E3;
+	line-height:1.5
 }
 
 .dotted {
