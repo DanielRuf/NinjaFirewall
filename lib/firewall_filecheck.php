@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-11-24 18:11:20                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -361,7 +359,7 @@ if (file_exists($nfmon_diff) ) {
 				?>
 				<form method="post">
 					<p>
-						<input type="submit" name="dlsnap" value="<?php echo $lang['down_sshot'] ?>" class="button-secondary" />&nbsp;&nbsp;&nbsp;<input type="submit" class="button-secondary" onClick="return delit();" value="<?php echo $lang['del_sshot'] ?>" />
+						<input type="submit" name="dlsnap" value="<?php echo $lang['down_sshot'] ?>" class="button" />&nbsp;&nbsp;&nbsp;<input type="submit" class="button" onClick="return delit();" value="<?php echo $lang['del_sshot'] ?>" />
 						<input type="hidden" name="nfw_act" value="delete" />
 						<input type="hidden" name="mid" value="<?php echo $GLOBALS['mid'] ?>">
 					</p>
@@ -381,11 +379,11 @@ if (file_exists($nfmon_diff) ) {
 				<p><?php printf( $lang['mod_files_'], count($mod_file) ) ?></p>
 
 				<form method="post">
-					<p><input type="button" value="<?php echo $lang['view_changes'] ?>" onClick="nftoogle();" class="button-secondary" id="vcbtn" <?php
+					<p><input type="button" value="<?php echo $lang['view_changes'] ?>" onClick="nftoogle();" class="button" id="vcbtn" <?php
 					if (! empty($changes)) {
 						echo 'disabled="disabled" ';
 					}
-					?>/>&nbsp;&nbsp;&nbsp;<input type="submit" name="dlmods" value="<?php echo $lang['down_changes'] ?>" class="button-secondary" /></p>
+					?>/>&nbsp;&nbsp;&nbsp;<input type="submit" name="dlmods" value="<?php echo $lang['down_changes'] ?>" class="button" /></p>
 				</form>
 				<br />
 			<?php
@@ -501,7 +499,7 @@ if (file_exists($nfmon_diff) ) {
 <form method="post">
 	<input type="hidden" name="mid" value="<?php echo $GLOBALS['mid'] ?>">
 	<input type="hidden" name="nfw_act" value="scan" />
-	<p style="text-align:center;"><input type="submit" class="button-primary" value="<?php echo $lang['scan now'] ?> &#187;" /></p>
+	<p style="text-align:center;"><input type="submit" class="button" value="<?php echo $lang['scan now'] ?> &#187;" /></p>
 </form>
 <br />
 <?php
@@ -542,6 +540,7 @@ function nf_sub_monitoring_create($nfmon_snapshot) {
 		$snapexclude = str_replace(',', '|', $tmp);
 	}
 
+	@ini_set('max_execution_time', 0);
 	$snapproc = microtime(true);
 
 	if ($fh = fopen($nfmon_snapshot, 'w') ) {
@@ -619,6 +618,8 @@ function nf_sub_monitoring_scan($nfmon_snapshot, $nfmon_diff) {
 	global $nfw_options;
 
 	if (empty($nfw_options['enabled']) ) { return; }
+
+	@ini_set('max_execution_time', 0);
 
 	if (! isset($nfw_options['snapexclude']) || ! isset($nfw_options['snapdir']) || ! isset($nfw_options['snapnoslink']) ) {
 		return sprintf( $lang['missing_option'], __LINE__ );

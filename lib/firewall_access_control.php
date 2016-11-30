@@ -38,7 +38,7 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 				</td>
 			</tr>
 			<tr>
-				<td width="55%" align="left" class="dotted"><?php printf( $lang['currentstatus'], '<code>' . $_SESSION['nfadmpro'] . '</code>') ?></td>
+				<td width="55%" align="left" class="dotted"><?php printf( $lang['currentstatus'], '<code>' . $nfw_options['admin_name'] . '</code>') ?></td>
 				<td width="45%" class="dotted">N/A</td>
 			</tr>
 		</table>

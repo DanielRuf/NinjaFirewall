@@ -1,6 +1,15 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.1 =
+* Updated security rules.
+* Added "max_execution_time" directive to "File Check" to prevent time-out.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Fixed a bug in the "Summary > Statistics" page where the "Average time per request" field could report a wrong value.
+* Fixed a few CSS issues with Webkit-based browsers (Opera, Chrome/Chromium, Safari).
+* The "Block scripts, ELF and system files upload" will also block Microsoft executable files (MZ header).
+* Minor fixes and adjustments.
+
 = 3.2 =
 * Added a new "Content-Security-Policy" option to the "Firewall Policies > HTTP response headers" section.
 * [Pro+ Edition] Added a new feature: "Centralized Logging". It allows you to remotely access the firewall log of all your NinjaFirewall protected websites from one single installation, without having to log in to individual servers to analyse your log data (see our blog for more info about that: http://nin.link/centlog/ ).

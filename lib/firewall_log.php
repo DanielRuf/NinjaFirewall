@@ -157,7 +157,7 @@ echo '</select>';
 if ( ! empty( $data['lines'] ) ) {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" value="'. $lang['js_exp_log'] .'" onclick=\'window.location="?mid='. $GLOBALS['mid'] .'&token='. $_REQUEST['token'] .'&nfw_export=1&nfw_logname='. $selected_log .'"\'>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" value="'. $lang['js_del_log'] .'" onclick=\'if (confirm("'. $lang['js_confirm'] .'")){window.location="?mid='. $GLOBALS['mid'] .'&token='. $_REQUEST['token'] .'&nfw_delete=1&nfw_logname='. $selected_log .'"}\'>';
 } else {
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button-secondary" disabled="disabled" value="'. $lang['js_exp_log'] .'" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button-secondary" disabled="disabled" value="'.  $lang['js_del_log'] .'"  />';
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" disabled="disabled" value="'. $lang['js_exp_log'] .'" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" disabled="disabled" value="'.  $lang['js_del_log'] .'"  />';
 }
 echo '</center>';
 

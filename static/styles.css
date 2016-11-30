@@ -98,6 +98,10 @@ a {
    text-decoration: none;
 }
 
+option {
+	font-size: 13px;
+}
+
 label {
 	cursor:pointer;
 }

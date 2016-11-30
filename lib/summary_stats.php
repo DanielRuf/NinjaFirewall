@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2015-09-18 23:36:17                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -58,6 +56,7 @@ if ($fh = @fopen($fw_log, 'r') ) {
 				if (strpos($line, 'Banning IP') !== false) {
 					$banned_ip++;
 				}
+				continue;
 			}
 			if ($match[1]) {
 				if ( $match[1] > $slow) {

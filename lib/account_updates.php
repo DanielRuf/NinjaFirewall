@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2014-11-11 01:53:54                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -145,7 +143,7 @@ if (! empty($_POST['nfw_update']) ) {
 
 		echo '<br /><div class="success"><p>' . $lang['update_ok'] .'</p></div><br />
 			<form method="post" action="?token=' . $_REQUEST['token'] . '&rand=' . time() . '">
-			<input type="submit" value="' . $lang['update_ok_bt'] . '">
+			<input class="button" type="submit" value="' . $lang['update_ok_bt'] . '">
 			<input type="hidden" name="mid" value="' . $GLOBALS['mid'] . '">
 			<input type="hidden" name="nfw_what" value="check">
 			</form>';

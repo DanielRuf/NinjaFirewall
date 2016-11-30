@@ -90,7 +90,7 @@ if ( ($_SESSION['timeout'] + 7200) < time() ) {
 }
 $_SESSION['timeout'] = time();
 
-if ($_SESSION['nfadmpro'] != $nfw_options['admin_name']) {
+if ($_SESSION['nfadmpro'] != sha1( $nfw_options['admin_name']) ) {
 	session_destroy();
    header('Location: login.php?4');
    exit;

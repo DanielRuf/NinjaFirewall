@@ -159,7 +159,7 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
    }
 
 	// Redirect to the index page :
-	$_SESSION['nfadmpro'] = $nfw_options['admin_name'];
+	$_SESSION['nfadmpro'] = sha1( $nfw_options['admin_name'] );
 	$_SESSION['timeout'] = time();
 	$token = sha1( time() );
 	$_SESSION['nftoken'] = sha1( $token . __DIR__ );
