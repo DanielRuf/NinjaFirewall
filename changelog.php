@@ -1,6 +1,10 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.3 =
+* Updated security rules.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 3.2.2 =
 * Improved the filtering engine cache for better reliability and speed.
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
