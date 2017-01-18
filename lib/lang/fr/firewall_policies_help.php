@@ -1,5 +1,4 @@
 <?php
-/* 2016-09-27 22:40:39 */
 $title = 'Pare-Feu > Politique';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -95,6 +94,9 @@ Veuillez noter que cette action est effectuée en dernier, après le filtrage, j
 <h3><strong>PHP</strong></h3>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les gestionnaires (wrappers) PHP dangereux&nbsp;:</strong> PHP dispose de nombreux gestionnaires pour différents types de protocoles de style URL, à utiliser avec les fonctions de manipulation de fichiers. Il est possible pour un hacker de les utiliser afin de passer outre un pare-feu ou plugin de sécurité afin d'exploiter une vulnérabilité dans un script (RFI/LFI etc). Cette option détecte et bloque toute tentative d'utilisation de <code>php://</code> ou <code>data://</code> dans une requête <code>GET</code> ou <code>POST</code>, des cookies, ou dans les variables <code>HTTP_REFERER</code> et <code>HTTP_USER_AGENT</code>.</p>
+
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Bloquer les objets PHP sérialisés&nbsp;:</strong> La sérialisation est utilisée par de nombreuses applications afin de générer une représentation stockable d'une valeur. Cependant, lorsqu'elle est utilisée dans des applications, thèmes ou extensions mal sécurisées, la sérialisation d'objets peut être exploitée pour injecter et exécuter du code PHP (PHP Object Injection). Lorsque cette option est activée, NinjaFirewall bloquera les objets PHP sérialisés se trouvant dans les requêtes <code>GET</code> ou <code>POST</code>, les cookies, ou dans les variables <code>HTTP_REFERER</code> et <code>HTTP_USER_AGENT</code>. Cette option n'est pas activée par défaut.</p>
+
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Masquer les messages d'erreur de PHP&nbsp;:</strong> vous permet de masquer les erreurs retournées par PHP. Ces erreurs peuvent afficher des informations sensibles qui peuvent être exploitées ultérieurement par des pirates.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Nettoyer <code>PHP_SELF</code>, <code>PATH_TRANSLATED</code>, <code>PATH_INFO</code>:</strong> activez ces options si vous souhaitez que le pare-feu nettoie ces trois variables.</p>
 

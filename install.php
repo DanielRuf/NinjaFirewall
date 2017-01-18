@@ -1584,9 +1584,10 @@ function fw_conf_rules() {
 	}
 
 	$nfw_rules[NFW_WRAPPERS]['ena'] 	= 1;
-	$nfw_rules[NFW_NULL_BYTE]['ena'] 	= 1;
+	$nfw_rules[NFW_OBJECTS]['ena'] = 0;
+	$nfw_rules[NFW_NULL_BYTE]['ena'] = 1;
 	$nfw_rules[NFW_ASCII_CTRL]['ena'] = 0;
-	$nfw_rules[NFW_LOOPBACK]['ena'] 	= 0;
+	$nfw_rules[NFW_LOOPBACK]['ena'] = 0;
 
 	return $nfw_rules;
 

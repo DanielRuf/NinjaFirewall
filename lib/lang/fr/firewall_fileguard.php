@@ -12,7 +12,7 @@ $lang = array (
 	'enable_fg'			=>	'Activer File Guard',
 	'detection'			=>	'Détection en temps réel',
 	'exclude_title'	=>	'Exclure les fichiers / dossiers suivants (optionnel)',
-	'exclude_desc'		=>	'Chaîne de caractères complète ou partielle, sensible à la casse. Plusieurs valeurs doivent être séparées par des virgules.',
+	'exclude_desc'		=>	'Chaîne de caractères complète ou partielle, sensible à la casse, 255 caractères maximum. Plusieurs valeurs doivent être séparées par des virgules.',
 	'eg'					=>	'e.g.,',
 
 	'monitor'			=>	'Surveiller et alerter par e-mail lorsqu\'un visiteur accède à un script PHP ' .

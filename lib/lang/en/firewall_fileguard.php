@@ -13,7 +13,7 @@ $lang = array (
 	'enable_fg'			=>	'Enable File Guard',
 	'detection'			=>	'Real-time detection',
 	'exclude_title'	=>	'Exclude the following files/folders (optional)',
-	'exclude_desc'		=>	'Full or partial case-sensitive string(s). Multiple values must be comma-separated.',
+	'exclude_desc'		=>	'Full or partial case-sensitive string(s), max. 255 characters. Multiple values must be comma-separated.',
 	'eg'					=>	'e.g.,',
 
 	'monitor'			=>	'Monitor file activity and send an alert when someone is accessing ' .

@@ -503,6 +503,11 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 	} else {
 		$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
 	}
+	if ( empty( $nfw_rules[NFW_OBJECTS]['ena']) ) {
+		$nfw_rules[NFW_OBJECTS]['ena'] = 0;
+	} else {
+		$nfw_rules[NFW_OBJECTS]['ena'] = 1;
+	}
 	if ( empty( $nfw_options['php_errors']) ) {
 		$nfw_options['php_errors'] = 0;
 	} else {
@@ -531,6 +536,13 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 				<td width="45%" align="left">
 					<p><label><input type="radio" name="php_wrappers" value="1"<?php checked( $nfw_rules[NFW_WRAPPERS]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
 					<p><label><input type="radio" name="php_wrappers" value="0"<?php checked( $nfw_rules[NFW_WRAPPERS]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] ?></label></p>
+				</td>
+			</tr>
+			<tr>
+				<td width="55%" align="left" class="dotted"><?php echo $lang['objects'] ?></td>
+				<td width="45%" align="left" class="dotted">
+					<p><label><input type="radio" name="php_objects" value="1"<?php checked( $nfw_rules[NFW_OBJECTS]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] ?></label></p>
+					<p><label><input type="radio" name="php_objects" value="0"<?php checked( $nfw_rules[NFW_OBJECTS]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] . $lang['default'] ?></label></p>
 				</td>
 			</tr>
 			<tr>
@@ -723,6 +735,7 @@ function restore_firewall_policies() {
 	$nfw_options['referer_sanitise'] = 1;
 	$nfw_options['referer_post'] = 0;
 	$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
+	$nfw_rules[NFW_OBJECTS]['ena'] = 0;
 	$nfw_options['php_errors'] = 1;
 	$nfw_options['php_self'] = 1;
 	$nfw_options['php_path_t'] = 1;
@@ -1086,6 +1099,14 @@ function save_firewall_policies() {
 	} else {
 		// Default: yes
 		$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
+	}
+
+	// Block serialized PHP objects (#ID 525) :
+	if ( empty( $_POST['php_objects']) ) {
+		// Default: no
+		$nfw_rules[NFW_OBJECTS]['ena'] = 0;
+	} else {
+		$nfw_rules[NFW_OBJECTS]['ena'] = 1;
 	}
 
 	// Save changes to 'conf/admin.php' :

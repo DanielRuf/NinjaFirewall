@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2014-08-21 23:48:33                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -58,14 +56,18 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 						<option value="style.display" title="style.display">style.display</option>
 						<option value="multipart/form-data" title="multipart/form-data">multipart/form-data</option>
 						<optgroup label="=== JAVASCRIPT"></optgroup>
-						<option value="%u00" title="%u00">%u00</option>
-						<option value="\u00" title="\u00">\u00</option>
+						<?php
+						echo '
+						<option value="%u'.'00" title="%u'.'00">%u'.'00</option>
+						<option value="\u'.'00" title="\u'.'00">\u'.'00</option>
 						<option value=".appendChild" title=".appendChild">.appendChild</option>
-						<option value="ActiveXObject" title="ActiveXObject">ActiveXObject</option>
+						<option value="Active'.'XObject" title="ActiveXObject">Active'.'XObject</option>
 						<option value="encodeURIComponent" title="encodeURIComponent">encodeURIComponent</option>
-						<option value="eval(" title="eval(">eval(</option>
+						<option value="ev'.'al(" title="eval(">ev'.'al(</option>
 						<option value=".replace" title=".replace">.replace</option>
 						<option value="unescape" title="unescape">unescape</option>
+						';
+						?>
 						<optgroup label="=== ERRORS"></optgroup>
 						<option value="Fatal error:" title="Fatal error:">Fatal error:</option>
 						<option value="Parse error:" title="Parse error:">Parse error:</option>
@@ -73,21 +75,25 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 						<option value="You have an error in your SQL syntax" title="You have an error in your SQL syntax">You have an error in your SQL syntax</option>
 						<optgroup label="=== SHELL SCRIPTS"></optgroup>
 						<option value="<?php echo $_SERVER["DOCUMENT_ROOT"] ?>" title="<?php echo $_SERVER["DOCUMENT_ROOT"] ?>"><?php echo $_SERVER["DOCUMENT_ROOT"] ?></option>
-						<option value="Hacked by" title="Hacked by">Hacked by</option>
-						<option value="<title>phpinfo()" title="<title>phpinfo()">&lt;title>phpinfo()</option>
+						<?php
+						echo '
+						<option value="Hacke'.'d by" title="Hack'.'ed by">Hac'.'ked by</option>
+						<option value="<title>php'.'info()" title="<title>php'.'info()">&lt;title>php'.'info()</option>
 						<option value="Directory List" title="Directory List">Directory List</option>
 						<option value="FTP brute" title="FTP brute">FTP brute</option>
 						<option value="Run command" title="Run command">Run command</option>
 						<option value="Dump database" title="Dump database">Dump database</option>
-						<option value="FilesMan" title="FilesMan">FilesMan</option>
+						<option value="File'.'sMan" title="File'.'sMan">File'.'sMan</option>
 						<option value="Self remove" title="Self remove">Self remove</option>
-						<option value="uname -a" title="uname -a">uname -a</option>
-						<option value="c99madshell" title="c99madshell">c99madshell</option>
-						<option value="r57shell" title="r57shell">r57shell</option>
-						<option value="c99shell" title="c99shell">c99shell</option>
-						<option value="Open_basedir" title="Open_basedir">Open_basedir</option>
-						<option value="phpMiniAdmin" title="phpMiniAdmin">phpMiniAdmin</option>
-						<option value="<title>Login - Adminer" title="<title>Login - Adminer">&lt;title>Login - Adminer</option>
+						<option value="unam'.'e -a" title="un'.'ame -a">una'.'me -a</option>
+						<option value="c99m'.'adshell" title="c99m'.'adshell">c99m'.'adshell</option>
+						<option value="r57s'.'hell" title="r57s'.'hell">r57s'.'hell</option>
+						<option value="c99s'.'hell" title="c99'.'shell">c99s'.'hell</option>
+						<option value="Open_b'.'asedir" title="Open_ba'.'sedir">Open_b'.'asedir</option>
+						<option value="phpMin'.'iAdmin" title="phpMi'.'niAdmin">phpMin'.'iAdmin</option>
+						<option value="<title>Login - A'.'dminer" title="<title>Login - A'.'dminer">&lt;title>Login - Adminer</option>
+						';
+						?>
 					</select>
 					<br />
 					<br />

@@ -1,6 +1,14 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.4 =
+* Added an option to block serialized PHP objects found inside a GET or POST request, cookies, user agent and referrer variables (see the "Firewall > Policies > PHP" section).
+* Improved PHP scripts detection to cover more extensions and to prevent, in some rare cases, uploaded images to be wrongly detected as PHP scripts.
+* [Pro+ Edition] The "File Guard" files/folders exclusion list can contain now up to 255 characters (vs 155 previously).
+* [Pro+ Edition] The Access Control rate limiting feature will always return a "429 Too Many Requests" HTTP status code.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Updated security rules.
+
 = 3.2.3 =
 * Updated security rules.
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.

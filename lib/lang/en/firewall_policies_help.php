@@ -1,5 +1,4 @@
 <?php
-/* 2016-09-27 22:40:31 */
 $title = 'Firewall > Policies';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -97,6 +96,9 @@ This action will be performed when the filtering process is over, right before N
 <h3><strong>PHP</strong></h3>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Block PHP built-in wrappers:</strong> PHP has several wrappers for use with the filesystem functions. It is possible for an attacker to use them to bypass firewalls and various IDS to exploit remote and local file inclusions. This option lets you block any script attempting to pass a <code>php://</code> or a <code>data://</code> stream inside a <code>GET</code> or <code>POST</code> request, cookies, user agent and referrer variables.</p>
+
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Block serialized PHP objects:</strong> Object Serialization is a PHP feature used by many applications to generate a storable representation of a value. However, some insecure PHP applications and plugins can turn that feature into a critical vulnerability called PHP Object Injection. When this option is enabled, NinjaFirewall will block serialized PHP objects found inside a <code>GET</code> or <code>POST</code> request, cookies, user agent and referrer variables. By default, it is disabled.</p>
+
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Hide PHP notice & error messages:</strong> this option lets you hide errors returned by your scripts. Such errors can leak sensitive informations which can be exploited by hackers.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Sanitise <code>PHP_SELF</code>, <code>PATH_TRANSLATED</code>, <code>PATH_INFO</code>:</strong> this option can sanitise any dangerous characters found in those 3 server variables to prevent various XSS and database injection attempts.</p>
 

@@ -1,5 +1,4 @@
 <?php
-/* 2016-09-27 16:43:32 */
 $lang = array (
 	'error'				=> 'Erreur',
 	'yes'					=> 'Oui',
@@ -81,7 +80,8 @@ $lang = array (
 	'hsts_warn'			=>	'Les en-têtes HSTS ne peuvent être utilisés que lorsque vous vous connectez à votre site en HTTPS (connexion sécurisée).',
 
 	'php'					=>	'PHP',
-	'wrapper'			=>	'Bloquer les gestionnaires (wrappers) PHP dangereux',
+	'wrapper'			=>	'Bloquer les gestionnaires PHP dangereux (wrappers)',
+	'objects'			=>	'Bloquer les objets PHP sérialisés',
 	'php_error'			=>	'Masquer les messages d\'erreur de PHP',
 	'php_self'			=>	'Nettoyer PHP_SELF',
 	'php_ptrans'		=>	'Nettoyer PATH_TRANSLATED',

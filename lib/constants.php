@@ -20,8 +20,8 @@
 
 /* ------------------------------------------------------------------ */
 
-define('NFW_ENGINE_VERSION', '3.2.3');
-define('NFW_RULES_VERSION', '20161128.1');
+define('NFW_ENGINE_VERSION', '3.2.4');
+define('NFW_RULES_VERSION', '20170118.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
@@ -44,6 +44,7 @@ define( 'NFW_NULL_BYTE', 2);
 define( 'NFW_ASCII_CTRL', 500);
 define( 'NFW_DOC_ROOT', 510);
 define( 'NFW_WRAPPERS', 520);
+define( 'NFW_OBJECTS', 525);
 define( 'NFW_LOOPBACK', 540);
 // Pro Edtion only :
 define('NFW_SCAN_BOTS', 531);

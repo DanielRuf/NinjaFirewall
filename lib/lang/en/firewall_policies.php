@@ -1,5 +1,4 @@
 <?php
-/* 2016-09-27 16:43:28 */
 $lang = array (
 
 	'error'				=> 'Error',
@@ -82,6 +81,7 @@ $lang = array (
 
 	'php'					=>	'PHP',
 	'wrapper'			=>	'Block PHP built-in wrappers',
+	'objects'			=>	'Block serialized PHP objects',
 	'php_error'			=>	'Hide PHP notice and error messages',
 	'php_self'			=>	'Sanitise PHP_SELF',
 	'php_ptrans'		=>	'Sanitise PATH_TRANSLATED',
