@@ -20,8 +20,8 @@
 
 /* ------------------------------------------------------------------ */
 
-define('NFW_ENGINE_VERSION', '3.2.4');
-define('NFW_RULES_VERSION', '20170118.1');
+define('NFW_ENGINE_VERSION', '3.2.5');
+define('NFW_RULES_VERSION', '20170210.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
@@ -49,10 +49,10 @@ define( 'NFW_LOOPBACK', 540);
 // Pro Edtion only :
 define('NFW_SCAN_BOTS', 531);
 // Pro+ Edtion only :
-define('NFW_BOT_LIST', 'acunetix|analyzer|AhrefsBot|backdoor|bandit|' .
+define('NFW_BOT_LIST', 'acunetix|AhrefsBot|backdoor|bandit|' .
 	'blackwidow|BOT for JCE|core-project|dts agent|emailmagnet|' .
 	'exploit|extract|flood|grabber|harvest|httrack|havij|hunter|indy library|' .
-	'inspect|LoadTimeBot|Microsoft URL Control|Miami Style|morfeus|' .
+	'LoadTimeBot|Microsoft URL Control|Miami Style|morfeus|' .
 	'nessus|pmafind|scanner|siphon|spbot|sqlmap|survey|teleport|updown_tester|xovibot'
 );
 define( 'NFW_DEFAULT_MSG', '<br /><br /><br /><br /><center>Sorry ' .

@@ -27,7 +27,7 @@ Rotated logs, if any, can be selected and viewed from the dropdown menu.</p>
 
 <h3><strong>Centralized Logging</strong></h3>
 
-<p>Centralized Logging lets you remotely access the firewall log of all your NinjaFirewall protected websites from one single installation. You do not need any more to log in to individual servers to analyse your log data. <a class="links" style="border-bottom:dotted 1px #FDCD25;" href="http://blog.nintechnet.com/centralized-logging-with-ninjafirewall/">Consult our blog for more info about it</a>.</p>
+<p>Centralized Logging lets you remotely access the firewall log of all your NinjaFirewall protected websites from one single installation. You do not need any more to log in to individual servers to analyse your log data. <a class="links" style="border-bottom:dotted 1px #FDCD25;" href="https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/">Consult our blog for more info about it</a>.</p>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Enter your public key (optional):</strong> This is the public key that was created from your main server.</p>
 

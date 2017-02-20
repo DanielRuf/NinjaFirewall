@@ -63,7 +63,7 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 				<td width="55%" align="left" class="dotted"><?php echo $lang['pub_key'] ?></td>
 				<td width="45%" class="dotted">
 					<code><?php echo sha1( $key ) .':'. htmlspecialchars( $_SERVER['SERVER_ADDR'] )  ?></code>
-					<p><i><?php printf( $lang['blog_info'], '<a href="http://blog.nintechnet.com/centralized-logging-with-ninjafirewall/" class="links" style="border-bottom:dotted 1px #FDCD25;">', '</a>' ) ?></i></p>
+					<p><i><?php printf( $lang['blog_info'], '<a href="https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/" class="links" style="border-bottom:dotted 1px #FDCD25;">', '</a>' ) ?></i></p>
 				</td>
 			</tr>
 

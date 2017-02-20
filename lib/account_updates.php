@@ -324,15 +324,15 @@ function download_account_update() {
 	}
 
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_USERAGENT, 'NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN );
+	curl_setopt( $ch, CURLOPT_USERAGENT, 'NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN );
 	curl_setopt( $ch, CURLOPT_ENCODING, '');
 	curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
 	curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
 	curl_setopt( $ch, CURLOPT_URL, 'http://'. NFW_UPDATE .'/index.php' );
 	curl_setopt( $ch, CURLOPT_POST, true );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
-	curl_setopt ($ch, CURLOPT_HEADER, 0);
-	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt( $ch, CURLOPT_HEADER, 0);
+	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
 
 	if ( ($content = @unserialize(curl_exec($ch)) ) === FALSE ) {
 		// cURL error (connection, timeout etc) :

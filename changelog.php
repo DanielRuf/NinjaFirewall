@@ -1,6 +1,12 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.5 =
+* Updated security rules.
+* Tweaked list of suspicious bots to prevent potential false-positives.
+* Improved PHP scripts detection.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 3.2.4 =
 * Added an option to block serialized PHP objects found inside a GET or POST request, cookies, user agent and referrer variables (see the "Firewall > Policies > PHP" section).
 * Improved PHP scripts detection to cover more extensions and to prevent, in some rare cases, uploaded images to be wrongly detected as PHP scripts.

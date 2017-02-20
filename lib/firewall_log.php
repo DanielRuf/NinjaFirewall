@@ -347,7 +347,7 @@ function nf_sub_log_options($max_lines) {
 			<td width="55%" align="left"><?php echo $lang['enter_key'] ?></td>
 			<td width="45%" align="left">
 				<input class="input" type="text" style="width:100%" maxlength="80" name="nfw_options[clogs_pubkey]" value="<?php echo htmlspecialchars( $nfw_options['clogs_pubkey'] ) ?>" autocomplete="off" />
-				<br /><i><?php printf( $lang['blog_doc'], '<a href="http://blog.nintechnet.com/centralized-logging-with-ninjafirewall/" class="links" style="border-bottom:dotted 1px #FDCD25;">', '</a>' ) ?></i>
+				<br /><i><?php printf( $lang['blog_doc'], '<a href="https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/" class="links" style="border-bottom:dotted 1px #FDCD25;">', '</a>' ) ?></i>
 			</td>
 		</tr>
 	</table>

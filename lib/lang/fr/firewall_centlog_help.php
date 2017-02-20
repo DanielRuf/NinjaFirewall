@@ -12,7 +12,7 @@ $nfw_help = <<<'EOT'
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>L'adresse IP de ce serveur :</strong> Seule cette adresse IPv4 ou IPv6 sera autorisée à se connecter aux sites distants. Si vous ne souhaitez pas de restriction d’accès par IP, veuillez entrer le caractère <code>*</code>.</p>
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Clé publique :</strong> Vous devez configurer vos sites distants avec cette clé. <a class="links" style="border-bottom:dotted 1px #FDCD25;" href="http://blog.nintechnet.com/centralized-logging-with-ninjafirewall/">Consultez notre blog pour plus d'info</a>.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Clé publique :</strong> Vous devez configurer vos sites distants avec cette clé. <a class="links" style="border-bottom:dotted 1px #FDCD25;" href="https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/">Consultez notre blog pour plus d'info</a>.</p>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>URL de vos sites distants :</strong> Entrez l'URL complète des sites protégés par NinjaFirewall auxquels vous souhaitez accéder à distance à partir du serveur principal.</p>
 

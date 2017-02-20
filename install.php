@@ -874,7 +874,7 @@ function nfw_integration( $err ) {
 						echo '<p id="hhvm" style="display:none;">';
 					}
 					?>
-					<a href="http://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/" target="_blank" class="links" style="border-bottom:dotted 1px #FDCD25;"><?php echo $lang['hhvm_doc'] ?></a></p>
+					<a href="https://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/" target="_blank" class="links" style="border-bottom:dotted 1px #FDCD25;"><?php echo $lang['hhvm_doc'] ?></a></p>
 				</td>
 			</tr>
 			<?php
@@ -1089,7 +1089,7 @@ function nfw_activation() {
 
 			// HHVM
 			} elseif ($_SESSION['http_server'] == 7) {
-				echo '<p><a href="http://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/" target="_blank" class="links" style="border-bottom:dotted 1px #FDCD25;">' . $lang['hhvm_doc'] .'</a></p>' . $bullet . 'Add the following code to your <code>/etc/hhvm/php.ini</code> file, and restart HHVM afterwards:
+				echo '<p><a href="https://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/" target="_blank" class="links" style="border-bottom:dotted 1px #FDCD25;">' . $lang['hhvm_doc'] .'</a></p>' . $bullet . 'Add the following code to your <code>/etc/hhvm/php.ini</code> file, and restart HHVM afterwards:
 				<br /><br />
 				<pre style="background-color:#FFF;border:1px solid #ccc;margin:0px;padding:6px;overflow:auto;height:50px;"><font color="red">auto_prepend_file = ' . __DIR__ . '/firewall.php</font></pre>
 				<br />';
@@ -1227,7 +1227,7 @@ function nfw_activation_test() {
 		</td></tr></table>
 		<p style="text-align:center"><strong><?php echo $lang['need_help'] ?></strong>
 		<br />
-		<a style="border-bottom:dotted 1px #FDCD25;" class="links" href="http://blog.nintechnet.com/troubleshoot-ninjafirewall-installation-problems/" target="_blank">Troubleshoot NinjaFirewall installation problems</a>.</p>
+		<a style="border-bottom:dotted 1px #FDCD25;" class="links" href="https://blog.nintechnet.com/troubleshoot-ninjafirewall-installation-problems/" target="_blank">Troubleshoot NinjaFirewall installation problems</a>.</p>
 		</fieldset>
 		<p style="text-align:center"><input type="button" class="button" value="<?php echo $lang['try_again'] ?>" onClick="location.reload(); " /></p>
 
@@ -1301,16 +1301,16 @@ function nfw_activation_test() {
 			$message.= '4) '. $lang['hi23'] . "\n\n";
 
 			$message.= $lang['hi24_2'] . "\n";
-			$message.= 'http://blog.nintechnet.com/introduction-to-ninjafirewall-filtering-engine/ ' . "\n\n";
+			$message.= 'https://blog.nintechnet.com/introduction-to-ninjafirewall-filtering-engine/ ' . "\n\n";
 
 			$message.= $lang['hi24'] . "\n";
-			$message.= 'http://blog.nintechnet.com/testing-ninjafirewall-without-blocking-your-visitors/ ' . "\n\n";
+			$message.= 'https://blog.nintechnet.com/testing-ninjafirewall-without-blocking-your-visitors/ ' . "\n\n";
 
 			$message.= $lang['hi25'] . "\n";
-			$message.= 'http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ' . "\n\n";
+			$message.= 'https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ' . "\n\n";
 
 			$message.= $lang['hi25b'] . "\n";
-			$message.= 'http://blog.nintechnet.com/upgrading-to-php-7-with-ninjafirewall-installed/ ' . "\n\n";
+			$message.= 'https://blog.nintechnet.com/upgrading-to-php-7-with-ninjafirewall-installed/ ' . "\n\n";
 
 			$message.= '5) '. $lang['hi26'] . "\n\n";
 

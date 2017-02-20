@@ -12,7 +12,7 @@ $nfw_help = <<<'EOT'
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>This server's IP address:</strong> As an additional protection layer, you can restrict access to the remote website(s) to the main server's IP only. You can use IPv4 or IPv6. If you do not want any IP restriction, enter the <code>*</code> character instead.</p>
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Public key:</strong> This is the public key that you will need to upload to each remote website (<a class="links" style="border-bottom:dotted 1px #FDCD25;" href="http://blog.nintechnet.com/centralized-logging-with-ninjafirewall/">consult our blog for more info about it</a>).</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Public key:</strong> This is the public key that you will need to upload to each remote website (<a class="links" style="border-bottom:dotted 1px #FDCD25;" href="https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/">consult our blog for more info about it</a>).</p>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Remote websites URL:</strong> Enter the full URL of your NinjaFirewall protected website(s) that you want to remotely access from the main server.</p>
 
