@@ -1,6 +1,16 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.6 =
+* Updated security rules.
+* Added two new comparison operators to the firewall fitering engine.
+* The "Block PHP built-in wrappers" firewall policy has been extended to "expect://", "file://", "phar://" and "zip://" streams. Previously, it covered only "php://" and "data://" streams.
+* All "textarea" HTML elements will turn browsers spell checking off to prevent annoying highlighting.
+* The "Block ASCII character 0x00" and "Block ASCII control characters" policies will no longer apply to COOKIE to prevent false positives.
+* Minor fixes and adjustments.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* [Pro+ Edition] Added "PATCH" method to the "Firewall > Access Control > HTTP Methods" section.
+
 = 3.2.5 =
 * Updated security rules.
 * Tweaked list of suspicious bots to prevent potential false-positives.

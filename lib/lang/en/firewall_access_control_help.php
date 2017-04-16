@@ -1,5 +1,5 @@
 <?php
-/* 2016-09-24 17:08:05 */
+
 $title = 'Firewall > Access Control';
 $close = 'Close';
 $nfw_help = <<<'EOT'

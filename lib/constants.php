@@ -3,7 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -19,14 +19,15 @@
 */
 
 /* ------------------------------------------------------------------ */
-
-define('NFW_ENGINE_VERSION', '3.2.5');
-define('NFW_RULES_VERSION', '20170210.1');
+define('NFW_ENGINE_VERSION', '3.2.6');
+define('NFW_RULES_VERSION', '20170401.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
 // (obviously, you will not be able to update NF any longer!) :
-define('NFW_UPDATE', 'pro.ninjafirewall.com');
+if (! defined( 'NFW_UPDATE' ) ) {
+	define( 'NFW_UPDATE', 'pro.ninjafirewall.com' );
+}
 
 /* ------------------------------------------------------------------ */
 
@@ -53,7 +54,7 @@ define('NFW_BOT_LIST', 'acunetix|AhrefsBot|backdoor|bandit|' .
 	'blackwidow|BOT for JCE|core-project|dts agent|emailmagnet|' .
 	'exploit|extract|flood|grabber|harvest|httrack|havij|hunter|indy library|' .
 	'LoadTimeBot|Microsoft URL Control|Miami Style|morfeus|' .
-	'nessus|pmafind|scanner|siphon|spbot|sqlmap|survey|teleport|updown_tester|xovibot'
+	'nessus|pmafind|scanner|semrushbot|siphon|spbot|sqlmap|survey|teleport|updown_tester|xovibot'
 );
 define( 'NFW_DEFAULT_MSG', '<br /><br /><br /><br /><center>Sorry ' .
 	'<b>%%REM_ADDRESS%%</b>, your request cannot be proceeded.<br />' .

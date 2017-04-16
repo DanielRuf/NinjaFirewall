@@ -1,5 +1,5 @@
 <?php
-/* 2016-09-22 15:21:24 */
+
 $title = 'Pare-Feu > Centralisation des Logs';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'

@@ -233,7 +233,7 @@ function filter_log() {
 		<table width="100%" class="smallblack" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<td width="100%" align="center">
-					<textarea name="txtlog" style="background-color:#ffffff;width:95%;height:250px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" wrap="off"><?php
+					<textarea name="txtlog" style="background-color:#ffffff;width:95%;height:250px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php
 					if ( ! empty( $logline ) ) {
 						echo '       DATE         INCIDENT  LEVEL     RULE     IP            REQUEST' . "\n";
 						echo $logline;

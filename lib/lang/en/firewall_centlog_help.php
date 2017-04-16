@@ -1,5 +1,5 @@
 <?php
-/* 2016-09-22 15:21:24 */
+
 $title = 'Firewall > Centralized Loggging';
 $close = 'Close';
 $nfw_help = <<<'EOT'

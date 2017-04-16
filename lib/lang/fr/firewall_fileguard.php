@@ -1,5 +1,4 @@
 <?php
-/* 2016-03-28 19:18:45 */
 $lang = array (
 
 	'error'				=> 'Erreur',

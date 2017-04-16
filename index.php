@@ -344,7 +344,7 @@ function raw_admin_log() {
 
 	if ( $fh = fopen(__DIR__ . '/nfwlog/admin.php', 'r') ) {
 		$st = stat(__DIR__ . '/nfwlog/admin.php');
-		echo '<legend><b>&nbsp;admin log [/nfwlog/admin.php - ' . number_format($st['size']) . ' bytes]</b>&nbsp;</legend><center><textarea style="background-color:#ffffff;width:590px;height:380px;border:none;font-family:Consolas,Monaco,monospace;font-size:13px;" wrap="off">';
+		echo '<legend><b>&nbsp;admin log [/nfwlog/admin.php - ' . number_format($st['size']) . ' bytes]</b>&nbsp;</legend><center><textarea style="background-color:#ffffff;width:590px;height:380px;border:none;font-family:Consolas,Monaco,monospace;font-size:13px;" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">';
 
 		if ($st['size'] < 5) {
 			fclose($fh);
@@ -428,7 +428,7 @@ require('changelog.php');
 <body bgcolor="white" class="smallblack">
 	<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
 		<tr>
-			<td width="100%" align="center"><textarea style="background-color:#ffffff;width:95%;height:380px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;"><?php echo htmlentities($changelog) ?></textarea></td>
+			<td width="100%" align="center"><textarea style="background-color:#ffffff;width:95%;height:380px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php echo htmlentities($changelog) ?></textarea></td>
 		</tr>
 	</table>
 	<br />

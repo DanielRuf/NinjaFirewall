@@ -108,8 +108,8 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/index.php' || $_SERVER['SCRIPT_FI
 if (! empty($nfw_['nfw_options']['ban_ip']) ) {
 	$nfw_['ipbk'] = __DIR__ .'/nfwlog/cache/ipbk.'. $_SERVER['SERVER_NAME'] .'_-_'. NFW_REMOTE_ADDR .'.php';
 	if (file_exists($nfw_['ipbk']) ) {
-		$nfw_['stat'] = stat($nfw_['ipbk']);
-		if ( time() - $nfw_['stat']['mtime'] > $nfw_['nfw_options']['ban_time'] * 60 ) {
+		$nfw_['mtime'] = filemtime($nfw_['ipbk']);
+		if ( time() - $nfw_['mtime'] > $nfw_['nfw_options']['ban_time'] * 60 ) {
 			@unlink($nfw_['ipbk']);
 		} else {
 			nfw_block(0);
@@ -287,7 +287,7 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 	}
 
    @file_put_contents($log_file_ext,
-      $tmp . '[' . time() . '] ' . '[' . round( (microtime(true) - $nfw_['fw_starttime']), 5) . '] ' .
+      $tmp . '[' . time() . '] ' . '[' . round( microtime(true) - $nfw_['fw_starttime'], 5) . '] ' .
       '[' . $_SERVER['SERVER_NAME'] . '] ' . '[#' . $nfw_['num_incident'] . '] ' .
       '[' . $ruleid . '] ' .
       '[' . $loglevel . '] ' . '[' . NFW_REMOTE_ADDR . '] ' .
@@ -322,8 +322,8 @@ function nfw_block( $lev ) {
 		header('HTTP/1.0 ' . $http_codes[$nfw_['nfw_options']['ret_code']] );
 		header('Status: ' .  $http_codes[$nfw_['nfw_options']['ret_code']] );
 		header('Pragma: no-cache');
-		header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate, proxy-revalidate');
-		header('Expires: Mon, 01 Sep 2014 01:01:01 GMT');
+		header('Cache-Control: no-cache, no-store, must-revalidate');
+		header('Expires: 0');
 	}
 
 	echo '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">' . "\n" .
@@ -378,7 +378,7 @@ function nfw_check_upload() {
 					nfw_log('Attempt to upload a Linux binary file (ELF)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
-				if (preg_match('`(<\?(?i:php\s|=[\s\x21-\x7e]{10})|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\b(?i:array_map|base64_(?:de|en)code|eval|file(?:_get_contents)?|fsockopen|gzinflate|move_uploaded_file|passthru|preg_replace|phpinfo|system|(?:shell_)?exec)\s*\(|\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[]|\W\$\{\s*[\'"]\w+[\'"])`', $data, $match) ) {
+				if (preg_match('`(<\?(?i:php\s|=[\s\x21-\x7e]{10})|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\b(?i:array_map|base64_(?:de|en)code|eval|file(?:_get_contents)?|fsockopen|gzinflate|move_uploaded_file|passthru|[ep]reg_replace|phpinfo|system|(?:shell_)?exec)\s*\(|\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[]|\W\$\{\s*[\'"]\w+[\'"])`', $data, $match) ) {
 					nfw_log('Attempt to upload a script', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes), pattern: '. $match[1], 3, 0);
 					nfw_block(3);
 				}
@@ -388,7 +388,7 @@ function nfw_check_upload() {
 				if ( empty($data) ) {
 					$data = file_get_contents( $f_uploaded[$key]['tmp_name'] );
 				}
-				if ( preg_match('`X5O!P%@AP' . '\[4\\\PZX54\(P\^\)7CC\)7}\$EIC' .
+				if ( preg_match('`^X5O!P%@AP' . '\[4\\\PZX54\(P\^\)7CC\)7}\$EIC' .
 				                'AR-STANDARD-ANTIVI' . 'RUS-TEST-FILE!\$H' . '\+H\*' .
 				                '[\x09\x10\x13\x20\x1A]*`', $data) ) {
 					nfw_log('EICAR Standard Anti-Virus Test File blocked', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
@@ -450,7 +450,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 	if ( defined('NFW_STATUS') ) { return; }
 
-	global $nfw_;
+	global $nfw_, $HTTP_RAW_POST_DATA;
 
 	foreach ( $nfw_rules as $id => $rules ) {
 
@@ -466,12 +466,12 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 			// =================================================================
 			if ( $where == 'RAW' ) {
-				if ( $_SERVER['REQUEST_METHOD'] != 'POST' ) { continue; }
+				if (! isset( $HTTP_RAW_POST_DATA ) ) {
+					$HTTP_RAW_POST_DATA = file_get_contents( 'php://input' );
+				}
 
-				$RAW_POST = file_get_contents( 'php://input' );
-
-				if ( nfw_matching( 'RAW', 'POST', $nfw_rules, $rules, 1, $id, $RAW_POST, $nfw_options ) ) {
-					nfw_check_subrule( 'RAW', 'POST', $nfw_rules, $nfw_options, $rules, $id );
+				if ( nfw_matching( 'RAW', $_SERVER['REQUEST_METHOD'], $nfw_rules, $rules, 1, $id, $HTTP_RAW_POST_DATA, $nfw_options ) ) {
+					nfw_check_subrule( 'RAW', $_SERVER['REQUEST_METHOD'], $nfw_rules, $nfw_options, $rules, $id );
 				}
 				continue;
 			}
@@ -536,11 +536,16 @@ function nfw_check_subrule( $w0, $w1, $nfw_rules, $nfw_options, $rules, $id ) {
 		$w = explode(':', $rules['cha'][2]['whe']);
 
 		if (! isset( $w[1] ) ) {
+
 			if ( $w[0] == 'RAW' ) {
-				if ( nfw_disabled_scan( 'POST', $nfw_options) || $_SERVER['REQUEST_METHOD'] != 'POST' ) {
+				if ( nfw_disabled_scan( 'POST', $nfw_options) && $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 					return;
 				}
-				nfw_matching( 'POST', 'RAW', $nfw_rules, $rules, 2, $id, file_get_contents( 'php://input' ), $nfw_options );
+				global $HTTP_RAW_POST_DATA;
+				if (! isset( $HTTP_RAW_POST_DATA ) ) {
+					$HTTP_RAW_POST_DATA = file_get_contents( 'php://input' );
+				}
+				nfw_matching( $_SERVER['REQUEST_METHOD'], 'RAW', $nfw_rules, $rules, 2, $id, $HTTP_RAW_POST_DATA, $nfw_options );
 				return;
 			}
 			$w[2] = $w[1] = $w[0];
@@ -690,6 +695,14 @@ function nfw_operator( $val, $what, $op ) {
 	} elseif ( $op == 7 ) {
 		return true;
 
+	} elseif ( $op == 8 ) {
+		if ( strpos($val, $what) === FALSE ) {
+			return true;
+		}
+	} elseif ( $op == 9 ) {
+		if ( stripos($val, $what) === FALSE ) {
+			return true;
+		}
 	} else {
 		if ( $val == $what ) {
 			return true;
@@ -892,7 +905,7 @@ function nfw_check_b64( $key, $string ) {
 	$decoded = base64_decode($string);
 	if ( strlen($decoded) < 4 ) { return; }
 
-	if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|preg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|substr|system|unlink)\s*\(|\becho\s*[\'"]|<(?i:a[\s/]|applet|div|embed|i?frame(?:set)?|img|meta|marquee|object|script|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php|=)|(?i:(?:\b|\d)select\b.+?from\b.+?(?:\b|\d)where|(?:\b|\d)insert\b.+?into\b|(?:\b|\d)union\b.+?(?:\b|\d)select\b|(?:\b|\d)update\b.+?(?:\b|\d)set\b)`', $decoded) ) {
+	if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|[ep]reg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|substr|system|unlink)\s*\(|\becho\s*[\'"]|<(?i:a[\s/]|applet|div|embed|i?frame(?:set)?|img|meta|marquee|object|script|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php|=)|(?i:(?:\b|\d)select\b.+?from\b.+?(?:\b|\d)where|(?:\b|\d)insert\b.+?into\b|(?:\b|\d)union\b.+?(?:\b|\d)select\b|(?:\b|\d)update\b.+?(?:\b|\d)set\b)`', $decoded) ) {
 		nfw_log('BASE64-encoded injection', 'POST:' . $key . ' = ' . $string, '3', 0);
 		nfw_block(3);
 	}

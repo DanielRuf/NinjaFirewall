@@ -1,5 +1,5 @@
 <?php
-/* 2016-03-10 00:28:36 */
+
 $title = 'Pare-Feu > Contrôle d\'Accès';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'

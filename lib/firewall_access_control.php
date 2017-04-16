@@ -81,6 +81,7 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;HEAD<?php echo  $lang['default'] ?></label></p>
 					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;PUT<?php echo  $lang['default'] ?></label></p>
 					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;DELETE<?php echo  $lang['default'] ?></label></p>
+					<p><label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;PATCH<?php echo  $lang['default'] ?></label></p>
 				</td>
 			</tr>
 		</table>

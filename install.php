@@ -444,7 +444,7 @@ function nfw_changelog() {
 	<fieldset><legend>&nbsp;<b><?php echo $lang['notes'] ?></b>&nbsp;</legend>
 		<table width="100%" class="smallblack" border="0" cellpadding="2" cellspacing="0">
 			<tr>
-				<td width="100%" align="center"><textarea name="txtlog" style="background-color:#ffffff;width:95%;height:300px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;"><?php echo htmlspecialchars($changelog) ?></textarea></td>
+				<td width="100%" align="center"><textarea name="txtlog" style="background-color:#ffffff;width:95%;height:300px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php echo htmlspecialchars($changelog) ?></textarea></td>
 			</tr>
 		</table>
 	</fieldset>
@@ -473,7 +473,7 @@ function nfw_license() {
 	<fieldset><legend>&nbsp;<b><?php echo $lang['license'] ?></b>&nbsp;</legend>
 		<table width="100%" class="smallblack" border="0" cellpadding="2" cellspacing="0">
 			<tr>
-				<td width="100%" align="center"><textarea name="txtlog" style="background-color:#ffffff;width:95%;height:300px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;"><?php echo $license ?></textarea></td>
+				<td width="100%" align="center"><textarea name="txtlog" style="background-color:#ffffff;width:95%;height:300px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php echo htmlspecialchars($license) ?></textarea></td>
 			</tr>
 		</table>
 	</fieldset>

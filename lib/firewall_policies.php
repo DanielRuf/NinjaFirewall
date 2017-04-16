@@ -485,7 +485,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 					<p><label><input type="radio" onclick="csp_onoff(1, 'csp')" name="csp_frontend" value="1"<?php checked( $nfw_options['response_headers'][6], 1 ); disabled($err, 1); ?>><?php echo $lang['yes'] ?></label></p>
 					<p><label><input type="radio" onclick="csp_onoff(0, 'csp')" name="csp_frontend" value="0"<?php checked( $nfw_options['response_headers'][6], 0 ); disabled($err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p>
 					<p>
-					<textarea name="csp_frontend_data" id="csp" style="font-family:monospace;font-size:13px;width:100%;border:1px solid #666666;" rows="4"<?php readonly( $err, 1 ); readonly( $nfw_options['response_headers'][6], 0 ) ?>><?php echo htmlspecialchars( $nfw_options['csp_frontend_data'] ) ?></textarea>
+					<textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="csp_frontend_data" id="csp" style="font-family:monospace;font-size:13px;width:100%;border:1px solid #666666;" rows="4"<?php readonly( $err, 1 ); readonly( $nfw_options['response_headers'][6], 0 ) ?>><?php echo htmlspecialchars( $nfw_options['csp_frontend_data'] ) ?></textarea>
 					</p>
 					<?php echo $err_msg ?>
 				</td>

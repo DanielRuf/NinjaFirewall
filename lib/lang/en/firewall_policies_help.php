@@ -95,7 +95,7 @@ This action will be performed when the filtering process is over, right before N
 
 <h3><strong>PHP</strong></h3>
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Block PHP built-in wrappers:</strong> PHP has several wrappers for use with the filesystem functions. It is possible for an attacker to use them to bypass firewalls and various IDS to exploit remote and local file inclusions. This option lets you block any script attempting to pass a <code>php://</code> or a <code>data://</code> stream inside a <code>GET</code> or <code>POST</code> request, cookies, user agent and referrer variables.</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Block PHP built-in wrappers:</strong> PHP has several wrappers for use with the filesystem functions. It is possible for an attacker to use them to bypass firewalls and various IDS to exploit remote and local file inclusions. This option lets you block any script attempting to pass a <code>expect://</code>, <code>file://</code>, <code>phar://</code>, <code>php://</code>, <code>zip://</code> or <code>data://</code> stream inside a <code>GET</code> or <code>POST</code> request, cookies, user agent and referrer variables.</p>
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Block serialized PHP objects:</strong> Object Serialization is a PHP feature used by many applications to generate a storable representation of a value. However, some insecure PHP applications and plugins can turn that feature into a critical vulnerability called PHP Object Injection. When this option is enabled, NinjaFirewall will block serialized PHP objects found inside a <code>GET</code> or <code>POST</code> request, cookies, user agent and referrer variables. By default, it is disabled.</p>
 
@@ -108,9 +108,9 @@ This action will be performed when the filtering process is over, right before N
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Block the <code>DOCUMENT_ROOT</code> server variable in HTTP requests:</strong> this option will block scripts attempting to pass the <code>DOCUMENT_ROOT</code> server variable in a <code>GET</code> or <code>POST</code> request. Hackers use shell scripts that often need to pass this value, but most legitimate programs do not.
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Block ASCII character 0x00 (NULL byte):</strong> this option will reject any <code>GET</code> or <code>POST</code> request, <code>COOKIE</code>, <code>HTTP_USER_AGENT</code>, <code>REQUEST_URI</code>, <code>PHP_SELF</code>, <code>PATH_INFO</code> variables containing the ASCII character 0x00 (NULL byte). Such a character is dangerous and should always be rejected.
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Block ASCII character 0x00 (NULL byte):</strong> this option will reject any <code>GET</code> or <code>POST</code> request, <code>HTTP_USER_AGENT</code>, <code>REQUEST_URI</code>, <code>PHP_SELF</code>, <code>PATH_INFO</code>, <code>HTTP_REFERER</code> variables containing the ASCII character 0x00 (NULL byte). Such a character is dangerous and should always be rejected.
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>Block ASCII control characters 1 to 8 and 14 to 31:</strong> in most cases, those control characters are not needed.
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Block ASCII control characters 1 to 8 and 14 to 31:</strong> this option will reject any <code>GET</code> or <code>POST</code> request, <code>HTTP_USER_AGENT</code>, <code>HTTP_REFERER</code> variables containing ASCII characters from 1 to 8 and 14 to 31.
 
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Block localhost IP in <code>GET/POST</code> requests:</strong> this option will block any <code>GET</code> or <code>POST</code> request containing the localhost IP (127.0.0.1). It can be useful to block SQL dumpers and various hacker's shell scripts.
 

@@ -147,7 +147,7 @@ function chkflds(){
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['blocked_msg'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted"><br />
-					<textarea name="blocked_msg" rows="8" style="background-color:#ffffff;font-family:monospace;font-size:13px;width:100%;border:1px solid #666666;"><?php
+					<textarea name="blocked_msg" rows="8" style="background-color:#ffffff;font-family:monospace;font-size:13px;width:100%;border:1px solid #666666;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php
 					if (! empty( $nfw_options['blocked_msg']) ) {
 						echo htmlentities(base64_decode($nfw_options['blocked_msg']));
 					} else {
