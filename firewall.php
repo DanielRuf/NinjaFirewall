@@ -2,7 +2,7 @@
 // +---------------------------------------------------------------------+
 // | NinjaFirewall (Pro edition)                                         |
 // |                                                                     |
-// | (c) NinTechNet - http://nintechnet.com/                             |
+// | (c) NinTechNet - https://nintechnet.com/                            |
 // |                                                                     |
 // +---------------------------------------------------------------------+
 // | This program is free software: you can redistribute it and/or       |
@@ -23,7 +23,7 @@ if (defined('NFW_STATUS')) { return; }
 $nfw_['fw_starttime'] = microtime(true);
 
 // Optional NinjaFirewall configuration file
-// ( see http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
+// ( see https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
 if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja') ||
 	@file_exists($nfw_['file'] = $_SERVER['DOCUMENT_ROOT'] .'/.htninja') ) {
 	$nfw_['res'] = @include($nfw_['file']);
@@ -36,6 +36,9 @@ if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja
 		header('HTTP/1.1 403 Forbidden');
 		header('Status: 403 Forbidden');
 		die('403 Forbidden');
+		header('Pragma: no-cache');
+		header('Cache-Control: no-cache, no-store, must-revalidate');
+		header('Expires: 0');
 	}
 }
 
@@ -378,7 +381,7 @@ function nfw_check_upload() {
 					nfw_log('Attempt to upload a Linux binary file (ELF)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
-				if (preg_match('`(<\?(?i:php\s|=[\s\x21-\x7e]{10})|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\b(?i:array_map|base64_(?:de|en)code|eval|file(?:_get_contents)?|fsockopen|gzinflate|move_uploaded_file|passthru|[ep]reg_replace|phpinfo|system|(?:shell_)?exec)\s*\(|\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[]|\W\$\{\s*[\'"]\w+[\'"])`', $data, $match) ) {
+				if (preg_match('`(<\?(?i:php\s|=[\s\x21-\x7e]{10})|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\W\$\{\s*[\'"]\w+[\'"])`', $data, $match) ) {
 					nfw_log('Attempt to upload a script', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes), pattern: '. $match[1], 3, 0);
 					nfw_block(3);
 				}

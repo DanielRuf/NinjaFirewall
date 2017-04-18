@@ -1,6 +1,10 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.7 =
+* Updated security rules.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+
 = 3.2.6 =
 * Updated security rules.
 * Added two new comparison operators to the firewall fitering engine.
