@@ -18,8 +18,8 @@
  +---------------------------------------------------------------------+
 */
 /* ------------------------------------------------------------------ */
-define('NFW_ENGINE_VERSION', '3.2.7');
-define('NFW_RULES_VERSION', '20170417.1');
+define('NFW_ENGINE_VERSION', '3.2.8');
+define('NFW_RULES_VERSION', '20170517.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
