@@ -18,8 +18,8 @@
  +---------------------------------------------------------------------+
 */
 /* ------------------------------------------------------------------ */
-define('NFW_ENGINE_VERSION', '3.2.8');
-define('NFW_RULES_VERSION', '20170517.1');
+define('NFW_ENGINE_VERSION', '3.2.9');
+define('NFW_RULES_VERSION', '20170710.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
@@ -56,9 +56,9 @@ define('NFW_BOT_LIST', 'acunetix|AhrefsBot|backdoor|bandit|' .
 	'nessus|pmafind|scanner|semrushbot|siphon|spbot|sqlmap|survey|teleport|updown_tester|xovibot'
 );
 define( 'NFW_DEFAULT_MSG', '<br /><br /><br /><br /><center>Sorry ' .
-	'<b>%%REM_ADDRESS%%</b>, your request cannot be proceeded.<br />' .
-	'For security reason, it was blocked and logged.<br /><br />' .
-	'If you think that was a mistake, please contact the<br />' .
+	'<b>%%REM_ADDRESS%%</b>, your request cannot be processed.<br />' .
+	'For security reasons, it was blocked and logged.<br /><br />' .
+	'If you believe this was an error please contact the<br />' .
 	'webmaster and enclose the following incident ID:<br />' .
 	'<br />[ <b>#%%NUM_INCIDENT%%</b> ]</center>'
 );
