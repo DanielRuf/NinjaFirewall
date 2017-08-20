@@ -6,8 +6,6 @@
  | (c) NinTechNet - http://nintechnet.com/                             |
  |                                                                     |
  +---------------------------------------------------------------------+
- | REVISION: 2016-01-30 01:53:14                                       |
- +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
  | published by the Free Software Foundation, either version 3 of      |
@@ -65,6 +63,12 @@ if (! empty($_POST) ) {
 }
 
 $disabled_rules = $enabled_rules = array();
+
+if ( empty( $nfw_rules ) ) {
+	echo '<br /><div class="error"><p>' . $lang['no_rules'] .'</p></div>';
+	html_footer();
+}
+
 foreach ( $nfw_rules as $rule_key => $rule_value ) {
 	if (! empty( $nfw_rules[$rule_key]['ena'] ) ) {
 		$enabled_rules[] =  $rule_key;

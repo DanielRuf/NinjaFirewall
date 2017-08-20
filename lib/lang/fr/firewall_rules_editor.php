@@ -1,5 +1,5 @@
 <?php
-/* 2014-09-14 19:56:09 */
+
 $lang = array (
 
 	'error'				=> 'Erreur',
@@ -9,6 +9,7 @@ $lang = array (
 	'select_disable'	=>	'Vous devez sélectionner une règle à désactiver.',
 	'policy_rule'		=>	'Pour changer cette règle, utilisez le menu Politique du pare-feu.',
 	'no_exist'			=>	'Cette règle n\'existe pas !',
+	'no_rules'			=>	'Erreur : le pare-feu n\'a pas de règles ! Réinstallez NinjaFirewall pour résoudre le problème.',
 
 	'rule'				=>	'Règle # ',
 	'enabled'			=>	'Règles activées :',

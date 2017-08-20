@@ -372,16 +372,25 @@ function nfw_check_upload() {
 			}
 			$data = '';
 			if ( $nfw_['nfw_options']['uploads'] == 2 ) {
+
 				if (preg_match('/\.ht(?:access|passwd)|(?:php\d?|\.user)\.ini|\.ph(?:p([34x]|5\d?)?|t(ml)?)(?:\.|$)/', $f_uploaded[$key]['name']) ) {
 					nfw_log('Attempt to upload a script or system file', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
 				$data = file_get_contents($f_uploaded[$key]['tmp_name']);
+
 				if (preg_match('`^\x7F\x45\x4C\x46`', $data) ) {
 					nfw_log('Attempt to upload a Linux binary file (ELF)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
-				if (preg_match('`(<\?(?i:php\s|=[\s\x21-\x7e]{10})|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\W\$\{\s*[\'"]\w+[\'"])`', $data, $match) ) {
+				// MZ header :
+				if (preg_match('`^\x4D\x5A`', $data) ) {
+					nfw_log('Attempt to upload an executable file (MZ header)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
+					nfw_block(3);
+				}
+
+
+				if (preg_match('`(<\?(?i:php\s|=[\s\x21-\x7e]{10})|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\W\$\{\s*([\'"])\w+\2)`', $data, $match) ) {
 					nfw_log('Attempt to upload a script', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes), pattern: '. $match[1], 3, 0);
 					nfw_block(3);
 				}
@@ -399,9 +408,13 @@ function nfw_check_upload() {
 				}
 			}
 
+
 			if (! empty($nfw_['nfw_options']['sanitise_fn']) ) {
+				if ( empty( $nfw_['nfw_options']['substitute'] ) ) {
+					$nfw_['nfw_options']['substitute'] = 'X';
+				}
 				$tmp = '';
-				$f_uploaded[$key]['name'] = preg_replace('/[^\w\.\-]/i', 'X', $f_uploaded[$key]['name'], -1, $count);
+				$f_uploaded[$key]['name'] = preg_replace('/[^\w\.\-]/i', $nfw_['nfw_options']['substitute'], $f_uploaded[$key]['name'], -1, $count);
 				if ($count) {
 					$tmp = ' (sanitising '. $count . ' char. from filename)';
 				}
@@ -820,7 +833,6 @@ function nfw_compress_string( $string, $where = null ) {
 function nfw_transform_string( $string, $where ) {
 
 	if ( $where == 1 ) {
-		// Heavily modified version of JsShrink (http://vrana.github.io/JsShrink/)
 		$norm = trim( preg_replace_callback('((^([^a-z/&|#]*)|([\'"])(?:\\\\.|[^\n\3\\\\])*?\3|(?:[0-9a-z_$]+)|.)'.
 			'(?:\s|--[^\n]*+\n|/\*(?:[^*!]|\*(?!/))*+\*/)*'.
 			'(?:(?:\#|--(?:[\x00-\x20\x7f]|$)|/\*$)[^\n]*+\n|/\*!(?:\d{5})?|\*/|/\*(?:[^*!]|\*(?!/))*+\*/)*)si',

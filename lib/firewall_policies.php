@@ -42,6 +42,14 @@ if (! empty($_POST['post']) ) {
 
 ?>
 <script>
+function sanitise_warn(cbox) {
+	if(cbox.checked) {
+		if (confirm("<?php echo $lang['sanit_fn_warn'] ?>")){
+			return true;
+		}
+		return false;
+	}
+}
 function is_number(id) {
 	var e = document.getElementById(id);
 	if (! e.value ) { return }
@@ -54,9 +62,11 @@ function san_onoff(what) {
 	if (what == 0) {
 		document.fwrules.sanid.disabled = true;
 		document.fwrules.sizeid.disabled = true;
+		document.fwrules.subs.disabled = true;
 	} else {
 		document.fwrules.sanid.disabled = false;
 		document.fwrules.sizeid.disabled = false;
+		document.fwrules.subs.disabled = false;
 	}
 }
 function csp_onoff(what, csp) {
@@ -105,6 +115,11 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 	} else {
 		$nfw_options['sanitise_fn'] = 1;
 	}
+	if ( empty( $nfw_options['substitute'] ) || strlen( $nfw_options['substitute'] ) > 1 ) {
+		$substitute = 'X';
+	} else {
+		$substitute = htmlspecialchars( $nfw_options['substitute'] );
+	}
 	if ( empty($nfw_options['uploads']) || ! preg_match( '/^[12]$/', $nfw_options['uploads']) ) {
 		$nfw_options['uploads'] = 0;
 	}
@@ -123,7 +138,9 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 1 ) ?> value="1" id="uf1" onClick="san_onoff(1);">&nbsp;<?php echo $lang['allow_upl'] ?></label></p>
 				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 2 ) ?> value="2" id="uf2" onClick="san_onoff(1);">&nbsp;<?php echo $lang['allow_but'] ?></label></p>
 				<br />
-				<p><label><input id="sanid" type="checkbox" name="sanitise_fn"<?php checked( $nfw_options['sanitise_fn'], 1 ); disabled( $nfw_options['uploads'], 0 ) ?>>&nbsp;<?php echo $lang['sanit_fn'] ?></label></p>
+				<p>
+					<label><input id="sanid" onclick='return sanitise_warn(this);' type="checkbox" name="sanitise_fn"<?php checked( $nfw_options['sanitise_fn'], 1 ); disabled( $nfw_options['uploads'], 0 ) ?> />&nbsp;<?php echo $lang['sanit_fn'] ?></label>&nbsp;(<?php echo $lang['substitute'] ?>&nbsp;<input id="subs" class="input" maxlength="1" size="1" value="<?php echo $substitute ?>" name="substitute" type="text" <?php disabled( $nfw_options['uploads'], 0 ) ?> style="padding-left:3px" />&nbsp;)
+				</p>
 				<p>&nbsp;<?php echo $lang['mxsize_fn'] ?> <input class="input" id="sizeid" type="text" name="upload_maxsize"<?php disabled( $nfw_options['uploads'], 0 ) ?> size="5" value="<?php echo $upload_maxsize ?>" onkeyup="is_number('sizeid')">&nbsp;<?php echo $lang['kb'] ?></p>
 				</td>
 			</tr>
@@ -421,8 +438,8 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left"><?php echo $lang['x_c_t_o'] ?></td>
 				<td width="45%" align="left">
-					<p><label><input type="radio" name="x_content_type_options" value="1"<?php checked( $nfw_options['response_headers'][1], 1 ); disabled($err, 1); ?>><?php echo $lang['yes'] . $lang['default']; ?></label></p>
-					<p><label><input type="radio" name="x_content_type_options" value="0"<?php checked( $nfw_options['response_headers'][1], 0 ); disabled($err, 1); ?>><?php echo $lang['no']; ?></label></p><?php echo $err_msg ?>
+					<p><label><input type="radio" name="x_content_type_options" value="1"<?php checked( $nfw_options['response_headers'][1], 1 ); disabled($err, 1); ?>><?php echo $lang['yes']; ?></label></p>
+					<p><label><input type="radio" name="x_content_type_options" value="0"<?php checked( $nfw_options['response_headers'][1], 0 ); disabled($err, 1); ?>><?php echo $lang['no'] . $lang['default']; ?></label></p><?php echo $err_msg ?>
 				</td>
 			</tr>
 			<tr>
@@ -709,6 +726,7 @@ function restore_firewall_policies() {
 	$nfw_options['scan_protocol'] = 3;
 	$nfw_options['uploads'] = 0;
 	$nfw_options['sanitise_fn'] = 0;
+	$nfw_options['substitute'] = 'X';
 	$nfw_options['upload_maxsize'] = 1048576;
 	$nfw_options['get_scan'] = 1;
 	$nfw_options['get_sanitise'] = 0;
@@ -728,8 +746,8 @@ function restore_firewall_policies() {
 	}
 	$nfw_options['referer_scan'] = 0;
 	if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-		// We enable X-XSS-Protection and X-Content-Type-Options:
-		$nfw_options['response_headers'] = '01010000';
+		// We enable X-XSS-Protection:
+		$nfw_options['response_headers'] = '00010000';
 		$nfw_options['csp_frontend_data'] = '';
 	}
 	$nfw_options['referer_sanitise'] = 1;
@@ -811,6 +829,13 @@ function save_firewall_policies() {
 	} else {
 		$nfw_options['sanitise_fn'] = 0;
 	}
+	// Substitute character:
+	if ( empty( $_POST['substitute'] ) || strlen( $_POST['substitute'] ) > 1 ) {
+		$nfw_options['substitute'] = 'X';
+	} else {
+		$nfw_options['substitute'] = $_POST['substitute'];
+	}
+
 	// Max file size :
 	if ( isset($_POST['upload_maxsize']) && preg_match( '/^\d+$/', $_POST['upload_maxsize']) ) {
 		$nfw_options['upload_maxsize'] = $_POST['upload_maxsize'] * 1024;

@@ -24,6 +24,9 @@ $lang = array (
 	'allow_but'			=>	'Autoriser, mais bloquer les scripts, fichiers ELF et systèmes',
 
 	'sanit_fn'			=>	'Nettoyer le nom des fichiers',
+	'sanit_fn_warn'	=>	'Tout caractère qui n\'est pas une lettre [a-zA-Z], un chiffre [0-9], un point [.], un trait d\'union [-] ou un caractère de soulignement [_], sera remplacé par le caractère de substitution. Continuer ?',
+
+	'substitute'		=>	'caractère de substitution&nbsp;:',
 	'mxsize_fn'			=>	'Taille maximale autorisée',
 	'kb'					=>	'Ko',
 

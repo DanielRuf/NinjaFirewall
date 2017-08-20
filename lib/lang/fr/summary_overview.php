@@ -1,5 +1,5 @@
 <?php
-/* 2016-09-17 11:59:59 */
+
 $lang = array (
 	'error'					=> 'Erreur',
 	'info'					=> 'Info',
@@ -68,10 +68,6 @@ $lang = array (
 	'last_login'			=>	'Dernière Connexion',
 
 	'htninja'				=>	'Fichier de configuration',
-	'htninja_writable'	=>	'%s est accessible en écriture. Pensez à changer ses permissions en lecture seule.',
-
-	'is_opcache'			=> 'Cache opcode PHP',
-	'opcache_detected'	=> 'Un cache opcode a été détecté : %s. Assurez-vous de le désactiver pour le répertoire %s, sinon tout changement dans votre configuration ne pourrait pas prendre effet immédiatement.',
 
 	'log_dir'				=> 'Répertoire des Fichier Journaux',
 	'cache_dir'				=> 'Répertoire du Cache',

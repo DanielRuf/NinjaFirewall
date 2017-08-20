@@ -1,5 +1,5 @@
 <?php
-/* 2016-09-17 11:41:54 */
+
 $lang = array (
 	'error'					=> 'Error',
 	'info'					=> 'Info',
@@ -67,10 +67,6 @@ $lang = array (
 	'last_login'			=>	'Last login',
 
 	'htninja'				=>	'Optional configuration file',
-	'htninja_writable'	=>	'%s is writable. Consider changing its permissions to read-only.',
-
-	'is_opcache'			=> 'PHP opcode cache',
-	'opcache_detected'	=> 'An opcode cache was detected: %s. Make sure to disable it in the %s folder, otherwise any configuration change may not take effect immediately.',
 
 	'log_dir'				=> 'Log Directory',
 	'cache_dir'				=> 'Cache Directory',

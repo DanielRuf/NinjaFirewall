@@ -18,14 +18,14 @@
  +---------------------------------------------------------------------+
 */
 /* ------------------------------------------------------------------ */
-define('NFW_ENGINE_VERSION', '3.2.9');
-define('NFW_RULES_VERSION', '20170710.1');
+define('NFW_ENGINE_VERSION', '3.2.10');
+define('NFW_RULES_VERSION', '20170808.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
 // (obviously, you will not be able to update NF any longer!) :
 if (! defined( 'NFW_UPDATE' ) ) {
-	define( 'NFW_UPDATE', 'pro.ninjafirewall.com' );
+	define( 'NFW_UPDATE', 'pro.nintechnet.com' );
 }
 
 /* ------------------------------------------------------------------ */

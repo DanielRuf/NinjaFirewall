@@ -1,5 +1,5 @@
 <?php
-/* 2014-09-14 19:56:17 */
+
 $title = 'Pare-Feu > Editeur de Règles';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'

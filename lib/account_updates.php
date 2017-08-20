@@ -251,15 +251,24 @@ function check_account_update() {
 		return 0;
 	}
 	if (function_exists('curl_init') ) {
+
+		// If your server can't remotely connect to a SSL port, add this
+		// to your ".htninja" script: define('NFW_DONT_USE_SSL', 1);
+		if ( defined( 'NFW_DONT_USE_SSL' ) ) {
+			$proto = "http://";
+		} else {
+			$proto = "https://";
+		}
+
 		$data  = 'action=checkversion';
 		$data .= '&edn=' . urlencode(NFW_EDN);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_USERAGENT, 'NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN );
+		curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN . ')' );
 		curl_setopt( $ch, CURLOPT_ENCODING, '');
 		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
 		curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
-		curl_setopt( $ch, CURLOPT_URL, 'http://'. NFW_UPDATE . '/index.php' );
+		curl_setopt( $ch, CURLOPT_URL, $proto. NFW_UPDATE . '/index.php' );
 		curl_setopt( $ch, CURLOPT_POST, true );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
 		curl_setopt ($ch, CURLOPT_HEADER, 0);
@@ -323,12 +332,20 @@ function download_account_update() {
 		return 0;
 	}
 
+	// If your server can't remotely connect to a SSL port, add this
+	// to your ".htninja" script: define('NFW_DONT_USE_SSL', 1);
+	if ( defined( 'NFW_DONT_USE_SSL' ) ) {
+		$proto = "http://";
+	} else {
+		$proto = "https://";
+	}
+
 	$ch = curl_init();
-	curl_setopt( $ch, CURLOPT_USERAGENT, 'NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN );
+	curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN . ')' );
 	curl_setopt( $ch, CURLOPT_ENCODING, '');
 	curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
 	curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
-	curl_setopt( $ch, CURLOPT_URL, 'http://'. NFW_UPDATE .'/index.php' );
+	curl_setopt( $ch, CURLOPT_URL, $proto. NFW_UPDATE .'/index.php' );
 	curl_setopt( $ch, CURLOPT_POST, true );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
 	curl_setopt( $ch, CURLOPT_HEADER, 0);
@@ -353,9 +370,9 @@ function download_account_update() {
 
 	if (! empty($content['err']) ) {
 		if ( $content['err'] > 10 ) {
-			echo '<br /><div class="error"><p>' . sprintf( $lang['curl_invlic'], $content['err'] ) . '</p></div>';
+			echo '<br /><div class="error"><p>' . sprintf( $lang['curl_invlic'], htmlspecialchars( $content['err'] ) ) . '</p></div>';
 		} else {
-			echo '<br /><div class="error"><p>' . sprintf( $lang['curl_err'], $content['err'] ) . '</p></div>';
+			echo '<br /><div class="error"><p>' . sprintf( $lang['curl_err'], htmlspecialchars( $content['err'] ) ) . '</p></div>';
 		}
 		return 0;
 	}

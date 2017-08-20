@@ -1,6 +1,16 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.10 =
+
+* The substitution character used to sanitise filenames can be changed (see "Firewall > Policies > Uploads > Sanitise filenames > Substitution character").
+* The "X-Content-Type-Options" firewall policy will be disabled by default when installing NinjaFirewall.
+* When creating the snapshot, "File Check" will remove any whitespace character preceding or following the excluded folders name.
+* Improved uploaded script detection to prevent false positives.
+* Minor fixes (typos etc) and several small adjustments.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Updated security rules.
+
 = 3.2.9 =
 * Updated security rules.
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.

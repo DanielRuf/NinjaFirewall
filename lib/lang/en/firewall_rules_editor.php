@@ -1,6 +1,5 @@
 <?php
 
-/* 2014-09-14 19:48:14 */
 $lang = array (
 
 	'error'				=> 'Error',
@@ -10,6 +9,7 @@ $lang = array (
 	'select_disable'	=>	'You did not select a rule to disable.',
 	'policy_rule'		=>	'To change this rule, use the "Firewall Policies" menu.',
 	'no_exist'			=>	'This rule does not exist!',
+	'no_rules'			=>	'Error: no rules found! Re-install NinjaFirewall to solve the problem.',
 
 	'rule'				=>	'Rule #',
 	'enabled'			=>	'Enabled rules:',

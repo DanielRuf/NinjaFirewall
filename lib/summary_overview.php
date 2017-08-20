@@ -63,14 +63,23 @@ $connect_err = 0;
 if ( $_SESSION['ver'] < 1 && NFW_UPDATE ) {
 	$tmp = '';
 	if (function_exists('curl_init') ) {
+
+		// If your server can't remotely connect to a SSL port, add this
+		// to your ".htninja" script: define('NFW_DONT_USE_SSL', 1);
+		if ( defined( 'NFW_DONT_USE_SSL' ) ) {
+			$proto = "http://";
+		} else {
+			$proto = "https://";
+		}
+
 		$data  = 'action=checkversion';
 		$data .= '&edn=' . NFW_EDN;
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_USERAGENT, 'NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN );
+		curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN . ')' );
 		curl_setopt( $ch, CURLOPT_ENCODING, '');
 		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
 		curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
-		curl_setopt( $ch, CURLOPT_URL, 'http://'. NFW_UPDATE .'/index.php' );
+		curl_setopt( $ch, CURLOPT_URL, $proto. NFW_UPDATE .'/index.php' );
 		curl_setopt( $ch, CURLOPT_POST, true );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
 		curl_setopt ($ch, CURLOPT_HEADER, 0);
@@ -311,42 +320,10 @@ if ( @file_exists( $file = dirname($doc_root ) . '/.htninja') ||
 	?>
 	<tr>
 		<td width="45%"><?php echo $lang['htninja'] ?></td>
-	<?php
-	if ( is_writable($file) ) {
-	?>
-		<td width="10%" align="center"><img src="static/icon_warn.png" border="0" width="21" height="21"></td>
-		<td width="45%"><?php printf( $lang['htninja_writable'], '<code>' . $file . '</code>' ) ?></td>
-	</tr>
-	<?php
-	} else {
-	?>
 		<td width="10%" align="center">&nbsp;</td>
-		<td><code><?php echo $file ?></code></td>
+		<td><code><?php echo htmlspecialchars( $file ) ?></code></td>
 	</tr>
 	<?php
-	}
-}
-
-// Check if there is an opcode cache enabled
-if ( ini_get('xcache.cacher') ) {
-	$opcode = 'xcache.cacher';
-} elseif ( ini_get('eaccelerator.enable') ) {
-	$opcode = 'eaccelerator.enable';
-} elseif ( ini_get('zend_optimizerplus.enable') ) {
-	$opcode = 'zend_optimizerplus.enable';
-} elseif ( ini_get('opcache.enable') ) {
-	$opcode = 'opcache.enable';
-}elseif ( ini_get('apc.enabled') ) {
-	$opcode = 'apc.enabled';
-}
-if ( isset($opcode) ) {
-	?>
-	<tr valign="middle">
-		<td width="45%"><?php echo $lang['is_opcache'] ?></td>
-		<td width="10%" align="center"><img src="static/icon_warn.png" border="0" width="21" height="21"></td>
-		<td width="45%"><?php printf( $lang['opcache_detected'], '<code>' .$opcode. '</code>', '<code>' . dirname(__DIR__) . '/conf/</code>' ) ?></td>
-	</tr>
-<?php
 }
 
 // Check admin log :
