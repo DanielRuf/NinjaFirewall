@@ -3,10 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
- |                                                                     |
- +---------------------------------------------------------------------+
- | REVISION: 2014-10-15 20:17:45                                       |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |

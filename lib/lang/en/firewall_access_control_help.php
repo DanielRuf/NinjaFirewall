@@ -12,7 +12,7 @@ To make better use of them, it is important to understand NinjaFirewall's direct
 
 <p><img src="static/bullet_off.gif">&nbsp;Incoming HTTP request:</p>
 <ol>
-	<li><code><a href="http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja" class="links" style="border-bottom:dotted 1px #FDCD25;" target="_blank">.htninja</a></code> file.</li>
+	<li><code><a href="https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja" class="links" style="border-bottom:dotted 1px #FDCD25;" target="_blank">.htninja</a></code> file.</li>
 	<li>Temporarily blocked IPs ("Firewall > Options > Ban offending IP").</li>
 
 	<li><strong>Access Control :</strong></li>

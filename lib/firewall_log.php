@@ -3,7 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -313,7 +313,7 @@ function nf_sub_log_options($max_lines) {
 		<tr>
 			<td width="55%" align="left" class="dotted"><?php echo $lang['auto_rotate'] ?></td>
 			<td width="45%" align="left" class="dotted">
-				<p><label><input type="radio" name="log_rotate" value="1"<?php checked($nfw_options['log_rotate'], 1) ?>>&nbsp;<?php printf($lang['rotate_size'], '</label>&nbsp;<input class="input" id="sizeid" name="log_maxsize" size="2" maxlength="2" value="' . $nfw_options['log_maxsize'] . '" onkeyup="is_number(\'sizeid\')" type="text">') ?> <?php echo $lang['default'] ?></p>
+				<p><label><input type="radio" name="log_rotate" value="1"<?php checked($nfw_options['log_rotate'], 1) ?>>&nbsp;<?php printf($lang['rotate_size'], '</label>&nbsp;<input class="input" id="sizeid" name="log_maxsize" size="2" maxlength="2" value="' . $nfw_options['log_maxsize'] . '" onkeyup="is_number(\'sizeid\')" type="number">') ?> <?php echo $lang['default'] ?></p>
 				<p><label><input type="radio" name="log_rotate" value="0"<?php checked($nfw_options['log_rotate'], 0) ?>>&nbsp;<?php echo $lang['rotate'] ?></label></p>
 			</td>
 		</tr>

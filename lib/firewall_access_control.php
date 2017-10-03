@@ -3,7 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -24,7 +24,7 @@ require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE_
 $iso_csv = __DIR__ .'/share/iso3166.csv';
 
 html_header();
-echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>).</p></div>';
+echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>).</p></div>';
 ?>
 <br />
 

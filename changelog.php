@@ -1,8 +1,15 @@
 <?php
 $changelog = <<<'EOT'
 
-= 3.2.10 =
+= 3.2.11 =
+* Multidimensional arrays in the $_FILES superglobal are now fully supported.
+* It is possible to select which superglobal the "Block serialized PHP objects" policy can apply to (see "Firewall > Policies > PHP > Block serialized PHP objects in the following global variables"). By default, all but "COOKIE" will be enabled.
+* The "Sanitise filenames" policy will not allow the use of the slash character "/" as a substitution character because it is the directory separator in Unix-like systems.
+* Updated security rules.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes.
 
+= 3.2.10 =
 * The substitution character used to sanitise filenames can be changed (see "Firewall > Policies > Uploads > Sanitise filenames > Substitution character").
 * The "X-Content-Type-Options" firewall policy will be disabled by default when installing NinjaFirewall.
 * When creating the snapshot, "File Check" will remove any whitespace character preceding or following the excluded folders name.

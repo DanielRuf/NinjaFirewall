@@ -3,10 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
- |                                                                     |
- +---------------------------------------------------------------------+
- | REVISION: 2014-08-21 23:09:10                                       |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -35,7 +32,7 @@ html_header();
 			</tr>
 			<tr>
 				<td width="55%" align="left"><?php echo $lang['lic_number'] ?></td>
-				<td width="45%"><?php echo $lang['lic_free'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>)' ?></td>
+				<td width="45%"><?php echo $lang['lic_free'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>)' ?></td>
 			</tr>
 			<tr>
 				<td width="55%">&nbsp;</td>

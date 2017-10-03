@@ -18,6 +18,10 @@ textarea {
 	line-height: 1.4;
 }
 
+input[type=number]{
+    width: 50px;
+}
+
 .code,code{
 	font-family:Consolas,Monaco,monospace;
 	direction:ltr

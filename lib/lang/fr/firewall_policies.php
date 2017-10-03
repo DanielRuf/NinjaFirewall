@@ -83,8 +83,8 @@ $lang = array (
 	'hsts_warn'			=>	'Les en-têtes HSTS ne peuvent être utilisés que lorsque vous vous connectez à votre site en HTTPS (connexion sécurisée).',
 
 	'php'					=>	'PHP',
-	'wrapper'			=>	'Bloquer les gestionnaires PHP dangereux (wrappers)',
-	'objects'			=>	'Bloquer les objets PHP sérialisés',
+	'wrapper'			=>	'Bloquer les gestionnaires PHP dangereux (wrappers) dans les variables GET, POST, HTTP_USER_AGENT, HTTP_REFERER et les cookies',
+	'objects'			=>	'Bloquer les objets PHP sérialisés dans les variables globales suivantes',
 	'php_error'			=>	'Masquer les messages d\'erreur de PHP',
 	'php_self'			=>	'Nettoyer PHP_SELF',
 	'php_ptrans'		=>	'Nettoyer PATH_TRANSLATED',

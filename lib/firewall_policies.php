@@ -3,7 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -115,7 +115,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 	} else {
 		$nfw_options['sanitise_fn'] = 1;
 	}
-	if ( empty( $nfw_options['substitute'] ) || strlen( $nfw_options['substitute'] ) > 1 ) {
+	if ( empty( $nfw_options['substitute'] ) || strlen( $nfw_options['substitute'] ) > 1 || $nfw_options['substitute'] == '/' ) {
 		$substitute = 'X';
 	} else {
 		$substitute = htmlspecialchars( $nfw_options['substitute'] );
@@ -141,7 +141,7 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 				<p>
 					<label><input id="sanid" onclick='return sanitise_warn(this);' type="checkbox" name="sanitise_fn"<?php checked( $nfw_options['sanitise_fn'], 1 ); disabled( $nfw_options['uploads'], 0 ) ?> />&nbsp;<?php echo $lang['sanit_fn'] ?></label>&nbsp;(<?php echo $lang['substitute'] ?>&nbsp;<input id="subs" class="input" maxlength="1" size="1" value="<?php echo $substitute ?>" name="substitute" type="text" <?php disabled( $nfw_options['uploads'], 0 ) ?> style="padding-left:3px" />&nbsp;)
 				</p>
-				<p>&nbsp;<?php echo $lang['mxsize_fn'] ?> <input class="input" id="sizeid" type="text" name="upload_maxsize"<?php disabled( $nfw_options['uploads'], 0 ) ?> size="5" value="<?php echo $upload_maxsize ?>" onkeyup="is_number('sizeid')">&nbsp;<?php echo $lang['kb'] ?></p>
+				<p>&nbsp;<?php echo $lang['mxsize_fn'] ?> <input class="input" id="sizeid" type="number" name="upload_maxsize"<?php disabled( $nfw_options['uploads'], 0 ) ?> size="5" value="<?php echo $upload_maxsize ?>" onkeyup="is_number('sizeid')">&nbsp;<?php echo $lang['kb'] ?></p>
 				</td>
 			</tr>
 		</table>
@@ -520,11 +520,38 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 	} else {
 		$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
 	}
-	if ( empty( $nfw_rules[NFW_OBJECTS]['ena']) ) {
-		$nfw_rules[NFW_OBJECTS]['ena'] = 0;
+
+	if (! empty( $nfw_rules[NFW_OBJECTS]['ena'] ) ) {
+		if ( strpos( $nfw_rules[NFW_OBJECTS]['cha'][1]['whe'], 'GET' )  !== FALSE) {
+			$NFW_OBJECTS_GET = ' checked="checked"';
+		} else {
+			$NFW_OBJECTS_GET = '';
+		}
+		if ( strpos( $nfw_rules[NFW_OBJECTS]['cha'][1]['whe'], 'POST' )  !== FALSE) {
+			$NFW_OBJECTS_POST = ' checked="checked"';
+		} else {
+			$NFW_OBJECTS_POST = '';
+		}
+		if ( strpos( $nfw_rules[NFW_OBJECTS]['cha'][1]['whe'], 'COOKIE' )  !== FALSE) {
+			$NFW_OBJECTS_COOKIE = ' checked="checked"';
+		} else {
+			$NFW_OBJECTS_COOKIE = '';
+		}
+		if ( strpos( $nfw_rules[NFW_OBJECTS]['cha'][1]['whe'], 'HTTP_USER_AGENT' )  !== FALSE) {
+			$NFW_OBJECTS_HTTP_USER_AGENT = ' checked="checked"';
+		} else {
+			$NFW_OBJECTS_HTTP_USER_AGENT = '';
+		}
+		if ( strpos( $nfw_rules[NFW_OBJECTS]['cha'][1]['whe'], 'HTTP_REFERER' )  !== FALSE) {
+			$NFW_OBJECTS_HTTP_REFERER = ' checked="checked"';
+		} else {
+			$NFW_OBJECTS_HTTP_REFERER = '';
+		}
 	} else {
-		$nfw_rules[NFW_OBJECTS]['ena'] = 1;
+		$NFW_OBJECTS_GET = ''; $NFW_OBJECTS_POST = ''; $NFW_OBJECTS_COOKIE = '';
+		$NFW_OBJECTS_HTTP_USER_AGENT = ''; $NFW_OBJECTS_HTTP_REFERER = '';
 	}
+
 	if ( empty( $nfw_options['php_errors']) ) {
 		$nfw_options['php_errors'] = 0;
 	} else {
@@ -558,8 +585,11 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 			<tr>
 				<td width="55%" align="left" class="dotted"><?php echo $lang['objects'] ?></td>
 				<td width="45%" align="left" class="dotted">
-					<p><label><input type="radio" name="php_objects" value="1"<?php checked( $nfw_rules[NFW_OBJECTS]['ena'], 1 ) ?>>&nbsp;<?php echo $lang['yes'] ?></label></p>
-					<p><label><input type="radio" name="php_objects" value="0"<?php checked( $nfw_rules[NFW_OBJECTS]['ena'], 0 ) ?>>&nbsp;<?php echo $lang['no'] . $lang['default'] ?></label></p>
+					<p><label><input type="checkbox" name="nfw_rules[php_objects_get]" value="1"<?php echo $NFW_OBJECTS_GET ?>>GET<?php echo $lang['default'] ?></label><p>
+					<p><label><input type="checkbox" name="nfw_rules[php_objects_post]" value="1"<?php echo $NFW_OBJECTS_POST ?>>POST<?php echo $lang['default'] ?></label><p>
+					<p><label><input type="checkbox" name="nfw_rules[php_objects_http_user_agent]" value="1"<?php echo $NFW_OBJECTS_HTTP_USER_AGENT ?>>HTTP_USER_AGENT<?php echo $lang['default'] ?></label><p>
+					<p><label><input type="checkbox" name="nfw_rules[php_objects_http_referer]" value="1"<?php echo $NFW_OBJECTS_HTTP_REFERER ?>>HTTP_REFERER<?php echo $lang['default'] ?></label><p>
+					<p><label><input type="checkbox" name="nfw_rules[php_objects_cookie]" value="1"<?php echo $NFW_OBJECTS_COOKIE ?>>COOKIE</label><p>
 				</td>
 			</tr>
 			<tr>
@@ -753,7 +783,10 @@ function restore_firewall_policies() {
 	$nfw_options['referer_sanitise'] = 1;
 	$nfw_options['referer_post'] = 0;
 	$nfw_rules[NFW_WRAPPERS]['ena'] = 1;
-	$nfw_rules[NFW_OBJECTS]['ena'] = 0;
+
+	$nfw_rules[NFW_OBJECTS]['ena'] = 1;
+	$nfw_rules[NFW_OBJECTS]['cha'][1]['whe'] = 'GET|POST|SERVER:HTTP_USER_AGENT|SERVER:HTTP_REFERER';
+
 	$nfw_options['php_errors'] = 1;
 	$nfw_options['php_self'] = 1;
 	$nfw_options['php_path_t'] = 1;
@@ -829,8 +862,9 @@ function save_firewall_policies() {
 	} else {
 		$nfw_options['sanitise_fn'] = 0;
 	}
-	// Substitute character:
-	if ( empty( $_POST['substitute'] ) || strlen( $_POST['substitute'] ) > 1 ) {
+	// Substitution character:
+	// Don't allow the '/' character:
+	if ( empty( $_POST['substitute'] ) || strlen( $_POST['substitute'] ) > 1 || $nfw_options['substitute'] == '/' ) {
 		$nfw_options['substitute'] = 'X';
 	} else {
 		$nfw_options['substitute'] = $_POST['substitute'];
@@ -1127,12 +1161,31 @@ function save_firewall_policies() {
 	}
 
 	// Block serialized PHP objects (#ID 525) :
-	if ( empty( $_POST['php_objects']) ) {
-		// Default: no
-		$nfw_rules[NFW_OBJECTS]['ena'] = 0;
-	} else {
-		$nfw_rules[NFW_OBJECTS]['ena'] = 1;
+	$nfw_objects = '';
+	if (! empty( $_POST['nfw_rules']['php_objects_get'] ) ) {
+		$nfw_objects .= "GET|";
 	}
+	if (! empty( $_POST['nfw_rules']['php_objects_post'] ) ) {
+		$nfw_objects .= "POST|";
+	}
+	if (! empty( $_POST['nfw_rules']['php_objects_cookie'] ) ) {
+		$nfw_objects .= "COOKIE|";
+	}
+	if (! empty( $_POST['nfw_rules']['php_objects_http_user_agent'] ) ) {
+		$nfw_objects .= "SERVER:HTTP_USER_AGENT|";
+	}
+	if (! empty( $_POST['nfw_rules']['php_objects_http_referer'] ) ) {
+		$nfw_objects .= "SERVER:HTTP_REFERER|";
+	}
+	if (! empty( $nfw_objects ) ) {
+		$nfw_objects = rtrim( $nfw_objects, '|' );
+		$nfw_rules[NFW_OBJECTS]['ena'] = 1;
+	} else {
+		// Disable rule:
+		$nfw_rules[NFW_OBJECTS]['ena'] = 0;
+	}
+	$nfw_rules[NFW_OBJECTS]['cha'][1]['whe'] = $nfw_objects;
+
 
 	// Save changes to 'conf/admin.php' :
 	if (! $fh = fopen('./conf/options.php', 'w') ) {

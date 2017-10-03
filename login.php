@@ -3,10 +3,8 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
- +---------------------------------------------------------------------+
- | REVISION: 2016-08-17 17:37:52                                       |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -149,7 +147,7 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 						"- IP   : ". NFW_REMOTE_ADDR . "\n" .
 						"- Date : ". date('F j, Y @ g:i a') . ' (UTC '. date('O') . ")\n" .
 						"- URL  : " . $http . "://". $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'] . "\n\n" .
-						'NinjaFirewall - http://ninjafirewall.com/' . "\n";
+						'NinjaFirewall - https://nintechnet.com/' . "\n";
 
 		$headers = 'From: "'. $nfw_options['admin_email'] .'" <'. $nfw_options['admin_email'] .'>' . "\r\n";
 		$headers .= "Content-Transfer-Encoding: 7bit\r\n";
@@ -218,7 +216,7 @@ function login_page($err) {
 			<div class="error" style="width:450px;"><p><?php printf( $lang['banned'], $max_bantime) ?></p></div>
 
 			<br /><br /><br /><br /><br />
-			<font class="tinygrey">&copy; 2012-<?php echo date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="http://nintechnet.com/" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</font>
+			<font class="tinygrey">&copy; 2012-<?php echo date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="https://nintechnet.com/" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</font>
 		</center>
 		</body></html>
 		<?php
@@ -252,7 +250,7 @@ function login_page($err) {
 	</form>
 	<br />
 	<br />
-	<center class="tinygrey">&copy; 2012-<?php echo date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="http://nintechnet.com/" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>
+	<center class="tinygrey">&copy; 2012-<?php echo date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="https://nintechnet.com/" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>
 	</body>
 </html>
 	<?php
@@ -277,7 +275,7 @@ function warn_login( $msg, $lev ) {
 		<br /><br /><br /><br /><br /><br />
 		<center class="smallblack"><div class="<?php echo $lev ?>" style="width:450px;"><p><?php echo $msg ?></div></center>
 		<br /><br /><br /><br />
-		<center class="tinygrey">&copy; 2012-<?php echo @date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="http://nintechnet.com/" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>
+		<center class="tinygrey">&copy; 2012-<?php echo @date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="https://nintechnet.com/" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>
 	</body>
 </html>
 	<?php

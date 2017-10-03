@@ -3,7 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -135,7 +135,7 @@ if ($_SESSION['ver'] == 0) {
       <?php
 		} else {
 			?>&nbsp;</td>
-			<td width="45%"><?php echo $lang['lic_free'] . ' ' . NFW_ENGINE_VERSION . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>)' ?></td>
+			<td width="45%"><?php echo $lang['lic_free'] . ' ' . NFW_ENGINE_VERSION . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>)' ?></td>
 			</tr>
 			<?php
 		}
@@ -216,7 +216,7 @@ if ( NFW_EDN == 2 ) {
 	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=32&token=' . $_REQUEST['token'] . '">';
 } else {
 	// Pro edn :
-	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja">';
+	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja">';
 }
 
 // Check IP and warn if localhost or private IP :
@@ -313,7 +313,7 @@ if (! is_writable('./conf') ) {
 	<?php
 }
 // Optional NinjaFirewall .htninja configuration file
-// ( see http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
+// ( see https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
 $doc_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
 if ( @file_exists( $file = dirname($doc_root ) . '/.htninja') ||
 		@file_exists( $file = $doc_root . '/.htninja') ) {

@@ -82,8 +82,8 @@ $lang = array (
 
 
 	'php'					=>	'PHP',
-	'wrapper'			=>	'Block PHP built-in wrappers',
-	'objects'			=>	'Block serialized PHP objects',
+	'wrapper'			=>	'Block PHP built-in wrappers in GET, POST, HTTP_USER_AGENT, HTTP_REFERER and cookies',
+	'objects'			=>	'Block serialized PHP objects in the following global variables',
 	'php_error'			=>	'Hide PHP notice and error messages',
 	'php_self'			=>	'Sanitise PHP_SELF',
 	'php_ptrans'		=>	'Sanitise PATH_TRANSLATED',

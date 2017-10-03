@@ -3,10 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
- |                                                                     |
- +---------------------------------------------------------------------+
- | REVISION: 2015-09-25 19:47:22                                       |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
  | modify it under the terms of the GNU General Public License as      |
@@ -188,7 +185,7 @@ function chkflds(){
 					<br />
 					<br />
 					<?php
-					printf($lang['ban_time'], '<input onkeyup="chktime();" type="text" class="input" style="padding-left:3px" name="ban_time" maxlength="3" size="2" value="' . $nfw_options['ban_time'] . '"' . $ban_disabled .'>');
+					printf($lang['ban_time'], '<input onkeyup="chktime();" type="number" class="input" style="padding-left:3px" name="ban_time" maxlength="3" size="2" value="' . $nfw_options['ban_time'] . '"' . $ban_disabled .'>');
 
 					// Check if we have some banned IPs :
 					$glob = glob( dirname( __DIR__ ) . '/nfwlog/cache/ipbk*.php');

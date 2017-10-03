@@ -3,7 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -51,7 +51,7 @@ if ( file_exists(__DIR__ . '/conf/options.php') && empty($_SESSION['nfw_install'
 	exit;
 }
 if (! file_exists(__DIR__ . '/conf/.rules.php') ) {
-	_error('unable to find the <code>conf/.rules.php</code> configuration file.<br />Please ensure your package is not corrupted, or <a href="http://ninjafirewall.com/" class="links" style="border-bottom:dotted 1px #FDCD25;">download NinjaFirewall from the official website</a>.');
+	_error('unable to find the <code>conf/.rules.php</code> configuration file.<br />Please ensure your package is not corrupted, or <a href="https://nintechnet.com/" class="links" style="border-bottom:dotted 1px #FDCD25;">download NinjaFirewall from the official website</a>.');
 	exit;
 }
 
@@ -462,7 +462,7 @@ function nfw_license() {
 	require (__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
 
 	if (! $license = @file_get_contents(__DIR__ . '/license.txt') ) {
-		_error('NinjaFirewall cannot find the <code>license.txt</code> file.<br />Please ensure your package is not corrupted, or <a href="http://ninjafirewall.com/" class="links" style="border-bottom:dotted 1px #FDCD25;">download NinjaFirewall from the official website</a>.');
+		_error('NinjaFirewall cannot find the <code>license.txt</code> file.<br />Please ensure your package is not corrupted, or <a href="https://nintechnet.com/" class="links" style="border-bottom:dotted 1px #FDCD25;">download NinjaFirewall from the official website</a>.');
 		exit;
 	}
 
@@ -719,6 +719,9 @@ ADMIN_SAVE_END:
 	if (NFW_EDN == 2) {
 		unset($nfw_rules[531]);
 	}
+
+	// Enable PHP object injection rules (since v3.2.11):
+	$nfw_rules[NFW_OBJECTS]['ena'] = 1;
 
 	// Save options....
 	if (! $fh = fopen(__DIR__ . '/conf/options.php', 'w') ) {
@@ -1271,7 +1274,7 @@ function nfw_activation_test() {
 			$message.= $lang['hi2'] . "\n\n";
 
 			$message.= '1) ' . $lang['hi3'] . "\n";
-			$message.= 'http://nintechnet.com/ninjafirewall/pro-edition/help/?troubleshooting ' . "\n\n";
+			$message.= 'https://nintechnet.com/ninjafirewall/pro-edition/help/?troubleshooting ' . "\n\n";
 
 			$message.= $lang['hi4'] . "\n";
 			$message.= $lang['hi5'] . "\n";
@@ -1279,14 +1282,14 @@ function nfw_activation_test() {
 			$message.= $lang['hi7'] . "\n\n";
 
 			$message.= '2) ' . $lang['hi8'] . "\n";
-			$message.= 'http://nintechnet.com/share/pro-check.txt ' . "\n\n";
+			$message.= 'https://nintechnet.com/share/pro-check.txt ' . "\n\n";
 			$message.=  $lang['hi9'] . "\n";
 			$message.=  $lang['hi10'] . "\n";
 			$message.=  $lang['hi11'] . "\n";
 			$message.=  $lang['hi12'] . "\n\n";
 
 			$message.= '3) '. $lang['hi13'] . "\n";
-			$message.= 'http://nintechnet.com/ninjafirewall/pro-edition/help/?faq ' . "\n\n";
+			$message.= 'https://nintechnet.com/ninjafirewall/pro-edition/help/?faq ' . "\n\n";
 
 			$message.= $lang['hi14'] . "\n";
 			$message.= $lang['hi15'] . "\n";
@@ -1316,7 +1319,7 @@ function nfw_activation_test() {
 
 			$message.= $lang['hi27'] . "\n";
 			$message.= $lang['hi28'] . " https://twitter.com/nintechnet \n";
-			$message.= '-NinjaFirewall (Pro edition) - http://ninjafirewall.com/ ' . "\n";
+			$message.= '-NinjaFirewall (Pro edition) - https://nintechnet.com/ ' . "\n";
 
 			$headers = 'From: "'. $_SESSION['admin_email'] .'" <'. $_SESSION['admin_email'] .'>' . "\r\n";
 			$headers .= "Content-Transfer-Encoding: 7bit\r\n";
@@ -1447,7 +1450,7 @@ function install_footer() {
 			</td>
 		</tr>
 	</table>
-	<center class="tinygrey">&copy; 2011-<?php echo date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="http://nintechnet.com/" target="_blank" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>
+	<center class="tinygrey">&copy; 2011-<?php echo date('Y') ?> <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="https://nintechnet.com/" target="_blank" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>
 	</body>
 </html>
 <?php

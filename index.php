@@ -3,7 +3,7 @@
  +---------------------------------------------------------------------+
  | NinjaFirewall (Pro edition)                                         |
  |                                                                     |
- | (c) NinTechNet - http://nintechnet.com/                             |
+ | (c) NinTechNet - https://nintechnet.com/                            |
  |                                                                     |
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -646,7 +646,7 @@ function html_footer() {
 		</td>
 	</tr>
 </table>
-<center class=tinygrey><a href="http://ninjamonitoring.com/" title="NinjaMonitoring : monitor your website for suspicious activities"><img src="static/p_icon_nm.png" height="21" width="21" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://ninjafirewall.com/" title="NinjaFirewall : advanced firewall software for all your PHP applications"><img src="static/p_icon_nf.png" height="21" width="21" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://ninjarecovery.com/" title="NinjaRecovery : incident response, malware removal &amp; hacking recovery" ><img src="static/p_icon_nr.png" height="21" width="21" border="0"></a><br />&copy; 2012-'. date('Y') .' <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="http://nintechnet.com/" target="_blank" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>';
+<center class=tinygrey><a href="https://nintechnet.com/ninjamonitoring/" title="NinjaMonitoring : monitor your website for suspicious activities"><img src="static/p_icon_nm.png" height="21" width="21" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://nintechnet.com/ninjafirewall/" title="NinjaFirewall : advanced firewall software for all your PHP applications"><img src="static/p_icon_nf.png" height="21" width="21" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://nintechnet.com/ninjarecovery/" title="NinjaRecovery : incident response, malware removal &amp; hacking recovery" ><img src="static/p_icon_nr.png" height="21" width="21" border="0"></a><br />&copy; 2012-'. date('Y') .' <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="https://nintechnet.com/" target="_blank" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>';
 
 	// Show error message:
 	if ( NF_DISABLED && $GLOBALS['mid'] != 10 ) {
