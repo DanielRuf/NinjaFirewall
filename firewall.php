@@ -26,7 +26,7 @@ $nfw_['fw_starttime'] = microtime(true);
 // ( see https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
 if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja') ||
 	@file_exists($nfw_['file'] = $_SERVER['DOCUMENT_ROOT'] .'/.htninja') ) {
-	$nfw_['res'] = @include($nfw_['file']);
+	$nfw_['res'] = @include $nfw_['file'];
 	if ( $nfw_['res'] == 'ALLOW' ) {
 		define( 'NFW_STATUS', 22 );
 		unset($nfw_);
@@ -42,7 +42,7 @@ if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja
 	}
 }
 
-if (! @include( __DIR__ . '/conf/options.php') ) {
+if (! @include __DIR__ . '/conf/options.php' ) {
 	define( 'NFW_STATUS', 1 );
 	unset($nfw_);
 	return;
@@ -56,7 +56,7 @@ if (! isset( $nfw_['nfw_options']['enabled']) ) {
 }
 
 if (! empty($nfw_['nfw_options']['clogs_pubkey']) && isset($_POST['clogs_req']) ) {
-	include( __DIR__ . '/lib/fw_centlog.php');
+	include __DIR__ . '/lib/fw_centlog.php';
 	fw_centlog(__DIR__ . '/nfwlog');
 	exit;
 }
@@ -94,7 +94,7 @@ if ( @$nfw_['nfw_options']['scan_protocol'] == 2 && $_SERVER['SERVER_PORT'] != 4
 }
 
 if ( $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/index.php' || $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/login.php' || $_SERVER['SCRIPT_FILENAME'] == __DIR__ .'/install.php' ) {
-	if (! @include( __DIR__ . '/conf/rules.php') ) {
+	if (! @include __DIR__ . '/conf/rules.php' ) {
 		define( 'NFW_STATUS', 3 );
 	} else {
 		$nfw_['nfw_rules'] = @unserialize($nfw_rules);
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 nfw_check_upload();
 
-if (! include( __DIR__ . '/conf/rules.php') ) {
+if (! include __DIR__ . '/conf/rules.php' ) {
 	define( 'NFW_STATUS', 3 );
 	unset($nfw_);
 	return;
@@ -233,16 +233,15 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 
 	global $nfw_;
 
+	$nfw_['num_incident'] = mt_rand(1000000, 9000000);
+
 	if ( $loglevel == 6) {
-		$nfw_['num_incident'] = '0000000';
 		$http_ret_code = '200';
 	} else {
 		if (! empty($nfw_['nfw_options']['debug']) ) {
-			$nfw_['num_incident'] = '0000000';
 			$loglevel = 7;
 			$http_ret_code = '200';
 		} else {
-			$nfw_['num_incident'] = mt_rand(1000000, 9000000);
 			$http_ret_code = $nfw_['nfw_options']['ret_code'];
 		}
 	}
@@ -276,7 +275,7 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 			if ( $log_stat['size'] > $nfw_['nfw_options']['log_maxsize']) {
 				$log_ext = 1;
 				while ( file_exists($log_file . '.' . sprintf('%02d', $log_ext) . '.php' ) ) {
-					$log_ext++;
+					++$log_ext;
 				}
 				rename($log_file_ext, $log_file . '.' . sprintf('%02d', $log_ext) . '.php');
 			}
@@ -289,14 +288,37 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 		$tmp = '';
 	}
 
-   @file_put_contents($log_file_ext,
+	// Which encoding to use?
+	if ( defined('NFW_LOG_ENCODING') ) {
+		if ( NFW_LOG_ENCODING == 'b64' ) {
+			$encoding = '[b64:' . base64_encode( $res ) . ']';
+		} elseif ( NFW_LOG_ENCODING == 'none' ) {
+			$encoding = '[' . $res . ']';
+		} else {
+			$unp = unpack('H*', $res);
+			$encoding = '[hex:' . array_shift( $unp )  . ']';
+		}
+	} else {
+		$unp = unpack('H*', $res);
+		$encoding = '[hex:' . array_shift( $unp )  . ']';
+	}
+
+   @file_put_contents( $log_file_ext,
       $tmp . '[' . time() . '] ' . '[' . round( microtime(true) - $nfw_['fw_starttime'], 5) . '] ' .
       '[' . $_SERVER['SERVER_NAME'] . '] ' . '[#' . $nfw_['num_incident'] . '] ' .
       '[' . $ruleid . '] ' .
       '[' . $loglevel . '] ' . '[' . NFW_REMOTE_ADDR . '] ' .
       '[' . $http_ret_code . '] ' . '[' . $_SERVER['REQUEST_METHOD'] . '] ' .
       '[' . $_SERVER['SCRIPT_NAME'] . '] ' . '[' . $loginfo . '] ' .
-      '[hex:' . array_shift( unpack('H*', $res) ) . ']' . "\n", FILE_APPEND | LOCK_EX);
+      $encoding . "\n", FILE_APPEND | LOCK_EX);
+
+	// Syslog?
+	if (! empty( $nfw_['nfw_options']['syslog'] ) ) {
+		$levels = array( '', 'MEDIUM', 'HIGH', 'CRITICAL', 'ERROR', 'UPLOAD', 'INFO', 'DEBUG_ON' );
+		@openlog( 'ninjafirewall', LOG_NDELAY|LOG_PID, LOG_USER );
+		@syslog( LOG_NOTICE, "{$levels[$loglevel]}: #{$nfw_['num_incident']}: {$loginfo} from ". NFW_REMOTE_ADDR . " on {$_SERVER['SERVER_NAME']}" );
+		@closelog();
+	}
 
 }
 

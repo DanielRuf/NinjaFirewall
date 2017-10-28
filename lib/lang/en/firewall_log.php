@@ -1,5 +1,5 @@
 <?php
-/* 2016-09-15 16:30:04 */
+
 $lang = array (
 
 	'yes'					=>	'Yes',
@@ -38,6 +38,12 @@ $lang = array (
 
 	'max_line_1'		=>	'Show the most recent',
 	'max_line_2'		=>	'lines',
+
+
+	'syslog'				=>	'Syslog',
+	'syslog_events'	=>	'Write events to the Syslog server too',
+	'syslog_help'		=>	'See contextual help before enabling this option.',
+	'syslog_compat'	=>	'Your server configuration is not compatible with that option.',
 
 	'today'				=>	'Today',
 	'critical'			=> 'Critical',

@@ -22,7 +22,7 @@ if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 // Load current language file :
 require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
 
-html_header();
+require_once(__DIR__ . '/misc.php');
 
 // Saved options ?
 if (! empty($_POST['post']) ) {
@@ -33,13 +33,15 @@ if (! empty($_POST['post']) ) {
 		// Save new configuration:
 		$err_msg = save_firewall_policies();
 	}
-	if ($err_msg) {
+	html_header();
+	if (! empty($err_msg) ) {
 		echo '<br /><div class="error"><p>' . $err_msg .'</p></div>';
-   } else {
+	} else {
 		echo '<br /><div class="success"><p>'. $lang['saved_conf'] . '</p></div>';
-   }
+	}
+} else {
+	html_header();
 }
-
 ?>
 <script>
 function sanitise_warn(cbox) {
@@ -124,7 +126,12 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 		$nfw_options['uploads'] = 0;
 	}
 	if ( empty( $nfw_options['upload_maxsize']) ) {
-		$upload_maxsize = 1024;
+		// Try to get the current PHP configuration value:
+		$upload_maxsize = return_bytes( ini_get('upload_max_filesize') );
+		if ( empty( $upload_maxsize ) ) {
+			// Set it to 10MB (10240 KB):
+			$upload_maxsize = 10240;
+		}
 	} else {
 		$upload_maxsize = $nfw_options['upload_maxsize'] / 1024;
 	}
@@ -757,7 +764,14 @@ function restore_firewall_policies() {
 	$nfw_options['uploads'] = 0;
 	$nfw_options['sanitise_fn'] = 0;
 	$nfw_options['substitute'] = 'X';
-	$nfw_options['upload_maxsize'] = 1048576;
+
+	// Try to get the current PHP configuration value:
+	$nfw_options['upload_maxsize'] = return_bytes( ini_get('upload_max_filesize') );
+	if ( empty( $nfw_options['upload_maxsize'] ) ) {
+		// Set it to 10MB (10240 KB):
+		$nfw_options['upload_maxsize'] = 10240;
+	}
+
 	$nfw_options['get_scan'] = 1;
 	$nfw_options['get_sanitise'] = 0;
 	$nfw_options['post_scan'] = 1;
@@ -874,8 +888,8 @@ function save_firewall_policies() {
 	if ( isset($_POST['upload_maxsize']) && preg_match( '/^\d+$/', $_POST['upload_maxsize']) ) {
 		$nfw_options['upload_maxsize'] = $_POST['upload_maxsize'] * 1024;
 	} else {
-		// Default : 1,048,576 bytes (1 MB)
-		$nfw_options['upload_maxsize'] = 1048576;
+		// Default : 10,485,760 bytes (10MB)
+		$nfw_options['upload_maxsize'] = 10485760;
 	}
 
 	// Scan GET requests ?

@@ -58,15 +58,16 @@ if (! file_exists(__DIR__ . '/conf/.rules.php') ) {
 // Set the installation flag :
 $_SESSION['nfw_install'] = 1;
 
-require(__DIR__ . '/conf/.rules.php');
+require __DIR__ . '/conf/.rules.php';
 $nfw_rules = unserialize($nfw_rules_new);
 // Required constants :
-require(__DIR__ . '/lib/constants.php');
+require __DIR__ . '/lib/constants.php';
 if ( NFW_EDN == 2 ) {
 	$nfedn = 'Pro+ Edition';
 } else {
 	$nfedn = 'Pro Edition';
 }
+require_once __DIR__ . '/lib/misc.php';
 
 // PHP INFO ?
 if (@$_GET['nfw_act'] == 99) {
@@ -144,7 +145,7 @@ function nfw_regional_settings() {
 	if ( $handle = opendir('./lib/lang') ) {
 		while (false !== ( $file = readdir($handle) ) ) {
 			if ( preg_match('/^([a-z]{2})$/', $file, $match) ) {
-				include('./lib/lang/' . $file . '/index.php');
+				include './lib/lang/' . $file . '/index.php';
 				$reg[$match[1]]['language'] = $language;
 				$reg[$match[1]]['author'] = $author;
 			}
@@ -161,7 +162,7 @@ function nfw_regional_settings() {
 		$tmp_lang = $_SESSION['admin_lang'];
 	}
 
-	require (__DIR__ . '/lib/lang/' . $tmp_lang . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $tmp_lang . '/' . basename(__FILE__);
 
 	install_header('', '');
 
@@ -222,7 +223,7 @@ function nfw_regional_settings() {
 
 function nfw_system_requirements() {
 
-	require (__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 
 	install_header('', '');
 	$critical = 0;
@@ -436,9 +437,9 @@ function nfw_system_requirements() {
 
 function nfw_changelog() {
 
-	require (__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 	install_header('', '');
-	require(__DIR__ . '/changelog.php');
+	require __DIR__ . '/changelog.php';
 	?>
 	<form method="post">
 	<fieldset><legend>&nbsp;<b><?php echo $lang['notes'] ?></b>&nbsp;</legend>
@@ -459,7 +460,7 @@ function nfw_changelog() {
 
 function nfw_license() {
 
-	require (__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 
 	if (! $license = @file_get_contents(__DIR__ . '/license.txt') ) {
 		_error('NinjaFirewall cannot find the <code>license.txt</code> file.<br />Please ensure your package is not corrupted, or <a href="https://nintechnet.com/" class="links" style="border-bottom:dotted 1px #FDCD25;">download NinjaFirewall from the official website</a>.');
@@ -489,7 +490,7 @@ function nfw_license() {
 
 function nfw_admin_setup( $err ) {
 
-	require(__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 	install_header('', '');
 
 	$admin_name = $admin_pass = $admin_pass2 = $admin_email = $lic = '';
@@ -616,7 +617,7 @@ function nfw_admin_setup( $err ) {
 
 function nfw_admin_setup_save() {
 
-	require_once(__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require_once __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 
 	// Fetch default configuration :
 	$nfw_options = fw_conf_options();
@@ -753,7 +754,7 @@ ADMIN_SAVE_END:
 
 function nfw_integration( $err ) {
 
-	require(__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 
 	// Let's try to detect the system configuration :
 	$s1 = $s2 = $s3 = $s4 = $s5 = $s7 = '';
@@ -812,7 +813,7 @@ function nfw_integration( $err ) {
 			return false;
 		}
 		var ischecked = 0;
-		for (var i = 0; i < document.integration_form.php_ini_type.length; i++) {
+		for (var i = 0; i < document.integration_form.php_ini_type.length; ++i) {
 			if(document.integration_form.php_ini_type[i].checked) {
 				ischecked = 1;
 				break;
@@ -929,7 +930,7 @@ function nfw_integration( $err ) {
 
 function nfw_integration_save() {
 
-	require(__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 
 	$error_msg = 0;
 
@@ -989,7 +990,7 @@ INTEGRATION_SAVE_END:
 
 function nfw_activation() {
 
-	require(__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 
 
 	if ( empty($_SESSION['http_server']) || empty($_SESSION['document_root']) ) {
@@ -1168,7 +1169,7 @@ function nfw_activation_test() {
 
 	global $err_fw;
 
-	require(__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 
 	if ($_SESSION['php_ini_type'] == 1) {
 		$php_file = 'php.ini';
@@ -1343,9 +1344,9 @@ function install_header($msg, $lev) {
 	}
 
 	if (empty($_SESSION['admin_lang']) ) {
-		require (__DIR__ . '/lib/lang/en/' . basename(__FILE__) );
+		require __DIR__ . '/lib/lang/en/' . basename(__FILE__);
 	} else {
-		require (__DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__) );
+		require __DIR__ . '/lib/lang/' . $_SESSION['admin_lang'] . '/' . basename(__FILE__);
 	}
 
 	if (! isset($GLOBALS['mid']) ) { $GLOBALS['mid'] = '10'; }
@@ -1522,7 +1523,7 @@ function fw_conf_options() {
 		'scan_protocol' 		=> 3,
 		'uploads' 				=> 0,
 		'sanitise_fn' 			=> 0,
-		'upload_maxsize' 		=> 1048576,
+		'upload_maxsize' 		=> 0, // Defined below since v3.2.12
 		'get_scan' 				=> 1,
 		'get_sanitise' 		=> 0,
 		'post_scan'				=> 1,
@@ -1557,6 +1558,8 @@ function fw_conf_options() {
 		'log_rotate' 			=> 1,
 		'log_maxsize' 			=> 2097152,
 		'log_line'				=>	1500,
+		// v3.2.12:
+		'syslog'					=>	0,
 	);
 	// Some compatibility checks:
 	// 1. header_register_callback(): requires PHP >=5.4
@@ -1565,6 +1568,14 @@ function fw_conf_options() {
 
 		$nfw_options['response_headers'] = '00010000';
 	}
+
+	// Try to get the current PHP configuration value for "upload_max_filesize":
+	$nfw_options['upload_maxsize'] = return_bytes( ini_get('upload_max_filesize') );
+	if ( empty( $nfw_options['upload_maxsize'] ) ) {
+		// Set it to 10MB (10240 KB):
+		$nfw_options['upload_maxsize'] = 10240;
+	}
+
 	return $nfw_options;
 }
 
@@ -1605,7 +1616,7 @@ function account_license_connect($data) {
 
 	global $lang;
 	global $domain;
-	require_once(__DIR__ . '/lib/misc.php');
+	require_once __DIR__ . '/lib/misc.php';
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_USERAGENT, 'NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN . '; ' . $domain );

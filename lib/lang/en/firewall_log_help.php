@@ -1,5 +1,5 @@
 <?php
-/* 2016-09-22 15:31:21 */
+
 $title = 'Firewall > Security Log';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -32,6 +32,30 @@ Rotated logs, if any, can be selected and viewed from the dropdown menu.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Enter your public key (optional):</strong> This is the public key that was created from your main server.</p>
 
 <p><img src="static/icon_warn.png">&nbsp;Centralized Logging will keep working even if NinjaFirewall is disabled. Delete your public key if you want to disable it.</p>
+
+<hr class="dotted" size="1">
+
+<h3><strong>Syslog</strong></h3>
+
+<p>In addition to the firewall's log, events can also be redirected to the syslog server (<code>LOG_USER</code> facility). If you have a shared hosting account, keep this option disabled as you do not have any access to the server's logs.</p>
+
+<p>The logline uses the following format:</p>
+<p><code>ninjafirewall[<font color="red">AA</font>]: <font color="red">BB</font>: #<font color="red">CCCCCC</font>: <i>Some event</i> from <font color="red">DD</font> on <font color="red">EE</font></code><p>
+<ul>
+	<li>AA: the process ID (PID).</li>
+	<li>BB: the level of severity as it appears in the firewall\'s log. It can be <code>CRITICAL</CODE>, <CODE>HIGH</CODE>, <CODE>MEDIUM</CODE>, <CODE>INFO</CODE>, <CODE>UPLOAD</CODE> or <CODE>DEBUG_ON</CODE>.</li>
+	<li>CCCCCC: the 7-digit incident ID.</li>
+	<li>DD: the user IPv4 or IPv6 address.</li>
+	<li>EE: the website (sub-)domain name.</li>
+</ul>
+Sample loglines:
+<br />
+<center>
+	<textarea style="width:100%;height:90px;font-family:monospace;" wrap="off">Oct  3 01:53:51 www ninjafirewall[19054]: INFO: #2498192: Logged in administrator from 12.24.56.78 on somesite.com
+Oct  3 02:01:56 www ninjafirewall[19054]: INFO: #1522694: Firewall log deleted by admin from 12.24.56.78 on somesite.com
+Oct  3 14:02:20 www ninjafirewall[18270]: HIGH: #7167442: Cross-site scripting from fe80::6e88:14ff:fe3e:86f0 on anothersite.com
+Oct  3 15:40:48 www ninjafirewall[19058]: CRITICAL: #2601781: ASCII character 0x00 (NULL byte) from fe80::6e88:14ff:fe3e:86f0 on anothersite.com</textarea>
+</center>
 
 
 EOT;

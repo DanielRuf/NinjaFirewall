@@ -18,8 +18,8 @@
  +---------------------------------------------------------------------+
 */
 /* ------------------------------------------------------------------ */
-define('NFW_ENGINE_VERSION', '3.2.11');
-define('NFW_RULES_VERSION', '20170916.1');
+define('NFW_ENGINE_VERSION', '3.2.12');
+define('NFW_RULES_VERSION', '20171027.1');
 define('NFW_EDN', 1);
 
 // Set to 0 if you don't want NF to connect to the update server
@@ -53,7 +53,8 @@ define('NFW_BOT_LIST', 'acunetix|AhrefsBot|backdoor|bandit|' .
 	'blackwidow|BOT for JCE|core-project|dts agent|emailmagnet|' .
 	'exploit|extract|flood|grabber|harvest|httrack|havij|hunter|indy library|' .
 	'LoadTimeBot|Microsoft URL Control|Miami Style|morfeus|' .
-	'nessus|pmafind|scanner|semrushbot|siphon|spbot|sqlmap|survey|teleport|updown_tester|xovibot'
+	'nessus|pmafind|scanner|semrushbot|siphon|spbot|sqlmap|' .
+	'survey|teleport|updown_tester|xovibot|zgrap|zmap'
 );
 define( 'NFW_DEFAULT_MSG', '<br /><br /><br /><br /><center>Sorry ' .
 	'<b>%%REM_ADDRESS%%</b>, your request cannot be processed.<br />' .

@@ -1,5 +1,5 @@
 <?php
-/* 2014-09-14 19:48:24 */
+
 $title = 'Firewall > Rules Editor';
 $close = 'Close';
 $nfw_help = <<<'EOT'

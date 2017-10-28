@@ -161,7 +161,7 @@ if ( ! empty( $data['lines'] ) ) {
 }
 echo '</center>';
 
-$levels = array( '', 'medium', 'high', 'critical', 'error', 'upload', 'info', 'DEBUG_ON' );
+$levels = array( '', 'MEDIUM', 'HIGH', 'CRITICAL', 'ERROR', 'UPLOAD', 'INFO', 'DEBUG_ON' );
 
 ?>
 
@@ -176,16 +176,17 @@ $severity = array( 0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 
 
 if ( isset( $data['log'] ) && is_array( $data['log'] ) ) {
 	foreach ( $data['log'] as $line ) {
-		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})\]\s+\[(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(hex:)?(.+)\]$/', $line, $match ) ) {
+		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})\]\s+\[(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(hex:|b64:)?(.+)\]$/', $line, $match ) ) {
 			if ( empty( $match[4]) ) { $match[4] = '-'; }
 			if ( $match[10] == 'hex:' ) { $match[11] = pack('H*', $match[11]); }
+			if ( $match[10] == 'b64:' ) { $match[11] = base64_decode( $match[11]); }
 			$res = date( 'd/M/y H:i:s', $match[1] ) . '  ' . $match[3] . '  ' .
 			str_pad( $levels[$match[5]], 8 , ' ', STR_PAD_RIGHT) .'  ' .
 			str_pad( $match[4], 4 , ' ', STR_PAD_LEFT) . '  ' . str_pad( $match[6], 15, ' ', STR_PAD_RIGHT) . '  ' .
 			$match[7] . ' ' . $match[8] . ' - ' .	$match[9] . ' - [' . $match[11] . '] - ' . $match[2];
 			echo 'myArray[' . $i . '] = "' . rawurlencode($res) . '";' . "\n";
 			$logline .= htmlentities( $res ."\n" );
-			$i++;
+			++$i;
 			// Keep track of severity levels :
 			$severity[$match[5]] = 1;
 		}
@@ -197,11 +198,11 @@ function filter_log() {
 	document.frmlog.txtlog.value = '       DATE         INCIDENT  LEVEL     RULE     IP            REQUEST\n';
 	// Prepare the regex :
 	var nf_tmp = '';
-	if ( document.frmlog.nf_crit.checked == true ) { nf_tmp += 'critical|'; }
-	if ( document.frmlog.nf_high.checked == true ) { nf_tmp += 'high|'; }
-	if ( document.frmlog.nf_med.checked == true )  { nf_tmp += 'medium|'; }
-	if ( document.frmlog.nf_upl.checked == true )  { nf_tmp += 'upload|'; }
-	if ( document.frmlog.nf_nfo.checked == true )  { nf_tmp += 'info|'; }
+	if ( document.frmlog.nf_crit.checked == true ) { nf_tmp += 'CRITICAL|'; }
+	if ( document.frmlog.nf_high.checked == true ) { nf_tmp += 'HIGH|'; }
+	if ( document.frmlog.nf_med.checked == true )  { nf_tmp += 'MEDIUM|'; }
+	if ( document.frmlog.nf_upl.checked == true )  { nf_tmp += 'UPLOAD|'; }
+	if ( document.frmlog.nf_nfo.checked == true )  { nf_tmp += 'INFO|'; }
 	if ( document.frmlog.nf_dbg.checked == true )  { nf_tmp += 'DEBUG_ON|'; }
 	// Return if empty :
 	if ( nf_tmp == '' ) {
@@ -212,7 +213,7 @@ function filter_log() {
 	var nf_reg = new RegExp('^\\S+\\s+\\S+\\s+\\S+\\s+' + '(' + nf_tmp.slice(0, - 1) + ')' + '\\s');
 	var nb = 0;
 	var decodearray;
-	for ( i = 0; i < myArray.length; i++ ) {
+	for ( i = 0; i < myArray.length; ++i ) {
 		decodearray = decodeURIComponent(myArray[i]);
 		if ( document.frmlog.nf_today.checked == true ) {
 			if (! decodearray.match(myToday) ) { continue;}
@@ -220,7 +221,7 @@ function filter_log() {
 		if ( decodearray.match(nf_reg) ) {
 			// Display it :
 			document.frmlog.txtlog.value += decodearray + '\n';
-			nb++;
+			++nb;
 		}
 	}
 	if ( nb == 0 ) {
@@ -298,6 +299,11 @@ function nf_sub_log_options($max_lines) {
 			}
 		}
 	}
+	if ( empty( $nfw_options['syslog'] ) ) {
+		$nfw_options['syslog'] = 0;
+	} else {
+		$nfw_options['syslog'] = 1;
+	}
 ?>
 <form method="post" action="?mid=<?php echo $GLOBALS['mid'] ?>">
 <input type="hidden" name="token" value="<?php echo $_REQUEST['token'] ?>" />
@@ -321,6 +327,27 @@ function nf_sub_log_options($max_lines) {
 			<td width="55%" align="left" class="dotted"><?php echo $lang['max_line_1'] ?></td>
 			<td width="45%" align="left" class="dotted">
 				<p><input name="nfw_options[log_line]" step="50" min="50" value="<?php echo $max_lines ?>" class="input" type="number"> <?php echo $lang['max_line_2'] ?></p>
+			</td>
+		</tr>
+		<tr>
+			<td width="55%" align="left" class="dotted"><?php echo $lang['syslog'] ?></td>
+			<td width="45%" align="left" class="dotted">
+			<?php
+			// Ensure that openlog() and syslog() are not disabled:
+			if (! function_exists('syslog') || ! function_exists('openlog') ) {
+				$nfw_options['syslog'] = 0;
+				$syslog_msg = $lang['syslog_compat'];
+				$enabled = 0;
+			} else {
+				$syslog_msg = $lang['syslog_help'];
+				$enabled = 1;
+			}
+			?>
+				<p><label><input type="checkbox" name="nfw_options[syslog]" value="1"<?php checked( $nfw_options['syslog'], 1 ) ?><?php disabled( $enabled, 0 )?> />&nbsp;<?php echo $lang['syslog_events'] ?></label>
+				<br />
+				<i class="tinyblack"><?php echo $syslog_msg ?></i>
+
+
 			</td>
 		</tr>
 	</table>
@@ -347,7 +374,7 @@ function nf_sub_log_options($max_lines) {
 			<td width="55%" align="left"><?php echo $lang['enter_key'] ?></td>
 			<td width="45%" align="left">
 				<input class="input" type="text" style="width:100%" maxlength="80" name="nfw_options[clogs_pubkey]" value="<?php echo htmlspecialchars( $nfw_options['clogs_pubkey'] ) ?>" autocomplete="off" />
-				<br /><i><?php printf( $lang['blog_doc'], '<a href="https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/" class="links" style="border-bottom:dotted 1px #FDCD25;">', '</a>' ) ?></i>
+				<br /><i class="tinyblack"><?php printf( $lang['blog_doc'], '<a href="https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/" class="links" style="border-bottom:dotted 1px #FDCD25;">', '</a>' ) ?></i>
 			</td>
 		</tr>
 	</table>
@@ -418,6 +445,9 @@ function nf_sub_log_delete( $log, $log_dir, $monthly_log ) {
 	if (! file_exists( $log_dir . $log) ) {
 		$err_msg = $lang['cannot_delete'] . ' (#2)';
 	}
+
+	$incident = mt_rand(1000000, 9000000);
+
 	if (! $err_msg ) {
 		// Delete the requested log:
 		@unlink($log_dir . $log);
@@ -427,12 +457,19 @@ function nf_sub_log_delete( $log, $log_dir, $monthly_log ) {
 		}
 		$fh = fopen($log_dir . $monthly_log, 'a');
 		fwrite( $fh, '[' . time() . '] [0] [' . $_SERVER['SERVER_NAME'] .
-			'] [#0000000] [0] [6] ' . '[' . NFW_REMOTE_ADDR . '] ' .
+			'] [#'. $incident .'] [0] [6] ' . '[' . NFW_REMOTE_ADDR . '] ' .
 			'[200 OK] ' . '[' . $_SERVER['REQUEST_METHOD'] . '] ' .
 			'[' . $_SERVER['SCRIPT_NAME'] . '] ' . '[Log deleted by admin] ' .
 			'[' . $nfw_options['admin_name'] . ': ' . $log . ']' . "\n"
 		);
 		fclose($fh);
+
+		// Syslog?
+		if (! empty( $nfw_options['syslog'] ) ) {
+			@openlog( 'ninjafirewall', LOG_NDELAY|LOG_PID, LOG_USER );
+			@syslog( LOG_NOTICE, "INFO: #{$incident}: Firewall log deleted by admin from ". NFW_REMOTE_ADDR . " on {$_SERVER['SERVER_NAME']}" );
+			@closelog();
+		}
 	}
 
 	return $err_msg;
@@ -489,6 +526,11 @@ function nf_sub_log_save_options( $nfw_options ) {
 		} else {
 			$nfw_options['log_line'] = $_POST['nfw_options']['log_line'];
 		}
+		if (empty( $_POST['nfw_options']['syslog']) ) {
+			$nfw_options['syslog'] = 0;
+		} else {
+			$nfw_options['syslog'] = 1;
+		}
 
 		if ( $err_msg = nfw_write_conf() ) {
 			return $err_msg;
@@ -544,7 +586,7 @@ function nf_sub_log_read_local( $log, $log_dir, $max_lines ) {
 	// Keep only the last $max_lines:
 	$data['lines'] = count( $data['log'] );
 	if ( $max_lines < $data['lines'] ) {
-		for ($i = 0; $i < ( $data['lines'] - $max_lines); $i++ ) {
+		for ($i = 0; $i < ( $data['lines'] - $max_lines); ++$i ) {
 			unset( $data['log'][$i] ) ;
 		}
 	}
@@ -591,12 +633,13 @@ function nf_sub_log_export( $log_dir ) {
 	}
 	$data = file( $log_dir . $log);
 	$res = "Date\tIncident\tLevel\tRule\tIP\tRequest\tEvent\tHost\n";
-	$levels = array( '', 'medium', 'high', 'critical', 'error', 'upload', 'info', 'DEBUG_ON' );
+	$levels = array( '', 'MEDIUM', 'HIGH', 'CRITICAL', 'ERROR', 'UPLOAD', 'INFO', 'DEBUG_ON' );
 	$severity = array( 0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0);
 	foreach( $data as $line ) {
-		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})\]\s+\[(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(hex:)?(.+)\]$/', $line, $match ) ) {
+		if ( preg_match( '/^\[(\d{10})\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(#\d{7})\]\s+\[(\d+)\]\s+\[(\d)\]\s+\[([\d.:a-fA-F, ]+?)\]\s+\[.+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[(hex:|b64:)?(.+)\]$/', $line, $match ) ) {
 			if ( empty( $match[4]) ) { $match[4] = '-'; }
 			if ( $match[10] == 'hex:' ) { $match[11] = pack('H*', $match[11]); }
+			if ( $match[10] == 'b64:' ) { $match[11] = base64_decode( $match[11]); }
 			$res .= date( 'd/M/y H:i:s', $match[1] ) . "\t" . $match[3] . "\t" .
 			$levels[$match[5]] . "\t" . $match[4] . "\t" . $match[6] . "\t" .
 			$match[7] . ' ' . $match[8] . "\t" .	$match[9] .

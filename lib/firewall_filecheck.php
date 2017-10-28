@@ -211,7 +211,7 @@ $count = -2;
 $fh = fopen($nfmon_snapshot, 'r');
 while (! feof($fh) ) {
 	fgets($fh);
-	$count++;
+	++$count;
 }
 fclose($fh);
 // Look for new/mod/del files :
@@ -557,11 +557,6 @@ function nf_sub_monitoring_create($nfmon_snapshot) {
 				unlink($nfmon_snapshot);
 			}
 			return $res;
-		}
-		$stat = stat($nfmon_snapshot);
-		if ($stat['size'] < 30 ) {
-			unlink($nfmon_snapshot);
-			return sprintf( $lang['cannot_create'], '<code>'. $nfmon_snapshot .'</code>');
 		}
 
 		// Save scan dir :

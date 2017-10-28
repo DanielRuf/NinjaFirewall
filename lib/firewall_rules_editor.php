@@ -111,7 +111,7 @@ foreach ( $nfw_rules as $rule_key => $rule_value ) {
 									$desc = ' Application specific';
 								}
 								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
-								$count++;
+								++$count;
 							}
 						}
 						?>
@@ -146,7 +146,7 @@ foreach ( $nfw_rules as $rule_key => $rule_value ) {
 									$desc = ' Application specific';
 								}
 								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
-								$count++;
+								++$count;
 							}
 						}
 						?>

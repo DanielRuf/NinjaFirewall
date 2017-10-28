@@ -93,7 +93,7 @@ html_footer();
 function generate_clogs_seckey() {
 
 	$key = '';
-	for ( $i = 0; $i < 40; $i++ ) {
+	for ( $i = 0; $i < 40; ++$i ) {
     $key .= chr( mt_rand( 33, 126 ) );
   }
   return $key;

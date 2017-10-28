@@ -1,5 +1,5 @@
 <?php
-/* 2015-02-05 22:59:34 */
+
 $title = 'Pare-Feu > Journal de Sécurité';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -32,5 +32,26 @@ Les journaux des mois précédents sont accessibles depuis le menu déroulant si
 
 <p><img src="static/icon_warn.png">&nbsp;L'option de centralisation des logs fonctionnera même si vous désactivez NinjaFirewall. Si vous souhaitez complètement désactiver cette option, supprimez votre clé publique.</p>
 
+<h3><strong>Syslog</strong></h3>
+
+<p>En plus d'écrire dans son journal, le pare-feu peut aussi utiliser le serveur Syslog (catégorie <code>LOG_USER</code>). Si vous avez un hébergement mutualisé, laissez cette option désactivée car vous n'avez pas accès aux journaux du serveur.</p>
+
+<p>Le format utilisé est le suivant :</p>
+<p><code>ninjafirewall[<font color="red">AA</font>]: <font color="red">BB</font>: #<font color="red">CCCCCC</font>: <i>Some event</i> from <font color="red">DD</font> on <font color="red">EE</font></code><p>
+<ul>
+	<li>AA: l'identifiant de processus (PID).</li>
+	<li>BB: le niveau de sévérité des attaques tel qu'il apparaît dans le journal du pare-feu. Cela peut être <code>CRITICAL</CODE>, <CODE>HIGH</CODE>, <CODE>MEDIUM</CODE>, <CODE>INFO</CODE>, <CODE>UPLOAD</CODE> ou <CODE>DEBUG_ON</CODE>.</li>
+	<li>CCCCCC: le numéro d'incident à sept chiffres.</li>
+	<li>DD: l'adresse IPv4 ou IPv6 de l'utilisateur.</li>
+	<li>EE: le nom de (sous-)domaine du site.</li>
+</ul>
+Exemple :
+<br />
+<center>
+	<textarea style="width:100%;height:90px;font-family:monospace;" wrap="off">Oct  3 01:53:51 www ninjafirewall[19054]: INFO: #2498192: Logged in administrator from 12.24.56.78 on somesite.com
+Oct  3 02:01:56 www ninjafirewall[19054]: INFO: #1522694: Firewall log deleted by admin from 12.24.56.78 on somesite.com
+Oct  3 14:02:20 www ninjafirewall[18270]: HIGH: #7167442: Cross-site scripting from fe80::6e88:14ff:fe3e:86f0 on anothersite.com
+Oct  3 15:40:48 www ninjafirewall[19058]: CRITICAL: #2601781: ASCII character 0x00 (NULL byte) from fe80::6e88:14ff:fe3e:86f0 on anothersite.com</textarea>
+</center>
 
 EOT;

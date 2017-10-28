@@ -1,5 +1,5 @@
 <?php
-/* 2014-09-14 19:07:10 */
+
 $title = 'Account > License';
 $close = 'Close';
 $nfw_help = <<<'EOT'

@@ -19,9 +19,9 @@
 */
 
 // Required constants :
-require(__DIR__ . '/lib/constants.php');
+require __DIR__ . '/lib/constants.php';
 
-if (! @include(__DIR__ . '/conf/options.php') ) {
+if (! @include __DIR__ . '/conf/options.php' ) {
 	header('Location: login.php?1');
 	exit;
 }
@@ -29,7 +29,7 @@ $nfw_options = unserialize($nfw_options);
 
 // Get the user defined IP (if any):
 if (! defined( 'NFW_REMOTE_ADDR') ) {
-	require_once(__DIR__ . '/lib/misc.php' );
+	require_once __DIR__ . '/lib/misc.php';
 	nfw_select_ip();
 }
 
@@ -103,11 +103,11 @@ if ( $nfw_options['admin_ssl'] && $_SERVER['SERVER_PORT'] != 443 ) {
    exit;
 }
 
-require(__DIR__ . '/conf/rules.php');
+require __DIR__ . '/conf/rules.php';
 $nfw_rules = unserialize($nfw_rules);
 
 // Used for updates :
-require(__DIR__ . '/lib/nfw_init.php');
+require __DIR__ . '/lib/nfw_init.php';
 
 if (! isset($_SESSION['ver']) ) {
 	$_SESSION['vapp'] = $_SESSION['ver'] = 0;
@@ -142,98 +142,98 @@ if ($mid == 99) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/summary_stats_help.php');
 	}
-	require(__DIR__ . '/lib/summary_stats.php');
+	require __DIR__ . '/lib/summary_stats.php';
 
 //	menu Account > Options :
 } elseif ($mid == 20) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/account_options_help.php');
 	}
-	require(__DIR__ . '/lib/account_options.php');
+	require __DIR__ . '/lib/account_options.php';
 
 //	menu Account > License :
 } elseif ($mid == 21) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/account_license_help.php');
 	}
-	require(__DIR__ . '/lib/account_license.php');
+	require __DIR__ . '/lib/account_license.php';
 
 //	menu Account > Updates :
 } elseif ($mid == 22) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/account_updates_help.php');
 	}
-	require(__DIR__ . '/lib/account_updates.php');
+	require __DIR__ . '/lib/account_updates.php';
 
 // menu Firewall > Options
 } elseif ($mid == 30) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_options_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_options.php');
+	require __DIR__ . '/lib/firewall_options.php';
 
 // menu Firewall > Policies
 } elseif ($mid == 31) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_policies_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_policies.php');
+	require __DIR__ . '/lib/firewall_policies.php';
 
 // menu Firewall > Access Control
 } elseif ($mid == 32) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_access_control_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_access_control.php');
+	require __DIR__ . '/lib/firewall_access_control.php';
 
 // menu Firewall > File Guard
 } elseif ($mid == 33) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_fileguard_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_fileguard.php');
+	require __DIR__ . '/lib/firewall_fileguard.php';
 
 // menu Firewall > Web Filter
 } elseif ($mid == 34) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_webfilter_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_webfilter.php');
+	require __DIR__ . '/lib/firewall_webfilter.php';
 
 // menu Firewall > Rules Editor
 } elseif ($mid == 35) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_rules_editor_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_rules_editor.php');
+	require __DIR__ . '/lib/firewall_rules_editor.php';
 
 // menu Firewall > Security Log
 } elseif ($mid == 36) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_log_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_log.php');
+	require __DIR__ . '/lib/firewall_log.php';
 
 // menu Firewall > Live Log
 } elseif ($mid == 37) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_livelog_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_livelog.php');
+	require __DIR__ . '/lib/firewall_livelog.php';
 
 // menu Firewall > File Check
 } elseif ($mid == 38) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_filecheck_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_filecheck.php');
+	require __DIR__ . '/lib/firewall_filecheck.php';
 
 // menu Firewall > Centralized Logging
 } elseif ($mid == 39) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_centlog_help.php');
 	}
-	require(__DIR__ . '/lib/firewall_centlog.php');
+	require __DIR__ . '/lib/firewall_centlog.php';
 
 } elseif ($mid == 90) {
    raw_admin_log();
@@ -246,7 +246,7 @@ if ($mid == 99) {
 	if (! empty($_GET['help']) ) {
 		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/summary_overview_help.php');
 	}
-	require(__DIR__ . '/lib/summary_overview.php');
+	require __DIR__ . '/lib/summary_overview.php';
 }
 
 exit;
@@ -338,7 +338,7 @@ function raw_admin_log() {
 
 	global $nfw_options;
 
-	require (__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__);
 
    echo '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>NinjaFirewall</title><link href="static/styles.css" rel="stylesheet" type="text/css"><script>function dellog(){if (confirm("' . $lang['del_log'] . ' ?")){return true;}else{return false;}}</script></head><body bgcolor="white" class="smallblack"><fieldset style="height:400px;width:600px;padding:5px">';
 
@@ -381,7 +381,7 @@ function flush_admin_log() {
 
 function nfw_help($what) {
 
-require($what);
+require $what;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -415,7 +415,7 @@ exit;
 
 function nfw_changelog() {
 
-require('changelog.php');
+require 'changelog.php';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -446,7 +446,7 @@ function html_header() {
 
 	global $nfw_options;
 
-	require (__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+	require __DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__);
 
 	$menu = array(
 		10 => $lang['summ_main'] . ' &gt; ' . $lang['summ_over'],

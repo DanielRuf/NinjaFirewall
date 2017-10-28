@@ -25,7 +25,7 @@ if (! empty($_SERVER["HTTP_USER_AGENT"]) && preg_match('/Googlebot|Yahoo|msnbot|
 	die('404 Not Found');
 }
 
-if (! @include(__DIR__ . '/conf/options.php') ) {
+if (! @include __DIR__ . '/conf/options.php' ) {
 	// Probably a fresh install; redirect it to the installer :
 	if ( file_exists('install.php') ) {
 		header('Location: install.php');
@@ -38,11 +38,11 @@ if (! @include(__DIR__ . '/conf/options.php') ) {
 
 $nfw_options = unserialize($nfw_options);
 date_default_timezone_set($nfw_options['timezone']);
-require (__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+require __DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__);
 
 // Get the user defined IP (if any):
 if (! defined( 'NFW_REMOTE_ADDR') ) {
-	require_once(__DIR__ . '/lib/misc.php' );
+	require_once __DIR__ . '/lib/misc.php';
 	nfw_select_ip();
 }
 
@@ -134,6 +134,13 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 	@file_put_contents( __DIR__ . '/nfwlog/admin.php',
 		date('[d/M/Y H:i:s O] ') . '[' . $nfw_options['admin_name'] . '] [' . NFW_REMOTE_ADDR . "] [OK]\n",
 		FILE_APPEND | LOCK_EX);
+
+	// Syslog?
+	if (! empty( $nfw_options['syslog'] ) ) {
+		@openlog( 'ninjafirewall', LOG_NDELAY|LOG_PID, LOG_USER );
+		@syslog( LOG_NOTICE, "INFO: #". mt_rand(1000000, 9000000) .": Logged in administrator from ". NFW_REMOTE_ADDR . " on {$_SERVER['SERVER_NAME']}" );
+		@closelog();
+	}
 
 	// Send an alert to the admin, if required :
 	if ($nfw_options['admin_login_alert']) {

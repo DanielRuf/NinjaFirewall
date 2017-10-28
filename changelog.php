@@ -1,6 +1,13 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.12 =
+* In addition to the firewall log, all events can also be redirected to the server Syslog. See our blog for more info: http://nin.link/syslog/
+* By default, the "Maximum allowed file size" policy will use the same value as the PHP `upload_max_filesize` directive or, if not available, it will be set to 10 megabytes.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes.
+* Updated security rules.
+
 = 3.2.11 =
 * Multidimensional arrays in the $_FILES superglobal are now fully supported.
 * It is possible to select which superglobal the "Block serialized PHP objects" policy can apply to (see "Firewall > Policies > PHP > Block serialized PHP objects in the following global variables"). By default, all but "COOKIE" will be enabled.

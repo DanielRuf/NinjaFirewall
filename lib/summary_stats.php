@@ -45,16 +45,16 @@ if ($fh = @fopen($fw_log, 'r') ) {
 		$line = fgets($fh);
 		if (preg_match('/^\[.+?(?:\s.\d{4})?\]\s+\[(.+?)\]\s+(?:\[.+?\]\s+){3}\[([1-6])\]/', $line, $match) ) {
 			if ($match[2] == 1) {
-				$medium++;
+				++$medium;
 			} elseif ($match[2] == 2) {
-				$high++;
+				++$high;
 			} elseif ($match[2] == 3) {
-				$critical++;
+				++$critical;
 			} elseif ($match[2] == 5) {
-				$upload++;
+				++$upload;
 			} elseif ($match[2] == 6) {
 				if (strpos($line, 'Banning IP') !== false) {
-					$banned_ip++;
+					++$banned_ip;
 				}
 				continue;
 			}
@@ -66,7 +66,7 @@ if ($fh = @fopen($fw_log, 'r') ) {
 					$fast = $match[1];
 				}
 				$speed += $match[1];
-				$tot_bench++;
+				++$tot_bench;
 			}
 		}
 	}
