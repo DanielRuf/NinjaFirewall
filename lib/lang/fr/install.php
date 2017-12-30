@@ -1,5 +1,5 @@
 <?php
-/* 2016-11-02 22:00:25 */
+
 $lang = array (
 
 	'next'					=> 'Suivant',
@@ -58,16 +58,16 @@ $lang = array (
 
 	'account'				=>	'Administrateur',
 	'admin_name'			=>	'Nom du compte de l\'administrateur (6 à 20 caractères)',
-	'admin_pass'			=>	'Mot de passe de l\'administrateur (6 à 20 caractères)',
+	'admin_pass'			=>	'Mot de passe de l\'administrateur (6 caractères minimum)',
 	'admin_pass2'			=>	'Retaper le mot de passe',
 	'admin_email'			=>	'Adresse e-mail de l\'administrateur',
 	'nf_license'			=>	'Entrez la clé de votre licence NinjaFirewall Pro',
 
 
 	'js_admin_name'		=>	'Veuillez entrer le nom de compte de l\'administrateur.',
-	'js_admin_name_char'	=>	'Le nom de compte de l\'administrateur doit contenir entre 6 et 20 caractères alpha-numeriques ainsi que le caractère (_).',
+	'js_admin_name_char'	=>	'Le nom de compte de l\'administrateur doit contenir entre 6 et 20 caractères alpha-numériques ainsi que le caractère (_).',
 	'js_admin_pass'		=>	'Veuillez entrer le mot de passe de l\'administrateur.',
-	'js_admin_pass_char'	=>	'Le mot de passe de l\'administrateur doit contenir entre 6 et 20 caractères.',
+	'js_admin_pass_char'	=>	'Le mot de passe de l\'administrateur doit contenir au moins 6 caractères.',
 	'js_admin_pass_2'		=>	'Veuillez retaper le mot de passe de l\'administrateur.',
 	'js_admin_pass_both'	=>	'Le mot de passe de l\'administrateur doit être le même dans les deux champs.',
 	'js_admin_email'		=>	'Veuillez entrer une adresse e-mail valide pour l\'administrateur.',

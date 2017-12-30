@@ -1,11 +1,11 @@
 <?php
-/* 2015-04-10 18:25:17 */
+
 $lang = array (
 
 	'error'					=> 'Error',
 
 	'chang_pass'			=> 'Login password',
-	'pass_txt'				=> 'Password length must be from 6 to 20 characters',
+	'pass_txt'				=> 'Password length must be at least 6 characters',
 	'old_admin_pass'		=> 'Old password',
 	'new_admin_pass'		=> 'New password',
 	'new_admin_pass_2'	=> 'Verify new password',
@@ -14,7 +14,7 @@ $lang = array (
 									'and twice your new password. Otherwise, leave those fields blank.',
 	'pass_err_2'			=> 'The new password must be the same in both fields.',
 	'pass_err_3'			=> 'The old password is not correct.',
-	'pass_err_4'			=> 'The new password must be from 6 to 20 characters.',
+	'pass_err_4'			=> 'The new password must contain at least 6 characters.',
 
 
 	'contact'				=> 'Contact',

@@ -627,7 +627,7 @@ function html_header() {
 		<td>
 			<table style="border:0px solid #666666;" width="100%" cellpadding=6>
 				<tr>
-					<td class=smallblack><div style="float:left;"><b>'. $menu[$GLOBALS['mid']] .'</b></div><div style="float:right;border:1px solid #FDCD25;padding:2px"><a href="javascript:popup(\'?mid='. $GLOBALS['mid'] .'&help=1&token=' . $_REQUEST['token'] . '\',640,480,0);" class="links"><strong>' . $lang['help'] . '</strong></a></div><br />';
+					<td class=smallblack><div style="float:left;"><b>'. $menu[$GLOBALS['mid']] .'</b></div><div style="float:right;border:1px solid #FDCD25;padding-left:10px;padding-right:10px"><a href="javascript:popup(\'?mid='. $GLOBALS['mid'] .'&help=1&token=' . $_REQUEST['token'] . '\',640,480,0);" class="links"><strong>' . $lang['help'] . '</strong></a></div><br />';
 
 }
 

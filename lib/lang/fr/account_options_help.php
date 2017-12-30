@@ -1,11 +1,11 @@
 <?php
-/* 2014-09-14 19:54:05 */
+
 $title = 'Compte > Options';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
 
 <h3><strong>Mot De Passe</strong></h3>
-<p><img src="static/bullet_off.gif">&nbsp;Le mot de passe doit avoir une longueur comprise entre 6 et 20 caractères.</p>
+<p><img src="static/bullet_off.gif">&nbsp;Le mot de passe doit contenir au moins 6 caractères.</p>
 
 
 <hr class="dotted" size="1">

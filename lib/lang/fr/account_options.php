@@ -1,11 +1,11 @@
 <?php
-/* 2014-10-15 20:18:28 */
+
 $lang = array (
 
 	'error'					=> 'Erreur',
 
 	'chang_pass'			=> 'Mot De Passe',
-	'pass_txt'				=> 'Le mot de passe doit avoir une longueur comprise entre 6 et 20 caractères',
+	'pass_txt'				=> 'Le mot de passe doit contenir au moins 6 caractères',
 	'old_admin_pass'		=> 'Ancien mot de passe',
 	'new_admin_pass'		=> 'Nouveau mot de passe',
 	'new_admin_pass_2'	=> 'Retaper le mot de passe',
@@ -14,7 +14,7 @@ $lang = array (
 									'et le nouveau deux fois. Sinon, laissez les champs vides.',
 	'pass_err_2'			=> 'Le nouveau mot de passe doit être identique dans les 2 champs.',
 	'pass_err_3'			=> 'L\'ancien mot de passe est invalide.',
-	'pass_err_4'			=> 'Le nouveau mot de passe doit avoir une longueur comprise entre 6 et 20 caractères',
+	'pass_err_4'			=> 'Le nouveau mot de passe doit contenir au moins 6 caractères.',
 
 
 	'contact'				=> 'Contact',

@@ -28,7 +28,7 @@ This action will be performed when the filtering process is over, right before N
 
 <h3><strong>Uploads</strong></h3>
 
-<p><img src="static/bullet_off.gif">&nbsp;<strong>File Uploads :</strong> you can allow/disallow uploads, or allow uploads but block scripts (PHP, CGI, Ruby, Python, bash/shell, C/C++ source code), ELF (Unix/Linux binary files) and system files (<code>.htaccess</code>, <code>.htpasswd</code> and PHP INI).</p>
+<p><img src="static/bullet_off.gif">&nbsp;<strong>File Uploads :</strong> you can allow/disallow uploads, or allow uploads but block scripts (PHP, CGI, Ruby, Python, bash/shell), C/C++ source code, binaries (MZ/PE/NE and ELF formats), system files (<code>.htaccess</code>, <code>.htpasswd</code> and PHP INI) and SVG files containing Javascript/XML events.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Sanitise filenames :</strong> any character that is not a letter <code>a-zA-Z</code>, a digit <code>0-9</code>, a dot <code>.</code>, a hyphen <code>-</code> or an underscore <code>_</code> will be removed from the filename and replaced with the substitution character.</p>
 <p><img src="static/bullet_off.gif">&nbsp;<strong>Maximum allowed file size :</strong> if you allow uploads, you can select the maximum size of an uploaded file. Any file bigger than this value will be rejected. Note that if your PHP configuration uses the <code>upload_max_filesize</code> directive, it will be used before NinjaFirewall.</p>
 

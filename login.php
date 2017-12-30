@@ -127,8 +127,8 @@ if ( empty($_POST['admin_name']) || empty($_POST['admin_pass']) )  {
 	exit;
 }
 
-// Check user/pass :
-if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_pass']) === $nfw_options['admin_pass'] ) {
+// Verify username & password:
+if ( verify_admin_login( $_POST['admin_name'], $_POST['admin_pass'], $nfw_options ) === true ) {
 
 	// Write to log :
 	@file_put_contents( __DIR__ . '/nfwlog/admin.php',
@@ -163,6 +163,28 @@ if ( $_POST['admin_name'] === $nfw_options['admin_name'] && sha1($_POST['admin_p
 		mail($nfw_options['admin_email'], $subject, $message, $headers, '-f'. $nfw_options['admin_email']);
    }
 
+	// If the user is still using an old SHA-1 password, we convert it
+	// with password_hash() with the default algo (requires PHP >=5.5):
+	if ( preg_match( '/^[0-9a-f]{40}$/', $nfw_options['admin_pass'] ) && function_exists( 'password_hash' ) ) {
+		// The algorithmic cost can be user-defined in the .htninja file
+		// E.g.: define('NF_PASSWORD_COST', 13);
+		// Default is 10 and should be suitable for most hardware (e.g., single-core VPS)
+		// but a cost of 13 would provide better security:
+		if ( defined('NF_PASSWORD_COST') ) {
+			$cost = (int) NF_PASSWORD_COST;
+		} else {
+			$cost = 10;
+		}
+		$new_password = password_hash( $_POST['admin_pass'], PASSWORD_DEFAULT, [ 'cost' => $cost ] );
+		if ( $new_password !== false ) {
+			// Update the hash in the option.php file:
+			$nfw_options['admin_pass'] = $new_password;
+			$fh = fopen( __DIR__ . '/conf/options.php', 'w' );
+			fwrite( $fh, '<?php'. "\n\$nfw_options = <<<'EOT'\n". serialize( $nfw_options ) ."\nEOT;\n" );
+			fclose( $fh );
+		}
+	}
+
 	// Redirect to the index page :
 	$_SESSION['nfadmpro'] = sha1( $nfw_options['admin_name'] );
 	$_SESSION['timeout'] = time();
@@ -189,6 +211,28 @@ login_page(1);
 exit;
 
 /* ------------------------------------------------------------------ */
+
+function verify_admin_login( $admin_name, $admin_pass, $nfw_options ) {
+
+	if ( $admin_name !== $nfw_options['admin_name'] ) {
+		return false;
+	}
+
+	// Old SHA-1 hash?
+	if ( preg_match( '/^[0-9a-f]{40}$/', $nfw_options['admin_pass'] ) ) {
+		if ( sha1( $admin_pass ) === $nfw_options['admin_pass'] ) {
+			return true;
+		}
+		return false;
+	}
+
+	// Bcrypt (PHP 5.5>=):
+	return password_verify( $admin_pass, $nfw_options['admin_pass'] );
+
+}
+
+/* ------------------------------------------------------------------ */
+
 function login_page($err) {
 
    global $max_bantime, $lang;
@@ -245,7 +289,7 @@ function login_page($err) {
 				</tr>
 				<tr>
 					<td align="right" width="50%"><?php echo $lang['password'] ?></td>
-					<td width="50%"><input id="password" class="input" type="password" size="15" name="admin_pass" maxlength="20" autocomplete="off"></td>
+					<td width="50%"><input id="password" class="input" type="password" size="15" name="admin_pass" autocomplete="off"></td>
 				</tr>
 				<tr>
 					<td width="50%">&nbsp;</td>

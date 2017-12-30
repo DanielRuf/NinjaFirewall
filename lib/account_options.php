@@ -78,11 +78,11 @@ function ssl_warn() {';
 			<tr>
 				<td width="55%" align="left"><br /><?php echo $lang['pass_txt'] ?><br />&nbsp;</td>
 				<td width="45%" align="left"><br />
-					<input type="password" class="input" size="20" maxlength="20" name="old_admin_pass">&nbsp;&nbsp;<?php echo $lang['old_admin_pass'] ?>
+					<input type="password" class="input" size="20" name="old_admin_pass">&nbsp;&nbsp;<?php echo $lang['old_admin_pass'] ?>
 					<br /><br />
-				  <input type="password" class="input" size="20" maxlength="20" name="new_admin_pass">&nbsp;&nbsp;<?php echo $lang['new_admin_pass'] ?>
+				  <input type="password" class="input" size="20" name="new_admin_pass">&nbsp;&nbsp;<?php echo $lang['new_admin_pass'] ?>
 				  <br /><br />
-				  <input type="password" class="input" size="20" maxlength="20" name="new_admin_pass_2">&nbsp;&nbsp;<?php echo $lang['new_admin_pass_2'] ?><br />&nbsp;
+				  <input type="password" class="input" size="20" name="new_admin_pass_2">&nbsp;&nbsp;<?php echo $lang['new_admin_pass_2'] ?><br />&nbsp;
 				</td>
 			</tr>
 		</table>
@@ -188,19 +188,48 @@ function save_account_options() {
    $new_admin_pass   = @$_POST['new_admin_pass'];
    $new_admin_pass_2 = @$_POST['new_admin_pass_2'];
 
-   if ( ($old_admin_pass) || ($new_admin_pass_2) || ($new_admin_pass) ) {
-		if ( (! $old_admin_pass ) || (! $new_admin_pass_2 ) || (! $new_admin_pass ) ) {
+  if ( $old_admin_pass || $new_admin_pass_2 || $new_admin_pass ) {
+		if (! $old_admin_pass || ! $new_admin_pass_2 || ! $new_admin_pass ) {
 			$err_msg .= $lang['pass_err_1'] . '<br />';
+
 		} else if ( $new_admin_pass_2 !== $new_admin_pass ) {
 			$err_msg .= $lang['pass_err_2'] . '<br />';
+
 		} else if ( $new_admin_pass_2 === $new_admin_pass ) {
-			$encoded = sha1 ($old_admin_pass);
-			if ( $encoded !== $nfw_options['admin_pass'] ) {
-				$err_msg .= $lang['pass_err_3'] . '<br />';
-			} else if (! preg_match('/^.{6,20}$/', $new_admin_pass) ) {
-				$err_msg .= $lang['pass_err_4'] . '<br />';
+			// Old SHA-1 hash?
+			if ( preg_match( '/^[0-9a-f]{40}$/', $nfw_options['admin_pass'] ) ) {
+				$encoded = sha1( $old_admin_pass );
+				if ( $encoded !== $nfw_options['admin_pass'] ) {
+					$encoded = false;
+				}
+			// Bcrypt hash?
 			} else {
-				$nfw_options['admin_pass'] = sha1($new_admin_pass);
+				$encoded = password_verify( $old_admin_pass, $nfw_options['admin_pass'] );
+			}
+
+			if ( $encoded === false ) {
+				$err_msg .= $lang['pass_err_3'] . '<br />';
+
+			} else if ( strlen( $new_admin_pass ) < 6 ) {
+				$err_msg .= $lang['pass_err_4'] . '<br />';
+
+			} else {
+				// PHP <5.5: create SHA-1 hash
+				if (! function_exists( 'password_hash' ) ) {
+					$nfw_options['admin_pass'] = sha1( $new_admin_pass );
+				// PHP >=5.5: use password_hash
+				} else {
+					// The algorithmic cost can be user-defined in the .htninja file
+					// E.g.: define('NF_PASSWORD_COST', 13);
+					// Default is 10 and should be suitable for most hardware (e.g., single-core VPS)
+					// but a cost of 13 would provide better security:
+					if ( defined('NF_PASSWORD_COST') ) {
+						$cost = (int) NF_PASSWORD_COST;
+					} else {
+						$cost = 10;
+					}
+					$nfw_options['admin_pass'] = password_hash( $new_admin_pass, PASSWORD_DEFAULT, [ 'cost' => $cost  ] );
+				}
 			}
 		}
 	}

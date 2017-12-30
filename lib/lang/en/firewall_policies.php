@@ -22,7 +22,10 @@ $lang = array (
 	'uploads'			=>	'Allow uploads',
 	'disallow_upl'		=>	'Disallow uploads',
 	'allow_upl'			=>	'Allow uploads',
-	'allow_but'			=>	'Allow, but block scripts, ELF and system files',
+
+	'allow_but'			=>	'Allow, but block dangerous files',
+	'allow_but_note'	=>	'See contextual help for the list of files.',
+
 	'sanit_fn'			=>	'Sanitise filenames',
 	'sanit_fn_warn'	=>	'Any character that is not a letter [a-zA-Z], a digit [0-9], a dot [.], a hyphen [-] or an underscore [_] will be removed from the filename and replaced with the substitution character. Continue?',
 	'substitute'		=>	'substitution character:',

@@ -527,7 +527,7 @@ function nfw_admin_setup( $err ) {
 			document.admin_form.admin_pass.focus();
 			return false;
 		}
-		if (!document.admin_form.admin_pass.value.match(/^.{6,20}$/)) {
+		if (document.admin_form.admin_pass.value.length < 6) {
 			alert("<?php echo $lang['js_admin_pass_char'] ?>");
 			document.admin_form.admin_pass.focus();
 			return false;
@@ -575,14 +575,14 @@ function nfw_admin_setup( $err ) {
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['admin_pass'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted">
-					<input class="input" size="20" maxlength="20" name="admin_pass" type="password" value="<?php echo htmlentities($admin_pass) ?>">
+					<input class="input" size="20" name="admin_pass" type="password" value="<?php echo htmlentities($admin_pass) ?>">
 				</td>
 			</tr>
 
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['admin_pass2'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted">
-					<input class="input" size="20" maxlength="20" name="admin_pass2" type="password" value="<?php echo htmlentities($admin_pass2) ?>">
+					<input class="input" size="20" name="admin_pass2" type="password" value="<?php echo htmlentities($admin_pass2) ?>">
 				</td>
 			</tr>
 
@@ -636,11 +636,17 @@ function nfw_admin_setup_save() {
 		$nfw_options['admin_name'] = $_POST['admin_name'];
 	}
 
-	if ( empty($_POST['admin_pass']) || ! preg_match('/^.{6,20}$/', $_POST['admin_pass']) ) {
+	if ( empty($_POST['admin_pass']) || strlen( $_POST['admin_pass'] ) < 6 ) {
 		$error_msg = $lang['js_admin_pass_char'];
 		goto ADMIN_SAVE_END;
 	} else {
-		$nfw_options['admin_pass'] = sha1($_POST['admin_pass']);
+		// PHP <5.5: create a SHA-1 hash
+		if (! function_exists( 'password_hash' ) ) {
+			$nfw_options['admin_pass'] = sha1( $_POST['admin_pass'] );
+		// PHP >=5.5: use password_hash
+		} else {
+			$nfw_options['admin_pass'] = password_hash( $_POST['admin_pass'], PASSWORD_DEFAULT, [ 'cost' => 10 ] );
+		}
 	}
 
 	if ( empty($_POST['admin_email']) || ! filter_var( $_POST['admin_email'], FILTER_VALIDATE_EMAIL ) ) {

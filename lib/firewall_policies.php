@@ -143,7 +143,9 @@ if ( empty( $nfw_options['scan_protocol']) || ! preg_match( '/^[123]$/', $nfw_op
 				<td width="45%">
 				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 0 ) ?> value="0" id="uf1" onClick="san_onoff(0);">&nbsp;<?php echo $lang['disallow_upl'] . $lang['default'] ?></label></p>
 				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 1 ) ?> value="1" id="uf1" onClick="san_onoff(1);">&nbsp;<?php echo $lang['allow_upl'] ?></label></p>
-				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 2 ) ?> value="2" id="uf2" onClick="san_onoff(1);">&nbsp;<?php echo $lang['allow_but'] ?></label></p>
+				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 2 ) ?> value="2" id="uf2" onClick="san_onoff(1);">&nbsp;<?php echo $lang['allow_but'] ?></label>
+				<br />
+				<i class="tinyblack">&nbsp;<?php echo $lang['allow_but_note'] ?></i></p>
 				<br />
 				<p>
 					<label><input id="sanid" onclick='return sanitise_warn(this);' type="checkbox" name="sanitise_fn"<?php checked( $nfw_options['sanitise_fn'], 1 ); disabled( $nfw_options['uploads'], 0 ) ?> />&nbsp;<?php echo $lang['sanit_fn'] ?></label>&nbsp;(<?php echo $lang['substitute'] ?>&nbsp;<input id="subs" class="input" maxlength="1" size="1" value="<?php echo $substitute ?>" name="substitute" type="text" <?php disabled( $nfw_options['uploads'], 0 ) ?> style="padding-left:3px" />&nbsp;)

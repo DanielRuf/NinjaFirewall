@@ -1,11 +1,11 @@
 <?php
-/* 2015-04-10 18:25:13 */
+
 $title = 'Account > Options';
 $close = 'Close';
 $nfw_help = <<<'EOT'
 
 <h3><strong>Login password</strong></h3>
-<p><img src="static/bullet_off.gif">&nbsp;Enter your new password. It must be from 6 to 20 characters.</p>
+<p><img src="static/bullet_off.gif">&nbsp;Enter your new password. It must contain at least 6 characters.</p>
 
 
 <hr class="dotted" size="1">

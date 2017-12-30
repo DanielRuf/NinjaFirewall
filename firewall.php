@@ -271,8 +271,8 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 
 	if (! empty($nfw_['nfw_options']['log_rotate']) && @ctype_digit($nfw_['nfw_options']['log_maxsize']) ) {
 		if ( file_exists($log_file_ext) ) {
-			$log_stat = stat($log_file_ext);
-			if ( $log_stat['size'] > $nfw_['nfw_options']['log_maxsize']) {
+			$log_stat = filesize($log_file_ext);
+			if ( $log_stat > $nfw_['nfw_options']['log_maxsize']) {
 				$log_ext = 1;
 				while ( file_exists($log_file . '.' . sprintf('%02d', $log_ext) . '.php' ) ) {
 					++$log_ext;
@@ -394,27 +394,33 @@ function nfw_check_upload() {
 				nfw_block(1);
 			}
 			$data = '';
+
 			if ( $nfw_['nfw_options']['uploads'] == 2 ) {
 
-				if (preg_match('/\.ht(?:access|passwd)|(?:php\d?|\.user)\.ini|\.ph(?:p([34x]|5\d?)?|t(ml)?)(?:\.|$)/', $f_uploaded[$key]['name']) ) {
+				if (preg_match('/\.ht(?:access|passwd)|(?:php\d?|\.user)\.ini|\.ph(?:p([34x7]|5\d?)?|t(ml)?)(?:\.|$)/', $f_uploaded[$key]['name']) ) {
 					nfw_log('Attempt to upload a script or system file', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
 				$data = file_get_contents($f_uploaded[$key]['tmp_name']);
 
 				if (preg_match('`^\x7F\x45\x4C\x46`', $data) ) {
-					nfw_log('Attempt to upload a Linux binary file (ELF)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
+					nfw_log('Attempt to upload an executable file (ELF)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
 				// MZ header :
 				if (preg_match('`^\x4D\x5A`', $data) ) {
-					nfw_log('Attempt to upload an executable file (MZ header)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
+					nfw_log('Attempt to upload an executable file (Microsoft MZ header)', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes)', 3, 0);
 					nfw_block(3);
 				}
 
 
 				if (preg_match('`(<\?(?i:php\s|=[\s\x21-\x7e]{10})|#!/(?:usr|bin)/.+?\s|\s#include\s+<[\w/.]+?>|\W\$\{\s*([\'"])\w+\2)`', $data, $match) ) {
 					nfw_log('Attempt to upload a script', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes), pattern: '. $match[1], 3, 0);
+					nfw_block(3);
+				}
+
+				if ( preg_match( '`<svg.*>.*?(<[a-z].+?\bon[a-z]{3,29}\b\s*=.{5}|<script.*?>.+?</script\s*>|data:image/svg\+xml;base64|javascript:|ev:event=).*?</svg\s*>`s', $data, $match ) ) {
+					nfw_log('Attempt to upload an SVG file containing Javascript/XML events', $f_uploaded[$key]['name'] . ' (' . number_format($f_uploaded[$key]['size']) . ' bytes), pattern: '. $match[1], 3, 0);
 					nfw_block(3);
 				}
 			}

@@ -21,7 +21,8 @@ $lang = array (
 	'uploads'			=>	'Autoriser les téléchargements (uploads)',
 	'disallow_upl'		=>	'Ne pas autoriser',
 	'allow_upl'			=>	'Autoriser',
-	'allow_but'			=>	'Autoriser, mais bloquer les scripts, fichiers ELF et systèmes',
+	'allow_but'			=>	'Autoriser, mais bloquer les fichiers dangereux',
+	'allow_but_note'	=>	"Consultez l'aide contextuelle pour voir la liste des fichiers concernés.",
 
 	'sanit_fn'			=>	'Nettoyer le nom des fichiers',
 	'sanit_fn_warn'	=>	'Tout caractère qui n\'est pas une lettre [a-zA-Z], un chiffre [0-9], un point [.], un trait d\'union [-] ou un caractère de soulignement [_], sera remplacé par le caractère de substitution. Continuer ?',

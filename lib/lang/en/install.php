@@ -1,5 +1,5 @@
 <?php
-/* 2016-11-02 22:00:21 */
+
 $lang = array (
 
 	'next'					=> 'Next',
@@ -58,7 +58,7 @@ $lang = array (
 
 	'account'				=>	'Administrator',
 	'admin_name'			=>	'Administrator name (6 to 20 characters)',
-	'admin_pass'			=>	'Administrator password (6 to 20 characters)',
+	'admin_pass'			=>	'Administrator password (at least 6 characters)',
 	'admin_pass2'			=>	'Retype administrator password',
 	'admin_email'			=>	'Administrator email',
 	'nf_license'			=>	'Enter your NinjaFirewall <font color="#FF0000">Pro+</font> license key',
@@ -67,7 +67,7 @@ $lang = array (
 	'js_admin_name'		=>	'Please enter the administrator name.',
 	'js_admin_name_char'	=>	'The administrator name can only contain from 6 to 20 alpha-numeric characters and underscore (_).',
 	'js_admin_pass'		=>	'Please enter the administrator password.',
-	'js_admin_pass_char'	=>	'The administrator password must contain from 6 to 20 characters.',
+	'js_admin_pass_char'	=>	'The administrator password must contain at least 6 characters.',
 	'js_admin_pass_2'		=>	'Please retype the administrator password.',
 	'js_admin_pass_both'	=>	'The administrator password must be the same in both fields.',
 	'js_admin_email'		=>	'Please enter a valid administrator email address.',
