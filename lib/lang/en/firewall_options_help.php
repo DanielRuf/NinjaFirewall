@@ -1,5 +1,5 @@
 <?php
-/* 2015-04-22 19:11:03 */
+
 $title = 'Firewall > Options';
 $close = 'Close';
 $nfw_help = <<<'EOT'
@@ -23,6 +23,12 @@ We recommend to run it in Debug Mode for at least 24 hours after installing it o
 	<li><code>%%REM_ADDRESS%%</code> : the blocked user IP.</li>
 	<li><code>%%NUM_INCIDENT%%</code> : the unique incident number as it will appear in the firewall log "INCIDENT" column.</li>
 </ul>
+
+<br />
+<p><img src="static/bullet_off.gif">&nbsp;<strong>IP anonymization:</strong> This option will anonymize IP addresses in the firewall log by removing their last 3 characters. It does not apply to private IP addresses.
+<br />
+Note that it will affect only IP addresses written to the firewall log after enabling this option. Also, if you are redirecting events to the syslog server, IP addresses will be anonymized too.
+
 
 <br />
 

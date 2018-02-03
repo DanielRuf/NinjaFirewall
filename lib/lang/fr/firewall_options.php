@@ -1,6 +1,5 @@
 <?php
 
-/* 2015-09-25 20:08:45 */
 $lang = array (
 
 	'default'			=> ' (defaut)',
@@ -18,6 +17,10 @@ $lang = array (
 	'406'					=>	'406 Not Acceptable',
 	'500'					=>	'500 Internal Server Error',
 	'503'					=>	'503 Service Unavailable',
+
+	'anon_ip'			=>	'Anonymisation IP',
+	'anon_ip_desc'		=>	'Anonymiser les adresses IP en supprimant les 3 derniers caractères.',
+	'anon_note'			=>	'Ne s\'applique pas aux adresses IP privées.',
 
 	'blocked_msg'		=>	'Message pour les utilisateurs bloqués',
 	'preview'			=>	'Prévisualiser',

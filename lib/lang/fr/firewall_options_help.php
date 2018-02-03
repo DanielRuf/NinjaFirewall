@@ -1,5 +1,5 @@
 <?php
-/* 2015-04-22 19:10:58 */
+
 $title = 'Pare-Feu > Options';
 $close = 'Fermer';
 $nfw_help = <<<'EOT'
@@ -22,6 +22,12 @@ Nous vous conseillons de laisser NinjaFirewall en Mode débogage pendant 24 heur
 	<p><img src="static/bullet_off.gif">&nbsp;<code>%%REM_ADDRESS%%</code> : l'adresse IP de l'utilisateur.</p>
 	<p><img src="static/bullet_off.gif">&nbsp;<code>%%NUM_INCIDENT%%</code> : le numéro d'incident, tel qu'il apparaîtra dans la colonne <code>INCIDENT</code> du journal du pare-feu.</p>
 </ul>
+
+<br />
+<p><img src="static/bullet_off.gif">&nbsp;<strong>Anonymisation IP :</strong> Cette option anonymise les adresses IP dans le journal du pare-feu en supprimant leurs 3 derniers caractères. Elle ne s'applique pas aux adresses IP privées.
+<br />
+Notez que seules les adresses IP enregistrées dans le journal du pare-feu après avoir activé cette option sont concernées. En outre, si vous redirigez les événements vers le serveur syslog, les adresses IP y seront également anonymisées.
+
 
 <br />
 

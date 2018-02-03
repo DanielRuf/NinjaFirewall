@@ -1,6 +1,12 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.14 =
+* Added "IP Anonymization" option. It will anonymize IP addresses in the firewall log by removing their last 3 characters. See "Firewall > Options > IP Anonymization".
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes.
+* Updated security rules.
+
 = 3.2.13 =
 * On servers running PHP 5.5 or above, NinjaFirewall will no longer user SHA1 for the administrator password, but the "password_hash()" function with the best algorithm available (currently bcrypt). To convert your current password, simply log out and log in again after applying this update.
 * The "Uploads > Allow, but block scripts, ELF and system files" firewall policy was renamed to "Allow, but block dangerous files" and will also block dangerous SVG files. Therefore, the complete list of blocked files is now: scripts (PHP, CGI, Ruby, Python, bash/shell), C/C++ source code, binaries (MZ/PE/NE and ELF formats), system files (.htaccess, .htpasswd and PHP INI) and SVG files containing Javascript/XML events.

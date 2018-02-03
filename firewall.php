@@ -307,7 +307,7 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
       $tmp . '[' . time() . '] ' . '[' . round( microtime(true) - $nfw_['fw_starttime'], 5) . '] ' .
       '[' . $_SERVER['SERVER_NAME'] . '] ' . '[#' . $nfw_['num_incident'] . '] ' .
       '[' . $ruleid . '] ' .
-      '[' . $loglevel . '] ' . '[' . NFW_REMOTE_ADDR . '] ' .
+      '[' . $loglevel . '] ' . '[' . nfw_anonymize_ip( NFW_REMOTE_ADDR ) . '] ' .
       '[' . $http_ret_code . '] ' . '[' . $_SERVER['REQUEST_METHOD'] . '] ' .
       '[' . $_SERVER['SCRIPT_NAME'] . '] ' . '[' . $loginfo . '] ' .
       $encoding . "\n", FILE_APPEND | LOCK_EX);
@@ -316,10 +316,23 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 	if (! empty( $nfw_['nfw_options']['syslog'] ) ) {
 		$levels = array( '', 'MEDIUM', 'HIGH', 'CRITICAL', 'ERROR', 'UPLOAD', 'INFO', 'DEBUG_ON' );
 		@openlog( 'ninjafirewall', LOG_NDELAY|LOG_PID, LOG_USER );
-		@syslog( LOG_NOTICE, "{$levels[$loglevel]}: #{$nfw_['num_incident']}: {$loginfo} from ". NFW_REMOTE_ADDR . " on {$_SERVER['SERVER_NAME']}" );
+		@syslog( LOG_NOTICE, "{$levels[$loglevel]}: #{$nfw_['num_incident']}: {$loginfo} from ". nfw_anonymize_ip( NFW_REMOTE_ADDR ) . " on {$_SERVER['SERVER_NAME']}" );
 		@closelog();
 	}
 
+}
+
+// =====================================================================
+function nfw_anonymize_ip( $ip ) {
+
+	global $nfw_;
+
+	if (! empty( $nfw_['nfw_options']['anon_ip'] ) &&
+	filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) ) {
+		return substr( $ip, 0, -3 ) .'xxx';
+	}
+
+	return $ip;
 }
 
 // =====================================================================

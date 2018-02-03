@@ -141,6 +141,22 @@ function chkflds(){
 				</td>
 			</tr>
 
+			<?php
+				if ( empty( $nfw_options['anon_ip'] ) ) {
+					$nfw_options['anon_ip'] = 0;
+				} else {
+					$nfw_options['anon_ip'] = 1;
+				}
+			?>
+			<tr>
+				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['anon_ip'] ?><br />&nbsp;</td>
+				<td width="45%" align="left" class="dotted"><br />
+				<p><label><input type="checkbox"<?php checked($nfw_options['anon_ip'], 1) ?> name="nfw_options[anon_ip]" /> <?php echo $lang['anon_ip_desc'] ?></label>
+				<br />
+				<i class="tinyblack"><?php echo $lang['anon_note'] ?></i></p>
+				</td>
+			</tr>
+
 			<tr>
 				<td width="55%" align="left" class="dotted"><br /><?php echo $lang['blocked_msg'] ?><br />&nbsp;</td>
 				<td width="45%" align="left" class="dotted"><br />
@@ -285,6 +301,12 @@ function save_firewall_options() {
 		$nfw_options['ret_code'] = $_POST['ret_code'];
 	} else {
 		$nfw_options['ret_code'] = '403';
+	}
+
+	if ( isset( $_POST['nfw_options']['anon_ip'] ) ) {
+		$nfw_options['anon_ip'] = 1;
+	} else {
+		$nfw_options['anon_ip'] = 0;
 	}
 
 	if ( empty( $_POST['blocked_msg']) ) {
