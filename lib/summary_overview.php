@@ -1,68 +1,75 @@
 <?php
-/*
- +---------------------------------------------------------------------+
- | NinjaFirewall (Pro edition)                                         |
- |                                                                     |
- | (c) NinTechNet - https://nintechnet.com/                            |
- |                                                                     |
- +---------------------------------------------------------------------+
- | This program is free software: you can redistribute it and/or       |
- | modify it under the terms of the GNU General Public License as      |
- | published by the Free Software Foundation, either version 3 of      |
- | the License, or (at your option) any later version.                 |
- |                                                                     |
- | This program is distributed in the hope that it will be useful,     |
- | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
- | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
- | GNU General Public License for more details.                        |
- +---------------------------------------------------------------------+
-*/
-if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
+// +-------------------------------------------------------------------+
+// | NinjaFirewall (Pro Edition)                                       |
+// |                                                                   |
+// | (c) NinTechNet - https://nintechnet.com/                          |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+// | This program is free software: you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation, either version 3 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// +-------------------------------------------------------------------+
 
-// Load current language file :
-require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
+if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
 html_header();
 
 ?>
-<br />
-<fieldset><legend>&nbsp;<b><?php echo $lang['info'] ?></b>&nbsp;</legend>
-	<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
+<div class="col-sm-12 text-left">
+	<h3><?php echo _('Summary > Overview') ?></h3>
+	<br />
+
 <?php
 
-// Is NF enabled/working ?
+// Is NF enabled/working?
 if (! defined('NF_DISABLED') ) {
 	is_nf_enabled();
 }
-if (NF_DISABLED) {
-	if (! empty($GLOBALS['err_fw'][NF_DISABLED]) ) {
+if ( NF_DISABLED ) {
+	if (! empty( $GLOBALS['err_fw'][NF_DISABLED] ) ) {
 		$msg = $GLOBALS['err_fw'][NF_DISABLED];
 	} else {
 		$msg = 'Unknown error #' . NF_DISABLED;
 	}
+
+	echo '<div class="alert alert-danger text-left"><a class="close" data-dismiss="alert" aria-label="close">&times;</a>'.
+		_('Warning, NinjaFirewall is not working and your site is not protected.') .
+		'<br />' .
+		sprintf( _('Error message: %s'), "<i>$msg</i>" ) .
+		'</div>';
+
 	?>
+<table width="100%" class="table table-nf">
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['firewall'] ?></td>
-		<td width="10%" align="center"><img src="static/icon_error.png" border="0" width="21" height="21" title="<?php echo $lang['warning'] ?> !"></td>
-		<td width="45%"><?php echo $lang['not_working'] . '. ' . $lang['err_message'] . '&nbsp;: ' . $msg ?>
-		</td>
+		<td width="40%"><?php echo _('Firewall') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'error' ) ?></td>
+		<td width="55%"><?php
+			echo _('Warning, NinjaFirewall is not working and your site is not protected.')
+		?></td>
 	</tr>
 	<?php
 } else {
 	?>
+<table width="100%" class="table table-nf">
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['firewall'] ?></td>
-		<td width="10%" align="center">&nbsp;</td>
-		<td width="45%"><?php echo $lang['enabled'] ?></td>
+		<td width="40%"><?php echo _('Firewall') ?></td>
+		<td width="5%">&nbsp;</td>
+		<td width="55%"><?php echo _('Enabled') ?></td>
 	</tr>
 	<?php
 }
 
-// Check for update :
+// Check for update:
 $connect_err = 0;
-if ( $_SESSION['ver'] < 1 && NFW_UPDATE ) {
+if ( $_SESSION['ver'] < 1 && NFW_UPDATE && ! empty( $nfw_options['login_updates'] ) ) {
 	$tmp = '';
-	if (function_exists('curl_init') ) {
+	if ( function_exists('curl_init') ) {
 
 		// If your server can't remotely connect to a SSL port, add this
 		// to your ".htninja" script: define('NFW_DONT_USE_SSL', 1);
@@ -100,42 +107,55 @@ if ( $_SESSION['ver'] < 1 && NFW_UPDATE ) {
 
 ?>
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['license'] ?></td>
-		<td width="10%" align="center">&nbsp;</td>
-		<td width="45%"><?php echo $lang['na']  ?></td>
+		<td width="40%"><?php echo _('License expiration') ?></td>
+		<td width="5%" align="center">&nbsp;</td>
+		<td width="55%"><?php echo _('N/A') ?></td>
 	</tr>
 
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['engine_ver'] ?></td>
-		<td width=10% align="center">
+		<td width="40%"><?php echo _('Version') ?></td>
+		<td width="5%" align="center">
 <?php
 
-if ($_SESSION['ver'] == 0) {
+if ( $_SESSION['ver'] == 0 ) {
 ?>
-			<img src="static/icon_warn.png" border="0" width="21" height="21">
+			<?php echo glyphicon( 'warning' ) ?>
 		</td>
-		<td width="45%"><?php echo $lang['failed_connect'] ?>&nbsp;!</td>
+		<td width="55%">
+			<?php echo _('Unable to retrieve updates information from NinjaFirewall server.') ?>
+		</td>
 	</tr>
 <?php
+
 } else {
 
 	if ( version_compare( NFW_ENGINE_VERSION, $_SESSION['vapp'], '<' ) ) {
 		?>
-		<img src="static/icon_warn.png" border="0" width="21" height="21"></td>
-		<td width="45%"><a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=22&token=<?php echo $_REQUEST['token'] ?>"><?php echo $lang['new_engine'] ?></a></td>
-		</tr>
+		<?php echo glyphicon( 'warning' ) ?></td>
+		<td width="55%">
+			<a href="?mid=22&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('A new version is available.') .' '. _('Click here to update.') ?></a>
+		</td>
+	</tr>
 		<?php
 	} else {
 		// HTTP error while checking the version ?
 		if ( $connect_err ) {
 			?>
-			<img src="static/icon_warn.png" border="0" width="21" height="21"></td>
-			<td width="45%"><?php echo $lang['failed_connect'] ?></td>
-			</tr>
+			<?php echo glyphicon( 'warning' ) ?></td>
+			<td width="55%">
+				<?php echo _('Unable to retrieve updates information from NinjaFirewall server.') ?>
+			</td>
+		</tr>
       <?php
 		} else {
 			?>&nbsp;</td>
-			<td width="45%"><?php echo $lang['lic_free'] . ' ' . NFW_ENGINE_VERSION . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>)' ?></td>
+			<td width="55%">Pro Edition <?php
+				echo NFW_ENGINE_VERSION .' '.
+				sprintf(
+					_('(upgrade to %s)'),
+					'<a href="https://nintechnet.com/ninjafirewall/pro-edition/">Pro+ Edition</a>'
+				);
+			?></td>
 			</tr>
 			<?php
 		}
@@ -144,113 +164,118 @@ if ($_SESSION['ver'] == 0) {
 
 // Centralized logging: remote server
 if ( ! empty( $nfw_options['clogs_pubkey'] ) ) {
-	$err_msg = $ok_msg = '';
+	$err_msg = ''; $ok_msg = '';
 	if (! preg_match( '/^[a-f0-9]{40}:([a-f0-9:.]{3,39}|\*)$/', $nfw_options['clogs_pubkey'], $match ) ) {
-		$err_msg = sprintf( $lang['invalid_key'], '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=36&token='. $_REQUEST['token'] .'#clogs">', '</a>');
+		$err_msg = sprintf(
+			_('The public key is invalid. Please %scheck your configuration%s.'),
+			'<a href="?mid=36&token='. $_REQUEST['token'] .'#clogs">', '</a>'
+		);
 
 	} else {
 		if ( $match[1] == '*' ) {
-			$ok_msg = $lang['no_ip'];
+			$ok_msg = _('No IP address restriction.');
 
 		} elseif ( filter_var( $match[1], FILTER_VALIDATE_IP ) ) {
-			$ok_msg = sprintf( $lang['allowed_ip'], htmlspecialchars( $match[1]) );
+			$ok_msg = sprintf(
+				_('IP address %s is allowed to access NinjaFirewall\'s log on this server.'),
+				htmlspecialchars( $match[1])
+			);
 
 		} else {
-			$err_msg = sprintf( $lang['invalid_ip'], '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=36&token='. $_REQUEST['token'] .'#clogs">', '</a>');
-
+			$err_msg = sprintf(
+				_('The whitelisted IP is not valid. Please %scheck your configuration%s.'),
+				'<a href="?mid=36&token='. $_REQUEST['token'] .'#clogs">', '</a>'
+			);
 		}
 	}
 	?>
 	<tr>
-		<td width="45%"><?php echo $lang['centlog'] ?></th>
+		<td width="40%"><?php echo _('Centralized Logging') ?></th>
 		<?php
 		if ( $err_msg ) {
 			?>
-		<td width="10%" align="center"><img src="static/icon_error.png" border="0" width="21" height="21"></td>
-		<td width="45%"><?php printf( $lang['err_centlog'], $err_msg) ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'warning' ) ?></td>
+		<td width="55%"><?php printf( _('Error: %s'), $err_msg) ?></td>
 	</tr>
 		<?php
 		$err_msg = '';
 	} else {
 		?>
-			<td width="10%">&nbsp;</td>
-			<td width="45%"><a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=36&token=<?php echo $_REQUEST['token'] ?>#clogs"><?php echo $lang['enabled']; echo "</a>. $ok_msg"; ?></td>
+			<td width="5%">&nbsp;</td>
+			<td width="55%"><a href="?mid=36&token=<?php echo $_REQUEST['token'] ?>#clogs"><?php echo _('Enabled'); echo "</a>. $ok_msg"; ?></td>
 		</tr>
 	<?php
 	}
 }
 
-
-// Is debug mode on ?
+// Is debug mode on?
 if ( $nfw_options['debug'] ) {
 	?>
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['debugging'] ?></td>
-		<td width="10%" align="center">
-			<img src="static/icon_warn.png" border="0" width="21" height="21">
-		</td>
-		<td width="45%">
-			<?php printf( $lang['debug_warn'], '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=30&token='.$_REQUEST['token'].'">') ?>
+		<td width="40%"><?php echo _('Debugging') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'warning' ) ?></td>
+		<td width="55%">
+			<?php printf(
+				_('NinjaFirewall is running in <i>Debug Mode</i>, do not forget to <a href="%s">disable it</a> before going live.'),
+				 '?mid=30&token='.$_REQUEST['token']
+			) ?>
 		</td>
 	</tr>
 	<?php
 }
-// Is logging on ?
+// Is logging on?
 if (! $nfw_options['logging'] ) {
 	?>
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['logging'] ?></td>
-		<td width="10%" align="center">
-			<img src="static/icon_warn.png" border="0" width="21" height="21">
-		</td>
-		<td width="45%">
-			<?php printf( $lang['logging_warn'], '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=36&token='.$_REQUEST['token'].'">') ?>
+		<td width="40%"><?php echo _('Firewall Log') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'warning' ) ?></td>
+		<td width="55%">
+			<?php printf(
+				_('The log is disabled.') .' <a href="%s">'. _('Click here to re-enable it') .'</a>.',
+				"?mid=36&token={$_REQUEST['token']}"
+			) ?>
 		</td>
 	</tr>
 	<?php
 }
 
+$IPlink = "?mid=32&token={$_REQUEST['token']}#source-ip";
 
-if ( NFW_EDN == 2 ) {
-	// Pro+ edn :
-	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="?mid=32&token=' . $_REQUEST['token'] . '">';
-} else {
-	// Pro edn :
-	$IPlink = '<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja">';
-}
-
-// Check IP and warn if localhost or private IP :
-if (! filter_var(NFW_REMOTE_ADDR, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) ) {
+// Check IP and warn if localhost or private IP:
+if (! filter_var( NFW_REMOTE_ADDR, FILTER_VALIDATE_IP,
+	FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) ) {
 	?>
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['source_ip'] ?></td>
-		<td width="10%" align="center">
-			<img src="static/icon_warn.png" border="0" width="21" height="21">
-		</td>
-		<td width="45%"><?php echo $lang['lo_warn'] . ' ' . htmlspecialchars(NFW_REMOTE_ADDR) . '<br />' ?>
-		<?php printf($lang['lo_check'], $IPlink) ?>
+		<td width="40%"><?php echo _('Source IP') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'warning' ) ?></td>
+		<td width="55%"><?php
+			echo sprintf( _('You have a private IP: %s'), htmlspecialchars(NFW_REMOTE_ADDR) ) .'<br />'.
+			sprintf( _('If your site is behind a reverse proxy or a load balancer, ' .
+				'ensure that the <a href="%s">Source IP</a> is setup accordingly.'),
+				$IPlink
+			) ?>
 		</td>
 	</tr>
 	<?php
 }
 
 // Look for CDN's (Incapsula/Cloudflare) and warn the user about using
-// the correct IPs, unless it was added to the access control list :
-if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) ) {
+// the correct IPs, unless it was added to the access control list:
+if (! empty( $_SERVER["HTTP_CF_CONNECTING_IP"] ) ) {
 	if ( NFW_REMOTE_ADDR != $_SERVER["HTTP_CF_CONNECTING_IP"] ) {
 		// CloudFlare :
 		?>
 		<tr valign="middle">
-			<td width="45%"><?php echo $lang['cdn_title'] ?></td>
-			<td width="10%" align="center">
-				<img src="static/icon_warn.png" border="0" height="21" width="21">
-			</td>
-			<td width="45%">
+			<td width="40%"><?php echo _('CDN detection') ?></td>
+			<td width="5%" align="center"><?php echo glyphicon( 'warning' ) ?></td>
+			<td width="55%">
 				<?php
-				if ( NFW_EDN == 1 ){
-					printf($lang['cdn_clouflare_free'], $IPlink);
+				if ( NFW_EDN == 1 ) {
+					echo sprintf( _('%s detected: you seem to be using %s CDN services.'), 'HTTP_CF_CONNECTING_IP', 'Cloudflare') .' '.
+					sprintf( _('Ensure that you have setup your HTTP server or PHP to forward the correct visitor IP, otherwise use the <a href="%s">.htninja configuration file</a>.'), $IPlink );
 				} else {
-					printf($lang['cdn_clouflare_pro'], $IPlink);
+					echo sprintf( _('%s detected: you seem to be using %s CDN services.'), 'HTTP_CF_CONNECTING_IP', 'Cloudflare') .' '.
+					sprintf( _('Ensure that the <a href="%s">Source IP</a> is setup accordingly.'), $IPlink );
 				}
 				?>
 			</td>
@@ -258,21 +283,21 @@ if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) ) {
 		<?php
 	}
 }
-if (! empty($_SERVER["HTTP_INCAP_CLIENT_IP"]) ) {
+if (! empty( $_SERVER["HTTP_INCAP_CLIENT_IP"] ) ) {
 	if ( NFW_REMOTE_ADDR != $_SERVER["HTTP_INCAP_CLIENT_IP"] ) {
 		// Incapsula :
 		?>
 		<tr valign="middle">
-			<td width="45%"><?php echo $lang['cdn_title'] ?></td>
-			<td width="10%" align="center">
-				<img src="static/icon_warn.png" border="0" height="21" width="21">
-			</td>
-			<td width="45%">
+			<td width="40%"><?php echo _('CDN detection') ?></td>
+			<td width="5%" align="center"><?php echo glyphicon( 'warning' ) ?></td>
+			<td width="55%">
 				<?php
-				if ( NFW_EDN == 1 ){
-					printf($lang['cdn_incapsula_free'], $IPlink);
+				if ( NFW_EDN == 1 ) {
+					echo sprintf( _('%s detected: you seem to be using %s CDN services.'), 'HTTP_INCAP_CLIENT_IP', 'Incapsula') .' '.
+					sprintf( _('Ensure that you have setup your HTTP server or PHP to forward the correct visitor IP, otherwise use the <a href="%s">.htninja configuration file</a>.'), $IPlink );
 				} else {
-					printf($lang['cdn_incapsula_pro'], $IPlink);
+					echo sprintf( _('%s detected: you seem to be using %s CDN services.'), 'HTTP_INCAP_CLIENT_IP', 'Incapsula') .' '.
+					sprintf( _('Ensure that the <a href="%s">Source IP</a> is setup accordingly.'), $IPlink );
 				}
 				?>
 			</td>
@@ -281,80 +306,119 @@ if (! empty($_SERVER["HTTP_INCAP_CLIENT_IP"]) ) {
 	}
 }
 
-// Check if the ./nfwlog/ directory is writable :
-if (! is_writable('./nfwlog') ) {
+// Check if the ./nfwlog/ directory is writable:
+if (! is_writable( './nfwlog' ) ) {
 	?>
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['log_dir'] ?></td>
-		<td width="10%" align="center"><img src="static/icon_error.png" border="0" width="21" height="21"></td>
-		<td width="45%"><?php printf( $lang['dir_readonly'], '/nfwlog/') ?>&nbsp;! <?php echo $lang['chmod777'] ?></td>
-	</tr>
-	<?php
-}
-// Check if the ./nfwlog/cache/ directory is writable :
-if (! is_writable('./nfwlog/cache/') ) {
-	?>
-	<tr valign="middle">
-		<td width="45%"><?php echo $lang['cache_dir'] ?></td>
-		<td width="10%" align="center"><img src="static/icon_error.png" border="0" width="21" height="21"></td>
-		<td width="45%"><?php printf( $lang['dir_readonly'], '/nfwlog/cache/') ?>&nbsp;! <?php echo $lang['chmod777'] ?></td>
+		<td width="40%"><?php echo _('Log Directory') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'error' ) ?></span></td>
+		<td width="55%"><?php
+			printf( _('Warning, the "%s" directory is not writable, please chmod it to 0777 or equivalent.'), '/nfwlog/' );
+		?></td>
 	</tr>
 	<?php
 }
 
-// Check if the ./conf/ directory is writable :
-if (! is_writable('./conf') ) {
+// Check if the ./nfwlog/cache/ directory is writable:
+if (! is_writable( './nfwlog/cache/' ) ) {
 	?>
 	<tr valign="middle">
-		<td width="45%"><?php echo $lang['conf_dir'] ?></td>
-		<td width="10%" align="center"><img src="static/icon_error.png" border="0" width="21" height="21"></td>
-		<td width="45%"><?php printf( $lang['dir_readonly'], '/conf/') ?>&nbsp;! <?php echo $lang['chmod777'] ?></td>
+		<td width="40%"><?php echo _('Cache Directory') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'error' ) ?></td>
+		<td width="55%"><?php
+			printf( _('Warning, the "%s" directory is not writable, please chmod it to 0777 or equivalent.'), '/nfwlog/cache/' );
+		?></td>
+	</tr>
+	<?php
+}
+
+// Check if the ./conf/ directory is writable:
+if (! is_writable( './conf' ) ) {
+	?>
+	<tr valign="middle">
+		<td width="40%"><?php echo _('Configuration Directory') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'error' ) ?></td>
+		<td width="55%"><?php
+			printf( _('Warning, the "%s" directory is not writable, please chmod it to 0777 or equivalent.'), '/conf/' );
+		?></td>
 	</tr>
 	<?php
 }
 // Optional NinjaFirewall .htninja configuration file
 // ( see https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja ) :
-$doc_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
-if ( @file_exists( $file = dirname($doc_root ) . '/.htninja') ||
+$doc_root = rtrim( $_SERVER['DOCUMENT_ROOT'], '/' );
+if ( @file_exists( $file = dirname( $doc_root ) . '/.htninja') ||
 		@file_exists( $file = $doc_root . '/.htninja') ) {
 	?>
 	<tr>
-		<td width="45%"><?php echo $lang['htninja'] ?></td>
-		<td width="10%" align="center">&nbsp;</td>
+		<td width="40%"><?php echo _('Optional configuration file') ?></td>
+		<td width="5%" align="center">&nbsp;</td>
 		<td><code><?php echo htmlspecialchars( $file ) ?></code></td>
 	</tr>
 	<?php
 }
 
-// Check admin log :
-if ( file_exists('./nfwlog/admin.php') ) {
+// Check if admin is whitelisted:
+if (! empty( $nfw_options['admin_wl'] ) && ! empty( $_COOKIE['ninjadmin'] ) &&
+	! empty( $nfw_options['admin_wl_session'] ) ) {
+
+	if ( sha1( $_COOKIE['ninjadmin'] . $nfw_options['admin_pass'] ) === $nfw_options['admin_wl_session'] ) {
+		$whitelisted = _('You are whitelisted.');
+	}
+}
+if ( empty( $whitelisted ) ) {
+	?>
+	<tr valign="middle">
+		<td width="40%"><?php echo _('Administrator') ?></td>
+		<td width="5%" align="center"><?php echo glyphicon( 'warning' ) ?></td>
+		<td width="55%"><a href="?mid=32&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('You are not whitelisted.') ?></a></td>
+	</tr>
+	<?php
+} else {
+	?>
+	<tr valign="middle">
+		<td width="40%"><?php echo _('Administrator') ?></td>
+		<td width="5%" align="center">&nbsp;</td>
+		<td width="55%"><a href="?mid=32&token=<?php echo $_REQUEST['token'] ?>"><?php echo $whitelisted ?></a></td>
+	</tr>
+	<?php
+}
+
+// Check admin log:
+if ( file_exists( './nfwlog/admin.php' ) ) {
 	$nfw_stat = file( './nfwlog/admin.php', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
-	// Skip the last line, it is us :
-	array_pop($nfw_stat);
-	while ($nfw_stat) {
+
+	// Skip the last line, it is us, unless there is only one connection:
+	if ( count( $nfw_stat ) > 1 ) {
+		array_pop( $nfw_stat );
+	}
+	while ( $nfw_stat ) {
 		// Get last connection :
-		$line = array_pop($nfw_stat);
+		$line = array_pop( $nfw_stat );
 		if ( preg_match('/^\[([^\s]+)\s+([^\s]+).+?\]\s+\[(.+?)\]\s+\[(.+?)\]\s+\[OK/', $line, $match) ) {
 			break;
 		}
 	}
-	if (! empty($match[1]) ) {
+	if (! empty( $match[1] ) ) {
 		?>
 		<tr valign="middle">
-			<td width="45%"><?php echo $lang['last_login'] ?></td>
-			<td width="10%" align="center">&nbsp;</td>
-			<td width="45%"><a class="links" style="border-bottom:1px dotted #FFCC25;" href="javascript:popup('?mid=90&token=<?php echo $_REQUEST['token'] ?>',640,480,0)"><?php echo htmlspecialchars($match[3]) . ' (' . htmlspecialchars($match[4]) . ')</a> ' . str_replace('/', '-', $match[1]) . ' @ '. $match[2] ?></td>
+			<td width="40%"><?php echo _('Last login') ?></td>
+			<td width="5%" align="center">&nbsp;</td>
+			<td width="55%"><a href="javascript:popup('?mid=90&token=<?php
+				echo $_REQUEST['token'] ?>',640,480,0)" title="<?php echo _('Click to view the connection log.') ?>"><?php
+				echo htmlspecialchars( $match[3] ) .' ('. htmlspecialchars( $match[4] ) .')</a> ~ '.
+				str_replace( '/', '-', $match[1] ) .' @ '. $match[2] ?></td>
 		</tr>
 		<?php
 	}
 }
-
 ?>
 	</table>
-</fieldset>
+</div>
 <?php
 
 html_footer();
 
-/* ------------------------------------------------------------------ */
+// ---------------------------------------------------------------------
 // EOF
+

@@ -1,75 +1,88 @@
 <?php
-/*
- +---------------------------------------------------------------------+
- | NinjaFirewall (Pro edition)                                         |
- |                                                                     |
- | (c) NinTechNet - https://nintechnet.com/                            |
- |                                                                     |
- +---------------------------------------------------------------------+
- | This program is free software: you can redistribute it and/or       |
- | modify it under the terms of the GNU General Public License as      |
- | published by the Free Software Foundation, either version 3 of      |
- | the License, or (at your option) any later version.                 |
- |                                                                     |
- | This program is distributed in the hope that it will be useful,     |
- | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
- | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
- | GNU General Public License for more details.                        |
- +---------------------------------------------------------------------+
-*/
+// +-------------------------------------------------------------------+
+// | NinjaFirewall (Pro Edition)                                       |
+// |                                                                   |
+// | (c) NinTechNet - https://nintechnet.com/                          |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+// | This program is free software: you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation, either version 3 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// +-------------------------------------------------------------------+
+
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
-// Load current language file :
-require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
-
 html_header();
+?>
+<div class="col-sm-12 text-left">
+	<h3><?php echo _('Firewall > Rules Editor') ?></h3>
+	<br />
+<?php
 
 // Saved options ?
 if (! empty($_POST) ) {
-	$err_msg = $is_update = $ok_msg = '';
-	if ( isset($_POST['sel_e_r']) ) {
+	$err_msg = ''; $is_update = ''; $ok_msg = '';
+	if ( isset( $_POST['sel_e_r'] ) ) {
 		if ( $_POST['sel_e_r'] < 1 ) {
-			$err_msg = $lang['select_disable'];
-		} else if ( ( $_POST['sel_e_r'] == 2 ) || ( $_POST['sel_e_r'] > 499 ) && ( $_POST['sel_e_r'] < 600 ) ) {
-			$err_msg = $lang['policy_rule'];
+			$err_msg = _('You did not select a rule.');
+		} else if ( $_POST['sel_e_r'] == 2 || $_POST['sel_e_r'] > 499 && $_POST['sel_e_r'] < 600 ) {
+			$err_msg = _('To change this rule, use the "Firewall Policies" menu.');
 		} else if (! isset( $nfw_rules[$_POST['sel_e_r']] ) ) {
-			$err_msg = $lang['no_exist'];
+			$err_msg = _('This rule does not exist.');
 		} else {
 			$nfw_rules[$_POST['sel_e_r']]['ena'] = 0;
 			$is_update = 1;
-			$ok_msg = sprintf($lang['ok_disabled'], htmlspecialchars($_POST['sel_e_r']));
+			$ok_msg = sprintf( _('Rule #%s has been disabled'), (int) $_POST['sel_e_r'] );
 		}
-	} else if ( isset($_POST['sel_d_r']) ) {
+	} else if ( isset( $_POST['sel_d_r'] ) ) {
 		if ( $_POST['sel_d_r'] < 1 ) {
-			$err_msg = $lang['select_enable'];
-		} else if ( ( $_POST['sel_d_r'] == 2 ) || ( $_POST['sel_d_r'] > 499 ) && ( $_POST['sel_d_r'] < 600 ) ) {
-			$err_msg = $lang['policy_rule'];
+			$err_msg = _('You did not select a rule.');
+		} else if ( $_POST['sel_d_r'] == 2 || $_POST['sel_d_r'] > 499 && $_POST['sel_d_r'] < 600 ) {
+			$err_msg = _('To change this rule, use the "Firewall Policies" menu.');
 		} else if (! isset( $nfw_rules[$_POST['sel_d_r']] ) ) {
-			$err_msg = $lang['no_exist'];
+			$err_msg = _('This rule does not exist.');
 		} else {
 			$nfw_rules[$_POST['sel_d_r']]['ena'] = 1;
 			$is_update = 1;
-			$ok_msg = sprintf($lang['ok_enabled'], htmlspecialchars($_POST['sel_d_r']));
+			$ok_msg = sprintf( _('Rule #%s has been enabled'), (int) $_POST['sel_d_r'] );
 		}
 	}
    if ( $is_update ) {
 		$err_msg = save_firewall_rules_editor();
 	}
 	if ($err_msg) {
-      echo '<br /><div class="error"><p>' . $err_msg .'</p></div>';
+      echo '<div class="alert alert-danger text-left"><a class="close" '.
+		'data-dismiss="alert" aria-label="close">&times;</a>'. $err_msg .'</div>';
    } else {
-      echo '<br /><div class="success"><p>'. $ok_msg . '</p></div>';
+      echo '<div class="alert alert-success text-left"><a class="close" data-dismiss="alert"'.
+		' aria-label="close">&times;</a>'. $ok_msg . '</div>';
    }
 }
 
-$disabled_rules = $enabled_rules = array();
+$disabled_rules = array();
+$enabled_rules = array();
 
 if ( empty( $nfw_rules ) ) {
-	echo '<br /><div class="error"><p>' . $lang['no_rules'] .'</p></div>';
+	echo '<div class="alert alert-danger text-left">'.
+		_('Fatal error: No rules found. Reinstall NinjaFirewall to solve the problem.') .
+		'</div>';
+	echo '</div>';
 	html_footer();
 }
 
 foreach ( $nfw_rules as $rule_key => $rule_value ) {
+
+	// Ingore firewall policies:
+	if ( $rule_key == 2 || $rule_key > 499 && $rule_key < 600 ) {
+		continue;
+	}
+
 	if (! empty( $nfw_rules[$rule_key]['ena'] ) ) {
 		$enabled_rules[] =  $rule_key;
 	} else {
@@ -77,115 +90,98 @@ foreach ( $nfw_rules as $rule_key => $rule_value ) {
 	}
 }
 ?>
-<br />
-	<fieldset><legend>&nbsp;<b><?php echo $lang['ruleseditor'] ?></b>&nbsp;</legend>
-		<table width="100%" class="smallblack" border="0" cellpadding="5" cellspacing="0">
-			<tr>
-				<td width="55%" align="left"><?php echo $lang['select'] ?></td>
-				<td width="45%">
-					<form method="post">
-						<select name="sel_e_r" class="input" style="width:180px;">
-						<option value="0"><?php echo $lang['enabled'] . ' ' . count( $enabled_rules ) ?></option>
-						<?php
-						sort($enabled_rules);
-						$count = 0;
-						$desr = '';
-						foreach ( $enabled_rules as $key ) {
-							// grey-out those ones, they can be changed in the Firewall Policies section:
-							if ( ( $key == 2 ) || ( $key > 499 ) && ( $key < 600 ) ) {
-								echo '<option value="0" disabled="disabled">' . $lang['rule'] . htmlspecialchars($key) . ' Firewall policy</option>';
-							} else {
-								if ( $key < 100 ) {
-									$desc = ' Remote/local file inclusion';
-								} elseif ( $key < 150 ) {
-									$desc = ' Cross-site scripting';
-								} elseif ( $key < 200 ) {
-									$desc = ' Code injection';
-								} elseif (  $key > 249 && $key < 300 ) {
-									$desc = ' SQL injection';
-								} elseif ( $key < 350 ) {
-									$desc = ' Various vulnerability';
-								} elseif ( $key < 400 ) {
-									$desc = ' Backdoor/shell';
-								} elseif ( $key > 999 && $key < 1300 ) {
-									$desc = ' Application specific';
-								}
-								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
-								++$count;
-							}
+	<table width="100%" class="table table-nf">
+		<tr>
+			<td width="40%" align="left"><?php echo _('Select the rule you want to enable or disable') ?></td>
+			<td width="5%" align="center">&nbsp;</td>
+			<td width="55%" align="left">
+				<form method="post">
+					<select name="sel_e_r" class="form-control">
+					<option value="0"><?php echo _('Enabled rules:') . ' ' . count( $enabled_rules ) ?></option>
+					<?php
+					sort($enabled_rules);
+					$count = 0;
+					$desr = '';
+					foreach ( $enabled_rules as $key ) {
+						if ( $key < 100 ) {
+							$desc = ' '. _('Remote/local file inclusion');
+						} elseif ( $key < 150 ) {
+							$desc = ' '. _('Cross-site scripting');
+						} elseif ( $key < 200 ) {
+							$desc = ' '. _('Code injection');
+						} elseif (  $key > 249 && $key < 300 ) {
+							$desc = ' '. _('SQL injection');
+						} elseif ( $key < 350 ) {
+							$desc = ' '. _('Various vulnerability');
+						} elseif ( $key < 400 ) {
+							$desc = ' '. _('Backdoor/shell');
+						} elseif ( $key > 999 && $key < 1300 ) {
+							$desc = ' '. _('Application specific');
 						}
-						?>
-						</select>&nbsp;&nbsp;<input class="button" style="width:100px;" type="submit" value="<?php echo $lang['disable_it'] ?>"<?php disabled( $count, 0) ?>>
-					</form>
+						echo '<option value="' . htmlspecialchars( $key ) . '">' . _('Rule #') . htmlspecialchars( $key ) . $desc . '</option>';
+						++$count;
+					}
+					?>
+					</select>
 					<br />
-					<br />
-					<form method="post">
-						<select name="sel_d_r" class="input" style="width:180px;">
-						<option value="0"><?php echo $lang['disabled'] . ' ' . count( $disabled_rules ) ?></option>
-						<?php
-						$count = 0;
-						sort($disabled_rules);
-						foreach ( $disabled_rules as $key ) {
-							// grey-out those ones, they can be changed in the Firewall Policies section:
-							if ( ( $key == 2 ) || ( $key > 499 ) && ( $key < 600 ) ) {
-								echo '<option value="0" disabled="disabled">' . $lang['rule'] . htmlspecialchars($key) . ' Firewall policy</option>';
-							} else {
-								if ( $key < 100 ) {
-									$desc = ' Remote/local file inclusion';
-								} elseif ( $key < 150 ) {
-									$desc = ' Cross-site scripting';
-								} elseif ( $key < 200 ) {
-									$desc = ' Code injection';
-								} elseif (  $key > 249 && $key < 300 ) {
-									$desc = ' SQL injection';
-								} elseif ( $key < 350 ) {
-									$desc = ' Various vulnerability';
-								} elseif ( $key < 400 ) {
-									$desc = ' Backdoor/shell';
-								} elseif ( $key > 999 && $key < 1300 ) {
-									$desc = ' Application specific';
-								}
-								echo '<option value="' . htmlspecialchars($key) . '">' . $lang['rule'] . htmlspecialchars($key) . $desc . '</option>';
-								++$count;
+					<input class="btn btn-sm btn-success btn-35" type="submit" value="<?php echo _('Disable it') ?>"<?php disabled( $count, 0) ?>>
+				</form>
+
+				<br />
+				<br />
+
+				<form method="post">
+					<select name="sel_d_r" class="form-control">
+					<option value="0"><?php echo _('Disabled rules:') . ' ' . count( $disabled_rules ) ?></option>
+					<?php
+					$count = 0;
+					sort($disabled_rules);
+					foreach ( $disabled_rules as $key ) {
+						if ( $key < 100 ) {
+								$desc = ' '. _('Remote/local file inclusion');
+							} elseif ( $key < 150 ) {
+								$desc = ' '. _('Cross-site scripting');
+							} elseif ( $key < 200 ) {
+								$desc = ' '. _('Code injection');
+							} elseif (  $key > 249 && $key < 300 ) {
+								$desc = ' '. _('SQL injection');
+							} elseif ( $key < 350 ) {
+								$desc = ' '. _('Various vulnerability');
+							} elseif ( $key < 400 ) {
+								$desc = ' '. _('Backdoor/shell');
+							} elseif ( $key > 999 && $key < 1300 ) {
+								$desc = ' '. _('Application specific');
 							}
+							echo '<option value="' . htmlspecialchars( $key ) . '">' . _('Rule #') . htmlspecialchars( $key ) . $desc . '</option>';
+							++$count;
 						}
-						?>
-						</select>&nbsp;&nbsp;<input class="button" style="width:100px;" type="submit" value="<?php echo $lang['enable_it'] ?>"<?php disabled( $count, 0) ?>>
-					</form>
-					<br /><i class="tinyblack"><?php echo $lang['greyed_out'] ?></i>
-				</td>
-			</tr>
-		</table>
-	</fieldset>
-
-	<br />
-	<br />
-
+					?>
+					</select>
+					<br />
+					<input class="btn btn-sm btn-success btn-35" type="submit" value="<?php echo _('Enable it') ?>"<?php disabled( $count, 0) ?>>
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>
 <?php
 
 html_footer();
 
-/* ------------------------------------------------------------------ */
+// ---------------------------------------------------------------------
 
 function save_firewall_rules_editor() {
 
-	global $lang;
 	global $nfw_rules;
 
-	// Config file must be writable :
-	if (! is_writable('./conf/rules.php') ) {
-		return $lang['error_rules' ];
+	// Save rules:
+	$res = save_config( $nfw_rules, 'rules' );
+	if (! empty( $res ) ) {
+		return $res;
 	}
-
-	// Save changes :
-	if (! $fh = fopen('./conf/rules.php', 'w') ) {
-		return $lang['error_rules' ];
-	}
-	fwrite($fh, '<?php' . "\n\$nfw_rules = <<<'EOT'\n" . serialize( $nfw_rules ) . "\nEOT;\n" );
-	fclose($fh);
 
 	return;
 }
 
-/* ------------------------------------------------------------------ */
+// ---------------------------------------------------------------------
 // EOF

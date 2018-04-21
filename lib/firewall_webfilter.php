@@ -1,53 +1,57 @@
 <?php
-/*
- +---------------------------------------------------------------------+
- | NinjaFirewall (Pro edition)                                         |
- |                                                                     |
- | (c) NinTechNet - https://nintechnet.com/                            |
- |                                                                     |
- +---------------------------------------------------------------------+
- | This program is free software: you can redistribute it and/or       |
- | modify it under the terms of the GNU General Public License as      |
- | published by the Free Software Foundation, either version 3 of      |
- | the License, or (at your option) any later version.                 |
- |                                                                     |
- | This program is distributed in the hope that it will be useful,     |
- | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
- | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
- | GNU General Public License for more details.                        |
- +---------------------------------------------------------------------+
-*/
+// +-------------------------------------------------------------------+
+// | NinjaFirewall (Pro Edition)                                       |
+// |                                                                   |
+// | (c) NinTechNet - https://nintechnet.com/                          |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+// | This program is free software: you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation, either version 3 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// +-------------------------------------------------------------------+
+
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
-// Load current language file :
-require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
-
 html_header();
-echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>).</p></div>';
+
 ?>
+<div class="col-sm-12 text-left">
+	<h3><?php echo _('Monitoring > Web Filter') ?></h3>
+	<br />
+	<div class="alert alert-warning text-left"><?php
+		printf(
+			_('This feature is only available in the <a href="%s">Pro+ Edition</a> of NinjaFirewall.'),
+			'https://nintechnet.com/ninjafirewall/pro-edition/'
+		);
+	?></div>
 
-<br />
-	<fieldset><legend>&nbsp;<b><?php echo $lang['wf'] ?></b>&nbsp;</legend>
-		<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
-			<tr>
-				<td width="55%" align="left"><?php echo $lang['enable_wf'] ?></td>
-				<td width="45%">
-					<p><label><input type="radio" disabled="disabled" />&nbsp;<?php echo $lang['yes'] ?></label></p>
-					<p><label><input type="radio" disabled="disabled" checked="checked"/>&nbsp;<?php echo $lang['no']. $lang['default'] ?></label></p>
-				</td>
-			</tr>
-		</table>
+	<table width="100%" class="table table-nf">
+		<tr>
+			<td width="45%" align="left"><?php echo _('Enable Web Filter') ?></td>
+			<td width="55%">
+				<p><label><input type="radio" checked disabled />&nbsp;<?php echo _('Yes') ?></label></p>
+				<p><label><input type="radio" disabled />&nbsp;<?php echo _('No') .' '. _('(default)') ?></label></p>
+			</td>
+		</tr>
+	</table>
 
-		<table border="0" width="100%" class="smallblack" cellpadding="10" cellspacing="0">
+	<div id="wf_table" style="border:1px #ddd solid;">
+		<table width="100%" class="table table-borderless">
 			<tr>
-				<td width="28%" align="left" class="dotted"><?php echo $lang['keywords'] ?></td>
-				<td width="28%" align="center" class="dotted">
-					<input type="text" maxlength="150" disabled="disabled" style="width:200px;" placeholder="<?php echo $lang['eg'] ?> &lt;iframe" class="input" />
+				<td width="35%" align="center">
+					<?php echo _('Search HTML page for:') ?>
 					<br />
-					<i><?php echo $lang['minmax_char'] ?></i>
-					<br /><br />
-					<select name="wf_strings" style="width:200px" class="input">
-						<option value=""><?php echo $lang['suggested'] ?></option>
+					<input type="text" disabled placeholder="<?php echo _('e.g.') ?> &lt;iframe" class="form-control" />
+					<p><i><?php echo _('Min. 4, max. 150 characters.') ?></i></p>
+					<br />
+					<select class="form-control">
+						<option value=""><?php echo _('Suggested keywords...') ?></option>
 						<optgroup label="=== HTML / CSS"></optgroup>
 						<option value="<iframe" title="<iframe">&lt;iframe</option>
 						<option value="display:none" title="display:none">display:none</option>
@@ -57,15 +61,15 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 						<option value="multipart/form-data" title="multipart/form-data">multipart/form-data</option>
 						<optgroup label="=== JAVASCRIPT"></optgroup>
 						<?php
-						echo '
+						echo ';
 						<option value="%u'.'00" title="%u'.'00">%u'.'00</option>
 						<option value="\u'.'00" title="\u'.'00">\u'.'00</option>
 						<option value=".appendChild" title=".appendChild">.appendChild</option>
-						<option value="Active'.'XObject" title="ActiveXObject">Active'.'XObject</option>
+						<option value="Activ'.'eXObject" title="Active'.'XObject">Active'.'XObject</option>
 						<option value="encodeURIComponent" title="encodeURIComponent">encodeURIComponent</option>
-						<option value="ev'.'al(" title="eval(">ev'.'al(</option>
+						<option value="ev'.'al(" title="ev'.'al(">e'.'val(</option>
 						<option value=".replace" title=".replace">.replace</option>
-						<option value="unescape" title="unescape">unescape</option>
+						<option value="une'.'scape" title="unes'.'cape">unes'.'cape</option>
 						';
 						?>
 						<optgroup label="=== ERRORS"></optgroup>
@@ -74,82 +78,78 @@ echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" 
 						<option value="<title>404 Not Found" title="<title>404 Not Found">&lt;title>404 Not Found</option>
 						<option value="You have an error in your SQL syntax" title="You have an error in your SQL syntax">You have an error in your SQL syntax</option>
 						<optgroup label="=== SHELL SCRIPTS"></optgroup>
-						<option value="<?php echo $_SERVER["DOCUMENT_ROOT"] ?>" title="<?php echo $_SERVER["DOCUMENT_ROOT"] ?>"><?php echo $_SERVER["DOCUMENT_ROOT"] ?></option>
+						<option value="<?php echo htmlspecialchars( $_SERVER["DOCUMENT_ROOT"] ) ?>" title="<?php echo htmlspecialchars( $_SERVER["DOCUMENT_ROOT"] ) ?>"><?php echo htmlspecialchars( $_SERVER["DOCUMENT_ROOT"] ) ?></option>
 						<?php
 						echo '
-						<option value="Hacke'.'d by" title="Hack'.'ed by">Hac'.'ked by</option>
-						<option value="<title>php'.'info()" title="<title>php'.'info()">&lt;title>php'.'info()</option>
+						<option value="Hacked by" title="Hacked by">Hacked by</option>
+						<option value="<title>ph'.'pinfo()" title="<title>php'.'info()">&lt;title>ph'.'pinfo()</option>
 						<option value="Directory List" title="Directory List">Directory List</option>
 						<option value="FTP brute" title="FTP brute">FTP brute</option>
 						<option value="Run command" title="Run command">Run command</option>
 						<option value="Dump database" title="Dump database">Dump database</option>
-						<option value="File'.'sMan" title="File'.'sMan">File'.'sMan</option>
+						<option value="Files'.'Man" title="File'.'sMan">Files'.'Man</option>
 						<option value="Self remove" title="Self remove">Self remove</option>
-						<option value="unam'.'e -a" title="un'.'ame -a">una'.'me -a</option>
-						<option value="c99m'.'adshell" title="c99m'.'adshell">c99m'.'adshell</option>
+						<option value="un'.'ame -a" title="un'.'ame -a">un'.'ame -a</option>
+						<option value="c99m'.'adshell" title="c99'.'madshell">c99m'.'adshell</option>
 						<option value="r57s'.'hell" title="r57s'.'hell">r57s'.'hell</option>
-						<option value="c99s'.'hell" title="c99'.'shell">c99s'.'hell</option>
-						<option value="Open_b'.'asedir" title="Open_ba'.'sedir">Open_b'.'asedir</option>
-						<option value="phpMin'.'iAdmin" title="phpMi'.'niAdmin">phpMin'.'iAdmin</option>
-						<option value="<title>Login - A'.'dminer" title="<title>Login - A'.'dminer">&lt;title>Login - Adminer</option>
+						<option value="c99s'.'hell" title="c99s'.'hell">c99s'.'hell</option>
+						<option value="Open_ba'.'sedir" title="Open_'.'basedir">Open_b'.'asedir</option>
+						<option value="phpMi'.'niAdmin" title="phpMi'.'niAdmin">phpM'.'iniAdmin</option>
+						<option value="<title>Login - Adm'.'iner" title="<title>Login - Ad'.'miner">&lt;title>Login - Ad'.'miner</option>
 						';
 						?>
 					</select>
-					<br />
-					<br />
-					<div style="text-align:left;">
-						<label><input type="radio" disabled="disabled" checked="checked" />&nbsp;<?php echo $lang['case_sensit'] .  $lang['default'] ?></label>
-						<br />
-						<label><input type="radio" disabled="disabled" />&nbsp;<?php echo $lang['case_insensit'] ?></label>
-					</div>
 				</td>
-				<td width="14%" align="center" class="dotted">
-					<input type="button" style="width:100px" disabled="disabled" class="button" value="<?php echo $lang['add'] ?> &#187;" />
+
+				<td width="30%" align="center"><br />
+					<input type="button" style="width:150px" class="btn btn-md btn-default btn-25" value="<?php echo _('Add') ?> &#187;" disabled />
 					<br /><br />
-					<input type="button" style="width:100px" disabled="disabled" class="button" value="&#171; <?php echo $lang['remove'] ?>" />
+					<input type="button" style="width:150px" class="btn btn-md btn-default btn-25" value="&#171; <?php echo _('Remove') ?>" disabled />
+					<br />
+					<br />
+					<br />
+					<p><label><input type="radio" disabled checked />&nbsp;<?php echo _('Case-sensitive') .' '. _('(default)') ?></label></p>
+					<p><label><input type="radio" disabled />&nbsp;<?php echo _('Case-insensitive') ?></label></p>
 				</td>
-				<td width="30%" align="center" class="dotted">
-				<?php echo $lang['keywords_search'] ?>
+				<td width="35%" align="center">
+				<?php echo _('Keywords to search:') ?>
 				<br />
-				<select multiple="multiple" size="8" style="width:220px;height:200px;"></select>
+				<select multiple="multiple" class="form-control" disabled style="height:200px;">
+				</select>
 				</td>
 			</tr>
 		</table>
-		<br />
-		<table border="0" width="100%" cellpadding="10" cellspacing="0" class="smallblack">
+
+		<table width="100%" class="table table-borderless">
 			<tr>
-				<td align="left" width="28%" class="dotted"><?php echo $lang['email_alert'] ?></td>
-				<td align="left" width="72%" class="dotted"><br />
-				<?php echo $lang['max_email_1'] ?><select class="input">
-					<option><?php echo $lang['5_minute'] ?></option>
-					<option><?php echo $lang['15_minute'] ?></option>
-					<option><?php echo $lang['30_minute'] ?></option>
-					<option><?php echo $lang['60_minute'] ?></option>
-					<option><?php echo $lang['180_minute'] ?></option>
-					<option><?php echo $lang['360_minute'] ?></option>
-					<option><?php echo $lang['720_minute'] ?></option>
-					<option><?php echo $lang['1440_minute'] ?></option>
-				</select><?php echo $lang['max_email_2'] ?>
+				<td align="left" width="40%"><?php echo _('Email alert') ?></td>
+				<td align="left" width="60%">
+				<?php
+				$select = '<select disabled class="form-control" style="width:150px;display:inline">
+					<option value="30"'. selected($nfw_options['wf_alert'], 30, 1) .'>'. _('30-minute') .'</option>
+				</select>';
+				printf( _('Do not send me more than one email alert in a %s interval.'), $select );
+				?>
 				<br />
-				<i><?php echo $lang['reset_timer'] ?></i>
+				<i><?php echo _('Clicking the "Save Changes" button below will reset the current timer.') ?></i>
 				<br />
 				<br />
-				<label><input type="checkbox" disabled="disabled" checked="checked">&nbsp;<?php echo $lang['email_attach'] . $lang['default'] ?>.</label>
+				<label><input type="checkbox" checked disabled >&nbsp;<?php echo _('Attach the HTML page output to the email alert') .' '. _('(default)') ?></label>
 				</td>
 			</tr>
 		</table>
-	</fieldset>
+	</div>
 
 	<br />
-	<br />
-	<center><input type="button" class="button" disabled="disabled" value="<?php echo $lang['save_conf'] ?>"></center>
 
-	<br />
-	<br />
+	<input type="hidden" name="mid" value="<?php echo $GLOBALS['mid'] ?>">
+	<input type="hidden" name="post" value="1">
+	<center><input type="submit" name="save-changes" disabled class="btn btn-md btn-success btn-25" value="<?php echo _('Save Changes') ?>"></center>
 
+</div>
 <?php
 
 html_footer();
 
-/* ------------------------------------------------------------------ */
+// ---------------------------------------------------------------------
 // EOF

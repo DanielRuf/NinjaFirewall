@@ -1,16 +1,16 @@
 <?php
 
-// +-----------------------------------------------------------------+
-// | NinjaFirewall (Pro edition) optional configuration file         |
+// +=================================================================+
+// | NinjaFirewall (Pro Edition) optional configuration file         |
 // | See:                                                            |
-// | http://nintechnet.com/ninjafirewall/pro-edition/help/?htninja   |
+// | https://nintechnet.com/ninjafirewall/pro-edition/help/?htninja  |
 // |                                                                 |
-// +-----------------------------------------------------------------+
+// +=================================================================+
 
 // Put your PHP code below:
 
 /*
-// -------------------------------------------------------------------
+// ====================================================================
 // Block immediately a POST request if it contains a 'whatever' variable
 // sent to a script named 'script.php' :
 if ( isset($_POST['whatever']) && strpos($_SERVER['SCRIPT_NAME'], 'script.php') !== FALSE ) {
@@ -20,7 +20,7 @@ if ( isset($_POST['whatever']) && strpos($_SERVER['SCRIPT_NAME'], 'script.php') 
 
 
 /*
-// -------------------------------------------------------------------
+// ====================================================================
 // Allow immediately IP 1.2.3.4 :
 if ( $_SERVER["REMOTE_ADDR"] == '1.2.3.4' ) {
    return 'ALLOW';
@@ -29,7 +29,7 @@ if ( $_SERVER["REMOTE_ADDR"] == '1.2.3.4' ) {
 
 
 /*
-// -------------------------------------------------------------------
+// ====================================================================
 // Unset the cookie name 'my_cookie' from all visitors (this will not
 // delete it from the user's browser) :
 if ( isset($_COOKIE['my_cookie']) ) {
@@ -39,7 +39,7 @@ if ( isset($_COOKIE['my_cookie']) ) {
 
 
 /*
-// -------------------------------------------------------------------
+// ====================================================================
 // Users of the CDN service Cloudflare can copy the visitor real IP
 // (HTTP_CF_CONNECTING_IP) into the REMOTE_ADDR
 // **NOTE** : This is for NinjaFirewall Free edition only. If you have
@@ -53,6 +53,6 @@ if (! empty($_SERVER["HTTP_CF_CONNECTING_IP"]) &&
 
 
 
-// do not add anything below this line -------------------------------
+// do not add anything below this line ===============================
 
 

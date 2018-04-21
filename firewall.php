@@ -1,20 +1,20 @@
 <?php
-// +---------------------------------------------------------------------+
-// | NinjaFirewall (Pro edition)                                         |
-// |                                                                     |
-// | (c) NinTechNet - https://nintechnet.com/                            |
-// |                                                                     |
-// +---------------------------------------------------------------------+
-// | This program is free software: you can redistribute it and/or       |
-// | modify it under the terms of the GNU General Public License as      |
-// | published by the Free Software Foundation, either version 3 of      |
-// | the License, or (at your option) any later version.                 |
-// |                                                                     |
-// | This program is distributed in the hope that it will be useful,     |
-// | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
-// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
-// | GNU General Public License for more details.                        |
-// +---------------------------------------------------------------------+
+// +-------------------------------------------------------------------+
+// | NinjaFirewall (Pro Edition)                                       |
+// |                                                                   |
+// | (c) NinTechNet - https://nintechnet.com/                          |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+// | This program is free software: you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation, either version 3 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// +-------------------------------------------------------------------+
 
 if ( strpos($_SERVER['SCRIPT_NAME'], '/nfwlog/') !== FALSE
 	|| $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) { die('Forbidden'); }
@@ -202,7 +202,7 @@ define( 'NFW_STATUS', 22 );
 
 return;
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_check_ip() {
 
@@ -227,7 +227,7 @@ function nfw_check_ip() {
 	}
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 
@@ -322,7 +322,7 @@ function nfw_log($loginfo, $logdata, $loglevel, $ruleid) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 function nfw_anonymize_ip( $ip ) {
 
 	global $nfw_;
@@ -335,7 +335,7 @@ function nfw_anonymize_ip( $ip ) {
 	return $ip;
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_block( $lev ) {
 
@@ -377,7 +377,7 @@ function nfw_block( $lev ) {
 	exit;
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_check_upload() {
 
@@ -470,7 +470,7 @@ function nfw_check_upload() {
 	}
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_fetch_uploads() {
 
@@ -498,7 +498,7 @@ function nfw_fetch_uploads() {
 	return $upload_array;
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_recursive_upload( $data ) {
 
@@ -515,7 +515,7 @@ function nfw_recursive_upload( $data ) {
 	}
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_sanitize_filename( $array, $key, $value ) {
 
@@ -527,7 +527,7 @@ function nfw_sanitize_filename( $array, $key, $value ) {
 	return $array;
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_check_request( $nfw_rules, $nfw_options ) {
 
@@ -547,7 +547,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 			if ( nfw_disabled_scan( $where, $nfw_options ) ) { continue; }
 
-			// =================================================================
+			// ------------------------------------------------------------
 			if ( $where == 'RAW' ) {
 				if (! isset( $HTTP_RAW_POST_DATA ) ) {
 					@$HTTP_RAW_POST_DATA = file_get_contents( 'php://input' );
@@ -559,7 +559,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 				continue;
 			}
 
-			// =================================================================
+			// ------------------------------------------------------------
 			if ( $where == 'POST' || $where == 'GET' || $where == 'COOKIE' ||
 				$where == 'SERVER' || $where == 'REQUEST' || $where == 'FILES' ||
 				$where == 'SESSION'
@@ -578,7 +578,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 				continue;
 			}
 
-			// =================================================================
+			// ------------------------------------------------------------
 
 			if ( isset( $_SERVER[$where] ) ) {
 
@@ -588,7 +588,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 				continue;
 			}
 
-			// =================================================================
+			// ------------------------------------------------------------
 
 			$w = explode(':', $where);
 
@@ -600,7 +600,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 				nfw_check_subrule( $w[0], $w[1], $nfw_rules, $nfw_options, $rules, $id );
 			}
 
-			// =================================================================
+			// ------------------------------------------------------------
 
 		}
 
@@ -608,7 +608,7 @@ function nfw_check_request( $nfw_rules, $nfw_options ) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_check_subrule( $w0, $w1, $nfw_rules, $nfw_options, $rules, $id ) {
 
@@ -650,7 +650,7 @@ function nfw_check_subrule( $w0, $w1, $nfw_rules, $nfw_options, $rules, $id ) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_disabled_scan( $where, $nfw_options, $extra = null ) {
 
@@ -667,7 +667,7 @@ function nfw_disabled_scan( $where, $nfw_options, $extra = null ) {
 	return 0;
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST = null, $nfw_options ) {
 
@@ -751,7 +751,7 @@ function nfw_matching( $where, $key, $nfw_rules, $rules, $subid, $id, $RAW_POST 
 	return 0;
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_operator( $val, $what, $op ) {
 
@@ -793,7 +793,7 @@ function nfw_operator( $val, $what, $op ) {
 	}
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_normalize( $string, $nfw_rules ) {
 
@@ -849,7 +849,7 @@ function nfw_normalize( $string, $nfw_rules ) {
 	return $norm;
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_html_decode( $norm ) {
 
@@ -878,7 +878,7 @@ function nfw_html_decode( $norm ) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_compress_string( $string, $where = null ) {
 
@@ -895,7 +895,7 @@ function nfw_compress_string( $string, $where = null ) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_transform_string( $string, $where ) {
 
@@ -911,17 +911,28 @@ function nfw_transform_string( $string, $where ) {
 		$norm = trim( preg_replace_callback('((^|([\'"])(?:\\\\.|[^\n\2\\\\])*?\2|(?:[0-9a-z_$]+)|.)'.
 			'(?://[^\n]*+\n|/\*(?:[^*]|\*(?!/))*+\*/)*)si',
 			'nfw_delcomments2',  $string . "\n") );
-		$norm = preg_replace( array('/[\n\r\t\f\v]/', '`/\*\s*\*/`', '/[\'"`]\x20*[+.]?\x20*[\'"`]/'),
-				array('', ' ', ''), $norm);
+		$norm = preg_replace(
+			array('/[\n\r\t\f\v]/', '`/\*\s*\*/`', '/[\'"`]\x20*[+.]?\x20*[\'"`]/'),
+			array('', ' ', ''),
+			$norm
+		);
 	} elseif ( $where == 3 ) {
-		$norm = preg_replace( array('`/(\./)+`','`/{2,}`', '`/(.+?)/\.\./\1\b`', '`\n`', '`\\\`'), array('/', '/', '/\1', '', ''), $string );
+		$norm = preg_replace(
+			array('`/(\./)+`','`/{2,}`', '`/(.+?)/\.\./\1\b`', '`\n`', '`\\\`'),
+			array('/', '/', '/\1', '', ''),
+			$string
+		);
+		$norm = preg_replace(
+			array('`([\\\"\'^])`','`\s([\/(])`', '`([,;]|\s+)`'),
+			array('', '\1', ' '),
+		$norm );
 	}
 
 	return $norm;
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_delcomments1 ( $match ) {
 
@@ -942,7 +953,7 @@ function nfw_delcomments2 ( $match ) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_udecode( $match ) {
 
@@ -950,7 +961,7 @@ function nfw_udecode( $match ) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_hex2ascii( $match ) {
 
@@ -958,7 +969,7 @@ function nfw_hex2ascii( $match ) {
 
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_flatten( $glue, $pieces ) {
 
@@ -978,7 +989,7 @@ function nfw_flatten( $glue, $pieces ) {
    return implode($glue, $ret);
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_check_b64( $key, $string ) {
 
@@ -993,7 +1004,7 @@ function nfw_check_b64( $key, $string ) {
 	}
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_sanitise( $str, $msg ) {
 
@@ -1013,6 +1024,9 @@ function nfw_sanitise( $str, $msg ) {
 		} else {
 			$str2 = str_replace(	array('\\', "'", '"', "\x0d", "\x0a", "\x00", "\x1a", '`', '<', '>'),
 				array('\\\\', "\\'", '\\"', '-', '-', '-', '-', '\\`', '&lt;', '&gt;'),	$str);
+		}
+		if ( $msg == 'GET' && strpos( $str2, '/') !== false ) {
+			$str2 = str_replace( array( '*', '?' ), array( '\*', '\?' ), $str2 );
 		}
 		if (! empty($nfw_['nfw_options']['debug']) ) {
 			if ($str2 != $str) {
@@ -1044,7 +1058,7 @@ function nfw_sanitise( $str, $msg ) {
 	}
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 
 function nfw_response_headers() {
 
@@ -1084,6 +1098,8 @@ function nfw_response_headers() {
 
 	if (! empty( $NFW_RESHEADERS[3] ) ) {
 		header('X-XSS-Protection: 1; mode=block');
+	} else {
+		header('X-XSS-Protection: 0');
 	}
 
 	if (! empty( $NFW_RESHEADERS[6] ) ) {
@@ -1112,5 +1128,5 @@ function nfw_response_headers() {
 	header('Strict-Transport-Security: '. $max_age);
 }
 
-// =====================================================================
+// ---------------------------------------------------------------------
 // EOF

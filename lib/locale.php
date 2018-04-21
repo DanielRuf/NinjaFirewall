@@ -16,38 +16,17 @@
 // | GNU General Public License for more details.                      |
 // +-------------------------------------------------------------------+
 
-if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
+if ( empty( $nfw_options ) && ! defined('NFW_INSTALLER') ) { die( 'Forbidden' ); }
 
-html_header();
-?>
-<div class="col-sm-12 text-left">
-	<h3><?php echo _('Account > License') ?></h3>
-	<br />
-	<h4><?php echo _('Current License') ?></h4>
-
-		<table width="100%" class="table table-nf">
-			<tr>
-				<td width="40%" align="left" ><?php echo _('Expiration date') ?></td>
-				<td width="5%" align="center" >&nbsp;</td>
-				<td width="55%">&nbsp;<?php echo _('N/A') ?></td>
-			</tr>
-			<tr>
-				<td width="40%" align="left"><?php echo _('License Number') ?></td>
-				<td width="5%" align="center" >&nbsp;</td>
-				<td width="55%"><?php
-					printf(
-						_('Pro Edition (upgrade to %s)'),
-						'<a href="https://nintechnet.com/ninjafirewall/pro-edition/">Pro+ Edition</a>'
-					);
-				?><br /><br />
-				<input class="btn btn-sm btn-success" type="submit" disabled value="<?php echo _('Check License Validity') ?>" />
-				</td>
-			</tr>
-		</table>
-</div>
-<?php
-
-html_footer();
-
+if ( empty( $nfw_options['admin_lang'] ) || ! preg_match( '/^[a-z]{2}_[A-Z]{2}$/', $nfw_options['admin_lang'] ) ) {
+	return;
+}
+// I18N:
+putenv( "LANG={$nfw_options['admin_lang']}" );
+setlocale( LC_MESSAGES, "{$nfw_options['admin_lang']}.utf-8" );
+setlocale( LC_CTYPE, "{$nfw_options['admin_lang']}.utf-8" );
+$domain = "ninjafirewall_pro-{$nfw_options['admin_lang']}";
+bindtextdomain( $domain, dirname( __DIR__ ) . '/locale' );
+textdomain( $domain );
 // ---------------------------------------------------------------------
 // EOF

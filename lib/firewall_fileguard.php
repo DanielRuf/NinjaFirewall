@@ -1,65 +1,75 @@
 <?php
-/*
- +---------------------------------------------------------------------+
- | NinjaFirewall (Pro edition)                                         |
- |                                                                     |
- | (c) NinTechNet - https://nintechnet.com/                            |
- |                                                                     |
- +---------------------------------------------------------------------+
- | REVISION: 2015-01-21 19:18:31                                       |
- +---------------------------------------------------------------------+
- | This program is free software: you can redistribute it and/or       |
- | modify it under the terms of the GNU General Public License as      |
- | published by the Free Software Foundation, either version 3 of      |
- | the License, or (at your option) any later version.                 |
- |                                                                     |
- | This program is distributed in the hope that it will be useful,     |
- | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
- | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
- | GNU General Public License for more details.                        |
- +---------------------------------------------------------------------+
-*/
+// +-------------------------------------------------------------------+
+// | NinjaFirewall (Pro Edition)                                       |
+// |                                                                   |
+// | (c) NinTechNet - https://nintechnet.com/                          |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+// | This program is free software: you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation, either version 3 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// +-------------------------------------------------------------------+
+
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
-// Load current language file :
-require (__DIR__ .'/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__) );
-
 html_header();
-echo '<br /><div class="warning"><p>' . $lang['pro_only'] . ' (<a class="links" style="border-bottom:1px dotted #FFCC25;" href="https://nintechnet.com/ninjafirewall/pro-edition/">'. $lang['lic_upgrade'] . '</a>).</p></div>';
+
 ?>
-<br />
-	<fieldset><legend>&nbsp;<b><?php echo $lang['fg'] ?></b>&nbsp;</legend>
-		<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
+<div class="col-sm-12 text-left">
+	<h3><?php echo _('Monitoring > File Guard') ?></h3>
+	<br />
+	<div class="alert alert-warning text-left"><?php
+		printf(
+			_('This feature is only available in the <a href="%s">Pro+ Edition</a> of NinjaFirewall.'),
+			'https://nintechnet.com/ninjafirewall/pro-edition/'
+		);
+	?></div>
+
+	<table width="100%" class="table table-nf">
+		<tr>
+			<td width="45%" align="left"><?php echo _('Enable File Guard') ?></td>
+			<td width="55%">
+				<p><label><input type="radio" checked disabled />&nbsp;<?php echo _('Yes') ?></label></p>
+				<p><label><input type="radio" disabled />&nbsp;<?php echo _('No') .' '. _('(default)') ?></label></p>
+			</td>
+		</tr>
+	</table>
+
+	<div id="fg_table" style="border:1px #ddd solid;">
+		<table width="100%" class="table table-borderless">
 			<tr>
-				<td width="55%" align="left"><?php echo $lang['enable_fg'] ?></td>
-				<td width="45%">
-					<p><label><input type="radio" disabled="disabled" checked="checked" />&nbsp;<?php echo $lang['yes'] . $lang['default'] ?></label></p>
-					<p><label><input type="radio" disabled="disabled" value="0" />&nbsp;<?php echo $lang['no'] ?></label></p>
+				<td width="45%" align="left"><?php echo _('Real-time detection') ?></td>
+				<td width="55%">
+					<?php
+					printf(
+						'Monitor file activity and send an alert when someone is accessing a PHP script that was modified or created less than %s hour(s) ago.',
+						'<input class="form-control" style="width:90px;display:inline" maxlength="2" size="2" min="1" value="10" disabled type="number" />'
+					);
+					?>
 				</td>
 			</tr>
-		</table>
-		<br />
-		<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
 			<tr>
-				<td width="55%" align="left" class="dotted"><?php echo $lang['detection'] ?></td>
-				<td width="45%" class="dotted">
-					<?php printf($lang['monitor'], '<input class="input" disabled="disabled" maxlength="2" size="2" value="10" type="text" />') ?>
-				</td>
-			</tr>
-			<tr>
-				<td width="55%" align="left" class="dotted"><?php echo $lang['exclude_title'] ?></td>
-				<td width="45%" class="dotted"><p><input class="input" style="width:300px" type="text" value="" placeholder="<?php echo $lang['eg'] ?> /foo/bar/cache/" disabled="disabled"><br /><i><?php echo $lang['exclude_desc'] ?></i></p></td>
+				<td width="45%" align="left"><?php echo _('Exclude the following files/folders (optional)') ?></td>
+				<td width="55%"><p><input class="form-control" maxlength="255" type="text" disabled placeholder="<?php echo _('e.g.') ?> /foo/bar/cache/" /><br /><i><?php echo _('Full or partial case-sensitive string(s), max. 255 characters. Multiple values must be comma-separated.') ?></i></p></td>
 			</tr>
 		</table>
-	</fieldset>
+	</div>
+
 	<br />
-	<br />
-	<center><input type="button" disabled="disabled" class="button" value="<?php echo $lang['save_conf'] ?>"></center>
-	<br />
-	<br />
+
+
+	<center><input type="submit" disabled name="save-changes" class="btn btn-md btn-success btn-25" value="<?php echo _('Save Changes') ?>"></center>
+
+</div>
 <?php
 
 html_footer();
 
-/* ------------------------------------------------------------------ */
+// ---------------------------------------------------------------------
 // EOF

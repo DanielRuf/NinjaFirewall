@@ -1,7 +1,30 @@
 <?php
+// +-------------------------------------------------------------------+
+// | NinjaFirewall (Pro Edition)                                       |
+// |                                                                   |
+// | (c) NinTechNet - https://nintechnet.com/                          |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+// | This program is free software: you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation, either version 3 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// +-------------------------------------------------------------------+
+
 $changelog = <<<'EOT'
 
-= 3.2.15 =
+= 3.3 =
+* NinjaFirewall has a new user interface. You can even customize it with your own style sheet. See our blog for more info: http://nin.link/nfui/
+* Internationalization is now using the GNU Gettext. You can translate NinjaFirewall into your language by using the PO file available in "./locale/ninjafirewall_pro.pot".
+* [Pro+ Edition] Improved the "Access Control > Whitelist the Administrator" option. In a few cases, when the option was enabled, the admin was not whitelisted upon login.
+* Updated the contextual help.
+* Several small fixes and improvements.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
 * Updated security rules.
 
 = 3.2.14 =

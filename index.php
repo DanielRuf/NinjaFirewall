@@ -1,59 +1,51 @@
 <?php
-/*
- +---------------------------------------------------------------------+
- | NinjaFirewall (Pro edition)                                         |
- |                                                                     |
- | (c) NinTechNet - https://nintechnet.com/                            |
- |                                                                     |
- +---------------------------------------------------------------------+
- | This program is free software: you can redistribute it and/or       |
- | modify it under the terms of the GNU General Public License as      |
- | published by the Free Software Foundation, either version 3 of      |
- | the License, or (at your option) any later version.                 |
- |                                                                     |
- | This program is distributed in the hope that it will be useful,     |
- | but WITHOUT ANY WARRANTY; without even the implied warranty of      |
- | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       |
- | GNU General Public License for more details.                        |
- +---------------------------------------------------------------------+
-*/
-
-// Required constants :
-require __DIR__ . '/lib/constants.php';
+// +-------------------------------------------------------------------+
+// | NinjaFirewall (Pro Edition)                                       |
+// |                                                                   |
+// | (c) NinTechNet - https://nintechnet.com/                          |
+// |                                                                   |
+// +-------------------------------------------------------------------+
+// | This program is free software: you can redistribute it and/or     |
+// | modify it under the terms of the GNU General Public License as    |
+// | published by the Free Software Foundation, either version 3 of    |
+// | the License, or (at your option) any later version.               |
+// |                                                                   |
+// | This program is distributed in the hope that it will be useful,   |
+// | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+// | GNU General Public License for more details.                      |
+// +-------------------------------------------------------------------+
 
 if (! @include __DIR__ . '/conf/options.php' ) {
 	header('Location: login.php?1');
 	exit;
 }
-$nfw_options = unserialize($nfw_options);
+$nfw_options = unserialize( $nfw_options );
 
+// I18N:
+require_once __DIR__ .'/lib/locale.php';
+
+// Required constants :
+require __DIR__ . '/lib/constants.php';
+
+require_once __DIR__ . '/lib/misc.php';
 // Get the user defined IP (if any):
 if (! defined( 'NFW_REMOTE_ADDR') ) {
-	require_once __DIR__ . '/lib/misc.php';
-	nfw_select_ip();
+	nfw_select_ip( $nfw_options );
 }
 
 date_default_timezone_set( $nfw_options['timezone'] );
 
 // Start session :
-if (version_compare(PHP_VERSION, '5.4', '<') ) {
-	if (! session_id() ) {
-		@ini_set('session.cookie_httponly', 1);
-		@ini_set('session.use_only_cookies', 1);
-		if ($_SERVER['SERVER_PORT'] == 443) {
-			@ini_set('session.cookie_secure', 1);
-		}
-		session_start();
+if ( ( version_compare( PHP_VERSION, '5.4', '<' ) && ! session_id() ) ||
+	session_status() !== PHP_SESSION_ACTIVE ) {
+
+	@ini_set('session.cookie_httponly', 1);
+	@ini_set('session.use_only_cookies', 1);
+	if ( $_SERVER['SERVER_PORT'] == 443 ) {
+		@ini_set('session.cookie_secure', 1);
 	}
-} else {
-	if (session_status() !== PHP_SESSION_ACTIVE) {
-		@ini_set('session.cookie_httponly', 1);
-		@ini_set('session.use_only_cookies', 1);
-		if ($_SERVER['SERVER_PORT'] == 443) {
-			@ini_set('session.cookie_secure', 1);
-		}
-		session_start();
-	}
+	session_start();
 }
 
 // Don't cache anything :
@@ -67,191 +59,134 @@ if ( $_SERVER['QUERY_STRING'] == 'logout') {
    exit;
 }
 
-if ( empty($_SESSION['timeout']) || empty($_SESSION['nfadmpro']) ||
-	empty($_SESSION['nftoken']) || empty($_REQUEST['token']) ) {
-	if ( empty($_SESSION['first_run']) ) {
+if ( empty( $_SESSION['timeout'] ) || empty( $_SESSION['nfadmpro'] ) ||
+	empty( $_SESSION['nftoken'] ) || empty( $_REQUEST['token'] ) ) {
+
+	if ( empty( $_SESSION['first_run'] ) ) {
 		session_destroy();
 	}
    header('Location: login.php?2');
    exit;
 }
 
-if ($_SESSION['nftoken'] != sha1($_REQUEST['token'] . __DIR__) ||
-	! preg_match('/^[a-f0-9]{40}$/', $_REQUEST['token'] ) ) {
+if ( $_SESSION['nftoken'] !== sha1( $_REQUEST['token'] . __DIR__ ) ||
+	! preg_match( '/^[a-f0-9]{40}$/', $_REQUEST['token'] ) ) {
 	session_destroy();
    header('Location: login.php?3');
    exit;
 }
 
-if ( ($_SESSION['timeout'] + 7200) < time() ) {
+if ( ( $_SESSION['timeout'] + 7200 ) < time() ) {
 	session_destroy();
    header('Location: login.php?expired');
    exit;
 }
 $_SESSION['timeout'] = time();
 
-if ($_SESSION['nfadmpro'] != sha1( $nfw_options['admin_name']) ) {
+if ( $_SESSION['nfadmpro'] !== sha1( $nfw_options['admin_name'] ) ) {
 	session_destroy();
    header('Location: login.php?4');
    exit;
 }
 
-// Should we force SSL login ?
+// Should we force SSL login?
 if ( $nfw_options['admin_ssl'] && $_SERVER['SERVER_PORT'] != 443 ) {
 	// Force it:
-   header('Location: https://' . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'] );
+   header("Location: https://{$_SERVER['SERVER_NAME']}{$_SERVER['SCRIPT_NAME']}" );
    exit;
 }
 
 require __DIR__ . '/conf/rules.php';
-$nfw_rules = unserialize($nfw_rules);
+$nfw_rules = unserialize( $nfw_rules );
 
 // Used for updates :
 require __DIR__ . '/lib/nfw_init.php';
 
-if (! isset($_SESSION['ver']) ) {
+if (! isset( $_SESSION['ver'] ) ) {
 	$_SESSION['vapp'] = $_SESSION['ver'] = 0;
 }
 
-if (@strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') === FALSE) {
-	define('OPA','opacity:0.4');
-	define('OPA_OUT','this.style.opacity=0.4');
-	define('OPA_OVER','this.style.opacity=1');
-} else {
-	if (preg_match('/MSIE [678]/', $_SERVER['HTTP_USER_AGENT']) ) {
-		define('OPA',''); define('OPA_OUT',''); define('OPA_OVER','');
-	} else {
-		define('OPA','filter:alpha(opacity=60)');
-		define('OPA_OUT','this.filters.alpha.opacity=60');
-		define('OPA_OVER','this.filters.alpha.opacity=100');
-	}
-}
-
-if ( empty($_REQUEST['mid']) || ! ctype_digit($_REQUEST['mid']) ) {
+if ( empty( $_REQUEST['mid'] ) || ! ctype_digit( $_REQUEST['mid'] ) ) {
 	$mid = 10;
 } else {
 	$mid = $_REQUEST['mid'];
 }
 
 // Changelog pop-up window :
-if ($mid == 99) {
+if ( $mid == 99 ) {
 	nfw_changelog();
 
-//	menu Summary > Overview :
-} elseif ($mid == 11) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/summary_stats_help.php');
-	}
+//	Summary > Statstistics:
+} elseif ( $mid == 11 ) {
 	require __DIR__ . '/lib/summary_stats.php';
 
-//	menu Account > Options :
-} elseif ($mid == 20) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/account_options_help.php');
-	}
+//	Account > Options :
+} elseif ( $mid == 20 ) {
 	require __DIR__ . '/lib/account_options.php';
 
-//	menu Account > License :
-} elseif ($mid == 21) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/account_license_help.php');
-	}
+// Account > License :
+} elseif ( $mid == 21 ) {
 	require __DIR__ . '/lib/account_license.php';
 
-//	menu Account > Updates :
-} elseif ($mid == 22) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/account_updates_help.php');
-	}
+// Account > Updates :
+} elseif ( $mid == 22 ) {
 	require __DIR__ . '/lib/account_updates.php';
 
-// menu Firewall > Options
-} elseif ($mid == 30) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_options_help.php');
-	}
+// Firewall > Options
+} elseif ( $mid == 30 ) {
 	require __DIR__ . '/lib/firewall_options.php';
 
-// menu Firewall > Policies
-} elseif ($mid == 31) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_policies_help.php');
-	}
+// Firewall > Policies
+} elseif ( $mid == 31 ) {
 	require __DIR__ . '/lib/firewall_policies.php';
 
-// menu Firewall > Access Control
-} elseif ($mid == 32) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_access_control_help.php');
-	}
+// Firewall > Access Control
+} elseif ( $mid == 32 ) {
 	require __DIR__ . '/lib/firewall_access_control.php';
 
-// menu Firewall > File Guard
-} elseif ($mid == 33) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_fileguard_help.php');
-	}
-	require __DIR__ . '/lib/firewall_fileguard.php';
-
-// menu Firewall > Web Filter
-} elseif ($mid == 34) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_webfilter_help.php');
-	}
-	require __DIR__ . '/lib/firewall_webfilter.php';
-
-// menu Firewall > Rules Editor
-} elseif ($mid == 35) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_rules_editor_help.php');
-	}
+// Firewall > Rules Editor
+} elseif ( $mid == 35 ) {
 	require __DIR__ . '/lib/firewall_rules_editor.php';
 
-// menu Firewall > Security Log
-} elseif ($mid == 36) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_log_help.php');
-	}
-	require __DIR__ . '/lib/firewall_log.php';
+// Monitoring > File Guard
+} elseif ( $mid == 33 ) {
+	require __DIR__ . '/lib/firewall_fileguard.php';
 
-// menu Firewall > Live Log
-} elseif ($mid == 37) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_livelog_help.php');
-	}
-	require __DIR__ . '/lib/firewall_livelog.php';
-
-// menu Firewall > File Check
-} elseif ($mid == 38) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_filecheck_help.php');
-	}
+// Monitoring > File Check
+} elseif ( $mid == 38 ) {
 	require __DIR__ . '/lib/firewall_filecheck.php';
 
-// menu Firewall > Centralized Logging
-} elseif ($mid == 39) {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/firewall_centlog_help.php');
-	}
+// Monitoring > Web Filter
+} elseif ( $mid == 34 ) {
+	require __DIR__ . '/lib/firewall_webfilter.php';
+
+// Logs > Firewall Log
+} elseif ( $mid == 36 ) {
+	require __DIR__ . '/lib/firewall_log.php';
+
+// Logs > Live Log
+} elseif ( $mid == 37 ) {
+	require __DIR__ . '/lib/firewall_livelog.php';
+
+// Logs > Centralized Logging
+} elseif ( $mid == 39 ) {
 	require __DIR__ . '/lib/firewall_centlog.php';
 
-} elseif ($mid == 90) {
+} elseif ( $mid == 90 ) {
    raw_admin_log();
-} elseif ($mid == 91) {
+
+} elseif ( $mid == 91 ) {
 	flush_admin_log();
    raw_admin_log();
 
-//	menu Summary > Overview :
+//	Summary > Overview:
 } else {
-	if (! empty($_GET['help']) ) {
-		nfw_help(__DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/summary_overview_help.php');
-	}
 	require __DIR__ . '/lib/summary_overview.php';
 }
 
 exit;
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
 function is_nf_enabled() {
 
@@ -290,7 +225,7 @@ function is_nf_enabled() {
 
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
 function checked( $var, $val) {
 
@@ -300,17 +235,21 @@ function checked( $var, $val) {
 
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
-function selected( $var, $val) {
+function selected( $var, $val, $ret = 0 ) {
 
 	if ( $var == $val ) {
-		echo " selected='selected'";
+		if (! $ret ) {
+			echo " selected='selected'";
+		} else {
+			return " selected='selected'";
+		}
 	}
 
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
 function disabled( $var, $val) {
 
@@ -319,7 +258,7 @@ function disabled( $var, $val) {
 	}
 
 }
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
 function readonly( $var, $val) {
 
@@ -329,340 +268,415 @@ function readonly( $var, $val) {
 
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
+// Open and display the admin log in a pop-up window.
 
 function raw_admin_log() {
 
-	// turn off debugging (if enabled) for that window :
-	define('NF_NODBG', true);
-
 	global $nfw_options;
 
-	require __DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__);
+	$log = __DIR__ .'/nfwlog/admin.php';
+	$line = '';
 
-   echo '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>NinjaFirewall</title><link href="static/styles.css" rel="stylesheet" type="text/css"><script>function dellog(){if (confirm("' . $lang['del_log'] . ' ?")){return true;}else{return false;}}</script></head><body bgcolor="white" class="smallblack"><fieldset style="height:400px;width:600px;padding:5px">';
+	// Open the log:
+	if ( file_exists( $log ) ) {
+		$fsize = filesize( $log );
 
-	if ( $fh = fopen(__DIR__ . '/nfwlog/admin.php', 'r') ) {
-		$st = stat(__DIR__ . '/nfwlog/admin.php');
-		echo '<legend><b>&nbsp;admin log [/nfwlog/admin.php - ' . number_format($st['size']) . ' bytes]</b>&nbsp;</legend><center><textarea style="background-color:#ffffff;width:590px;height:380px;border:none;font-family:Consolas,Monaco,monospace;font-size:13px;" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">';
+		// It looks empty, return an error:
+		if ( $fsize < 5 ) {
+			$line = _('The admin log is empty.');
+			$err = 1;
 
-		if ($st['size'] < 5) {
-			fclose($fh);
-			echo '<center>' . $lang['empty_log'] . '.</center></textarea></center></fieldset><br /></body></html>';
-			exit;
+		// Fetch its content:
+		} else {
+			$fh = fopen( $log, 'r' );
+			while (! feof( $fh ) ) {
+				$line .= htmlspecialchars( fgets( $fh ) );
+			}
+			fclose ( $fh );
 		}
-		while (! feof($fh) ) {
-			$line = fgets($fh);
-			echo htmlspecialchars($line);
-		}
-		fclose($fh);
-		echo '</textarea></center></fieldset><br /><center><form method="post" onsubmit="return dellog();"><input class="button" type="button" value="' . $lang['close'] . '" onClick="window.close();">&nbsp;&nbsp;&nbsp;<input type="hidden" name="mid" value="91"><input type="submit" class="button" value="' . $lang['del_log'] . '"></form></center><br /></body></html>';
+
+	// Missing log:
 	} else {
-		echo '<font color="red">' . $lang['err_open_log'] . ' (/nfwlog/admin.php) !</font></fieldset><br /></body></html>';
+		$line = sprintf( _('Unable to open logfile: %s'), '/nfwlog/admin.php' );
+		$err = 1;
 	}
-	exit;
 
+	?><html lang="en">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+			<title>NinjaFirewall</title>
+			<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+			<link href="static/bootstrap.min.css" rel="stylesheet" type="text/css">
+			<link href="static/styles.css" rel="stylesheet" type="text/css">
+			<?php
+			// If the use has their own CSS style sheet, load it:
+			if ( file_exists( 'static/user.css' ) ) {
+				echo '<link href="static/user.css" rel="stylesheet" type="text/css">'."\n";
+			}
+			?>
+			<script>function dellog(){if (confirm("<?php echo _('Delete log') ?>?")){return true;}else{return false;}}</script>
+		</head>
+
+		<body>
+			<div id="main_nr" class="ntn-section text-center" style="padding-top:10px">
+				<div class="container">
+					<div class="row" style="padding:10px">
+						<?php
+						if ( empty( $err ) ) {
+							echo '<h4>nfwlog/admin.php (' . sprintf('%s bytes', number_format( $fsize ) ) .')</h4>';
+						}
+						?>
+						<textarea class="form-control" style="height:300px;font-family:Consolas,Monaco,monospace;"><?php
+						echo $line;
+						?></textarea>
+						<?php
+						if (! empty( $err ) ) {
+							echo '</div></div></div></body></html>';
+							exit;
+						}
+						?>
+						<br />
+						<form method="post" onsubmit="return dellog();">
+							<input type="hidden" name="mid" value="91" />
+							<input class="btn btn-md btn-danger btn-25" type="submit" value="<?php echo _('Delete log') ?>" />
+							&nbsp;&nbsp;&nbsp;
+							<input class="btn btn-md btn-success btn-25" type="button" value="<?php echo _('Close') ?>" onClick="window.close();" />
+						</form>
+					</div>
+				</div>
+			</div>
+			<script src="static/bootstrap.min.js<?php echo '?ver='. NFW_ENGINE_VERSION ?>"></script>
+		</body>
+	</html><?php
+
+	exit;
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
 function flush_admin_log() {
 
 	global $nfw_options;
 
-	if ($fh = fopen(__DIR__ . '/nfwlog/admin.php', 'w') ) {
-		fwrite($fh, date('[d/M/Y H:i:s O] ') . '[' . $nfw_options['admin_name'] . '] ' .
-		'[' . NFW_REMOTE_ADDR . '] ' . '[OK] ' .  "\n" );
+	if ( $fh = fopen( __DIR__ . '/nfwlog/admin.php', 'w' ) ) {
+		fwrite( $fh, date('[d/M/Y H:i:s O] ') . "[{$nfw_options['admin_name']}]".
+		'['. NFW_REMOTE_ADDR . '] ' ."[OK]\n" );
 		fclose($fh);
 	}
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
-function nfw_help($what) {
-
-require $what;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>NinjaFirewall : <?php echo $title ?></title>
-	<link href="static/styles.css" rel="stylesheet" type="text/css">
-	<link rel="Shortcut Icon" type="image/gif" href="static/favicon.ico">
-</head>
-<body bgcolor="white" class="smallblack">
-	<fieldset><legend>&nbsp;<b><?php echo $title ?></b>&nbsp;</legend>
-		<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
-			<tr>
-				<td>
-				<?php echo $nfw_help ?>
-				</td>
-			</tr>
-		</table>
-	</fieldset>
-	<br />
-	<center><input type="button" value="<?php echo $close ?>" onclick="window.close()" /></center>
-</body>
-</html>
-<?php
-
-exit;
-
-}
-
-/* ------------------------------------------------------------------ */
-
-function nfw_changelog() {
-
-require 'changelog.php';
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>NinjaFirewall : changelog</title>
-	<link href="static/styles.css" rel="stylesheet" type="text/css">
-	<link rel="Shortcut Icon" type="image/gif" href="static/favicon.ico">
-</head>
-<body bgcolor="white" class="smallblack">
-	<table width="100%" class="smallblack" border="0" cellpadding="10" cellspacing="0">
-		<tr>
-			<td width="100%" align="center"><textarea style="background-color:#ffffff;width:95%;height:380px;border:1px solid #FDCD25;padding:4px;font-family:monospace;font-size:13px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php echo htmlentities($changelog) ?></textarea></td>
-		</tr>
-	</table>
-	<br />
-	<center><input type="button" class="button" value="Close" onclick="window.close()" /></center>
-</body>
-</html>
-<?php
-exit;
-
-}
-
-/* ------------------------------------------------------------------ */
-
-function html_header() {
+function html_header( $load = '' ) {
 
 	global $nfw_options;
 
-	require __DIR__ . '/lib/lang/' . $nfw_options['admin_lang'] . '/' . basename(__FILE__);
+	if ( NFW_EDN == 1 ) {
+		$p = ' <sup style="color:red">Pro+</sup>';
+	} else {
+		$p = '';
+	}
 
-	$menu = array(
-		10 => $lang['summ_main'] . ' &gt; ' . $lang['summ_over'],
-		11 => $lang['summ_main'] . ' &gt; ' . $lang['summ_stat'],
-		20 => $lang['acc_main'] . ' &gt; ' . $lang['acc_opt'],
-		21 => $lang['acc_main'] . ' &gt; ' . $lang['acc_lic'],
-		22 => $lang['acc_main'] . ' &gt; ' . $lang['acc_upd'],
-		30 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_opt'],
-		31 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_pol'],
-		32 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_ac'],
-		33 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_fg'],
-		34 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_wf'],
-		35 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_edit'],
-		36 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_log'],
-		37 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_livelog'],
-		38 => $lang['fwl_main'] . ' &gt; ' . $lang['fwl_fc'],
-		39 => $lang['fwl_main'] . ' &gt; ' . $lang['cent_log']
-	);
-	$m10 = $m11 = $m12 =
-	$m20 = $m21 = $m22 =
-	$m30 = $m31 = $m32 =
-	$m33 = $m34 = $m35 =
-	$m36 = $m37 = $m38 = $m39 = 'static/bullet_off.gif';
+   $menu = array(
+      10 => _('Summary > Overview'),
+      11 => _('Summary > Statistics'),
 
-	if    ( $GLOBALS['mid'] == 10 ) $m10 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 11 ) $m11 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 20 ) $m20 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 21 ) $m21 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 22 ) $m22 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 30 ) $m30 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 31 ) $m31 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 32 ) $m32 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 33 ) $m33 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 34 ) $m34 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 35 ) $m35 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 36 ) $m36 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 37 ) $m37 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 38 ) $m38 = 'static/bullet_on.gif';
-	elseif( $GLOBALS['mid'] == 39 ) $m39 = 'static/bullet_on.gif';
+      20 => _('Account > Options'),
+      21 => _('Account > License'),
+      22 => _('Account > Updates'),
 
-	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+      30 => _('Firewall > Options'),
+      31 => _('Firewall > Policies'),
+      32 => _('Firewall > Access Control'),
+      35 => _('Firewall > Rules Editor'),
+
+      33 => _('Monitoring > File Guard'),
+      38 => _('Monitoring > File Check'),
+      34 => _('Monitoring > Web Filter'),
+
+      36 => _('Logs > Firewall Log'),
+      37 => _('Logs > Live Log'),
+      39 => _('Logs > Centralized Logging'),
+   );
+
+	$summary_active = ''; $account_active = ''; $firewall_active = '';
+	$monitoring_active = ''; $log_active = '';
+
+	if ( $GLOBALS['mid'] == 10 || $GLOBALS['mid'] == 11 ) {
+		$summary_active = " active";
+	} elseif( $GLOBALS['mid'] == 20 || $GLOBALS['mid'] == 21 || $GLOBALS['mid'] == 22 ) {
+		$account_active = " active";
+	} elseif ( $GLOBALS['mid'] == 30 || $GLOBALS['mid'] == 31 ||
+		$GLOBALS['mid'] == 32 || $GLOBALS['mid'] == 35 ) {
+		$firewall_active = " active";
+	} elseif( $GLOBALS['mid'] == 33 || $GLOBALS['mid'] == 34 || $GLOBALS['mid'] == 38 ) {
+		$monitoring_active = " active";
+	} elseif( $GLOBALS['mid'] == 36 || $GLOBALS['mid'] == 37 || $GLOBALS['mid'] == 39 ) {
+		$log_active = " active";
+	}
+
+?><!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>NinjaFirewall : '. $menu[$GLOBALS['mid']] .'</title>
-	<link href="static/styles.css" rel="stylesheet" type="text/css">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="author" content="NinTechNet">
+	<meta http-equiv="cache-control" content="no-store" />
+	<meta http-equiv="expires" content="Mon, 01 Sep 2014 01:01:01 GMT" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<title>NinjaFirewall: <?php echo $menu[$GLOBALS['mid']] ?></title>
 	<link rel="Shortcut Icon" type="image/gif" href="static/favicon.ico">
-	<script>function disconnect(who){if (confirm("' . $lang['close_sess'] . ' ["+who+"] ?")){return true};return false;}function popup(url,width,height,scroll_bar) {height=height+20;width=width+20;var str = "height=" + height + ",innerHeight=" + height;str += ",width=" + width + ",innerWidth=" + width;if (window.screen){var ah = screen.availHeight - 30;var aw = screen.availWidth -10;var xc = (aw - width) / 2;var yc = (ah - height) / 2;str += ",left=" + xc + ",screenX=" + xc;str += ",top=" + yc + ",screenY=" + yc;if (scroll_bar) {str += ",scrollbars=no";}else {str += ",scrollbars=yes";}str += ",status=no,location=no,resizable=yes";}win = open(url, "nfpop", str);setTimeout("win.window.focus()",300);}</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<link href="static/bootstrap.min.css<?php echo '?ver='. NFW_ENGINE_VERSION ?>" rel="stylesheet" type="text/css">
+	<link href="static/styles.css<?php echo '?ver='. NFW_ENGINE_VERSION ?>" rel="stylesheet" type="text/css">
+	<?php
+	// If the use has their own CSS style sheet, load it:
+	if ( file_exists( 'static/user.css' ) ) {
+		echo '<link href="static/user.css?ver='. NFW_ENGINE_VERSION .'" rel="stylesheet" type="text/css">'."\n";
+	}
+	?>
+	<script src="static/nintechnet.js.php<?php echo '?ver='. NFW_ENGINE_VERSION ?>&mid=<?php echo (int)$GLOBALS['mid'] ?>"></script>
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<?php
+	if ( $load == 'chartjs' ) {
+		echo "<script src='static/vendor/Chart.min.js?ver=". NFW_ENGINE_VERSION ."'></script>\n";
+	}
+	?>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
-<body bgcolor="white" class="smallblack">
 
-<table style="border:0px solid #666666;" width="100%">
-	<tr>
-		<td align="left" width="250">
-			<img src="static/logo.png" width="192" height="62">
-		</td>
-		<td align="center">
-			<div class="error" style="display:none;width:90%;text-align:left" id="error_table"><p>' . $lang['not_working'] . '.<br />' . $lang['err_message'] . '&nbsp;: <font id="error_msg">' . @$GLOBALS['err_fw'][NF_DISABLED] . '</font></p></div>
-		</td>
-		<td align="right">
-			<a href="?logout" onclick="return disconnect(\''. $nfw_options['admin_name'] .'\');"><img border="0" src="static/logout.png" width="52" height="52" title="Logout" alt="Logout" style="'.OPA.'" onmouseover="'.OPA_OVER.'" onmouseout="'.OPA_OUT.'"></a>
-		</td>
-	</tr>
-</table>
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-	<tr valign="top">
-		<td width="150" align="left"><br />
-			<table border="0" width="150" height="400" cellpadding="0" cellspacing="7">
-				<tr valign="top">
-					<td class="tinyblack">
-						<center style="border:1px solid #FDCD25;">' . $lang['summ_main'] . '</center>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m10 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=10&token='.$_REQUEST['token'].'">' . $lang['summ_over'] . '</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m11 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=11&token='.$_REQUEST['token'].'">' . $lang['summ_stat'] . '</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<center style="border:1px solid #FDCD25;">' . $lang['acc_main'] . '</center>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m20 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=20&token='.$_REQUEST['token'].'">' . $lang['acc_opt'] . '</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m21 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=21&token='.$_REQUEST['token'].'">' . $lang['acc_lic'] . '</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m22 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=22&token='.$_REQUEST['token'].'">' . $lang['acc_upd'] . '</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<center style="border:1px solid #FDCD25;">' . $lang['fwl_main'] . '</center>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m30 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=30&token='.$_REQUEST['token'].'">' . $lang['fwl_opt'] . '</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m31 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=31&token='.$_REQUEST['token'].'">' . $lang['fwl_pol'] . '</a>
-					</td>
-				</tr>';
-				if (! defined('DSPPM') ) {
-					echo '
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m32 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=32&token='.$_REQUEST['token'].'">' . $lang['fwl_ac'] . ' (<font color="#FF0000">Pro+</font>)</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m33 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=33&token='.$_REQUEST['token'].'">' . $lang['fwl_fg'] . ' (<font color="#FF0000">Pro+</font>)</a>
-					</td>
-				</tr>';
-				}
-				echo '
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m38 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=38&token='.$_REQUEST['token'].'">' . $lang['fwl_fc'] . '</a>
-					</td>
-				</tr>';
-				if (! defined('DSPPM') ) {
-					echo '
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m34 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=34&token='.$_REQUEST['token'].'">' . $lang['fwl_wf'] . ' (<font color="#FF0000">Pro+</font>)</a>
-					</td>
-				</tr>';
-				}
-				echo '
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m35 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=35&token='.$_REQUEST['token'].'">' . $lang['fwl_edit'] . '</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m36 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=36&token='.$_REQUEST['token'].'">' . $lang['fwl_log'] . '</a>
-					</td>
-				</tr>';
-				if (! defined('DSPPM') ) {
-					echo '
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m39 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=39&token='.$_REQUEST['token'].'">' . $lang['cent_log'] . ' (<font color="#FF0000">Pro+</font>)</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="tinyblack">
-						<img src="'. $m37 .'" width="10" height="10">&nbsp;<a class="links" href="?mid=37&token='.$_REQUEST['token'].'">' . $lang['fwl_livelog'] . ' (<font color="#FF0000">Pro+</font>)</a>
-					</td>
-				</tr>';
-				}
-				echo '
-				<tr>
-					<td style="text-align:center;"><p><img src="static/logopro_60.png" width="60" height="60"></p>
-					</td>
-				</tr>
-			</table>
-		</td>
-		<td width="20">&nbsp;</td>
-		<td>
-			<table style="border:0px solid #666666;" width="100%" cellpadding=6>
-				<tr>
-					<td class=smallblack><div style="float:left;"><b>'. $menu[$GLOBALS['mid']] .'</b></div><div style="float:right;border:1px solid #FDCD25;padding-left:10px;padding-right:10px"><a href="javascript:popup(\'?mid='. $GLOBALS['mid'] .'&help=1&token=' . $_REQUEST['token'] . '\',640,480,0);" class="links"><strong>' . $lang['help'] . '</strong></a></div><br />';
+<body>
+<!-- Navigation panel -->
+<nav class="navbar navbar-default navbar-fixed-top nav_shadow" role="navigation">
+	<img class="brand-logo" src="static/logo_45.png">
+	<div class="container-fluid">
+		<!-- Mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+				<span class="sr-only"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<!-- Main navbar -->
+		<div class="collapse navbar-collapse" id="navbar-collapse-main">
+			<ul class="nav navbar-nav navbar-right">
+
+				<li class="dropdown<?php echo $summary_active ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Summary') ?> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="?mid=10&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Overview') ?></a></li>
+						<li><a href="?mid=11&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Statistics') ?></a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown<?php echo $account_active ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Account') ?> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="?mid=20&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Options') ?></a></li>
+						<li><a href="?mid=21&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('License') ?></a></li>
+						<li><a href="?mid=22&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Updates') ?></a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown<?php echo $firewall_active ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Firewall') ?> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="?mid=30&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Options') ?></a></li>
+						<li><a href="?mid=31&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Policies') ?></a></li>
+						<li><a href="?mid=32&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Access Control') .$p ?></a></li>
+						<li><a href="?mid=35&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Rules Editor') ?></a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown<?php echo $monitoring_active ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Monitoring') ?> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="?mid=33&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('File Guard') .$p ?></a></li>
+						<li><a href="?mid=38&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('File Check') ?></a></li>
+						<li><a href="?mid=34&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Web Filter') .$p ?></a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown<?php echo $log_active ?>">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo _('Logs') ?> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="?mid=36&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Firewall Log') ?></a></li>
+						<li><a href="?mid=37&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Live Log') .$p ?></a></li>
+						<li><a href="?mid=39&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Centralized Logging') .$p ?></a></li>
+					</ul>
+				</li>
+
+				<li><p class="navbar-btn"><button class="btn btn-info btn-sm" title="Click to display the contextual help for this page" data-toggle="modal" data-target="#modal-help"><?php echo _('Help') ?></button>&nbsp;&nbsp;</p></li>
+
+				<li><p class="navbar-btn"><a href="?logout" onclick="return disconnect('<?php echo $nfw_options['admin_name'] ?>');" class="btn btn-warning btn-sm" title="Click to log out"><?php echo _('Logout') ?></a>&nbsp;&nbsp;</p></li>
+
+			</ul>
+		</div>
+	</div>
+</nav>
+<!-- End navigation panel -->
+
+<!-- Help panel -->
+<div id="modal-help" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><?php echo $menu[$GLOBALS['mid']] ?></h4>
+      </div>
+      <div class="modal-body"><?php
+        require './lib/help.php';
+        show_help();
+        ?></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info btn-sm" data-dismiss="modal"><?php echo _('Close') ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="main_nr" class="ntn-section">
+	<div class="container">
+		<div class="row ">
+<?php
 
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 
 function html_footer() {
 
-	// Check if NF is enabled :
-	if (! defined('NF_DISABLED') ) {
-		is_nf_enabled();
-	}
-   echo'
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-<center class=tinygrey><a href="https://nintechnet.com/ninjamonitoring/" title="NinjaMonitoring : monitor your website for suspicious activities"><img src="static/p_icon_nm.png" height="21" width="21" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://nintechnet.com/ninjafirewall/" title="NinjaFirewall : advanced firewall software for all your PHP applications"><img src="static/p_icon_nf.png" height="21" width="21" border="0"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://nintechnet.com/ninjarecovery/" title="NinjaRecovery : incident response, malware removal &amp; hacking recovery" ><img src="static/p_icon_nr.png" height="21" width="21" border="0"></a><br />&copy; 2012-'. date('Y') .' <a style="border-bottom:dotted 1px #FDCD25;color:#999999;" href="https://nintechnet.com/" target="_blank" title="The Ninja Technologies Network">NinTechNet</a><br />The Ninja Technologies Network</center>';
+	?>
+			</div> <!-- row -->
+	</div><!-- container-->
+</div> <!-- Main -->
 
-	// Show error message:
-	if ( NF_DISABLED && $GLOBALS['mid'] != 10 ) {
-		if (! empty($GLOBALS['err_fw'][NF_DISABLED]) ) {
-			$msg = $GLOBALS['err_fw'][NF_DISABLED];
-		} else {
-			$msg = 'Unknown error #' . NF_DISABLED;
-		}
-		echo '<script>	function show_err(){document.getElementById("error_table").style.display = "";document.getElementById("error_msg").innerHTML = \'' . $msg . '\';}	window.onload = show_err;</script>';
-	}
+<!-- Footer -->
+<div id="footer" class="ntn-section">
+	<div class="container footer-font">
 
-	echo '
+		<div class="row">
+			<div class="col-xs-6 col-sm-4 col-md-2">
+				<div>
+					<?php echo _('Summary') ?>
+				</div>
+				<div>
+					<a href="?mid=10&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Overview') ?></a><br />
+					<a href="?mid=11&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Statistics') ?></a><br />
+					<br />
+					<br />
+				</div>
+				<br />&nbsp;
+			</div>
+
+			<div class="col-xs-6 col-sm-4 col-md-2">
+				<div>
+					<?php echo _('Account') ?>
+				</div>
+				<div>
+					<a href="?mid=20&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Options') ?></a><br />
+					<a href="?mid=21&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('License') ?></a><br />
+					<a href="?mid=21&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Updates') ?></a><br />
+					<br />
+				</div>
+				<br />&nbsp;
+			</div>
+
+			<div class="col-xs-6 col-sm-4 col-md-2">
+				<div>
+					<?php echo _('Firewall') ?>
+				</div>
+				<div>
+					<a href="?mid=30&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Options') ?></a><br />
+					<a href="?mid=31&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Policies') ?></a><br />
+					<a href="?mid=32&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Access Control') ?></a><br />
+					<a href="?mid=35&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Rules Editor') ?></a>
+				</div>
+				<br />&nbsp;
+			</div>
+
+			<div class="col-xs-6 col-sm-4 col-md-2">
+				<div>
+					<?php echo _('Monitoring') ?>
+				</div>
+				<div>
+					<a href="?mid=33&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('File Guard') ?></a><br />
+					<a href="?mid=38&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('File Check') ?></a><br />
+					<a href="?mid=34&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Web Filter') ?></a><br />
+					<br />
+				</div>
+				<br />&nbsp;
+			</div>
+
+			<div class="col-xs-6 col-sm-4 col-md-2">
+				<div>
+					<?php echo _('Logs') ?>
+				</div>
+				<div>
+					<a href="?mid=36&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Firewall Log') ?></a><br />
+					<a href="?mid=37&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Live Log') ?></a><br />
+					<a href="?mid=39&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Centralized Logging') ?></a><br />
+					<br />
+				</div>
+			</div>
+
+			<div class="col-xs-6 col-sm-4 col-md-2">
+				<div>
+					<a style="color:#f7f7f7" href="?logout"><?php echo _('Updates info:') ?></a><br />
+				</div>
+				<div>
+					<a href="https://twitter.com/nintechnet" title="NinjaFirewall updates info on Twitter"><img border="0" src="static/twitter.png"></a>
+				</div>
+				<br />&nbsp;
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="text-center">
+				<?php
+					echo 'NinjaFirewall v'. NFW_ENGINE_VERSION .' ('.
+						sprintf( _('security rules: %s'), NFW_RULES_VERSION ) .')<br />'.
+						'&copy; 2011-'. date('Y') .' <a href="https://nintechnet.com/">The Ninja Technologies Network</a>';
+				?>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div><!-- footer -->
+
+<!-- jQuery and bootstrap JS plugins -->
+<script src="static/jquery.js<?php echo '?ver='. NFW_ENGINE_VERSION ?>"></script>
+<script src="static/bootstrap.min.js<?php echo '?ver='. NFW_ENGINE_VERSION ?>"></script>
+
+<?php
+	if ( $GLOBALS['mid'] == 10 || $GLOBALS['mid'] == 30 ||
+	$GLOBALS['mid'] == 31 || $GLOBALS['mid'] == 35) {
+	?>
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="popover"]').popover({animation:false, trigger:'hover', placement:'top'});
+	});
+</script>
+	<?php
+	}
+	?>
 </body>
-</html>';
-   exit;
+</html><?php
+
+	exit;
+
 }
 
-/* ------------------------------------------------------------------ */
+// =====================================================================
 // EOF
