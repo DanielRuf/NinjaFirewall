@@ -109,7 +109,7 @@ get_current_screen()->add_help_tab( array(
 		'title'     =>  __('Export/import configuration', 'ninjafirewall'),
 		'content'   => '<br />' .
 			__('This options lets you export you current configuration or import it from another NinjaFirewall (WP Edition) installation. The imported file must match your current version otherwise it will be rejected. Note that importing will override all firewall rules and options.', 'ninjafirewall') .
-			'<p><img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" height="16" border="0" width="16">&nbsp;<span class="description">' .
+			'<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">' .
 			__('"File Check" configuration will not be exported/imported.', 'ninjafirewall') . '</span></p>'
 	) );
 }
@@ -130,7 +130,7 @@ function help_nfsubpolicies() {
 		'id'        => 'policies01',
 		'title'     => __('Policies overview', 'ninjafirewall'),
 		'content'   => '<br />' .
-			sprintf( __('Because NinjaFirewall sits in front of WordPress, it can hook, scan and sanitise all PHP requests, HTTP variables, headers and IPs before they reach your blog: <code><a href="%s">$_GET</a></code>, <code><a href="%s">$_POST</a></code>, <code><a href="%s">$_COOKIES</a></code>, <code><a href="%s">$_REQUEST</a></code>, <code><a href="%s">$_FILES</a></code>, <code><a href="%s">$_SERVER</a></code> in HTTP and/or HTTPS mode.', 'ninjafirewall'), 'http://www.php.net/manual/en/reserved.variables.get.php', 'http://www.php.net/manual/en/reserved.variables.post.php', 'http://www.php.net/manual/en/reserved.variables.cookies.php', 'http://www.php.net/manual/en/reserved.variables.request.php', 'http://www.php.net/manual/en/reserved.variables.files.php', 'http://php.net/manual/en/reserved.variables.server.php') .
+			sprintf( __('Because NinjaFirewall sits in front of WordPress, it can hook, scan and sanitise all PHP requests, HTTP variables, headers and IPs before they reach your blog: <code><a href="%s">$_GET</a></code>, <code><a href="%s">$_POST</a></code>, <code><a href="%s">$_COOKIE</a></code>, <code><a href="%s">$_REQUEST</a></code>, <code><a href="%s">$_FILES</a></code>, <code><a href="%s">$_SERVER</a></code> in HTTP and/or HTTPS mode.', 'ninjafirewall'), 'http://www.php.net/manual/en/reserved.variables.get.php', 'http://www.php.net/manual/en/reserved.variables.post.php', 'http://www.php.net/manual/en/reserved.variables.cookies.php', 'http://www.php.net/manual/en/reserved.variables.request.php', 'http://www.php.net/manual/en/reserved.variables.files.php', 'http://php.net/manual/en/reserved.variables.server.php') .
 			'<br />' .
 			__('Use the options below to enable, disable or to tweak these rules according to your needs.', 'ninjafirewall') .
 			'<br />' .
@@ -143,12 +143,12 @@ function help_nfsubpolicies() {
 		'content'   => '<br />'.
 		__('You can choose to scan and reject dangerous content but also to sanitise requests and variables. Those two actions are different and can be combined together for better security.', 'ninjafirewall') .
 		'<li>'. __('Scan : if anything suspicious is detected, NinjaFirewall will block the request and return an HTTP error code and message (defined in the "Firewall Options" page). The user request will fail and the connection will be closed immediately.', 'ninjafirewall') .'</li>
-		<li>'. sprintf( __('Sanitise : this option will not block but sanitise the user request by escaping characters that can be used to exploit vulnerabilities (%s) and replacing <code>&lt;</code> and <code>&gt;</code> with their corresponding HTML entities (<code>&amp;lt;</code>, <code>&amp;gt;</code>). If it is a variable, i.e. <code>?name=value</code>, both its name and value will be sanitised.', 'ninjafirewall'), '<code>\'</code>, <code>"</code>, <code>\\</code>, <code>\n</code>, <code>\r</code>, <code>`</code>, <code>\x1a</code>, <code>\x00</code>') .'
+		<li>'. sprintf( __('Sanitise : this option will not block but sanitise the user request by escaping characters that can be used to exploit vulnerabilities (%s) and replacing <code>&lt;</code> and <code>&gt;</code> with their corresponding HTML entities (<code>&amp;lt;</code>, <code>&amp;gt;</code>). If it is a variable, i.e. <code>?name=value</code>, both its name and value will be sanitised.', 'ninjafirewall'), '<code>\'</code>, <code>"</code>, <code>\\</code>, <code>\n</code>, <code>\r</code>, <code>`</code>, <code>\x1a</code>, <code>\x00</code>, <code>*</code>, <code>?</code>') .'
 		<br />' .
 		__('This action will be performed when the filtering process is over, right before NinjaFirewall forwards the request to your PHP script.', 'ninjafirewall') . '
 		<br />
 		<br />
-		<img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" border="0" height="16" width="16">&nbsp;<span class="description">'. __('If you enabled <code>POST</code> requests sanitising, articles and messages posted by your visitors could be corrupted with excessive backslashes or substitution characters.', 'ninjafirewall'). '</span></li>'
+		<img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">'. __('If you enabled <code>POST</code> requests sanitising, articles and messages posted by your visitors could be corrupted with excessive backslashes or substitution characters.', 'ninjafirewall'). '</span></li>'
 	) );
 	get_current_screen()->add_help_tab( array(
 		'id'			=> 'policies04',
@@ -216,7 +216,7 @@ function help_nfsubpolicies() {
 		<br />
 		' . __('In addition to filtering incoming requests, NinjaFirewall can also hook the HTTP response in order to alter its headers. Those modifications can help to mitigate threats such as XSS, phishing and clickjacking attacks.', 'ninjafirewall'). '
 		<br />
-		<li>' . __('Set <code>X-Content-Type-Options</code> to protect against MIME type confusion attacks:', 'ninjafirewall'). '<span class="description"> ' . __('sending this response header with the <code>nosniff</code> value will prevent compatible browsers from MIME-sniffing a response away from the declared content-type.', 'ninjafirewall'). '</span></li>
+		<li>' . __('Set <code>X-Content-Type-Options</code> to protect against MIME type confusion attacks:', 'ninjafirewall'). '<span class="description"> ' . __('this header will send the nosniff value to instruct the browser to disable content or MIME sniffing and to use the content-type returned by the server. Some browsers try to guess (sniff) and override the content-type by looking at the content itself which, in some cases, could lead to security issues such as MIME Confusion Attacks.', 'ninjafirewall'). '</span></li>
 		<li>' . __('Set <code>X-Frame-Options</code> to protect against clickjacking attempts:', 'ninjafirewall'). '<span class="description"> ' . __('this header indicates a policy whether a browser must not allow to render a page in a &lt;frame&gt; or &lt;iframe&gt;. Hosts can declare this policy in the header of their HTTP responses to prevent clickjacking attacks, by ensuring that their content is not embedded into other pages or frames. NinjaFirewall accepts two different values:', 'ninjafirewall'). '
 			<ul>
 				<li><code>SAMEORIGIN</code>: ' . __('a browser receiving content with this header must not display this content in any frame from a page of different origin than the content itself.', 'ninjafirewall'). '</li>
@@ -226,9 +226,11 @@ function help_nfsubpolicies() {
 			' . __('NinjaFirewall does not support the <code>ALLOW-FROM</code> value.', 'ninjafirewall'). '
 			<br />' .
 			__('Since v3.1.3, WordPress sets this value to <code>SAMEORIGIN</code> for the administrator and the login page only.', 'ninjafirewall'). '</li>
-		<li>' . __('Enforce <code>X-XSS-Protection</code> (IE, Chrome and Safari browsers):', 'ninjafirewall'). '<span class="description"> ' . __('this header allows compatible browsers to identify and block XSS attack by preventing the malicious script from executing. NinjaFirewall will set its value to <code>1; mode=block</code>.', 'ninjafirewall'). '</span></li>
-		<li>' . __('Force <code>HttpOnly</code> flag on all cookies to mitigate XSS attacks:', 'ninjafirewall'). '<span class="description"> ' . __('adding this flag to cookies helps to mitigate the risk of cross-site scripting by preventing them from being accessed through client-side script. NinjaFirewall can hook all cookies sent by your blog, its plugins or any other PHP script, add the <code>HttpOnly</code> flag if it is missing, and re-inject those cookies back into your server HTTP response headers right before they are sent to your visitors. Note that WordPress sets that flag on the logged in user cookies only.', 'ninjafirewall'). '</span></li>
-		<p><img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" height="16" border="0" width="16">&nbsp;<span class="description">' . __('If your PHP scripts send cookies that need to be accessed from JavaScript, you should keep that option disabled.', 'ninjafirewall'). '</span></p>
+		<li>' . __('Disable <code>X-XSS-Protection</code> (IE/Edge, Chrome, Opera and Safari browsers):', 'ninjafirewall'). '<span class="description"> ' . __('this header allows browsers to identify and block XSS attacks by preventing malicious scripts from executing. It is enabled by default on all compatible browsers. Because it can lead to false positives and there are better alternatives (e.g. Content-Security-Policy), it is possible to turn it off. When it is enabled, NinjaFirewall will set its value to <code>mode=block</code>.', 'ninjafirewall'). '</span></li>'.
+		'<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">' . __("If a visitor disabled their browser's XSS filter, you cannot re-enable it with that option.", 'ninjafirewall'). '</span></p>'.
+
+		'<li>' . __('Force <code>HttpOnly</code> flag on all cookies to mitigate XSS attacks:', 'ninjafirewall'). '<span class="description"> ' . __('adding this flag to cookies helps to mitigate the risk of cross-site scripting by preventing them from being accessed through client-side scripts. NinjaFirewall can hook all cookies sent by your blog, its plugins or any other PHP script, add the <code>HttpOnly</code> flag if it is missing, and re-inject those cookies back into your server HTTP response headers right before they are sent to your visitors. Note that WordPress sets that flag on the logged in user cookies only.', 'ninjafirewall'). '</span></li>
+		<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">' . __('If your PHP scripts send cookies that need to be accessed from JavaScript, you should keep that option disabled.', 'ninjafirewall'). '</span></p>
 		<li>' . __('Set <code>Strict-Transport-Security</code> (HSTS) to enforce secure connections to the server:', 'ninjafirewall'). '<span class="description"> ' . __('this policy enforces secure HTTPS connections to the server. Web browsers will not allow the user to access the web application over insecure HTTP protocol. It helps to defend against cookie hijacking and Man-in-the-middle attacks. Most recent browsers support HSTS headers.', 'ninjafirewall'). '</span></li>
 		<li>' . __('Set <code>Content-Security-Policy</code>:', 'ninjafirewall'). '<span class="description"> ' . __('this policy helps to mitigate threats such as XSS, phishing and clickjacking attacks. It covers JavaScript, CSS, HTML frames, web workers, fonts, images, objects (Java, ActiveX, audio and video files), and other HTML5 features.', 'ninjafirewall'). ' ' . __('NinjaFirewall lets you configure the CSP policy separately for the frontend (blog, website) and the backend (WordPress admin dashboard).', 'ninjafirewall') . '</span></li>
 		<br />
@@ -268,7 +270,7 @@ function help_nfsubfileguard() {
 			__('If a hacker uploaded a shell script to your site (or injected a backdoor into an already existing file) and tried to directly access that file using his browser or a script, NinjaFirewall would hook the HTTP request and immediately detect that the file was recently modified/created. It would send you a detailed alert (script name, IP, request, date and time). Alerts will be sent to the contact email address defined in the "Event Notifications" menu.', 'ninjafirewall') .
 			'<p>' . __('If you do not want to monitor a folder, you can exclude its full path or a part of it (e.g., <code>/var/www/public_html/cache/</code> or <code>/cache/</code> etc). NinjaFirewall will compare this value to the <code>$_SERVER["SCRIPT_FILENAME"]</code> server variable and, if it matches, will ignore it.', 'ninjafirewall') . '</p>' .
 			__('Multiple values must be comma-separated (e.g., <code>/foo/bar/,/cache/</code>).', 'ninjafirewall') .'</li>' .
-			'<p><img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" height="16" border="0" width="16">&nbsp;<span class="description">' . __('File Guard real-time detection is a totally unique feature, because NinjaFirewall is the only plugin for WordPress that can hook HTTP requests sent to any PHP script, even if that script is not part of the WordPress package (third-party software, shell script, backdoor etc).', 'ninjafirewall') . '</span></p>'
+			'<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">' . __('File Guard real-time detection is a totally unique feature, because NinjaFirewall is the only plugin for WordPress that can hook HTTP requests sent to any PHP script, even if that script is not part of the WordPress package (third-party software, shell script, backdoor etc).', 'ninjafirewall') . '</span></p>'
 	) );
 }
 /* ------------------------------------------------------------------ */ // i18n+
@@ -313,7 +315,7 @@ function help_nfsubfilecheck() {
 			'<br />'.
 			__('Reports will be sent to the contact email address defined in the "Event Notifications" menu.', 'ninjafirewall'). '</p>'.
 
-			'<p><img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" height="16" border="0" width="16">&nbsp;<span class="description">'. sprintf( __('Scheduled scans rely on <a href="%s">WordPress pseudo cron</a> which works only if your site gets sufficient traffic.', 'ninjafirewall'), 'http://codex.wordpress.org/Category:WP-Cron_Functions') . '</span></p>'
+			'<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">'. sprintf( __('Scheduled scans rely on <a href="%s">WordPress pseudo cron</a> which works only if your site gets sufficient traffic.', 'ninjafirewall'), 'http://codex.wordpress.org/Category:WP-Cron_Functions') . '</span></p>'
 	) );
 
 }
@@ -386,7 +388,7 @@ function help_nfsublogin() {
 		__('Sample loglines:', 'ninjafirewall') .
 		'<br />
 		<textarea class="small-text code" style="width:100%;height:80px;" wrap="off">Aug 31 01:40:35 www ninjafirewall[6191]: Possible brute-force attack from 172.16.0.1 on mysite.com (wp-login.php). Blocking access for 5mn.'. "\n" . 'Aug 31 01:45:28 www ninjafirewall[6192]: Possible brute-force attack from fe80::6e88:14ff:fe3e:86f0 on blog.domain.com (XML-RPC API). Blocking access for 25mn.</textarea>
-		<p><img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" height="16" border="0" width="16">&nbsp;<span class="description">' . sprintf( __('Be careful if you are behind a load balancer, reverse-proxy or CDN because the Login Protection feature will always record the <code>REMOTE_ADDR</code> IP. If you have an application parsing the AUTH log in order to ban IPs (e.g. Fail2ban), you <strong>must</strong> setup your HTTP server to forward the correct IP (or use the <code><a href="%s">.htninja</a></code> file), otherwise you will likely block legitimate users.', 'ninjafirewall'), 'https://nintechnet.com/ninjafirewall/wp-edition/help/?htninja') . '</span></p>
+		<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">' . sprintf( __('Be careful if you are behind a load balancer, reverse-proxy or CDN because the Login Protection feature will always record the <code>REMOTE_ADDR</code> IP. If you have an application parsing the AUTH log in order to ban IPs (e.g. Fail2ban), you <strong>must</strong> setup your HTTP server to forward the correct IP (or use the <code><a href="%s">.htninja</a></code> file), otherwise you will likely block legitimate users.', 'ninjafirewall'), 'https://nintechnet.com/ninjafirewall/wp-edition/help/?htninja') . '</span></p>
 		</div>'
 	) );
 
@@ -411,17 +413,33 @@ function help_nfsublog() {
 			<li>' . __('REQUEST : the HTTP request including offending variables and values as well as the reason the action was logged.', 'ninjafirewall') . '</li>'
 	) );
 
+	get_current_screen()->add_help_tab( array(
+		'id'        => 'log02',
+		'title'     => __('Auto-delete log', 'ninjafirewall'),
+		'content'   => '<br />'.
+			__('This options lets you configure NinjaFirewall to delete its old logs automatically. By default, logs are never deleted, <b>even when uninstall NinjaFirewall</b>. Leave this value to <code>0</code> if you don\'t want to delete old logs.', 'ninjafirewall'). '</p>'
+	) );
+
 	// Centralized Logging tab:
 	get_current_screen()->add_help_tab( array(
-		'id'        => 'log04',
+		'id'        => 'log03',
 		'title'     => __('Centralized Logging', 'ninjafirewall'),
 		'content'   =>
 			'<p>'. __('Centralized Logging lets you remotely access the firewall log of all your NinjaFirewall protected websites from one single installation. You do not need any longer to log in to individual servers to analyse your log data.', 'ninjafirewall') .	' ' . sprintf( __('<a href="%s">Consult our blog</a> for more info about it.', 'ninjafirewall'), 'https://blog.nintechnet.com/centralized-logging-with-ninjafirewall/' ) . '</p>' .
 			'<li>' .	 __('Enter your public key (optional): This is the public key that was created from your main server.', 'ninjafirewall') . '</li>' .
 
-			'<p><img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" height="16" border="0" width="16">&nbsp;<span class="description">'.
+			'<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">'.
 			__('Centralized Logging will keep working even if NinjaFirewall is disabled. Delete your public key below if you want to disable it.', 'ninjafirewall') .
 			'</span></p>'
+	) );
+
+	// GDPR compliance tab:
+	get_current_screen()->add_help_tab( array(
+		'id'        => 'log04',
+		'title'     => __('GDPR Compliance', 'ninjafirewall'),
+		'content'   =>
+			'<p>'.  __('NinjaFirewall is compliant with the General Data Protection Regulation (GDPR). For more info, please visit our blog:', 'ninjafirewall') .' <a href="https://blog.nintechnet.com/ninjafirewall-general-data-protection-regulation-compliance/">https://blog.nintechnet.com/ninjafirewall-general-data-protection-regulation-compliance/</a>'.
+			'</p>'
 	) );
 
 }
@@ -435,14 +453,14 @@ function help_nfsublivelog() {
 		'id'        => 'log01',
 		'title'     => __('Live Log', 'ninjafirewall'),
 		'content'   =>
-			'<p>' .	__('Live Log lets you watch your website traffic in real time. It displays connections in a format similar to the one used by most HTTP server logs. Note that requests sent to static elements like JS/CSS files and images are not managed by NinjaFirewall.', 'ninjafirewall') .'</p>
+			'<p>' .	__('Live Log lets you watch your blog traffic in real time, just like the Unix <code>tail -f</code> command. Note that requests sent to static elements like JS/CSS files and images are not managed by NinjaFirewall.', 'ninjafirewall') .'</p>
 
 			<p>' . __('You can enable/disable the monitoring process, change the refresh rate, clear the screen, enable automatic vertical scrolling, change the log format, select which traffic you want to view (HTTP/HTTPS) and the timezone as well.', 'ninjafirewall') .
 			'</p>
 
-			<p>' . __('Live Log does not make use of any WordPress core file (e.g., <code>admin-ajax.php</code>). It communicates directly with the firewall without loading WordPress bootstrap. Consequently, it is fast, light and it should not affect your server load, even if you set its refresh rate to the lowest value.', 'ninjafirewall') .	'</p>
+			<p>' . __('Live Log does not make use of any WordPress core file (e.g., <code>admin-ajax.php</code>). It communicates directly with the firewall without loading WordPress bootstrap. Consequently, it is fast, lightweight and it should not affect your server load, even if you set its refresh rate to the lowest value.', 'ninjafirewall') .	'</p>
 
-			<p><img src="' . plugins_url( '/images/icon_warn_16.png', __DIR__ ) . '" height="16" border="0" width="16">&nbsp;<span class="description">' . __('If you are using the optional <code>.htninja</code> configuration file to whitelist your IP, the Live Log feature will not work.', 'ninjafirewall') . '
+			<p><img src="' . plugins_url( '/images/glyphicons-warning.png', __DIR__ ) . '">&nbsp;<span class="description">' . __('If you are using the optional <code>.htninja</code> configuration file to whitelist your IP, the Live Log feature will not work.', 'ninjafirewall') . '
 		</span></p>'
 	) );
 	get_current_screen()->add_help_tab( array(
@@ -518,9 +536,6 @@ function help_nfsubedit() {
 				</tr>
 				<tr>
 					<th scope="row" style="text-align:left">Summer Of Pwnage</th><td>https://sumofpwn.nl/</td>
-				</tr>
-				<tr>
-					<th scope="row" style="text-align:left">Wordfence</th><td>https://wordfence.com/</td>
 				</tr>
 				<tr>
 					<th scope="row" style="text-align:left">WordPress Hütte</th><td>http://wphutte.com/</td>

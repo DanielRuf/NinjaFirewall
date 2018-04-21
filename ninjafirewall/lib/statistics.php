@@ -27,6 +27,10 @@ echo '
 		<div style="width:33px;height:33px;background-image:url( ' . plugins_url() . '/ninjafirewall/images/ninjafirewall_32.png);background-repeat:no-repeat;background-position:0 0;margin:7px 5px 0 0;float:left;"></div>
 	<h1>' . __('Statistics', 'ninjafirewall') . '</h1>';
 
+// Display a one-time notice after two weeks of use:
+$nfw_options = nfw_get_option( 'nfw_options' );
+nfw_rate_notice( $nfw_options );
+
 $critical = $high = $medium = $slow = $benchmark =
 $tot_bench = $speed = $upload = $banned_ip = $xtr = 0;
 $fast = 1000;
@@ -113,11 +117,11 @@ echo '
 			<td align="left">' . $ret . '</td>
 		</tr>
 		<tr>
-			<th scope="row">' . __('Blocked hacking attempts', 'ninjafirewall') . '</th>
+			<th scope="row">' . __('Blocked threats', 'ninjafirewall') . '</th>
 			<td align="left">' . $total . '</td>
 		</tr>
 		<tr>
-			<th scope="row">' . __('Hacking attempts severity', 'ninjafirewall') . '</th>
+			<th scope="row">' . __('Threats level', 'ninjafirewall') . '</th>
 			<td align="left">
 				' . __('Critical', 'ninjafirewall') . ' : ' . $critical . '%<br />
 				<table bgcolor="#DFDFDF" border="0" cellpadding="0" cellspacing="0" height="14" width="250" align="left" style="height:14px;">
