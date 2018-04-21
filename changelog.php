@@ -1,6 +1,9 @@
 <?php
 $changelog = <<<'EOT'
 
+= 3.2.15 =
+* Updated security rules.
+
 = 3.2.14 =
 * Added "IP Anonymization" option. It will anonymize IP addresses in the firewall log by removing their last 3 characters. See "Firewall > Options > IP Anonymization".
 * [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
