@@ -18,6 +18,10 @@
 
 $changelog = <<<'EOT'
 
+= 3.3.1 =
+* Updated security rules.
+* Fixed a fatal error if the Gettext extension was missing.
+
 = 3.3 =
 * NinjaFirewall has a new user interface. You can even customize it with your own style sheet. See our blog for more info: http://nin.link/nfui/
 * Internationalization is now using the GNU Gettext. You can translate NinjaFirewall into your language by using the PO file available in "./locale/ninjafirewall_pro.pot".

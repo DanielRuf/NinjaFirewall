@@ -164,6 +164,15 @@ function nfw_regional_settings() {
 	}
 	sort( $i18n_list );
 
+	// Make sure the Gettext extension is installed, otherwise we warn
+	// and disable the possibility to change the language:
+	$disabled = '';
+	$warn_msg = '';
+	if (! function_exists( 'gettext' ) ) {
+		$warn_msg = '<br />'. glyphicon('warning') .' '.  _('The PHP Gettext extension is missing on your server. Please install it if you want to change languages.');
+		$disabled = ' disabled';
+	}
+
 	if ( empty( $_SESSION['admin_lang'] ) ) {
 		// Load en_US language file by default :
 		$tmp_lang = 'en_US';
@@ -194,10 +203,15 @@ function nfw_regional_settings() {
 						if ( $i18n == $tmp_lang ) {
 							echo ' selected';
 						}
-						echo '>' . htmlspecialchars( $i18n ) . '</option>';
+						echo $disabled . '>' . htmlspecialchars( $i18n ) . '</option>';
 					}
 					?>
 				</select>
+				<?php
+				if (! empty( $warn_msg ) ) {
+					echo $warn_msg;
+				}
+				?>
 			</td>
 		</tr>
 		<tr>

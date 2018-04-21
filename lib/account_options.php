@@ -118,10 +118,19 @@ $current_tz = @date_default_timezone_get();
 			}
 		}
 		sort( $i18n_list );
+
+		// Make sure the Gettext extension is installed, otherwise we warn
+		// and disable the possibility to change the language:
+		$disabled = '';
+		$warn_msg = '';
+		if (! function_exists( 'gettext' ) ) {
+			$warn_msg = glyphicon('help', _('The PHP Gettext extension is missing on your server. Please install it if you want to change languages.') );
+			$disabled = ' disabled';
+		}
 		?>
 		<tr>
 			<td width="40%" align="left"><?php echo _('Select a display language') ?></td>
-			<td width="5%">&nbsp;</td>
+			<td width="5%"><?php echo $warn_msg ?></td>
 			<td width="55%" align="left">
 				<select name="admin_lang" class="form-control">
 					<?php
@@ -130,15 +139,10 @@ $current_tz = @date_default_timezone_get();
 						if ( $i18n == $nfw_options['admin_lang'] ) {
 							echo ' selected';
 						}
-						echo '>' . htmlspecialchars( $i18n ) . '</option>';
+						echo $disabled . '>' . htmlspecialchars( $i18n ) . '</option>';
 					}
 					?>
 				</select>
-				<?php /*
-				<br />
-				<i><?php echo _('If you translated NinjaFirewall into your language, send us your PO/MO files. We could make them available on our website to other users!') ?></i>
-				*/
-				?>
 			</td>
 		</tr>
 	</table>

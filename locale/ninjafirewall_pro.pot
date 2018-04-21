@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NinjaFirewall pot\n"
-"POT-Creation-Date: 2018-03-30 19:17+0700\n"
-"PO-Revision-Date: 2018-03-30 19:17+0700\n"
+"POT-Creation-Date: 2018-04-01 16:52+0700\n"
+"PO-Revision-Date: 2018-04-01 16:52+0700\n"
 "Last-Translator: NinTechNet <contact@nintechnet.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -30,7 +30,7 @@ msgstr ""
 msgid "Delete log"
 msgstr ""
 
-#: index.php:344 index.php:541 install.php:1298
+#: index.php:344 index.php:541 install.php:1312
 msgid "Close"
 msgstr ""
 
@@ -115,7 +115,7 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: index.php:484 index.php:587 install.php:496
+#: index.php:484 index.php:587 install.php:510
 msgid "License"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 msgid "Updates info:"
 msgstr ""
 
-#: index.php:648 install.php:1443
+#: index.php:648 install.php:1457
 #, php-format
 msgid "security rules: %s"
 msgstr ""
@@ -202,119 +202,125 @@ msgstr ""
 msgid "Missing %s file. Please re-install NinjaFirewall."
 msgstr ""
 
-#: install.php:181
+#: install.php:172 lib/account_options.php:127
+msgid ""
+"The PHP Gettext extension is missing on your server. Please install it if "
+"you want to change languages."
+msgstr ""
+
+#: install.php:190
 #, php-format
 msgid "Welcome to NinjaFirewall %s installation!"
 msgstr ""
 
-#: install.php:185 lib/account_options.php:76 lib/help.php:47
+#: install.php:194 lib/account_options.php:76 lib/help.php:47
 msgid "Regional Settings"
 msgstr ""
 
-#: install.php:188 lib/account_options.php:123
+#: install.php:197 lib/account_options.php:132
 msgid "Select a display language"
 msgstr ""
 
-#: install.php:204 lib/account_options.php:79
+#: install.php:218 lib/account_options.php:79
 msgid "Display dates and times using the following timezone"
 msgstr ""
 
-#: install.php:221 install.php:428 install.php:471 install.php:505
-#: install.php:631 install.php:952 install.php:1312
+#: install.php:235 install.php:442 install.php:485 install.php:519
+#: install.php:645 install.php:966 install.php:1326
 msgid "Next"
 msgstr ""
 
-#: install.php:237
+#: install.php:251
 msgid "System requirements"
 msgstr ""
 
-#: install.php:240
+#: install.php:254
 msgid "PHP version"
 msgstr ""
 
-#: install.php:248
+#: install.php:262
 #, php-format
 msgid ""
 "NinjaFirewall requires PHP v5.3 or greater, but your current version is %s."
 msgstr ""
 
-#: install.php:264
+#: install.php:278
 msgid "Operating system"
 msgstr ""
 
-#: install.php:270
+#: install.php:284
 msgid "NinjaFirewall is not compatible with Microsoft Windows."
 msgstr ""
 
-#: install.php:290
+#: install.php:304
 msgid ""
 "You have \"safe_mode\" enabled, please disable it. This feature has been "
 "DEPRECATED as of PHP 5.3 and REMOVED as of PHP 5.4."
 msgstr ""
 
-#: install.php:297 install.php:339 lib/firewall_access_control.php:676
+#: install.php:311 install.php:353 lib/firewall_access_control.php:676
 #: lib/firewall_options.php:52 lib/firewall_options.php:59
 #: lib/firewall_options.php:73 lib/firewall_options.php:79
 msgid "Disabled"
 msgstr ""
 
-#: install.php:312
+#: install.php:326
 #, php-format
 msgid ""
 "\"auto_prepend_file\" is already in use: %s<br />Because NinjaFirewall needs "
 "to use this directive, it will orverride your current one."
 msgstr ""
 
-#: install.php:319
+#: install.php:333
 msgid "Unused"
 msgstr ""
 
-#: install.php:332
+#: install.php:346
 msgid ""
 "You have \"magic_quotes_gpc\" enabled, please disable it, this feature has "
 "been DEPRECATED as of PHP 5.3 and REMOVED as of PHP 5.4."
 msgstr ""
 
-#: install.php:352
+#: install.php:366
 msgid ""
 "Your PHP configuration does not have \"cURL\" support. Please install it."
 msgstr ""
 
-#: install.php:359 install.php:378
+#: install.php:373 install.php:392
 msgid "Installed"
 msgstr ""
 
-#: install.php:372
+#: install.php:386
 msgid ""
 "Your PHP configuration does not have the \"ZipArchive\" class. You can still "
 "install NinjaFirewall, but you will not be able to use one-click updates."
 msgstr ""
 
-#: install.php:385
+#: install.php:399
 msgid "Configuration folder"
 msgstr ""
 
-#: install.php:391 install.php:411
+#: install.php:405 install.php:425
 #, php-format
 msgid "The %s folder is not writable. Please change its permissions."
 msgstr ""
 
-#: install.php:398 install.php:418
+#: install.php:412 install.php:432
 #, php-format
 msgid "The %s folder is writable"
 msgstr ""
 
-#: install.php:405
+#: install.php:419
 msgid "Log folder"
 msgstr ""
 
-#: install.php:433
+#: install.php:447
 msgid ""
 "NinjaFirewall installation cannot proceed. Please change your system "
 "settings to match the  requirements."
 msgstr ""
 
-#: install.php:454 install.php:487
+#: install.php:468 install.php:501
 #, php-format
 msgid ""
 "Cannot find the %s file. Make sure your version of NinjaFirewall is not "
@@ -322,189 +328,189 @@ msgid ""
 "aborted."
 msgstr ""
 
-#: install.php:462
+#: install.php:476
 msgid "Release Notes"
 msgstr ""
 
-#: install.php:540
+#: install.php:554
 msgid "Please enter the administrator name."
 msgstr ""
 
-#: install.php:545 install.php:656
+#: install.php:559 install.php:670
 msgid ""
 "The administrator name can only contain from 6 to 20 alpha-numeric "
 "characters and underscore (_)."
 msgstr ""
 
-#: install.php:550
+#: install.php:564
 msgid "Please enter the administrator password."
 msgstr ""
 
-#: install.php:555 install.php:663
+#: install.php:569 install.php:677
 msgid "The administrator password must contain at least 6 characters."
 msgstr ""
 
-#: install.php:560
+#: install.php:574
 msgid "Please retype the administrator password."
 msgstr ""
 
-#: install.php:565
+#: install.php:579
 msgid "The administrator password must be the same in both fields."
 msgstr ""
 
-#: install.php:570 install.php:680
+#: install.php:584 install.php:694
 msgid "Please enter a valid administrator email address."
 msgstr ""
 
-#: install.php:575 install.php:691
+#: install.php:589 install.php:705
 msgid "Please enter your NinjaFirewall Pro+ license key."
 msgstr ""
 
-#: install.php:590 lib/firewall_access_control.php:85 lib/help.php:232
+#: install.php:604 lib/firewall_access_control.php:85 lib/help.php:232
 #: lib/summary_overview.php:395 lib/summary_overview.php:403
 msgid "Administrator"
 msgstr ""
 
-#: install.php:593
+#: install.php:607
 msgid "Administrator name (6 to 20 characters)"
 msgstr ""
 
-#: install.php:600
+#: install.php:614
 msgid "Administrator password (at least 6 characters)"
 msgstr ""
 
-#: install.php:607
+#: install.php:621
 msgid "Retype administrator password"
 msgstr ""
 
-#: install.php:614
+#: install.php:628
 msgid "Administrator email"
 msgstr ""
 
-#: install.php:622
+#: install.php:636
 msgid "Enter your NinjaFirewall Pro+ license key"
 msgstr ""
 
-#: install.php:709
+#: install.php:723
 msgid "Unable to connect to NinjaFirewall server to check the license."
 msgstr ""
 
-#: install.php:711
+#: install.php:725
 msgid "Unable to connect to NinjaFirewall server: HTTP error."
 msgstr ""
 
-#: install.php:713
+#: install.php:727
 msgid ""
 "Unable to connect to NinjaFirewall server: no response or empty response."
 msgstr ""
 
-#: install.php:715
+#: install.php:729
 msgid "Unable to connect to NinjaFirewall server: unexpected response."
 msgstr ""
 
-#: install.php:724 lib/account_updates.php:443
+#: install.php:738 lib/account_updates.php:443
 #, php-format
 msgid "Your license is not valid (#%s)."
 msgstr ""
 
-#: install.php:726
+#: install.php:740
 msgid "Unable to connect to NinjaFirewall server: unknown error."
 msgstr ""
 
-#: install.php:795 install.php:801 install.php:810 install.php:818
-#: install.php:821 install.php:825 install.php:921 install.php:926
-#: install.php:931
+#: install.php:809 install.php:815 install.php:824 install.php:832
+#: install.php:835 install.php:839 install.php:935 install.php:940
+#: install.php:945
 msgid " (recommended)"
 msgstr ""
 
-#: install.php:842 install.php:969
+#: install.php:856 install.php:983
 msgid "Please enter the directory to be protected by NinjaFirewall."
 msgstr ""
 
-#: install.php:855
+#: install.php:869
 msgid "Please select the PHP initialization file supported by your server."
 msgstr ""
 
-#: install.php:880
+#: install.php:894
 msgid "Integration"
 msgstr ""
 
-#: install.php:884
+#: install.php:898
 #, php-format
 msgid ""
 "Enter the directory to be protected by NinjaFirewall. By default, it is "
 "<code>%s</code>"
 msgstr ""
 
-#: install.php:892 install.php:1003
+#: install.php:906 install.php:1017
 msgid "Select your HTTP server and PHP SAPI"
 msgstr ""
 
-#: install.php:899
+#: install.php:913
 msgid "CGI or PHP-FPM"
 msgstr ""
 
-#: install.php:901 install.php:902
+#: install.php:915 install.php:916
 msgid "Other webserver"
 msgstr ""
 
-#: install.php:905
+#: install.php:919
 msgid "Click to view your server PHP configuration"
 msgstr ""
 
-#: install.php:905
+#: install.php:919
 msgid "View PHPINFO"
 msgstr ""
 
-#: install.php:913 install.php:1131
+#: install.php:927 install.php:1145
 msgid "Please check our blog if you want to install NinjaFirewall on HHVM."
 msgstr ""
 
-#: install.php:942 install.php:1010
+#: install.php:956 install.php:1024
 msgid "Select the PHP initialization file supported by your server"
 msgstr ""
 
-#: install.php:945
+#: install.php:959
 msgid "Used by most shared hosting accounts"
 msgstr ""
 
-#: install.php:946
+#: install.php:960
 msgid ""
 "Used by most dedicated/VPS servers, as well as shared hosting accounts that "
 "do not support php.ini"
 msgstr ""
 
-#: install.php:946
+#: install.php:960
 msgid "more info"
 msgstr ""
 
-#: install.php:947
+#: install.php:961
 msgid "A few shared hosting accounts. Seldom used"
 msgstr ""
 
-#: install.php:990
+#: install.php:1004
 msgid ""
 "The directory to protect must include NinjaFirewall installation folder."
 msgstr ""
 
-#: install.php:1032 install.php:1036
+#: install.php:1046 install.php:1050
 #, php-format
 msgid "Error #%s"
 msgstr ""
 
-#: install.php:1053
+#: install.php:1067
 msgid "Activation"
 msgstr ""
 
-#: install.php:1063 install.php:1167
+#: install.php:1077 install.php:1181
 #, php-format
 msgid ""
 "In order to protect your site, NinjaFirewall needs some specific directives "
 "to be added to your <code>%s</code> file."
 msgstr ""
 
-#: install.php:1066 install.php:1092 install.php:1113 install.php:1146
-#: install.php:1171
+#: install.php:1080 install.php:1106 install.php:1127 install.php:1160
+#: install.php:1185
 #, php-format
 msgid ""
 "Please add the following <font color=\"red\">red lines</font> of code to "
@@ -512,64 +518,64 @@ msgid ""
 "of the file and should not be changed:"
 msgstr ""
 
-#: install.php:1071 install.php:1097 install.php:1118 install.php:1151
-#: install.php:1176
+#: install.php:1085 install.php:1111 install.php:1132 install.php:1165
+#: install.php:1190
 #, php-format
 msgid ""
 "Please create a <code>%s</code> file, and add the following lines of code to "
 "it:"
 msgstr ""
 
-#: install.php:1088 install.php:1143
+#: install.php:1102 install.php:1157
 #, php-format
 msgid ""
 "In order to protect your site, NinjaFirewall needs some specific directives "
 "to be added to your <code>%s</code> and <code>%s</code> files."
 msgstr ""
 
-#: install.php:1131
+#: install.php:1145
 msgid ""
 "Add the following code to your <code>/etc/hhvm/php.ini</code> file, and "
 "restart HHVM afterwards:"
 msgstr ""
 
-#: install.php:1188
+#: install.php:1202
 msgid ""
 "After making those changes, please click on the button below to test "
 "NinjaFirewall."
 msgstr ""
 
-#: install.php:1193
+#: install.php:1207
 msgid "Test NinjaFirewall"
 msgstr ""
 
-#: install.php:1221 install.php:1409
+#: install.php:1235 install.php:1423
 msgid "NinjaFirewall: Installation"
 msgstr ""
 
-#: install.php:1242
+#: install.php:1256
 msgid "Failed!"
 msgstr ""
 
-#: install.php:1243
+#: install.php:1257
 msgid "The firewall is not loaded."
 msgstr ""
 
-#: install.php:1245
+#: install.php:1259
 msgid "Suggestions:"
 msgstr ""
 
-#: install.php:1251
+#: install.php:1265
 msgid ""
 "You selected <code>Apache + PHP5 module</code> as your HTTP server and PHP "
 "SAPI. Maybe your HTTP server is <code>Apache + CGI/FastCGI</code>?"
 msgstr ""
 
-#: install.php:1251 install.php:1263
+#: install.php:1265 install.php:1277
 msgid "You can go back and try to select another HTTP server type"
 msgstr ""
 
-#: install.php:1257
+#: install.php:1271
 msgid ""
 "You have selected <code>.user.ini</code> as your PHP initialization file. "
 "Unlike <code>php.ini</code>, <code>.user.ini</code> files are not reloaded "
@@ -579,183 +585,183 @@ msgid ""
 "the firewall test again."
 msgstr ""
 
-#: install.php:1263
+#: install.php:1277
 msgid ""
 "You selected <code>Apache + CGI/FastCGI</code> as your HTTP server &amp; PHP "
 "SAPI. Maybe your HTTP server is <code>Apache + PHP5 module</code>?"
 msgstr ""
 
-#: install.php:1267
+#: install.php:1281
 msgid "You may have selected the wrong PHP initialization file."
 msgstr ""
 
-#: install.php:1267
+#: install.php:1281
 msgid "You can go back and try to select another INI file"
 msgstr ""
 
-#: install.php:1274
+#: install.php:1288
 msgid "Need help? Check our blog:"
 msgstr ""
 
-#: install.php:1278
+#: install.php:1292
 msgid "Test again"
 msgstr ""
 
-#: install.php:1290
+#: install.php:1304
 msgid "Error!"
 msgstr ""
 
-#: install.php:1291
+#: install.php:1305
 msgid "NinjaFirewall is loaded but returned the following error:"
 msgstr ""
 
-#: install.php:1293
+#: install.php:1307
 msgid "You may need to restart the installer to fix that error."
 msgstr ""
 
-#: install.php:1304
+#: install.php:1318
 msgid "It works!"
 msgstr ""
 
-#: install.php:1305
+#: install.php:1319
 msgid "Congratulations, NinjaFirewall is up and running."
 msgstr ""
 
-#: install.php:1306
+#: install.php:1320
 msgid "Click the button below to be redirected to the administration console."
 msgstr ""
 
-#: install.php:1317
+#: install.php:1331
 msgid "Quick Start, FAQ & Troubleshooting Guide"
 msgstr ""
 
-#: install.php:1319
+#: install.php:1333
 msgid "Hi,"
 msgstr ""
 
-#: install.php:1321
+#: install.php:1335
 msgid ""
 "This is NinjaFirewall's installer. Below are some helpful info and links you "
 "may consider reading before using NinjaFirewall."
 msgstr ""
 
-#: install.php:1324
+#: install.php:1338
 msgid "Troubleshooting:"
 msgstr ""
 
-#: install.php:1327
+#: install.php:1341
 msgid "-Failed installation (\"Error: the firewall is not loaded\")?"
 msgstr ""
 
-#: install.php:1328
+#: install.php:1342
 msgid "-How to disable NinjaFirewall?"
 msgstr ""
 
-#: install.php:1329
+#: install.php:1343
 msgid "-Blocked visitors?"
 msgstr ""
 
-#: install.php:1330
+#: install.php:1344
 msgid "-I lost my administrator password. How can I recover it?"
 msgstr ""
 
-#: install.php:1332
+#: install.php:1346
 msgid "NinjaFirewall (Pro/Pro+ Edition) troubleshooter script:"
 msgstr ""
 
-#: install.php:1334
+#: install.php:1348
 msgid "-Rename this file to \"pro-check.php\"."
 msgstr ""
 
-#: install.php:1335
+#: install.php:1349
 msgid "-Upload it into yourwebsite root folder."
 msgstr ""
 
-#: install.php:1336
+#: install.php:1350
 msgid "-Goto http://YOUR WEBSITE/pro-check.php."
 msgstr ""
 
-#: install.php:1337
+#: install.php:1351
 msgid "-Delete it afterwards."
 msgstr ""
 
-#: install.php:1339
+#: install.php:1353
 msgid "FAQ:"
 msgstr ""
 
-#: install.php:1342
+#: install.php:1356
 msgid "-Do I need root privileges to install NinjaFirewall?"
 msgstr ""
 
-#: install.php:1343
+#: install.php:1357
 msgid "-Does it work with Nginx?"
 msgstr ""
 
-#: install.php:1344
+#: install.php:1358
 msgid "-Do I need to alter my PHP scripts?"
 msgstr ""
 
-#: install.php:1345
+#: install.php:1359
 msgid ""
 "-Will NinjaFirewall detect the correct IP of my visitors if I am behind a "
 "CDN service like Cloudflare or Incapsula?"
 msgstr ""
 
-#: install.php:1347
+#: install.php:1361
 msgid "-Will it slow down my site?"
 msgstr ""
 
-#: install.php:1348
+#: install.php:1362
 msgid "-Is there any Microsoft Windows version?"
 msgstr ""
 
-#: install.php:1349
+#: install.php:1363
 msgid "-Can I add/write my own security rules?"
 msgstr ""
 
-#: install.php:1350
+#: install.php:1364
 msgid "-Can I migrate my site(s) with NinjaFirewall installed?"
 msgstr ""
 
-#: install.php:1352
+#: install.php:1366
 msgid "Must Read:"
 msgstr ""
 
-#: install.php:1354
+#: install.php:1368
 msgid "-An introduction to NinjaFirewall filtering engine:"
 msgstr ""
 
-#: install.php:1357
+#: install.php:1371
 msgid "-Testing NinjaFirewall without blocking your visitors:"
 msgstr ""
 
-#: install.php:1360
+#: install.php:1374
 msgid "-Add your own code to the firewall: the \".htninja\" file:"
 msgstr ""
 
-#: install.php:1363
+#: install.php:1377
 msgid "-Upgrading to PHP 7 with NinjaFirewall installed:"
 msgstr ""
 
-#: install.php:1366
+#: install.php:1380
 msgid "-Securing a Joomla! installation with NinjaFirewall:"
 msgstr ""
 
-#: install.php:1369
+#: install.php:1383
 msgid "Help & Support Links:"
 msgstr ""
 
-#: install.php:1371
+#: install.php:1385
 msgid ""
 "-Each page of NinjaFirewall includes a contextual help: click on the \"Help"
 "\" menu tab located in the upper right corner of the corresponding page."
 msgstr ""
 
-#: install.php:1372
+#: install.php:1386
 msgid "-Updates info are available via Twitter:"
 msgstr ""
 
-#: install.php:1374
+#: install.php:1388
 msgid "-Help Desk (Premium users only):"
 msgstr ""
 
@@ -901,37 +907,37 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: lib/account_options.php:148 lib/help.php:50
+#: lib/account_options.php:152 lib/help.php:50
 msgid "Appearance"
 msgstr ""
 
-#: lib/account_options.php:151
+#: lib/account_options.php:155
 msgid "Loaded style sheets"
 msgstr ""
 
-#: lib/account_options.php:156
+#: lib/account_options.php:160
 #, php-format
 msgid "user style sheet (%s)"
 msgstr ""
 
-#: lib/account_options.php:160
+#: lib/account_options.php:164
 #, php-format
 msgid ""
 "If you want to customize NinjaFirewall UI and load your own style sheet, <a "
 "href=\"%s\">consult this article</a>."
 msgstr ""
 
-#: lib/account_options.php:172 lib/help.php:53 login.php:400
+#: lib/account_options.php:176 lib/help.php:53 login.php:400
 msgid "Login"
 msgstr ""
 
-#: lib/account_options.php:175
+#: lib/account_options.php:179
 msgid ""
 "Send me an email whenever someone logs in to my NinjaFirewall admin account"
 msgstr ""
 
-#: lib/account_options.php:178 lib/account_options.php:185
-#: lib/account_options.php:196 lib/firewall_access_control.php:91
+#: lib/account_options.php:182 lib/account_options.php:189
+#: lib/account_options.php:200 lib/firewall_access_control.php:91
 #: lib/firewall_access_control.php:175 lib/firewall_access_control.php:254
 #: lib/firewall_access_control.php:476 lib/firewall_centlog.php:80
 #: lib/firewall_fileguard.php:71 lib/firewall_log.php:324
@@ -953,7 +959,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: lib/account_options.php:178 lib/account_options.php:196
+#: lib/account_options.php:182 lib/account_options.php:200
 #: lib/firewall_access_control.php:92 lib/firewall_access_control.php:175
 #: lib/firewall_access_control.php:201 lib/firewall_access_control.php:207
 #: lib/firewall_access_control.php:213 lib/firewall_access_control.php:219
@@ -963,7 +969,7 @@ msgstr ""
 #: lib/firewall_access_control.php:563 lib/firewall_access_control.php:666
 #: lib/firewall_access_control.php:676 lib/firewall_access_control.php:764
 #: lib/firewall_access_control.php:828 lib/firewall_centlog.php:81
-#: lib/firewall_fileguard.php:71 lib/firewall_log.php:324
+#: lib/firewall_fileguard.php:72 lib/firewall_log.php:324
 #: lib/firewall_log.php:332 lib/firewall_options.php:73
 #: lib/firewall_options.php:79 lib/firewall_options.php:165
 #: lib/firewall_policies.php:73 lib/firewall_policies.php:113
@@ -989,37 +995,37 @@ msgstr ""
 msgid "(default)"
 msgstr ""
 
-#: lib/account_options.php:182
+#: lib/account_options.php:186
 msgid "Always log in using a secure connection (HTTPS)"
 msgstr ""
 
-#: lib/account_options.php:194
+#: lib/account_options.php:198
 msgid "Automatically check for updates when I log in"
 msgstr ""
 
-#: lib/account_options.php:202
+#: lib/account_options.php:206
 msgid "Save changes"
 msgstr ""
 
-#: lib/account_options.php:229
+#: lib/account_options.php:233
 msgid ""
 "If you want to change your login password, please enter the current one and "
 "twice your new password. Otherwise, leave those fields blank."
 msgstr ""
 
-#: lib/account_options.php:233
+#: lib/account_options.php:237
 msgid "The new password must be the same in both fields."
 msgstr ""
 
-#: lib/account_options.php:248
+#: lib/account_options.php:252
 msgid "The old password is not correct."
 msgstr ""
 
-#: lib/account_options.php:251
+#: lib/account_options.php:255
 msgid "The new password must contain at least 6 characters."
 msgstr ""
 
-#: lib/account_options.php:288
+#: lib/account_options.php:292
 msgid "Please enter a valid email address."
 msgstr ""
 
@@ -3596,42 +3602,42 @@ msgstr ""
 msgid "No help available for this page."
 msgstr ""
 
-#: lib/misc.php:146
+#: lib/misc.php:149
 #, php-format
 msgid "Unknown file type %s"
 msgstr ""
 
-#: lib/misc.php:152
+#: lib/misc.php:155
 #, php-format
 msgid ""
 "Cannot find the \"%s\" file. Please review your NinjaFirewall installation."
 msgstr ""
 
-#: lib/misc.php:160
+#: lib/misc.php:163
 #, php-format
 msgid "The \"%s\" is not writable. Please change its permissions."
 msgstr ""
 
-#: lib/misc.php:173
+#: lib/misc.php:176
 #, php-format
 msgid "An error occurred while writing to the \"%s\" file."
 msgstr ""
 
-#: lib/misc.php:212
+#: lib/misc.php:215
 msgid "N/A"
 msgstr ""
 
-#: lib/misc.php:213
+#: lib/misc.php:216
 #, php-format
 msgid "Pro Edition (upgrade to %s)"
 msgstr ""
 
-#: lib/misc.php:214
+#: lib/misc.php:217
 #, php-format
 msgid "(upgrade to %s)"
 msgstr ""
 
-#: lib/misc.php:215
+#: lib/misc.php:218
 #, php-format
 msgid ""
 "This feature is only available in the <a href=\"%s\">Pro+ Edition</a> of "

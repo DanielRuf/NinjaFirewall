@@ -660,7 +660,7 @@ function html_footer() {
 <script src="static/bootstrap.min.js<?php echo '?ver='. NFW_ENGINE_VERSION ?>"></script>
 
 <?php
-	if ( $GLOBALS['mid'] == 10 || $GLOBALS['mid'] == 30 ||
+	if ( $GLOBALS['mid'] == 10 || $GLOBALS['mid'] == 20 || $GLOBALS['mid'] == 30 ||
 	$GLOBALS['mid'] == 31 || $GLOBALS['mid'] == 35) {
 	?>
 <script>

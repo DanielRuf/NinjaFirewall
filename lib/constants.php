@@ -21,8 +21,8 @@ if ( empty( $nfw_options ) && ! defined('NFW_INSTALLER') ) {
 }
 
 // ---------------------------------------------------------------------
-define('NFW_ENGINE_VERSION', '3.3');
-define('NFW_RULES_VERSION', '20180331.2');
+define('NFW_ENGINE_VERSION', '3.3.1');
+define('NFW_RULES_VERSION', '20180413.1');
 define('NFW_EDN', 1);
 
 if (! defined( 'NFW_UPDATE' ) ) {

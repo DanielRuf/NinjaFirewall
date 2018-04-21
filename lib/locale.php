@@ -18,6 +18,15 @@
 
 if ( empty( $nfw_options ) && ! defined('NFW_INSTALLER') ) { die( 'Forbidden' ); }
 
+// Make sure the Gettext extension is installed, otherwise
+// create a _() function so that we don't get a fatal error:
+if (! function_exists( 'gettext' ) && ! function_exists( '_' ) ) {
+	function _( $string = '' ) {
+		return $string;
+	}
+	return;
+}
+
 if ( empty( $nfw_options['admin_lang'] ) || ! preg_match( '/^[a-z]{2}_[A-Z]{2}$/', $nfw_options['admin_lang'] ) ) {
 	return;
 }
