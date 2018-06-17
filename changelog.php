@@ -18,6 +18,9 @@
 
 $changelog = <<<'EOT'
 
+= 3.3.3 =
+* Updated security rules.
+
 = 3.3.2 =
 * Added the "Referrer-Policy" header (see "Firewall > Policies > Advanced Policies > HTTP response headers").
 * Added the "418 I'm a teapot" HTTP error code (see "Firewall > Options > HTTP error code to return").

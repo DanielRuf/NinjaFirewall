@@ -47,7 +47,7 @@ html_header();
 				<tr>
 					<td width="45%" align="left"><?php echo _('Secret key') ?></td>
 					<td width="55%">
-						<input class="form-control" type="text" disabled value="<?php echo htmlentities( generate_clogs_seckey() ) ?>"  autocomplete="off" />
+						<input class="form-control" type="text" disabled value="<?php echo htmlentities( generate_clogs_seckey() ) ?>" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 						<p><i><?php echo _('From 30 to 100 ASCII printable characters.') ?></i></p>
 					</td>
 				</tr>
