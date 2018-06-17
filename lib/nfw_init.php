@@ -22,8 +22,8 @@ if ( version_compare($nfw_options['engine_version'], NFW_ENGINE_VERSION, '<') ) 
 	// v2.0.3 update ----------------------------------------------------
 	if (empty($nfw_options['response_headers']) ) {
 		if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
-			// We enable X-XSS-Protection and X-Content-Type-Options flag:
-			$nfw_options['response_headers'] = '01010000';
+			// Enable X-XSS-Protection:
+			$nfw_options['response_headers'] = '000100000';
 		}
 	}
 	// v2.0.5 update ----------------------------------------------------
@@ -43,7 +43,7 @@ if ( version_compare($nfw_options['engine_version'], NFW_ENGINE_VERSION, '<') ) 
 	if ( version_compare( $nfw_options['engine_version'], '3.2', '<' ) ) {
 		if ( function_exists('header_register_callback') && function_exists('headers_list') && function_exists('header_remove') ) {
 			if (! empty( $nfw_options['response_headers'] ) && strlen( $nfw_options['response_headers'] ) == 6 ) {
-				$nfw_options['response_headers'] .= '00';
+				$nfw_options['response_headers'] .= '000';
 			}
 		}
 	}

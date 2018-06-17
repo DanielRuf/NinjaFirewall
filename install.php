@@ -1578,9 +1578,10 @@ function fw_conf_options() {
 	if ( function_exists('header_register_callback') && function_exists('headers_list')
 		&& function_exists('header_remove') ) {
 
-		// We keep X-XSS-Protection enabled:
-		$nfw_options['response_headers'] = '00010000';
+		// X-XSS-Protection:
+		$nfw_options['response_headers'] = '000100000';
 	}
+	$nfw_options['referrer_policy_enabled'] = 0;
 
 	// Try to get the current PHP configuration value for "upload_max_filesize":
 	$nfw_options['upload_maxsize'] = return_bytes( ini_get('upload_max_filesize') );

@@ -18,6 +18,14 @@
 
 $changelog = <<<'EOT'
 
+= 3.3.2 =
+* Added the "Referrer-Policy" header (see "Firewall > Policies > Advanced Policies > HTTP response headers").
+* Added the "418 I'm a teapot" HTTP error code (see "Firewall > Options > HTTP error code to return").
+* Added more options to the X-XSS-Protection header; it can be set to "0", "1", "1; mode=block" or disabled (see "Firewall > Policies > Advanced Policies > HTTP response headers").
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes.
+* Updated security rules.
+
 = 3.3.1 =
 * Updated security rules.
 * Fixed a fatal error if the Gettext extension was missing.

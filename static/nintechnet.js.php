@@ -257,6 +257,13 @@ if ( $mid == 10 ) {
 } elseif ( $mid == 38 ) {
 	?>
 	function file_info(what, where) {
+
+		// Because we use a "multiple" select for aesthetic purposes
+		// but don't want the user to select multiple files, we focus
+		// only on the currently selected one:
+		var current_item = jQuery('#select-'+ where ).prop('selectedIndex');
+		jQuery('#select-'+ where ).prop('selectedIndex',current_item);
+
 		// New file :
 		if (where == 1) {
 

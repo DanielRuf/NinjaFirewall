@@ -104,7 +104,7 @@ html_header();
 	<h4><?php echo _('HTTP Methods') ?></h4>
 		<table width="100%" class="table table-nf">
 			<tr>
-				<td width="40%" align="left"><?php echo _('All Access Control directives below should apply to the following HTTP methods') ?></td>
+				<td width="40%" align="left"><?php echo _('All Access Control directives should apply to the following HTTP methods') ?></td>
 				<td width="5%" align="center">&nbsp;</td>
 				<td width="55%">
 					<p><label><input type="checkbox" checked disabled />&nbsp;GET <?php echo _('(default)') ?></label></p>
@@ -148,7 +148,7 @@ html_header();
 					}
 					?></td>
 					<td width="55%" style="vertical-align:top;">
-						<p><label><input type="radio" checked disabled />&nbsp;NinjaFirewall<?php echo _('(default)') ?></label></p>
+						<p><label><input type="radio" checked disabled />&nbsp;NinjaFirewall <?php echo _('(default)') ?></label></p>
 						<p><label><input type="radio" disabled />&nbsp;<?php echo _('PHP variable') ?></label> <input type="text"  placeholder="<?php echo _('e.g.') ?> GEOIP_COUNTRY_CODE" class="form-control" style="display:inline" disabled /></p>
 					</td>
 				</tr>

@@ -338,7 +338,7 @@ if (file_exists( $nfmon_diff ) ) {
 				if ( $new_file ) {
 					echo '<tr><td><br />';
 					echo _('New files:') .' '. count( $new_file ) .'<br />';
-					echo '<select name="sometext" multiple="multiple" class="form-control" style="height:150px" onClick="file_info(this.value, 1);">';
+					echo '<select id="select-1" name="sometext" multiple="multiple" class="form-control" style="height:150px" onchange="file_info(this.value, 1);">';
 					foreach($new_file as $k => $v) {
 						echo '<option value="' . htmlspecialchars( $v ) . '" title="' . htmlspecialchars( $k ) . '">' . htmlspecialchars( $k ) . '</option>';
 					}
@@ -387,7 +387,7 @@ if (file_exists( $nfmon_diff ) ) {
 					echo '
 			<tr>
 				<td><br />' . _('Modified files:') .' '. count( $mod_file ). '<br />'.
-					'<select name="sometext" multiple="multiple" class="form-control" style="height:150px" onClick="file_info(this.value, 2);">';
+					'<select id="select-2" name="sometext" multiple="multiple" class="form-control" style="height:150px" onchange="file_info(this.value, 2);">';
 					foreach($mod_file as $k => $v) {
 						echo '<option value="' . htmlspecialchars( $v ) . '" title="' . htmlspecialchars( $k ) . '">' . htmlspecialchars( $k ) . '</option>';
 					}

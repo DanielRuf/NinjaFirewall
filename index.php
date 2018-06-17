@@ -636,7 +636,9 @@ function html_footer() {
 				<div>
 					<a href="https://twitter.com/nintechnet" title="NinjaFirewall updates info on Twitter"><img border="0" src="static/twitter.png"></a>
 				</div>
-				<br />&nbsp;
+				<br /><?php
+					echo '<a href="https://blog.nintechnet.com/ninjafirewall-general-data-protection-regulation-compliance/">'. _('GDPR Compliance') .'</a>';
+				?>
 			</div>
 		</div>
 

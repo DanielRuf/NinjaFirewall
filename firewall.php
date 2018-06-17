@@ -350,7 +350,8 @@ function nfw_block( $lev ) {
 	$http_codes = array(
       400 => '400 Bad Request', 403 => '403 Forbidden',
       404 => '404 Not Found', 406 => '406 Not Acceptable',
-      500 => '500 Internal Server Error', 503 => '503 Service Unavailable',
+      418 => "418 I'm a teapot",  500 => '500 Internal Server Error',
+      503 => '503 Service Unavailable'
    );
 
 	if (empty($nfw_['num_incident']) ) { $nfw_['num_incident'] = '000000'; }
@@ -1096,14 +1097,37 @@ function nfw_response_headers() {
 		}
 	}
 
-	if (! empty( $NFW_RESHEADERS[3] ) ) {
-		header('X-XSS-Protection: 1; mode=block');
-	} else {
+	if ( empty( $NFW_RESHEADERS[3] ) ) {
 		header('X-XSS-Protection: 0');
+	} elseif ( $NFW_RESHEADERS[3] == 1 ) {
+		header('X-XSS-Protection: 1; mode=block');
+	} elseif ( $NFW_RESHEADERS[3] == 2 ) {
+		header('X-XSS-Protection: 1');
 	}
 
 	if (! empty( $NFW_RESHEADERS[6] ) ) {
 		header('Content-Security-Policy: ' . CSP_FRONTEND_DATA);
+	}
+
+	if (! empty( $NFW_RESHEADERS[8] ) ) {
+		if ( $NFW_RESHEADERS[8] == 1 ) {
+			$rf = 'no-referrer';
+		} elseif ( $NFW_RESHEADERS[8] == 2 ) {
+			$rf = 'no-referrer-when-downgrade';
+		} elseif ( $NFW_RESHEADERS[8] == 3 ) {
+			$rf = 'origin';
+		} elseif ( $NFW_RESHEADERS[8] == 4 ) {
+			$rf = 'origin-when-cross-origin';
+		} elseif ( $NFW_RESHEADERS[8] == 5 ) {
+			$rf = 'strict-origin';
+		} elseif ( $NFW_RESHEADERS[8] == 6 ) {
+			$rf = 'strict-origin-when-cross-origin';
+		} elseif ( $NFW_RESHEADERS[8] == 7 ) {
+			$rf = 'same-origin';
+		} else {
+			$rf = 'unsafe-url';
+		}
+		header('Referrer-Policy: '. $rf );
 	}
 
 	if ( empty($NFW_RESHEADERS[4] ) ) { return; }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NinjaFirewall pot\n"
-"POT-Creation-Date: 2018-04-01 16:52+0700\n"
-"PO-Revision-Date: 2018-04-01 16:52+0700\n"
+"POT-Creation-Date: 2018-04-04 14:56+0700\n"
+"PO-Revision-Date: 2018-04-04 14:56+0700\n"
 "Last-Translator: NinTechNet <contact@nintechnet.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -185,7 +185,11 @@ msgstr ""
 msgid "Updates info:"
 msgstr ""
 
-#: index.php:648 install.php:1457
+#: index.php:640
+msgid "GDPR Compliance"
+msgstr ""
+
+#: index.php:650 install.php:1457
 #, php-format
 msgid "security rules: %s"
 msgstr ""

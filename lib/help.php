@@ -164,7 +164,7 @@ function show_help() {
 			'<li>'. _('<code>DENY</code>: A browser receiving content with this header must not display this content in any frame.') .'</li>'.
 		'</ul>'.
 
-		'<p><strong>'. _('Disable X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)') .':</strong> '. _('This header allows browsers to identify and block XSS attacks by preventing malicious scripts from executing. It is enabled by default on all compatible browsers. Because it can lead to false positives and there are better alternatives (e.g. Content-Security-Policy), it is possible to turn it off. When it is enabled, NinjaFirewall will set its value to <code>mode=block</code>.') .'</p>'.
+		'<p><strong>'. _('Disable X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)') .':</strong> '. _('This header allows browsers to identify and block XSS attacks by preventing malicious scripts from executing. It is enabled by default on all compatible browsers.') .'</p>'.
 		'<p>'. glyphicon('warning') .'&nbsp;'. _('If a visitor disable their browser\'s XSS filter, you cannot re-enable it with that option.') .'</p>'.
 
 		'<p><strong>'. _('Force HttpOnly flag on all cookies to mitigate XSS attacks') .':</strong> '. _('Adding this flag to cookies helps to mitigate the risk of cross-site scripting by preventing them from being accessed through client-side scripts. NinjaFirewall can hook all cookies sent by your blog, its plugins or any other PHP script, add the <code>HttpOnly</code> flag if it is missing, and re-inject those cookies back into your server HTTP response headers right before they are sent to your visitors.') .'</p>'.
@@ -172,7 +172,9 @@ function show_help() {
 
 		'<p><strong>'. _('Set Strict-Transport-Security (HSTS) to enforce secure connections to the server') .':</strong> '. _('This policy enforces secure HTTPS connections to the server. Web browsers will not allow the user to access the web application over insecure HTTP protocol. It helps to defend against cookie hijacking and Man-in-the-middle attacks. Most recent browsers support HSTS headers.') .'</p>'.
 
-		'<p><strong>'. _('Set Content-Security-Policy') .':</strong> '. _('This policy helps to mitigate threats such as XSS, phishing and clickjacking attacks. It covers JavaScript, CSS, HTML frames, web workers, fonts, images, objects (Java, ActiveX, audio and video files), and other HTML5 features.') .'</p>';
+		'<p><strong>'. _('Set Content-Security-Policy') .':</strong> '. _('This policy helps to mitigate threats such as XSS, phishing and clickjacking attacks. It covers JavaScript, CSS, HTML frames, web workers, fonts, images, objects (Java, ActiveX, audio and video files), and other HTML5 features.') .'</p>'.
+
+		'<p><strong>'. _('Set Referrer-Policy') .':</strong> '. _('This HTTP header governs which referrer information, sent in the Referer header, should be included with requests made.') .'</p>';
 
 		echo '<h3><strong>'. _('PHP') .'</strong></h3>'.
 		'<p><strong>'. _('Block PHP built-in wrappers in GET, POST, HTTP_USER_AGENT, HTTP_REFERER and cookies') .':</strong> '. _('PHP has several wrappers for use with the filesystem functions. It is possible for an attacker to use them to bypass firewalls and various IDS to exploit remote and local file inclusions. This option lets you block any script attempting to pass a <code>expect://</code>, <code>file://</code>, <code>phar://</code>, <code>php://</code>, <code>zip://</code> or <code>data://</code> stream inside a <code>GET</code> or <code>POST</code> request, cookies, user agent and referrer variables.') .'</p>'.
@@ -237,7 +239,7 @@ function show_help() {
 		'<p><strong>'. _('Scan traffic coming from localhost and private IP address spaces') .':</strong> '. _('This option will allow the firewall to scan traffic from all non-routable private IPs (IPv4 and IPv6) as well as the localhost IP. We recommend to keep it enabled if you have a private network (2 or more servers interconnected).') .'</p>';
 
 		echo '<h3><strong>'. _('HTTP Methods') .'</strong></h3>'.
-		'<p><strong>'. _('All Access Control directives below should apply to the following HTTP methods') .':</strong> '. _('This option lets you select the HTTP method(s). All Access Control directives (Geolocation, IPs, bots and URLs) will only apply to the selected methods. It does not apply to the Firewall Policies options, which use their own ones.') .'</p>';
+		'<p><strong>'. _('All Access Control directives should apply to the following HTTP methods') .':</strong> '. _('This option lets you select the HTTP method(s). All Access Control directives (Geolocation, IPs, bots and URLs) will only apply to the selected methods. It does not apply to the Firewall Policies options, which use their own ones.') .'</p>';
 
 		echo '<hr />';
 

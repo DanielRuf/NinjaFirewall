@@ -218,7 +218,7 @@ if ( file_exists( $bfp_log) ) {
 
 // Disply login error:
 html_header();
-html_body( 0, sprintf( $danger, _('Wrong username or password.') ) );
+html_body( 0, sprintf( $danger, _('Wrong username or password.') .'<br />'. sprintf( _('Use <a href="%s">this script</a> if you need to reset your password.'), 'https://nintechnet.com/share/pro2-reset.txt' ) ) );
 html_footer();
 
 exit;

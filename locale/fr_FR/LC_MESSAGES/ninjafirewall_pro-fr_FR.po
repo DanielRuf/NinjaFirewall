@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NinjaFirewall pot\n"
-"POT-Creation-Date: 2018-04-01 16:52+0700\n"
-"PO-Revision-Date: 2018-04-01 16:53+0700\n"
+"POT-Creation-Date: 2018-05-21 19:13+0700\n"
+"PO-Revision-Date: 2018-05-21 19:14+0700\n"
 "Last-Translator: NinTechNet <contact@nintechnet.com>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
-"X-Poedit-Basepath: ../../../\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;esc_attr_e\n"
@@ -114,7 +114,7 @@ msgid "Account"
 msgstr "Compte"
 
 #: index.php:483 index.php:492 index.php:586 index.php:599
-#: lib/firewall_livelog.php:134 lib/firewall_log.php:318 lib/help.php:379
+#: lib/firewall_livelog.php:134 lib/firewall_log.php:318 lib/help.php:382
 msgid "Options"
 msgstr "Options"
 
@@ -147,7 +147,7 @@ msgstr "Éditeur de Règles"
 msgid "Monitoring"
 msgstr "Monitoring"
 
-#: index.php:502 index.php:612 lib/help.php:221
+#: index.php:502 index.php:612 lib/help.php:224
 msgid "File Guard"
 msgstr "File Guard"
 
@@ -155,7 +155,7 @@ msgstr "File Guard"
 msgid "File Check"
 msgstr "File Check"
 
-#: index.php:504 index.php:614 lib/help.php:227
+#: index.php:504 index.php:614 lib/help.php:230
 msgid "Web Filter"
 msgstr "Web Filter"
 
@@ -172,7 +172,7 @@ msgid "Live Log"
 msgstr "Live Log"
 
 #: index.php:513 index.php:627 lib/firewall_log.php:186
-#: lib/firewall_log.php:384 lib/help.php:406 lib/summary_overview.php:216
+#: lib/firewall_log.php:384 lib/help.php:409 lib/summary_overview.php:216
 msgid "Centralized Logging"
 msgstr "Centralisation des Logs"
 
@@ -188,7 +188,11 @@ msgstr "Déconnexion"
 msgid "Updates info:"
 msgstr "Info mise à jour :"
 
-#: index.php:648 install.php:1457
+#: index.php:640
+msgid "GDPR Compliance"
+msgstr "Conformité RGPD"
+
+#: index.php:650 install.php:1457
 #, php-format
 msgid "security rules: %s"
 msgstr "règles de sécurité : %s"
@@ -397,7 +401,7 @@ msgstr "Veuillez entrer une adresse e-mail valide pour l'administrateur."
 msgid "Please enter your NinjaFirewall Pro+ license key."
 msgstr "Veuillez entrer la clé votre licence NinjaFirewall Pro+."
 
-#: install.php:604 lib/firewall_access_control.php:85 lib/help.php:232
+#: install.php:604 lib/firewall_access_control.php:85 lib/help.php:235
 #: lib/summary_overview.php:395 lib/summary_overview.php:403
 msgid "Administrator"
 msgstr "Administrateur"
@@ -1050,13 +1054,13 @@ msgstr ""
 #: lib/firewall_policies.php:305 lib/firewall_policies.php:313
 #: lib/firewall_policies.php:332 lib/firewall_policies.php:362
 #: lib/firewall_policies.php:370 lib/firewall_policies.php:378
-#: lib/firewall_policies.php:417 lib/firewall_policies.php:434
-#: lib/firewall_policies.php:452 lib/firewall_policies.php:503
-#: lib/firewall_policies.php:578 lib/firewall_policies.php:597
-#: lib/firewall_policies.php:605 lib/firewall_policies.php:613
-#: lib/firewall_policies.php:621 lib/firewall_policies.php:666
-#: lib/firewall_policies.php:674 lib/firewall_policies.php:682
-#: lib/firewall_policies.php:690 lib/firewall_policies.php:698
+#: lib/firewall_policies.php:417 lib/firewall_policies.php:451
+#: lib/firewall_policies.php:502 lib/firewall_policies.php:524
+#: lib/firewall_policies.php:606 lib/firewall_policies.php:625
+#: lib/firewall_policies.php:633 lib/firewall_policies.php:641
+#: lib/firewall_policies.php:649 lib/firewall_policies.php:694
+#: lib/firewall_policies.php:702 lib/firewall_policies.php:710
+#: lib/firewall_policies.php:718 lib/firewall_policies.php:726
 #: lib/firewall_webfilter.php:65
 msgid "Yes"
 msgstr "Oui"
@@ -1073,7 +1077,7 @@ msgstr "Oui"
 #: lib/firewall_access_control.php:828 lib/firewall_centlog.php:81
 #: lib/firewall_fileguard.php:72 lib/firewall_log.php:324
 #: lib/firewall_log.php:332 lib/firewall_options.php:73
-#: lib/firewall_options.php:79 lib/firewall_options.php:165
+#: lib/firewall_options.php:79 lib/firewall_options.php:166
 #: lib/firewall_policies.php:73 lib/firewall_policies.php:113
 #: lib/firewall_policies.php:150 lib/firewall_policies.php:159
 #: lib/firewall_policies.php:187 lib/firewall_policies.php:196
@@ -1083,16 +1087,16 @@ msgstr "Oui"
 #: lib/firewall_policies.php:332 lib/firewall_policies.php:363
 #: lib/firewall_policies.php:370 lib/firewall_policies.php:379
 #: lib/firewall_policies.php:418 lib/firewall_policies.php:427
-#: lib/firewall_policies.php:435 lib/firewall_policies.php:453
-#: lib/firewall_policies.php:482 lib/firewall_policies.php:504
-#: lib/firewall_policies.php:578 lib/firewall_policies.php:586
-#: lib/firewall_policies.php:587 lib/firewall_policies.php:588
-#: lib/firewall_policies.php:589 lib/firewall_policies.php:597
-#: lib/firewall_policies.php:605 lib/firewall_policies.php:613
-#: lib/firewall_policies.php:621 lib/firewall_policies.php:666
-#: lib/firewall_policies.php:674 lib/firewall_policies.php:683
-#: lib/firewall_policies.php:691 lib/firewall_policies.php:699
-#: lib/firewall_policies.php:707 lib/firewall_webfilter.php:66
+#: lib/firewall_policies.php:436 lib/firewall_policies.php:452
+#: lib/firewall_policies.php:481 lib/firewall_policies.php:503
+#: lib/firewall_policies.php:606 lib/firewall_policies.php:614
+#: lib/firewall_policies.php:615 lib/firewall_policies.php:616
+#: lib/firewall_policies.php:617 lib/firewall_policies.php:625
+#: lib/firewall_policies.php:633 lib/firewall_policies.php:641
+#: lib/firewall_policies.php:649 lib/firewall_policies.php:694
+#: lib/firewall_policies.php:702 lib/firewall_policies.php:711
+#: lib/firewall_policies.php:719 lib/firewall_policies.php:727
+#: lib/firewall_policies.php:735 lib/firewall_webfilter.php:66
 #: lib/firewall_webfilter.php:144 lib/firewall_webfilter.php:201
 msgid "(default)"
 msgstr "(défaut)"
@@ -1309,26 +1313,26 @@ msgstr ""
 msgid "General"
 msgstr "Général"
 
-#: lib/firewall_access_control.php:73 lib/help.php:218
+#: lib/firewall_access_control.php:73 lib/help.php:221
 msgid "Geolocation"
 msgstr "Géolocalisation"
 
 #: lib/firewall_access_control.php:74 lib/firewall_access_control.php:498
-#: lib/help.php:268
+#: lib/help.php:271
 msgid "IP Access Control"
 msgstr "Contrôle d'accès IP"
 
 #: lib/firewall_access_control.php:75 lib/firewall_access_control.php:698
-#: lib/help.php:288
+#: lib/help.php:291
 msgid "URL Access Control"
 msgstr "Contrôle d'accès URL"
 
 #: lib/firewall_access_control.php:76 lib/firewall_access_control.php:810
-#: lib/help.php:217 lib/help.php:297
+#: lib/help.php:220 lib/help.php:300
 msgid "Bot Access Control"
 msgstr "Contrôle d'accès Bot"
 
-#: lib/firewall_access_control.php:88 lib/help.php:233
+#: lib/firewall_access_control.php:88 lib/help.php:236
 msgid "Whitelist the Administrator"
 msgstr "Ajouter l'Administrateur à la liste blanche"
 
@@ -1343,14 +1347,14 @@ msgstr "Ajouter l'Administrateur à la liste blanche"
 #: lib/firewall_policies.php:314 lib/firewall_policies.php:333
 #: lib/firewall_policies.php:363 lib/firewall_policies.php:371
 #: lib/firewall_policies.php:379 lib/firewall_policies.php:418
-#: lib/firewall_policies.php:427 lib/firewall_policies.php:435
-#: lib/firewall_policies.php:453 lib/firewall_policies.php:482
-#: lib/firewall_policies.php:504 lib/firewall_policies.php:579
-#: lib/firewall_policies.php:598 lib/firewall_policies.php:606
-#: lib/firewall_policies.php:614 lib/firewall_policies.php:622
-#: lib/firewall_policies.php:667 lib/firewall_policies.php:675
-#: lib/firewall_policies.php:683 lib/firewall_policies.php:691
-#: lib/firewall_policies.php:699 lib/firewall_webfilter.php:66
+#: lib/firewall_policies.php:427 lib/firewall_policies.php:437
+#: lib/firewall_policies.php:452 lib/firewall_policies.php:481
+#: lib/firewall_policies.php:503 lib/firewall_policies.php:607
+#: lib/firewall_policies.php:626 lib/firewall_policies.php:634
+#: lib/firewall_policies.php:642 lib/firewall_policies.php:650
+#: lib/firewall_policies.php:695 lib/firewall_policies.php:703
+#: lib/firewall_policies.php:711 lib/firewall_policies.php:719
+#: lib/firewall_policies.php:727 lib/firewall_webfilter.php:66
 msgid "No"
 msgstr "Non"
 
@@ -1368,12 +1372,12 @@ msgstr "Statut actuel pour l'utilisateur %s"
 msgid "You are not whitelisted."
 msgstr "Vous n'êtes pas dans la liste blanche."
 
-#: lib/firewall_access_control.php:132 lib/help.php:235
+#: lib/firewall_access_control.php:132 lib/help.php:238
 #: lib/summary_overview.php:272
 msgid "Source IP"
 msgstr "IP Source"
 
-#: lib/firewall_access_control.php:135 lib/help.php:236
+#: lib/firewall_access_control.php:135 lib/help.php:239
 msgid "Retrieve visitors IP address from"
 msgstr "Récupérer l'adresse IP des visiteurs depuis"
 
@@ -1395,21 +1399,22 @@ msgstr "ex:"
 msgid "Your server does not seem to support the %s variable."
 msgstr "Votre serveur ne semble pas utiliser la variable  %s."
 
-#: lib/firewall_access_control.php:172 lib/help.php:237
+#: lib/firewall_access_control.php:172 lib/help.php:240
 msgid "Scan traffic coming from localhost and private IP address spaces"
 msgstr "Filtrer les connexions provenant de localhost et d'adresses IP privées"
 
-#: lib/firewall_access_control.php:191 lib/help.php:239
+#: lib/firewall_access_control.php:191 lib/help.php:242
 msgid "HTTP Methods"
 msgstr "Méthodes HTTP"
 
-#: lib/firewall_access_control.php:194 lib/help.php:240
+#: lib/firewall_access_control.php:194 lib/help.php:243
 msgid ""
-"All Access Control directives below should apply to the following HTTP "
-"methods"
-msgstr "Toutes les directives ci-dessous s'appliquent aux méthodes"
+"All Access Control directives should apply to the following HTTP methods"
+msgstr ""
+"Toutes les directives du menu Contrôle d'Accès s'appliquent aux méthodes "
+"HTTP suivantes"
 
-#: lib/firewall_access_control.php:248 lib/help.php:244
+#: lib/firewall_access_control.php:248 lib/help.php:247
 msgid "Geolocation Access Control"
 msgstr "Contrôle d'accès par Géolocalisation"
 
@@ -1421,7 +1426,7 @@ msgstr "Activer la Géolocalisation"
 msgid "GeoIP database not found."
 msgstr "La base de données GeoIP est introuvable."
 
-#: lib/firewall_access_control.php:305 lib/help.php:245
+#: lib/firewall_access_control.php:305 lib/help.php:248
 msgid "Retrieve ISO 3166 country code from"
 msgstr "Récupérer le code ISO 3166 du pays depuis"
 
@@ -1462,7 +1467,7 @@ msgstr ""
 "Votre liste est vide. Désactivez la géolocalisation si vous ne l'utilisez "
 "pas."
 
-#: lib/firewall_access_control.php:417 lib/help.php:249
+#: lib/firewall_access_control.php:417 lib/help.php:252
 msgid "Geolocation should apply to the whole site or specific URLs only?"
 msgstr ""
 "Appliquer la Géolocalisation à tout le site ou à certains scripts "
@@ -1480,7 +1485,7 @@ msgstr "URL complète ou partielle, sensible à la casse."
 msgid "Blocked URLs:"
 msgstr "URL bloquées :"
 
-#: lib/firewall_access_control.php:473 lib/help.php:251
+#: lib/firewall_access_control.php:473 lib/help.php:254
 msgid "Add NINJA_COUNTRY_CODE to PHP headers"
 msgstr "Ajouter NINJA_COUNTRY_CODE aux en-têtes PHP"
 
@@ -1512,7 +1517,7 @@ msgstr "Bloquer les IP suivantes"
 msgid "Blocked IPs:"
 msgstr "IP bloquées :"
 
-#: lib/firewall_access_control.php:611 lib/help.php:283
+#: lib/firewall_access_control.php:611 lib/help.php:286
 msgid "Rate limiting"
 msgstr "Limiter le trafic"
 
@@ -1561,13 +1566,13 @@ msgid "Restore default list"
 msgstr "Restaurer les valeurs par défaut"
 
 #: lib/firewall_access_control.php:872 lib/firewall_centlog.php:142
-#: lib/firewall_fileguard.php:107 lib/firewall_options.php:201
-#: lib/firewall_options.php:219 lib/firewall_policies.php:716
+#: lib/firewall_fileguard.php:107 lib/firewall_options.php:202
+#: lib/firewall_options.php:220 lib/firewall_policies.php:744
 #: lib/firewall_webfilter.php:211
 msgid "Save Changes"
 msgstr "Sauvegarder les modifications"
 
-#: lib/firewall_access_control.php:873 lib/firewall_policies.php:717
+#: lib/firewall_access_control.php:873 lib/firewall_policies.php:745
 msgid "Restore Default Values"
 msgstr "Rétablir les valeurs par défaut"
 
@@ -1587,7 +1592,7 @@ msgstr ""
 "Attention : votre clé privée était soit corrompue soit manquante. Un nouveau "
 "jeu de clés vient d'être créé."
 
-#: lib/firewall_centlog.php:67 static/nintechnet.js.php:772
+#: lib/firewall_centlog.php:67 static/nintechnet.js.php:779
 msgid "Please enter the remote websites URL."
 msgstr "Veuillez entrer l'URL de vos sites distants"
 
@@ -1595,7 +1600,7 @@ msgstr "Veuillez entrer l'URL de vos sites distants"
 msgid "Enable Centralized Logging"
 msgstr "Activer la Centralisation des Logs"
 
-#: lib/firewall_centlog.php:96 lib/help.php:443
+#: lib/firewall_centlog.php:96 lib/help.php:446
 msgid "Secret key"
 msgstr "Clé privée"
 
@@ -1603,7 +1608,7 @@ msgstr "Clé privée"
 msgid "From 30 to 100 ASCII printable characters."
 msgstr "De 30 à 100 caractères ASCII."
 
-#: lib/firewall_centlog.php:104 lib/help.php:445
+#: lib/firewall_centlog.php:104 lib/help.php:448
 msgid "This server IP address"
 msgstr "L'adresse IP de ce serveur"
 
@@ -1617,7 +1622,7 @@ msgstr ""
 "distants. Si vous ne souhaitez pas de restriction d’accès par IP, veuillez "
 "entrer le caractère <code>*</code>."
 
-#: lib/firewall_centlog.php:112 lib/help.php:447
+#: lib/firewall_centlog.php:112 lib/help.php:450
 msgid "Public key"
 msgstr "Clé publique"
 
@@ -1630,7 +1635,7 @@ msgstr ""
 "Vous devez configurer vos sites distants avec cette nouvelle clé. <a href="
 "\"%s\">Consultez notre blog</a> pour plus d'info."
 
-#: lib/firewall_centlog.php:125 lib/help.php:449
+#: lib/firewall_centlog.php:125 lib/help.php:452
 msgid "Remote websites URL"
 msgstr "URL de vos sites distants"
 
@@ -1678,7 +1683,7 @@ msgstr "NinjaFirewall a détecté des changements dans vos fichiers."
 msgid "No changes detected."
 msgstr "Aucun changement n'a été détecté."
 
-#: lib/firewall_filecheck.php:181 lib/help.php:343
+#: lib/firewall_filecheck.php:181 lib/help.php:346
 msgid "Create a snapshot of all files stored in that directory"
 msgstr ""
 "Créer un instantané de tous les fichiers se trouvant dans ce répertoire"
@@ -1890,8 +1895,8 @@ msgstr ""
 "Cliquez sur le menu \"Pare-Feu > Contrôle d'Accès\" et assurez vous que "
 "l'option \"Ajouter l'Administrateur à la liste blanche\" est activée."
 
-#: lib/firewall_livelog.php:96 static/nintechnet.js.php:839
-#: static/nintechnet.js.php:868
+#: lib/firewall_livelog.php:96 static/nintechnet.js.php:846
+#: static/nintechnet.js.php:875
 msgid "No traffic yet, please wait..."
 msgstr "Aucun visiteur actuellement, veuillez patienter..."
 
@@ -1910,8 +1915,8 @@ msgstr "Intervalle :"
 #: lib/firewall_livelog.php:102 lib/firewall_livelog.php:103
 #: lib/firewall_livelog.php:104 lib/firewall_livelog.php:105
 #: lib/summary_stats.php:141 lib/summary_stats.php:145
-#: lib/summary_stats.php:149 static/nintechnet.js.php:870
-#: static/nintechnet.js.php:883 static/nintechnet.js.php:903
+#: lib/summary_stats.php:149 static/nintechnet.js.php:877
+#: static/nintechnet.js.php:890 static/nintechnet.js.php:910
 msgid "seconds"
 msgstr "secondes"
 
@@ -2054,11 +2059,11 @@ msgstr "Info"
 msgid "Debug"
 msgstr "Débogage"
 
-#: lib/firewall_log.php:321 lib/help.php:380
+#: lib/firewall_log.php:321 lib/help.php:383
 msgid "Enable firewall log"
 msgstr "Activer le journal"
 
-#: lib/firewall_log.php:329 lib/help.php:381
+#: lib/firewall_log.php:329 lib/help.php:384
 msgid "Auto-rotate log"
 msgstr "Rotation automatique du journal"
 
@@ -2071,7 +2076,7 @@ msgstr "Le 1er de chaque mois, ou si sa taille dépasse %s Mo"
 msgid "1st day of the month, regardless of its size"
 msgstr "Le 1er de chaque mois, quelle que soit sa taille"
 
-#: lib/firewall_log.php:337 lib/help.php:385
+#: lib/firewall_log.php:337 lib/help.php:388
 msgid "Show the most recent"
 msgstr "Afficher les dernières"
 
@@ -2080,7 +2085,7 @@ msgstr "Afficher les dernières"
 msgid "%s lines"
 msgstr "%s lignes"
 
-#: lib/firewall_log.php:347 lib/help.php:387
+#: lib/firewall_log.php:347 lib/help.php:390
 msgid "Syslog"
 msgstr "Syslog"
 
@@ -2097,7 +2102,7 @@ msgstr "Consultez l'aide contextuelle avant d'activer cette option."
 msgid "Write events to the Syslog server too"
 msgstr "Enregistrer aussi les événements dans le journal syslog"
 
-#: lib/firewall_log.php:392 lib/help.php:408
+#: lib/firewall_log.php:392 lib/help.php:411
 msgid "Enter your public key (optional)"
 msgstr "Entrez votre clé publique (optionnel)"
 
@@ -2212,71 +2217,75 @@ msgid "406 Not Acceptable"
 msgstr "406 Not Acceptable"
 
 #: lib/firewall_options.php:104
+msgid "418 I'm a teapot"
+msgstr "418 I'm a teapot"
+
+#: lib/firewall_options.php:105
 msgid "500 Internal Server Error"
 msgstr "500 Internal Server Error"
 
-#: lib/firewall_options.php:105
+#: lib/firewall_options.php:106
 msgid "503 Service Unavailable"
 msgstr "503 Service Unavailable"
 
-#: lib/firewall_options.php:118 lib/help.php:98
+#: lib/firewall_options.php:119 lib/help.php:98
 msgid "IP anonymization"
 msgstr "Anonymisation IP"
 
-#: lib/firewall_options.php:120
+#: lib/firewall_options.php:121
 msgid "This option does not apply to private IP addresses."
 msgstr "Ne s'applique pas aux adresses IP privées."
 
-#: lib/firewall_options.php:123
+#: lib/firewall_options.php:124
 msgid "Anonymize IP addresses by removing the last 3 characters."
 msgstr "Anonymiser les adresses IP en supprimant les 3 derniers caractères."
 
-#: lib/firewall_options.php:128
+#: lib/firewall_options.php:129
 msgid "Blocked user message"
 msgstr "Message pour les utilisateurs bloqués"
 
-#: lib/firewall_options.php:140
+#: lib/firewall_options.php:141
 msgid "Preview message"
 msgstr "Prévisualiser"
 
-#: lib/firewall_options.php:140
+#: lib/firewall_options.php:141
 msgid "Default message"
 msgstr "Message par défaut"
 
-#: lib/firewall_options.php:149 lib/help.php:104 lib/summary_stats.php:136
+#: lib/firewall_options.php:150 lib/help.php:104 lib/summary_stats.php:136
 msgid "Banned IP addresses"
 msgstr "Adresses IP bloquées"
 
-#: lib/firewall_options.php:161
+#: lib/firewall_options.php:162
 msgid "Ban offending IP addresses"
 msgstr "Bannir les adresses IP incriminées"
 
-#: lib/firewall_options.php:165
+#: lib/firewall_options.php:166
 msgid "Never ban IPs"
 msgstr "Ne jamais bannir"
 
-#: lib/firewall_options.php:166
+#: lib/firewall_options.php:167
 msgid "Only if critical severity"
 msgstr "Si risque critique uniquement"
 
-#: lib/firewall_options.php:167
+#: lib/firewall_options.php:168
 msgid "If critical or high severity"
 msgstr "Si risque critique ou élevé"
 
-#: lib/firewall_options.php:168
+#: lib/firewall_options.php:169
 msgid "Always ban offending IPs"
 msgstr "Toujours bannir"
 
-#: lib/firewall_options.php:173
+#: lib/firewall_options.php:174
 msgid "Banning period (in minutes)"
 msgstr "Durée du bannissement (en minutes)"
 
-#: lib/firewall_options.php:199
+#: lib/firewall_options.php:200
 msgid "Currently banned IP addresses:"
 msgstr "Adresses IP bloquées :"
 
 #. translators: do not use double-quotes ["], use single quotes only [']
-#: lib/firewall_options.php:201
+#: lib/firewall_options.php:202
 #, php-format
 msgid "To unban IP addresses, select them in the list and click '%s'."
 msgstr "Sélectionnez les adresses IP à débloquer, puis cliquez '%s'."
@@ -2305,8 +2314,7 @@ msgstr "Activer NinjaFirewall pour le trafic"
 msgid "HTTP and HTTPS traffic"
 msgstr "HTTP et HTTPS"
 
-#: lib/firewall_policies.php:110 lib/firewall_policies.php:114
-#: lib/help.php:128
+#: lib/firewall_policies.php:110 lib/firewall_policies.php:114 lib/help.php:128
 msgid "Allow uploads"
 msgstr "Autoriser"
 
@@ -2349,8 +2357,8 @@ msgstr "Filtrer la variable %s"
 #: lib/firewall_policies.php:155 lib/firewall_policies.php:192
 #: lib/firewall_policies.php:220 lib/firewall_policies.php:253
 #: lib/firewall_policies.php:310 lib/firewall_policies.php:367
-#: lib/firewall_policies.php:602 lib/firewall_policies.php:610
-#: lib/firewall_policies.php:618
+#: lib/firewall_policies.php:630 lib/firewall_policies.php:638
+#: lib/firewall_policies.php:646
 #, php-format
 msgid "Sanitise %s variable"
 msgstr "Nettoyer la variable %s"
@@ -2426,7 +2434,7 @@ msgstr ""
 "Cette option est désactivée parce que la fonction PHP %s n'est pas "
 "disponible sur votre serveur."
 
-#: lib/firewall_policies.php:411 lib/help.php:156 lib/help.php:226
+#: lib/firewall_policies.php:411 lib/help.php:156 lib/help.php:229
 msgid "HTTP response headers"
 msgstr "En-têtes de réponse HTTP"
 
@@ -2443,16 +2451,22 @@ msgstr ""
 "Activer X-Frame-Options pour protéger contre les attaques de détournement de "
 "clic (clickjacking)"
 
-#: lib/firewall_policies.php:431 lib/help.php:167
-msgid "Disable X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)"
-msgstr "Désactiver X-XSS-Protection (IE/Edge, Opera, Chrome et Safari)"
+#: lib/firewall_policies.php:431
+msgid "Set X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)"
+msgstr "Activer X-XSS-Protection (IE/Edge, Opera, Chrome et Safari)"
 
-#: lib/firewall_policies.php:442 lib/help.php:170
+#: lib/firewall_policies.php:434 lib/firewall_policies.php:435
+#: lib/firewall_policies.php:436
+#, php-format
+msgid "Set to %s"
+msgstr "Régler sur %s"
+
+#: lib/firewall_policies.php:441 lib/help.php:170
 msgid "Force HttpOnly flag on all cookies to mitigate XSS attacks"
 msgstr ""
 "Active la propriété HttpOnly pour les cookies afin d'atténuer les menaces XSS"
 
-#: lib/firewall_policies.php:447
+#: lib/firewall_policies.php:446
 msgid ""
 "If your PHP scripts send cookies that need to be accessed from JavaScript, "
 "you should keep this option disabled."
@@ -2460,14 +2474,14 @@ msgstr ""
 "Si vos scripts PHP envoient des cookies qui doivent être accessibles à "
 "partir de JavaScript, vous devez garder cette option désactivée."
 
-#: lib/firewall_policies.php:464
+#: lib/firewall_policies.php:463
 msgid ""
 "HSTS headers can only be set when you are accessing your site over HTTPS."
 msgstr ""
 "Les en-têtes HSTS ne peuvent être activés que lorsque vous vous connectez à "
 "votre site en HTTPS."
 
-#: lib/firewall_policies.php:472 lib/help.php:173
+#: lib/firewall_policies.php:471 lib/help.php:173
 msgid ""
 "Set Strict-Transport-Security (HSTS) to enforce secure connections to the "
 "server"
@@ -2475,35 +2489,43 @@ msgstr ""
 "Activer Strict-Transport-Security (HSTS) pour forcer les connexions "
 "sécurisées vers le serveur"
 
-#: lib/firewall_policies.php:483
+#: lib/firewall_policies.php:482
 msgid "Set <code>max-age</code> to 0"
 msgstr "Réinitialiser <code>max-age</code> à 0"
 
-#: lib/firewall_policies.php:484
+#: lib/firewall_policies.php:483
 msgid "1 month"
 msgstr "1 mois"
 
-#: lib/firewall_policies.php:485
+#: lib/firewall_policies.php:484
 msgid "6 months"
 msgstr "6 mois"
 
-#: lib/firewall_policies.php:486
+#: lib/firewall_policies.php:485
 msgid "1 year"
 msgstr "1 an"
 
-#: lib/firewall_policies.php:487
+#: lib/firewall_policies.php:486
 msgid "Apply to all subdomains"
 msgstr "Appliquer aux sous-domaines"
 
-#: lib/firewall_policies.php:500 lib/help.php:175
+#: lib/firewall_policies.php:499 lib/help.php:175
 msgid "Set Content-Security-Policy"
 msgstr "Activer Content-Security-Policy"
 
-#: lib/firewall_policies.php:572 lib/help.php:177
+#: lib/firewall_policies.php:521
+msgid "Set Referrer-Policy (Chrome, Opera and Firefox browsers)"
+msgstr "Activer Referrer-Policy (Chrome, Opera et Firefox)"
+
+#: lib/firewall_policies.php:525
+msgid "No (default)"
+msgstr "Non (défaut)"
+
+#: lib/firewall_policies.php:600 lib/help.php:180
 msgid "PHP"
 msgstr "PHP"
 
-#: lib/firewall_policies.php:575 lib/help.php:178
+#: lib/firewall_policies.php:603 lib/help.php:181
 msgid ""
 "Block PHP built-in wrappers in GET, POST, HTTP_USER_AGENT, HTTP_REFERER and "
 "cookies"
@@ -2511,48 +2533,48 @@ msgstr ""
 "Bloquer les gestionnaires PHP dangereux (wrappers) dans les variables GET, "
 "POST, HTTP_USER_AGENT, HTTP_REFERER et les cookies"
 
-#: lib/firewall_policies.php:583 lib/help.php:180
+#: lib/firewall_policies.php:611 lib/help.php:183
 msgid "Block serialized PHP objects in the following global variables"
 msgstr ""
 "Bloquer les objets PHP sérialisés dans les variables globales suivantes"
 
-#: lib/firewall_policies.php:594 lib/help.php:182
+#: lib/firewall_policies.php:622 lib/help.php:185
 msgid "Hide PHP notice and error messages"
 msgstr "Masquer les messages d'erreur de PHP"
 
-#: lib/firewall_policies.php:660 lib/help.php:186
+#: lib/firewall_policies.php:688 lib/help.php:189
 msgid "Various"
 msgstr "Divers"
 
-#: lib/firewall_policies.php:663 lib/help.php:187
+#: lib/firewall_policies.php:691 lib/help.php:190
 msgid "Block the DOCUMENT_ROOT server variable in HTTP request"
 msgstr "Bloquer les requêtes HTTP contenants la variable DOCUMENT_ROOT"
 
-#: lib/firewall_policies.php:671 lib/help.php:189
+#: lib/firewall_policies.php:699 lib/help.php:192
 msgid "Block ASCII character 0x00 (NULL byte)"
 msgstr "Bloquer le caractère ASCII 0x00 (NULL byte)"
 
-#: lib/firewall_policies.php:679 lib/help.php:191
+#: lib/firewall_policies.php:707 lib/help.php:194
 msgid "Block ASCII control characters 1 to 8 and 14 to 31"
 msgstr "Bloquer les caractères de contrôle ASCII 1 à 8 et 14 à 31"
 
-#: lib/firewall_policies.php:687 lib/help.php:193
+#: lib/firewall_policies.php:715 lib/help.php:196
 msgid "Block localhost IP in GET/POST request"
 msgstr "Bloquer les requêtes GET/POST contenants l'IP localhost"
 
-#: lib/firewall_policies.php:695 lib/help.php:195
+#: lib/firewall_policies.php:723 lib/help.php:198
 msgid "Block HTTP requests with an IP in the HTTP_HOST header"
 msgstr "Bloquer les requêtes HTTP dont l'en-tête HTTP_HOST contient une IP"
 
-#: lib/firewall_policies.php:703 lib/help.php:197
+#: lib/firewall_policies.php:731 lib/help.php:200
 msgid "Accept the following HTTP methods"
 msgstr "Accepter les méthodes HTTP suivantes"
 
-#: lib/firewall_policies.php:706
+#: lib/firewall_policies.php:734
 msgid "GET, POST and HEAD only"
 msgstr "GET, POST et HEAD uniquement"
 
-#: lib/firewall_policies.php:707
+#: lib/firewall_policies.php:735
 msgid "Any HTTP methods"
 msgstr "Toutes les méthodes HTTP"
 
@@ -2641,7 +2663,7 @@ msgstr "Activer"
 msgid "Enable Web Filter"
 msgstr "Activer Web Filter"
 
-#: lib/firewall_webfilter.php:81 lib/help.php:358
+#: lib/firewall_webfilter.php:81 lib/help.php:361
 msgid "Search HTML page for:"
 msgstr "Rechercher dans la page HTML :"
 
@@ -3185,21 +3207,18 @@ msgstr ""
 "une frame."
 
 #: lib/help.php:167
+msgid "Disable X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)"
+msgstr "Désactiver X-XSS-Protection (IE/Edge, Opera, Chrome et Safari)"
+
+#: lib/help.php:167
 msgid ""
 "This header allows browsers to identify and block XSS attacks by preventing "
 "malicious scripts from executing. It is enabled by default on all compatible "
-"browsers. Because it can lead to false positives and there are better "
-"alternatives (e.g. Content-Security-Policy), it is possible to turn it off. "
-"When it is enabled, NinjaFirewall will set its value to <code>mode=block</"
-"code>."
+"browsers."
 msgstr ""
 "Cet en-tête permet aux navigateurs compatibles d'identifier et bloquer les "
 "attaques XSS en empêchant un script malveillant de s'exécuter. Notez que "
-"cette option est activée par défaut sur ces navigateurs. Parce qu'elle peut "
-"conduire à des faux positifs et qu'ils existent de meilleures alternatives "
-"(par exemple Content-Security-Policy), il est possible de désactiver cette "
-"option. Quand elle est activée, NinjaFirewall définit sa valeur sur "
-"<code>mode=block</code>."
+"cette option est activée par défaut sur ces navigateurs."
 
 #: lib/help.php:168
 msgid ""
@@ -3256,7 +3275,19 @@ msgstr ""
 "code JavaScript, les styles CSS, frames/iframes HTML, polices, images, "
 "objets (Java, ActiveX, fichiers audio et video), mais aussi les WebSocket."
 
-#: lib/help.php:178
+#: lib/help.php:177
+msgid "Set Referrer-Policy"
+msgstr "Activer Referrer-Policy"
+
+#: lib/help.php:177
+msgid ""
+"This HTTP header governs which referrer information, sent in the Referer "
+"header, should be included with requests made."
+msgstr ""
+"Cet en-tête HTTP détermine quelles informations de provenance doivent être "
+"incluses dans l'en-tête Referer."
+
+#: lib/help.php:181
 msgid ""
 "PHP has several wrappers for use with the filesystem functions. It is "
 "possible for an attacker to use them to bypass firewalls and various IDS to "
@@ -3276,7 +3307,7 @@ msgstr ""
 "requête <code>GET</code> ou <code>POST</code>, des cookies, ou dans les "
 "variables <code>HTTP_REFERER</code> et <code>HTTP_USER_AGENT</code>."
 
-#: lib/help.php:180
+#: lib/help.php:183
 msgid ""
 "Object Serialization is a PHP feature used by many applications to generate "
 "a storable representation of a value. However, some insecure PHP "
@@ -3294,7 +3325,7 @@ msgstr ""
 "code>, des cookies, ou dans les variables <code>HTTP_REFERER</code> et "
 "<code>HTTP_USER_AGENT</code>."
 
-#: lib/help.php:182
+#: lib/help.php:185
 msgid ""
 "This option lets you hide errors returned by your scripts. Such errors can "
 "leak sensitive informations which can be exploited by hackers."
@@ -3303,11 +3334,11 @@ msgstr ""
 "afficher des informations sensibles qui peuvent être exploitées "
 "ultérieurement par des pirates."
 
-#: lib/help.php:184
+#: lib/help.php:187
 msgid "Sanitise PHP_SELF, PATH_TRANSLATED, PATH_INFO"
 msgstr "Nettoyer PHP_SELF, PATH_TRANSLATED, PATH_INFO"
 
-#: lib/help.php:184
+#: lib/help.php:187
 msgid ""
 "This option can sanitise any dangerous characters found in those 3 server "
 "variables to prevent various XSS and database injection attempts."
@@ -3315,7 +3346,7 @@ msgstr ""
 "Activez ces options si vous souhaitez que le pare-feu nettoie ces trois "
 "variables."
 
-#: lib/help.php:187
+#: lib/help.php:190
 msgid ""
 "This option will block scripts attempting to pass the <code>DOCUMENT_ROOT</"
 "code> server variable in a <code>GET</code> or <code>POST</code> request. "
@@ -3328,7 +3359,7 @@ msgstr ""
 "cette variable, mais pas la plupart des applications légitimes (hormis "
 "certains scripts d'installation ou de configuration)."
 
-#: lib/help.php:189
+#: lib/help.php:192
 msgid ""
 "This option will reject any <code>GET</code> or <code>POST</code> request, "
 "<code>HTTP_USER_AGENT</code>, <code>REQUEST_URI</code>, <code>PHP_SELF</"
@@ -3342,7 +3373,7 @@ msgstr ""
 "contenant le caractère ASCI 0x00 (NULL byte) sera bloquée immédiatement. Ce "
 "caractère est dangereux et devrait toujours être rejeté."
 
-#: lib/help.php:191
+#: lib/help.php:194
 msgid ""
 "This option will reject any <code>GET</code> or <code>POST</code> request, "
 "<code>HTTP_USER_AGENT</code>, <code>HTTP_REFERER</code> variables containing "
@@ -3352,7 +3383,7 @@ msgstr ""
 "variable <code>HTTP_USER_AGENT</code>, <code>HTTP_REFERER</code> contenant "
 "des caractères ASCII 1 à 8 et 14 à 31 sera bloquée."
 
-#: lib/help.php:193
+#: lib/help.php:196
 msgid ""
 "This option will block any <code>GET</code> or <code>POST</code> request "
 "containing the localhost IP. It can be useful to block SQL dumpers and "
@@ -3363,7 +3394,7 @@ msgstr ""
 "les programmes malveillants. Attention toutefois à ne pas bloquer certains "
 "scripts d'installation ou de configuration si vous l'activez."
 
-#: lib/help.php:195
+#: lib/help.php:198
 msgid ""
 "This option will reject any request using an IP instead of a domain name in "
 "the <code>Host</code> header of the HTTP request. Unless you need to connect "
@@ -3378,11 +3409,11 @@ msgstr ""
 "scanners de vulnérabilité car ces application trouvent les sites en scannant "
 "les plages d'adresses IP plutôt que les noms de domaine. "
 
-#: lib/help.php:197
+#: lib/help.php:200
 msgid "By default, NinjaFirewall will accept all HTTP methods."
 msgstr "Par défaut, NinjaFirewall accepte toutes les méthodes HTTP."
 
-#: lib/help.php:204
+#: lib/help.php:207
 msgid ""
 "Access Control is a powerful set of directives that can be used to allow or "
 "restrict access to your website based on many criteria."
@@ -3391,7 +3422,7 @@ msgstr ""
 "utilisé pour autoriser ou restreindre l'accès à votre site selon de nombreux "
 "critères."
 
-#: lib/help.php:205
+#: lib/help.php:208
 msgid ""
 "To make better use of them, it is important to understand NinjaFirewall's "
 "directives processing order:"
@@ -3399,51 +3430,51 @@ msgstr ""
 "Afin de pouvoir optimiser son utilisation, il est important de bien "
 "comprendre l'ordre dans lequel NinjaFirewall traite ces directives :"
 
-#: lib/help.php:207
+#: lib/help.php:210
 msgid "Incoming HTTP request:"
 msgstr "Requête HTTP entrante :"
 
-#: lib/help.php:209
+#: lib/help.php:212
 msgid "The <code>.htninja</code> file."
 msgstr "Fichier de configuration <code>.htninja</code>."
 
-#: lib/help.php:210
+#: lib/help.php:213
 msgid "Temporarily  banned IP addresses."
 msgstr "Adresses IP temporairement bannies."
 
-#: lib/help.php:211
+#: lib/help.php:214
 msgid "Access Control:"
 msgstr "Contrôle d'Accès :"
 
-#: lib/help.php:213
+#: lib/help.php:216
 msgid "Allowed IPs"
 msgstr "IPs autorisées"
 
-#: lib/help.php:214
+#: lib/help.php:217
 msgid "Blocked IPs"
 msgstr "IP bloquées"
 
-#: lib/help.php:215
+#: lib/help.php:218
 msgid "Allowed URLs"
 msgstr "URL autorisées"
 
-#: lib/help.php:216
+#: lib/help.php:219
 msgid "Blocked URLs"
 msgstr "URL bloquées"
 
-#: lib/help.php:219
+#: lib/help.php:222
 msgid "Rate Limiting"
 msgstr "Limiter le trafic"
 
-#: lib/help.php:222
+#: lib/help.php:225
 msgid "NinjaFirewall built-in rules and policies"
 msgstr "Options, Politiques et règles de pare-feu de NinjaFirewall."
 
-#: lib/help.php:224
+#: lib/help.php:227
 msgid "Response body:"
 msgstr "Requête HTTP sortante :"
 
-#: lib/help.php:233
+#: lib/help.php:236
 msgid ""
 "When enabling this option, NinjaFirewall will whitelist you with a browser "
 "cookie (valid for one-year) so that you will never be blocked by the "
@@ -3455,7 +3486,7 @@ msgstr ""
 "bloqué par le pare-feu. Vous resterez sur la liste blanche même si vous vous "
 "déconnectez de la console d'administration."
 
-#: lib/help.php:236
+#: lib/help.php:239
 msgid ""
 "This option should be used if you are behind a reverse proxy, a load "
 "balancer or using a CDN, in order to tell NinjaFirewall which IP it should "
@@ -3478,7 +3509,7 @@ msgstr ""
 "seule la première insérée sera vérifiée. Si elle ne comprend aucune IP "
 "utilisable, NinjaFirewall utilisera <code>REMOTE_ADDR</code>."
 
-#: lib/help.php:237
+#: lib/help.php:240
 msgid ""
 "This option will allow the firewall to scan traffic from all non-routable "
 "private IPs (IPv4 and IPv6) as well as the localhost IP. We recommend to "
@@ -3489,7 +3520,7 @@ msgstr ""
 "Nous vous recommandons de le garder activé si vous avez deux ou plusieurs "
 "serveurs reliés entre eux."
 
-#: lib/help.php:240
+#: lib/help.php:243
 msgid ""
 "This option lets you select the HTTP method(s). All Access Control "
 "directives (Geolocation, IPs, bots and URLs) will only apply to the selected "
@@ -3501,7 +3532,7 @@ msgstr ""
 "méthodes sélectionnées. Cette option ne concerne pas les Politiques du pare-"
 "feu."
 
-#: lib/help.php:245
+#: lib/help.php:248
 msgid ""
 "This is the two-letter country code that is used to define a country (e.g., "
 "US, UK, FR, DE etc), based on the visitors IP. NinjaFirewall can either "
@@ -3514,11 +3545,11 @@ msgstr ""
 "partir d'une variable PHP prédéfinie ajoutée par votre serveur HTTP (par "
 "exemple, <code>GEOIP_COUNTRY_CODE</code>)."
 
-#: lib/help.php:247
+#: lib/help.php:250
 msgid "Available countries"
 msgstr "Pays disponibles"
 
-#: lib/help.php:247
+#: lib/help.php:250
 #, php-format
 msgid ""
 "You can add/remove any country from the two listboxes. For more information "
@@ -3531,7 +3562,7 @@ msgstr ""
 "EU etc),vous pouvez consulter l'aide en ligne de <a href=\"%s\">MaxMind "
 "GeoIP</a>. Aucun pays n'est bloqué par défaut."
 
-#: lib/help.php:249
+#: lib/help.php:252
 msgid ""
 "whether geolocation should apply to the every PHP scripts on your website or "
 "to specific URLs only (e.g., <code>/foobar.php</code>). Leave all fields "
@@ -3541,7 +3572,7 @@ msgstr ""
 "certains scripts uniquement (ex: <code>/foobar.php</code>). Laissez tous les "
 "champs vides pour l'appliquer à tout le site."
 
-#: lib/help.php:251
+#: lib/help.php:254
 msgid ""
 "After retrieving the two-letter country code, NinjaFirewall can add it to "
 "the PHP headers in the <code>$_SERVER[\"NINJA_COUNTRY_CODE\"]</code> server "
@@ -3553,16 +3584,16 @@ msgstr ""
 "une application PHP qui nécessite de géolocaliser vos visiteurs, activez "
 "cette option."
 
-#: lib/help.php:252
+#: lib/help.php:255
 msgid "PHP code example to use in your application to geolocate your visitors:"
 msgstr ""
 "Exemple de code PHP à ajouter à vos scripts pour géolocaliser vos visiteurs :"
 
-#: lib/help.php:258
+#: lib/help.php:261
 msgid "Your country code is:"
 msgstr "Le code de votre pays est :"
 
-#: lib/help.php:264
+#: lib/help.php:267
 msgid ""
 "If NinjaFirewall cannot find the two-letter country code, it will replace it "
 "with two hyphens (<code>--</code>)."
@@ -3570,7 +3601,7 @@ msgstr ""
 "Si NinjaFirewall ne peut pas identifier le code à deux lettres du pays, il "
 "le remplacera par deux traits d'union (<code>--</code>)."
 
-#: lib/help.php:269
+#: lib/help.php:272
 msgid ""
 "You can permanently allow/block an IP or a part of it. IPv4 and IPv6 are "
 "fully supported by NinjaFirewall."
@@ -3578,15 +3609,15 @@ msgstr ""
 "Vous pouvez immédiatement accepter ou bloquer une adresse IP ou une partie "
 "de celle-ci. NinjaFirewall est compatible avec l'IPv4 et l'IPv6. "
 
-#: lib/help.php:270
+#: lib/help.php:273
 msgid "You must at least enter the first 3 characters of an IP:"
 msgstr "Vous devez entrer au moins les 3 premiers caractères d'une IP :"
 
-#: lib/help.php:272
+#: lib/help.php:275
 msgid "Full IPv4:"
 msgstr "IPv4 :"
 
-#: lib/help.php:274
+#: lib/help.php:277
 msgid ""
 "<code>1.2.3.123</code> will only match IP <code><font color=\"red"
 "\">1.2.3.123</font></code>"
@@ -3594,11 +3625,11 @@ msgstr ""
 "<code>1.2.3.123</code> ne s'appliquera qu'à l'IP <code><font color=\"red"
 "\">1.2.3.123</font></code>"
 
-#: lib/help.php:276
+#: lib/help.php:279
 msgid "Partial IPv4:"
 msgstr "IPv4 partielle :"
 
-#: lib/help.php:278
+#: lib/help.php:281
 msgid ""
 "<code>1.2.3.</code> will match any IP address <strong>starting with</strong> "
 "<code>1.2.3.</code> (from <code><font color=\"red\">1.2.3.</font>0</code> to "
@@ -3610,7 +3641,7 @@ msgstr ""
 "code> à <code><font color=\"red\">1.2.3.</font>255</code>), mais ne "
 "s'appliquera pas à <code>2<font color=\"red\">1.2.3.</font>0</code>"
 
-#: lib/help.php:279
+#: lib/help.php:282
 msgid ""
 "<code>1.2.3</code> will match any IP address <strong>starting with</strong> "
 "<code>1.2.3</code> (from <code><font color=\"red\">1.2.3</font>.0</code> to "
@@ -3624,7 +3655,7 @@ msgstr ""
 "<code><font color=\"red\">1.2.3</font>4.56</code> etc), mais ne s'appliquera "
 "pas à <code>4.<font color=\"red\">1.2.3</font></code>"
 
-#: lib/help.php:281
+#: lib/help.php:284
 msgid ""
 "The same rules apply to IPv6 addresses. Subnets notation (e.g, "
 "66.155.0.0/17) are not supported."
@@ -3632,7 +3663,7 @@ msgstr ""
 "Les mêmes règles s'appliquent aux adresses IPv6. Les masques de sous réseaux "
 "(ex: 66.155.0.0/17) ne sont pas pris en charge. "
 
-#: lib/help.php:283
+#: lib/help.php:286
 msgid ""
 "This option allows you to slow down aggressive bots, crawlers, web scrapers "
 "or even small attacks. Any IP reaching the defined threshold will be banned "
@@ -3647,7 +3678,7 @@ msgstr ""
 "temporairement une adresse IP. Si vous souhaitez bloquer définitivement une "
 "adresse IP, utilisez le menu \"Bloquer les IP\" ci-dessus."
 
-#: lib/help.php:284
+#: lib/help.php:287
 msgid ""
 "IPs temporarily banned by the Rate Limiting option can be unblocked "
 "immediately by clicking either the \"Save Changes\" or \"Restore Default "
@@ -3658,7 +3689,7 @@ msgstr ""
 "modifications\" ou \"Rétablir les valeurs par défaut\" situés en bas de la "
 "page."
 
-#: lib/help.php:289
+#: lib/help.php:292
 msgid ""
 "You can permanently allow or block any access to one or more PHP scripts "
 "based on their path, relative to the web root (<code>SCRIPT_NAME</code>). "
@@ -3669,7 +3700,7 @@ msgstr ""
 "(<code>SCRIPT_NAME</code>). Vous pouvez entrer l'URL complète ou partielle, "
 "sensible à la casse."
 
-#: lib/help.php:291
+#: lib/help.php:294
 msgid ""
 "<code>/foo/bar.php</code> will allow/block any access to the <code>bar.php</"
 "code> script located inside a <code>/foo/</code> directory (<code>http://"
@@ -3681,7 +3712,7 @@ msgstr ""
 "(<code>http://domaine.tld/foo/bar.php</code>, <code>http://domaine.tld/autre/"
 "repertoire/foo/bar.php</code> etc)."
 
-#: lib/help.php:292
+#: lib/help.php:295
 msgid ""
 "<code>/foo/</code> will allow/block access to all PHP scripts located inside "
 "a <code>/foo/</code> directory."
@@ -3689,7 +3720,7 @@ msgstr ""
 "<code>/foo/</code> autorisera/bloquera l'accès à tous les scripts PHP situés "
 "dans un répertoire <code>/foo/</code>."
 
-#: lib/help.php:298
+#: lib/help.php:301
 msgid ""
 "You can block bots, scanners and various crawlers based on the "
 "<code>HTTP_USER_AGENT</code> variable. You can enter either a full or "
@@ -3699,11 +3730,11 @@ msgstr ""
 "nom (<code>HTTP_USER_AGENT</code>) ou partie de celui-ci. La chaîne de "
 "caractères est insensible à la casse."
 
-#: lib/help.php:302
+#: lib/help.php:305
 msgid "Log events"
 msgstr "Journaliser"
 
-#: lib/help.php:303
+#: lib/help.php:306
 msgid ""
 "You can enable/disable firewall logging for each access control directive "
 "separately."
@@ -3711,7 +3742,7 @@ msgstr ""
 "Vous pouvez activer/désactiver la journalisation des directives "
 "indépendamment les unes des autres."
 
-#: lib/help.php:307
+#: lib/help.php:310
 msgid ""
 "NinjaFirewall includes GeoLite data created by MaxMind, available from <a "
 "href=\"http://www.maxmind.com\">http://www.maxmind.com</a>."
@@ -3719,7 +3750,7 @@ msgstr ""
 "NinjaFirewall includes GeoLite data created by MaxMind, available from <a "
 "href=\"http://www.maxmind.com\">http://www.maxmind.com</a>."
 
-#: lib/help.php:314
+#: lib/help.php:317
 msgid ""
 "In addition to the Firewall Policies and Access Control directives, "
 "NinjaFirewall includes also a large set of built-in rules used to protect "
@@ -3735,7 +3766,7 @@ msgstr ""
 "peuvent être désactivées individuellement, notamment dans le cas où l'une "
 "d'entre-elles bloquerait certains de vos visiteurs par erreur :"
 
-#: lib/help.php:316
+#: lib/help.php:319
 msgid ""
 "Check your firewall log and find the rule ID you want to disable (it is "
 "displayed in the <code>RULE</code> column)."
@@ -3743,7 +3774,7 @@ msgstr ""
 "Consultez le journal du pare-feu afin d'y trouver l'ID de la règle que vous "
 "souhaitez désactiver (il est affiché dans la colonne <code>RULE</code>)."
 
-#: lib/help.php:317
+#: lib/help.php:320
 msgid ""
 "Select its ID from the enabled rules list below and click the \"Disable it\" "
 "button."
@@ -3751,7 +3782,7 @@ msgstr ""
 "Sélectionnez son ID dans la liste des règles ci-dessous et cliquez sur le "
 "bouton \"Désactiver\"."
 
-#: lib/help.php:319
+#: lib/help.php:322
 msgid ""
 "If the <code>RULE</code> column from your log shows a hyphen <code>-</code> "
 "instead of a number, that means that the rule can be changed in your "
@@ -3761,7 +3792,7 @@ msgstr ""
 "code> au lieu d'un nombre, c'est qu'il s'agit d'une règle qui peut être "
 "désactivée depuis la page \"Pare-Feu &gt; Politiques\"."
 
-#: lib/help.php:326
+#: lib/help.php:329
 msgid ""
 "File Guard can detect, in real-time, any access to a PHP script that was "
 "recently modified or created, and alert you about this."
@@ -3769,7 +3800,7 @@ msgstr ""
 "File Guard peut détecter, en temps réel, tout accès à un script PHP ayant "
 "été créé ou modifié récemment, et vous en alerter par e-mail."
 
-#: lib/help.php:328
+#: lib/help.php:331
 msgid ""
 "If a hacker uploaded a shell script to your site (or injected a backdoor "
 "into an already existing file) and tried to directly access that file using "
@@ -3787,7 +3818,7 @@ msgstr ""
 "(nom du script, IP, requête HTTP, date et heure). L'alerte sera envoyée à "
 "l'adresse indiquée dans le menu \"Compte > Options > Contact\"."
 
-#: lib/help.php:330
+#: lib/help.php:333
 msgid ""
 "Modifications detected by NinjaFirewall include file modifications as well "
 "as file permissions, and ownership changes."
@@ -3796,7 +3827,7 @@ msgstr ""
 "modification du contenu d'un fichier, et la modification de ses propriétés "
 "et permissions."
 
-#: lib/help.php:332
+#: lib/help.php:335
 msgid ""
 "If you do not want to monitor a folder, you can exclude its full path or a "
 "part of it (e.g., <code>/var/www/public_html/cache/</code>, <code>/cache/</"
@@ -3810,13 +3841,13 @@ msgstr ""
 "variable <code>$_SERVER[\"SCRIPT_FILENAME\"]</code> et, si elle correspond, "
 "l'ignorera.<br>Plusieurs valeurs doivent être séparées par des virgules."
 
-#: lib/help.php:339
+#: lib/help.php:342
 msgid "File Check lets you perform file integrity monitoring upon request."
 msgstr ""
 "File Check vous permet d'effectuer une analyse de l'intégrité de vos "
 "fichiers sur demande."
 
-#: lib/help.php:341
+#: lib/help.php:344
 msgid ""
 "You need to create a snapshot of all your files and then, at a later time, "
 "you can scan your system to compare it with the previous snapshot. Any "
@@ -3829,15 +3860,15 @@ msgstr ""
 "permissions et propriétés des fichiers, leur création, suppression ainsi que "
 "l'horodatage."
 
-#: lib/help.php:343
+#: lib/help.php:346
 msgid "By default, the directory is set to NinjaFirewall's parent directory."
 msgstr "Par défaut, il s'agit du répertoire parent de NinjaFirewall."
 
-#: lib/help.php:345
+#: lib/help.php:348
 msgid "Exclude the following files/folders"
 msgstr "Exclure les fichiers / dossiers suivants"
 
-#: lib/help.php:345
+#: lib/help.php:348
 msgid ""
 "You can enter a directory or a file name (e.g., <code>/foo/bar/</code>), or "
 "a part of it (e.g., <code>foo</code>). Or you can exclude a file extension "
@@ -3850,17 +3881,17 @@ msgstr ""
 "valeurs doivent être séparées par des virgules (par ex. <code>/foo/bar/,."
 "css,.png</code>)."
 
-#: lib/help.php:347
+#: lib/help.php:350
 msgid "Do not follow symbolic links"
 msgstr "Ne pas suivre les liens symboliques"
 
-#: lib/help.php:347
+#: lib/help.php:350
 msgid "By default, NinjaFirewall will not follow symbolic links."
 msgstr ""
 "Par défaut, NinjaFirewall ignore les liens symboliques lors de son analyse "
 "des fichiers."
 
-#: lib/help.php:354
+#: lib/help.php:357
 msgid ""
 "If NinjaFirewall can hook and scan incoming requests, it can also hook the "
 "response body (i.e., the output of the HTML page right before it is sent to "
@@ -3878,7 +3909,7 @@ msgstr ""
 "etc), des scripts utilisés par les hackeurs (shell, backdoor) et même des "
 "erreurs (PHP, MySQL). "
 
-#: lib/help.php:356
+#: lib/help.php:359
 msgid ""
 "In the case of a positive detection, NinjaFirewall will not block the "
 "response body but will send you an alert by email."
@@ -3886,7 +3917,7 @@ msgstr ""
 "En cas de détection positive, NinjaFirewall ne bloquera pas la requête mais "
 "vous enverra immédiatement une alerte par e-mail. "
 
-#: lib/help.php:358
+#: lib/help.php:361
 msgid ""
 "You can enter any keyword from 4 to 150 characters and select whether the "
 "search will be case sensitive or not."
@@ -3894,11 +3925,11 @@ msgstr ""
 "Vous pouvez entrer de 4 à 150 caractères et sélectionner si la recherche est "
 "sensible à la casse."
 
-#: lib/help.php:359
+#: lib/help.php:362
 msgid "Email Alerts"
 msgstr "Alertes E-mail"
 
-#: lib/help.php:359
+#: lib/help.php:362
 msgid ""
 "You can use the notification throttling option to limit the frequency of "
 "alerts sent to you (and written to the firewall log) and select whether you "
@@ -3910,7 +3941,7 @@ msgstr ""
 "Contact\". La page HTML ayant déclenché cette alerte peut être jointe à l'e-"
 "mail."
 
-#: lib/help.php:361
+#: lib/help.php:364
 msgid ""
 "Response body filtering can be resource-intensive. Try to limit the number "
 "of keywords to what you really need (&lt;10) and/or, if possible, prefer "
@@ -3920,7 +3951,7 @@ msgstr ""
 "limiter le nombre de mots-clés (&lt;10) et/ou, si possible, préférez la "
 "recherche sensible à la casse."
 
-#: lib/help.php:368
+#: lib/help.php:371
 msgid ""
 "The firewall log displays blocked and sanitised requests as well as some "
 "useful information. It has 6 columns:"
@@ -3928,17 +3959,17 @@ msgstr ""
 "Le journal du pare-feu affiche les requêtes HTTP qui ont été bloquées ou "
 "nettoyées ainsi que d'autres informations utiles. Il a six colonnes :"
 
-#: lib/help.php:370
+#: lib/help.php:373
 msgid "Date and time of the incident."
 msgstr "Date et heure de l'incident."
 
-#: lib/help.php:371
+#: lib/help.php:374
 msgid "Unique incident number/ID as it was displayed to the blocked user."
 msgstr ""
 "Le numéro d'incident (ID) unique. Par défaut, il sera aussi affiché à "
 "l'utilisateur dont la requête aura été bloquée par le pare-feu."
 
-#: lib/help.php:372
+#: lib/help.php:375
 msgid ""
 "Level of severity (medium, high or critical), information (info, error, "
 "upload) and debugging mode (DEBUG_ON)."
@@ -3946,7 +3977,7 @@ msgstr ""
 "Sévérité des attaques (moyen, élevé ou critique), information (info, erreur, "
 "téléchargement) et mode débogage (DEBUG_ON)."
 
-#: lib/help.php:373
+#: lib/help.php:376
 msgid ""
 "Reference of the NinjaFirewall built-in security rule that triggered the "
 "action. A hyphen (<code>-</code>) instead of a number means it was a rule "
@@ -3957,11 +3988,11 @@ msgstr ""
 "numéro signifie que la règle provient soit de votre configuration "
 "personnelle \"Politique\" ou \"Contrôle d'Accès\" du menu \"Pare-Feu\"."
 
-#: lib/help.php:374
+#: lib/help.php:377
 msgid "The blocked user remote address."
 msgstr "L'adresse IP de l'utilisateur bloqué."
 
-#: lib/help.php:375
+#: lib/help.php:378
 msgid ""
 "The HTTP request including offending variables & values as well as the "
 "reason the action was logged."
@@ -3969,19 +4000,19 @@ msgstr ""
 "La requête HTTP avec ses variables et valeurs, ainsi que la raison qui a "
 "déclenché l'incident."
 
-#: lib/help.php:377
+#: lib/help.php:380
 msgid "The log can also be exported as a TSV (tab-separated values) text file."
 msgstr ""
 "Le journal peut également être exporté dans un fichier au format TSV "
 "(valeurs séparées par des tabulations)."
 
-#: lib/help.php:380
+#: lib/help.php:383
 msgid "You can disable/enable the firewall log from this page."
 msgstr ""
 "Vous pouvez activer / désactiver le journal du pare-feu à partir de cette "
 "page."
 
-#: lib/help.php:381
+#: lib/help.php:384
 msgid ""
 "NinjaFirewall will rotate its log automatically on the very first day of "
 "each month. If your site is very busy, you may want to allow it to rotate "
@@ -3993,14 +4024,14 @@ msgstr ""
 "effectuée plus tôt, dans le cas où le journal aurait atteint une certaine "
 "taille (Mo). Par défaut, cette taille est fixée à 2 Mo. "
 
-#: lib/help.php:383
+#: lib/help.php:386
 msgid ""
 "Rotated logs, if any, can be selected and viewed from the dropdown menu."
 msgstr ""
 "Les journaux des mois précédents sont accessibles depuis le menu déroulant "
 "situé au dessus de la fenêtre."
 
-#: lib/help.php:385
+#: lib/help.php:388
 msgid ""
 "If the log is too large, only the last 1500 lines will be displayed. It can "
 "be changed with this option."
@@ -4008,7 +4039,7 @@ msgstr ""
 "Si le journal est trop volumineux, seules les 1500 dernières lignes seront "
 "affichées. Cette valeur peut-être changée avec cette option."
 
-#: lib/help.php:387
+#: lib/help.php:390
 msgid ""
 "In addition to the firewall log, events can also be redirected to the syslog "
 "server (<code>LOG_USER</code> facility). If you have a shared hosting "
@@ -4020,15 +4051,15 @@ msgstr ""
 "hébergement mutualisé, laissez cette option désactivée car vous n'avez pas "
 "accès aux journaux du serveur."
 
-#: lib/help.php:388
+#: lib/help.php:391
 msgid "The logline uses the following format:"
 msgstr "Le format utilisé est le suivant :"
 
-#: lib/help.php:391
+#: lib/help.php:394
 msgid "the process ID (PID)."
 msgstr "l'identifiant de processus (PID)."
 
-#: lib/help.php:392
+#: lib/help.php:395
 msgid ""
 "the level of severity as it appears in the firewall log. It can be "
 "<code>CRITICAL</CODE>, <CODE>HIGH</CODE>, <CODE>MEDIUM</CODE>, <CODE>INFO</"
@@ -4039,19 +4070,19 @@ msgstr ""
 "<code>MEDIUM</code>, <code>INFO</code>, <code>UPLOAD</code> ou "
 "<code>DEBUG_ON</code>."
 
-#: lib/help.php:393
+#: lib/help.php:396
 msgid "the 7-digit incident ID."
 msgstr "le numéro d'incident à sept chiffres."
 
-#: lib/help.php:394
+#: lib/help.php:397
 msgid "the user IPv4 or IPv6 address."
 msgstr "l'adresse IPv4 ou IPv6 de l'utilisateur."
 
-#: lib/help.php:395
+#: lib/help.php:398
 msgid "the website (sub-)domain name."
 msgstr "le nom de (sous-)domaine du site."
 
-#: lib/help.php:407
+#: lib/help.php:410
 msgid ""
 "Centralized Logging lets you remotely access the firewall log of all your "
 "NinjaFirewall protected websites from one single installation. You do not "
@@ -4062,11 +4093,11 @@ msgstr ""
 "NinjaFirewall. Vous n'avez plus besoin de vous connecter à chaque site pour "
 "analyser vos journaux."
 
-#: lib/help.php:408
+#: lib/help.php:411
 msgid "This is the public key that was created from your main server."
 msgstr "Il s'agit de la clé qui a été créée depuis le serveur principal."
 
-#: lib/help.php:409
+#: lib/help.php:412
 msgid ""
 "Centralized Logging will keep working even if NinjaFirewall is disabled. "
 "Delete your public key if you want to disable it."
@@ -4075,7 +4106,7 @@ msgstr ""
 "NinjaFirewall. Si vous souhaitez complètement désactiver cette option, "
 "supprimez votre clé publique."
 
-#: lib/help.php:416
+#: lib/help.php:419
 msgid ""
 "Live Log lets you watch your blog traffic in real time, just like the Unix "
 "<code>tail -f</code> command. Note that requests sent to static elements "
@@ -4087,7 +4118,7 @@ msgstr ""
 "statiques comme les fichiers JS/CSS ou les images ne sont pas traitées par "
 "NinjaFirewall."
 
-#: lib/help.php:417
+#: lib/help.php:420
 msgid ""
 "You can enable/disable the monitoring process, change the refresh rate, "
 "clear the screen, enable automatic vertical scrolling, change the log format "
@@ -4098,25 +4129,25 @@ msgstr ""
 "effacer l'écran, changer le format d'affichage et choisir le type de trafic "
 "à visualiser (HTTP/HTTPS)."
 
-#: lib/help.php:419
+#: lib/help.php:422
 msgid "Log Format"
 msgstr "Format d'affichage"
 
-#: lib/help.php:420
+#: lib/help.php:423
 msgid "You can easily customize the log format. Possible values are:"
 msgstr ""
 "Vous pouvez facilement changer le format d'affichage en combinant une ou "
 "plusieurs des valeurs suivantes :"
 
-#: lib/help.php:422
+#: lib/help.php:425
 msgid "The server date, time and timezone."
 msgstr "La date, heure et fuseau horaire du serveur."
 
-#: lib/help.php:423
+#: lib/help.php:426
 msgid "Authenticated user (HTTP basic auth), if any."
 msgstr "Le nom de l'utilisateur (Authentification HTTP basic), si il existe."
 
-#: lib/help.php:424
+#: lib/help.php:427
 msgid ""
 "The client REMOTE_ADDR. If you are behind a load balancer or CDN, this will "
 "be its IP."
@@ -4124,23 +4155,23 @@ msgstr ""
 "L'adresse IP du client (REMOTE_ADDR). Si votre serveur est derrière un CDN "
 "ou un proxy, cette variable retournera l'adresse IP de celui-ci."
 
-#: lib/help.php:425
+#: lib/help.php:428
 msgid "HTTP method (e.g., GET, POST)."
 msgstr "La méthode HTTP (par ex. GET, POST)."
 
-#: lib/help.php:426
+#: lib/help.php:429
 msgid "The URI which was given in order to access the page (REQUEST_URI)."
 msgstr "L'URI donnée pour accéder à la page (REQUEST_URI)."
 
-#: lib/help.php:427
+#: lib/help.php:430
 msgid "The referrer (HTTP_REFERER), if any."
 msgstr "Le referrer (HTTP_REFERER), si il existe."
 
-#: lib/help.php:428
+#: lib/help.php:431
 msgid "The user-agent (HTTP_USER_AGENT), if any."
 msgstr "L'en-tête User_Agent (HTTP_USER_AGENT), si il existe."
 
-#: lib/help.php:429
+#: lib/help.php:432
 msgid ""
 "HTTP_X_FORWARDED_FOR, if any. If you are behind a load balancer or CDN, this "
 "will likely be the visitor true IP."
@@ -4149,11 +4180,11 @@ msgstr ""
 "un CDN ou un proxy, cette variable retournera probablement l'adresse réelle "
 "du client."
 
-#: lib/help.php:432
+#: lib/help.php:435
 msgid "Additionally, you can include any of the following characters:"
 msgstr "Vous pouvez aussi utiliser les caractères suivants :"
 
-#: lib/help.php:434
+#: lib/help.php:437
 msgid ""
 "If you are using the optional <code>.htninja</code> configuration file to "
 "whitelist your IP, the Live Log feature will not work."
@@ -4162,7 +4193,7 @@ msgstr ""
 "pour toujours accepter les requêtes provenant de votre adresse IP, Live Log "
 "ne fonctionnera pas."
 
-#: lib/help.php:441
+#: lib/help.php:444
 msgid ""
 "Centralized Logging lets you remotely access the firewall log of all your "
 "NinjaFirewall protected websites from one single installation. You do not "
@@ -4176,7 +4207,7 @@ msgstr ""
 "analyser vos journaux. Vous pouvez vous connecter à un nombre illimité de "
 "sites, quelque soit leur version de NinjaFirewall : WP, WP+, Pro or Pro+."
 
-#: lib/help.php:443
+#: lib/help.php:446
 msgid ""
 "The secret key will be used to generate your public key. Enter at least 30 "
 "ASCII characters, or use the one randomly created by NinjaFirewall."
@@ -4185,7 +4216,7 @@ msgstr ""
 "caractères ASCII, ou bien utilisez la clé générée aléatoirement par "
 "NinjaFirewall."
 
-#: lib/help.php:445
+#: lib/help.php:448
 msgid ""
 "As an additional protection layer, you can restrict access to the remote "
 "website(s) to the main server's IP only. You can use IPv4 or IPv6. If you do "
@@ -4195,12 +4226,12 @@ msgstr ""
 "distants. Si vous ne souhaitez pas de restriction d’accès par IP, veuillez "
 "entrer le caractère <code>*</code>."
 
-#: lib/help.php:447
+#: lib/help.php:450
 msgid ""
 "This is the public key that you will need to upload to each remote website."
 msgstr "Vous devez configurer vos sites distants avec cette clé."
 
-#: lib/help.php:449
+#: lib/help.php:452
 msgid ""
 "Enter the full URL of your NinjaFirewall protected website(s) that you want "
 "to remotely access from the main server."
@@ -4208,7 +4239,7 @@ msgstr ""
 "Entrez l'URL complète des sites protégés par NinjaFirewall auxquels vous "
 "souhaitez accéder à distance à partir du serveur principal."
 
-#: lib/help.php:451
+#: lib/help.php:454
 msgid ""
 "Centralized Logging will keep working even if NinjaFirewall is disabled. Use "
 "this menu if you want to disable it."
@@ -4217,7 +4248,7 @@ msgstr ""
 "NinjaFirewall. Si vous souhaitez complètement désactiver cette option, "
 "faites-le depuis ce menu."
 
-#: lib/help.php:457
+#: lib/help.php:460
 msgid "No help available for this page."
 msgstr "Aucune aide disponible pour cette page."
 
@@ -4495,6 +4526,13 @@ msgstr "Votre session a expiré."
 msgid "Wrong username or password."
 msgstr "Utilisateur ou mot de passe invalide."
 
+#: login.php:236
+#, php-format
+msgid "Use <a href=\"%s\">this script</a> if you need to reset your password."
+msgstr ""
+"Utilisez <a href=\"%s\">ce script</a> si vous souhaitez réinitialiser votre "
+"mot de passe."
+
 #: login.php:305
 msgid "[NinjaFirewall] Admin console login"
 msgstr "[NinjaFirewall] Connexion à la console d'administration"
@@ -4676,33 +4714,33 @@ msgstr "Entrez au moins un mot-clé ou désactivez Web Filter."
 msgid "Invalid character."
 msgstr "Caractère non valide."
 
-#: static/nintechnet.js.php:662
+#: static/nintechnet.js.php:669
 msgid "Delete the current snapshot?"
 msgstr "Supprimer l'instantané actuel ?"
 
-#: static/nintechnet.js.php:681
+#: static/nintechnet.js.php:688
 msgid "Please enter a number only."
 msgstr "Veuillez entrer un nombre seulement."
 
-#: static/nintechnet.js.php:692
+#: static/nintechnet.js.php:699
 msgid "Your public key is not valid."
 msgstr "Votre clé publique n'est pas valide."
 
-#: static/nintechnet.js.php:710 static/nintechnet.js.php:729
+#: static/nintechnet.js.php:717 static/nintechnet.js.php:736
 msgid "No records were found that match the specified search criteria."
 msgstr "Aucune donnée ne correspond aux critères de recherche spécifiés."
 
-#: static/nintechnet.js.php:748
+#: static/nintechnet.js.php:755
 msgid "Click the <i>Save Options</i> button to generate your new public key."
 msgstr ""
 "Cliquez sur <i>Sauvegarder les Options</i> pour créer votre nouvelle clé "
 "publique."
 
-#: static/nintechnet.js.php:750
+#: static/nintechnet.js.php:757
 msgid "You will need to upload that new key to the remote server(s)."
 msgstr "Vous devez configurer vos sites distants avec cette nouvelle clé."
 
-#: static/nintechnet.js.php:760
+#: static/nintechnet.js.php:767
 msgid ""
 "Please enter a secret key, from 30 to 100 ASCII printable characters. It "
 "will be used to generate your public key."
@@ -4710,36 +4748,63 @@ msgstr ""
 "Veuillez créer votre clé privée, de 30 à 100 caractères ASCII. Elle sera "
 "utilisée pour générer votre clé publique."
 
-#: static/nintechnet.js.php:766
+#: static/nintechnet.js.php:773
 msgid "Please enter this server IP address."
 msgstr "Veuillez entrer l'adresse IP de ce serveur."
 
-#: static/nintechnet.js.php:820
+#: static/nintechnet.js.php:827
 msgid "Loading..."
 msgstr "Chargement..."
 
-#: static/nintechnet.js.php:842
+#: static/nintechnet.js.php:849
 msgid "Error: Live Log did not receive the expected response from your server."
 msgstr "Erreur : le serveur n'a pas retourné la réponse attendue."
 
-#: static/nintechnet.js.php:861
+#: static/nintechnet.js.php:868
 msgid "Error: URL does not seem to exist:"
 msgstr "Erreur : l'URL ne semble pas valide :"
 
-#: static/nintechnet.js.php:863
+#: static/nintechnet.js.php:870
 msgid "Error: cannot find your log file. Try to reload this page."
 msgstr ""
 "Erreur : impossible de trouver le fichier log. Essayez de recharger cette "
 "page."
 
-#: static/nintechnet.js.php:865
+#: static/nintechnet.js.php:872
 msgid "Error: the HTTP server returned the following error code:"
 msgstr "Erreur : le serveur HTTP a retourné le code d'erreur suivant :"
 
-#: static/nintechnet.js.php:870 static/nintechnet.js.php:883
-#: static/nintechnet.js.php:903
+#: static/nintechnet.js.php:877 static/nintechnet.js.php:890
+#: static/nintechnet.js.php:910
 msgid "Sleeping"
 msgstr "Rafraîchissement dans"
+
+#~ msgid ""
+#~ "Use <a href=\"%s\">this script</a> if you need to reset your password"
+#~ msgstr ""
+#~ "Utilisez <a href=\"%s\">ce script</a> si vous souhaitez réinitialiser "
+#~ "votre mot de passe."
+
+#~ msgid ""
+#~ "All Access Control directives below should apply to the following HTTP "
+#~ "methods"
+#~ msgstr "Toutes les directives ci-dessous s'appliquent aux méthodes"
+
+#~ msgid ""
+#~ "This header allows browsers to identify and block XSS attacks by "
+#~ "preventing malicious scripts from executing. It is enabled by default on "
+#~ "all compatible browsers. Because it can lead to false positives and there "
+#~ "are better alternatives (e.g. Content-Security-Policy), it is possible to "
+#~ "turn it off. When it is enabled, NinjaFirewall will set its value to "
+#~ "<code>mode=block</code>."
+#~ msgstr ""
+#~ "Cet en-tête permet aux navigateurs compatibles d'identifier et bloquer "
+#~ "les attaques XSS en empêchant un script malveillant de s'exécuter. Notez "
+#~ "que cette option est activée par défaut sur ces navigateurs. Parce "
+#~ "qu'elle peut conduire à des faux positifs et qu'ils existent de "
+#~ "meilleures alternatives (par exemple Content-Security-Policy), il est "
+#~ "possible de désactiver cette option. Quand elle est activée, "
+#~ "NinjaFirewall définit sa valeur sur <code>mode=block</code>."
 
 #~ msgid "Your list is empty!"
 #~ msgstr "Votre liste est vide."

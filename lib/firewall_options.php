@@ -88,7 +88,7 @@ if (! empty( $_POST['post'] ) ) {
 
 		<?php
 		// Get (if any) the HTTP error code to return :
-		if (! @preg_match( '/^(?:40[0346]|50[03])$/', $nfw_options['ret_code'] ) ) {
+		if (! @preg_match( '/^(?:4(?:0[0346]|18)|50[03])$/', $nfw_options['ret_code'] ) ) {
 			$nfw_options['ret_code'] = '403';
 		}
 		?>
@@ -101,6 +101,7 @@ if (! empty( $_POST['post'] ) ) {
 					<option value="403"<?php selected($nfw_options['ret_code'],403) ?>><?php echo _('403 Forbidden (default)') ?></option>
 					<option value="404"<?php selected($nfw_options['ret_code'],404) ?>><?php echo _('404 Not Found') ?></option>
 					<option value="406"<?php selected($nfw_options['ret_code'],406) ?>><?php echo _('406 Not Acceptable') ?></option>
+					<option value="418"<?php selected($nfw_options['ret_code'],418) ?>><?php echo _("418 I'm a teapot") ?></option>
 					<option value="500"<?php selected($nfw_options['ret_code'],500) ?>><?php echo _('500 Internal Server Error') ?></option>
 					<option value="503"<?php selected($nfw_options['ret_code'],503) ?>><?php echo _('503 Service Unavailable') ?></option>
 				</select>
@@ -260,8 +261,8 @@ function save_firewall_options() {
 	}
 
 	if ( (isset( $_POST['ret_code'] ) ) &&
-		( preg_match( '/^(?:40[0346]|50[03])$/', $_POST['ret_code'] ) ) ) {
-		$nfw_options['ret_code'] = $_POST['ret_code'];
+		( preg_match( '/^(?:4(?:0[0346]|18)|50[03])$/', $_POST['ret_code'] ) ) ) {
+		$nfw_options['ret_code'] = (int)$_POST['ret_code'];
 	} else {
 		$nfw_options['ret_code'] = '403';
 	}

@@ -404,8 +404,8 @@ if ( empty( $nfw_options['scan_protocol'] ) || ! preg_match( '/^[123]$/', $nfw_o
 			$err_msg = sprintf( $err_img, sprintf( _('This option is disabled because the %s PHP function is not available on your server.'), 'header_remove()') );
 			$err = 1;
 		}
-		if ( empty( $nfw_options['response_headers'] ) || strlen( $nfw_options['response_headers'] ) != 8 || $err_msg ) {
-			$nfw_options['response_headers'] = '00000000';
+		if ( empty($nfw_options['response_headers']) || ! preg_match( '/^\d+$/', $nfw_options['response_headers'] ) || $err_msg ) {
+			$nfw_options['response_headers'] = '000000000';
 		}
 		?>
 		<h4><?php echo _('HTTP response headers') ?></h4>
@@ -428,16 +428,15 @@ if ( empty( $nfw_options['scan_protocol'] ) || ! preg_match( '/^[123]$/', $nfw_o
 				</td>
 			</tr>
 			<tr>
-				<td width="40%" align="left"><?php echo _('Disable X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)') ?></td>
+				<td width="40%" align="left"><?php echo _('Set X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)') ?></td>
 				<td width="5%" align="center"><?php echo $err_msg ?></td>
 				<td width="55%" align="left">
-					<p><label><input type="radio" name="x_xss_protection" value="0"<?php checked( $nfw_options['response_headers'][3], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo _('Yes'); ?></label></p>
-					<p><label><input type="radio" name="x_xss_protection" value="1"<?php checked( $nfw_options['response_headers'][3], 1 ); disabled($err, 1); ?>>&nbsp;<?php echo _('No') . ' '. _('(default)'); ?></label></p>
+					<p><label><input type="radio" name="x_xss_protection" value="0"<?php checked( $nfw_options['response_headers'][3], 0 ); disabled($err, 1); ?>>&nbsp;<?php printf( _('Set to %s'), '<code>0</code>'); ?></label></p>
+					<p><label><input type="radio" name="x_xss_protection" value="2"<?php checked( $nfw_options['response_headers'][3], 2 ); disabled($err, 1); ?>>&nbsp;<?php printf( _('Set to %s'), '<code>1</code>'); ?></label></p>
+					<p><label><input type="radio" name="x_xss_protection" value="1"<?php checked( $nfw_options['response_headers'][3], 1 ); disabled($err, 1); ?>>&nbsp;<?php printf( _('Set to %s'), '<code>1; mode=block</code>'); echo ' '. _('(default)') ?></label></p>
+					<p><label><input type="radio" name="x_xss_protection" value="3"<?php checked( $nfw_options['response_headers'][3], 3 ); disabled($err, 1); ?>>&nbsp;<?php echo _('No'); ?></label></p>
 				</td>
 			</tr>
-
-
-
 			<tr>
 				<td width="40%" align="left"><?php echo _('Force HttpOnly flag on all cookies to mitigate XSS attacks') ?></td>
 				<td width="5%" align="center"><?php
@@ -505,6 +504,35 @@ if ( empty( $nfw_options['scan_protocol'] ) || ! preg_match( '/^[123]$/', $nfw_o
 					<p>
 					<textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="csp_frontend_data" id="csp" class="form-control" rows="4"<?php readonly( $err, 1 ); readonly( $nfw_options['response_headers'][6], 0 ) ?>><?php echo htmlspecialchars( $nfw_options['csp_frontend_data'] ) ?></textarea>
 					</p>
+				</td>
+			</tr>
+
+			<?php
+			if (! isset( $nfw_options['response_headers'][8] ) ) {
+				$nfw_options['response_headers'][8] = 0;
+			}
+			if ( empty( $nfw_options['referrer_policy_enabled'] ) ) {
+				$nfw_options['referrer_policy_enabled'] = 0;
+			} else {
+				$nfw_options['referrer_policy_enabled'] = 1;
+			}
+			?>
+			<tr>
+				<td width="40%" align="left"><?php echo _('Set Referrer-Policy (Chrome, Opera and Firefox browsers)') ?></td>
+				<td width="5%" align="center"><?php echo $err_msg ?></td>
+				<td width="55%" align="left">
+					<p><label><input onclick="document.getElementById('rp_select').disabled=false;document.getElementById('rp_select').focus()" type="radio" name="referrer_policy_enabled" value="1"<?php checked($nfw_options['referrer_policy_enabled'], 1) ?> /> <?php echo _('Yes') ?></label>
+					<p><label><input onclick="document.getElementById('rp_select').disabled=true" type="radio" name="referrer_policy_enabled" value="0"<?php checked($nfw_options['referrer_policy_enabled'], 0) ?> /> <?php echo _('No (default)') ?></label></p>
+					<select class="form-control" id="rp_select" name="referrer_policy"<?php disabled($nfw_options['referrer_policy_enabled'], 0) ?>>
+						<option value="1"<?php selected($nfw_options['response_headers'][8], 1) ?>>no-referrer</option>
+						<option value="2"<?php selected($nfw_options['response_headers'][8], 2) ?>>no-referrer-when-downgrade</option>
+						<option value="3"<?php selected($nfw_options['response_headers'][8], 3) ?>>origin</option>
+						<option value="4"<?php selected($nfw_options['response_headers'][8], 4) ?>>origin-when-cross-origin</option>
+						<option value="5"<?php selected($nfw_options['response_headers'][8], 5) ?>>strict-origin</option>
+						<option value="6"<?php selected($nfw_options['response_headers'][8], 6) ?>>strict-origin-when-cross-origin</option>
+						<option value="7"<?php selected($nfw_options['response_headers'][8], 7) ?>>same-origin</option>
+						<option value="8"<?php selected($nfw_options['response_headers'][8], 8) ?>>unsafe-url</option>
+					</select>
 				</td>
 			</tr>
 		</table>
@@ -763,7 +791,8 @@ function restore_firewall_policies() {
 		function_exists('headers_list') && function_exists('header_remove') ) {
 
 		// We enable X-XSS-Protection:
-		$nfw_options['response_headers'] = '00010000';
+		$nfw_options['response_headers'] = '000100000';
+		$nfw_options['referrer_policy_enabled'] = 0;
 		$nfw_options['csp_frontend_data'] = '';
 	}
 	$nfw_options['referer_sanitise'] = 1;
@@ -896,7 +925,7 @@ function save_firewall_policies() {
 	if ( function_exists('header_register_callback') &&
 		function_exists('headers_list') && function_exists('header_remove') ) {
 
-		$nfw_options['response_headers'] = '00000000';
+		$nfw_options['response_headers'] = '000000000';
 		$nfw_options['csp_frontend_data'] = '';
 		// X-Content-Type-Options
 		if ( empty( $_POST['x_content_type_options'] ) ) {
@@ -912,11 +941,19 @@ function save_firewall_policies() {
 		} else {
 			$nfw_options['response_headers'][2] = 2;
 		}
-		// X-XSS-Protection
+		// XSS filter:
+		// 	0 = 0
+		// 	1 = 1; mode=block
+		// 	2 = 1
+		// 	3 = unset
 		if ( empty( $_POST['x_xss_protection'] ) ) {
 			$nfw_options['response_headers'][3] = 0;
-		} else {
+		} elseif ( $_POST['x_xss_protection'] == 1 ) {
 			$nfw_options['response_headers'][3] = 1;
+		} elseif ( $_POST['x_xss_protection'] == 2 ) {
+			$nfw_options['response_headers'][3] = 2;
+		} else {
+			$nfw_options['response_headers'][3] = 3;
 		}
 		// HttpOnly cookies ?
 		if ( empty( $_POST['cookies_httponly'] ) ) {
@@ -953,6 +990,21 @@ function save_firewall_policies() {
 		} else {
 			$nfw_options['response_headers'][6] = 1;
 		}
+
+		if ( empty( $_POST['referrer_policy_enabled'] ) ) {
+			$nfw_options['referrer_policy_enabled'] = 0;
+			$_POST['referrer_policy'] = 0;
+		} else {
+			$nfw_options['referrer_policy_enabled'] = 1;
+		}
+
+		if ( empty( $_POST['referrer_policy'] ) || ! preg_match('/^[1-8]$/', $_POST['referrer_policy'] ) ) {
+			$nfw_options['response_headers'][8] = 0;
+			$nfw_options['referrer_policy_enabled'] = 0;
+		} else {
+			$nfw_options['response_headers'][8] = (int)$_POST['referrer_policy'];
+		}
+
 	}
 
 	// Sanitise REQUEST requests ?
