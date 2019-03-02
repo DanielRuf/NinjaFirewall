@@ -171,7 +171,7 @@ foreach ( $available_logs as $log_name => $tmp ) {
 echo '</select>';
 // Enable export/delete buttons only if it is not empty:
 if ( ! empty( $data['lines'] ) ) {
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-md btn-default btn-25" value="'. _('Export') .'" onclick=\'window.location="?mid='. $GLOBALS['mid'] .'&token='. $_REQUEST['token'] .'&nfw_export=1&nfw_logname='. $selected_log .'"\'>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-md btn-default btn-25" value="'. _('Delete') .'" onclick=\'if (confirm("'. _('Delete log?') .'")){window.location="?mid='. $GLOBALS['mid'] .'&token='. $_REQUEST['token'] .'&nfw_delete=1&nfw_logname='. $selected_log .'"}\'>';
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-md btn-default btn-25" value="'. _('Export') .'" onclick=\'window.location="?mid='. $GLOBALS['mid'] .'&token='. $_REQUEST['token'] .'&nfw_export=1&nfw_logname='. $selected_log .'"\'>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-md btn-default btn-25" value="'. _('Delete') .'" onclick=\'if (confirm("'. _('Delete log?') .'")){window.location="?mid='. $GLOBALS['mid'] .'&token='. $_REQUEST['token'] .'&nfw_logname='. $selected_log .'&nfw_delete=1"}\'>';
 } else {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-md btn-default btn-25" disabled="disabled" value="'. _('Export') .'" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-md btn-default btn-25" disabled="disabled" value="'.  _('Delete') .'"  />';
 }
@@ -181,6 +181,11 @@ $levels = array( '', 'MEDIUM', 'HIGH', 'CRITICAL', 'ERROR', 'UPLOAD', 'INFO', 'D
 
 ?>
 <script>
+// We remove the '&nfw_delete=1' query string because if the user reloaded the page,
+// that would delete the log again:
+var url = window.location.href;
+window.history.replaceState({}, document.title, url.replace( /&nfw_delete=1/, '' ) );
+
 var myToday = '<?php echo date( 'd/M/y') ?>';
 var myArray = new Array();
 <?php

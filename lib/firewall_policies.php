@@ -197,7 +197,7 @@ if ( empty( $nfw_options['scan_protocol'] ) || ! preg_match( '/^[123]$/', $nfw_o
 				</td>
 			</tr>
 			<tr>
-				<td width="40%" align="left"><?php echo _('Decode base64-encoded POST variables') ?></td>
+				<td width="40%" align="left"><?php echo _('Decode base64-encoded POST variable') ?></td>
 				<td width="5%" align="center">&nbsp;</td>
 				<td width="55%">
 				<p><label><input type="radio" name="post_b64" value="1"<?php checked( $nfw_options['post_b64'], 1 ) ?>>&nbsp;<?php echo _('Yes') . ' '. _('(default)'); ?></label></p>

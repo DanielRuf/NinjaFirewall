@@ -136,7 +136,7 @@ function show_help() {
 
 		echo '<h3><strong>'. _('HTTP POST variable') .'</strong></h3>'.
 		'<p>'. sprintf( _('Whether to scan and/or sanitise the %s variable.'), '<code>POST</code>' ) .'</p>'.
-		'<p><strong>'. _('Decode base64-encoded POST variables') .':</strong> '. _('NinjaFirewall will decode and scan base64 encoded values in order to detect obfuscated malicious code. This option is only available for the <code>POST</code> variable.') .'</p>';
+		'<p><strong>'. _('Decode base64-encoded POST variable') .':</strong> '. _('NinjaFirewall will decode and scan base64 encoded values in order to detect obfuscated malicious code. This option is only available for the <code>POST</code> variable.') .'</p>';
 
 		echo '<h3><strong>'. _('HTTP REQUEST variable') .'</strong></h3>'.
 		'<p>'. sprintf( _('Whether to scan and/or sanitise the %s variable.'), '<code>REQUEST</code>' ) .'</p>';

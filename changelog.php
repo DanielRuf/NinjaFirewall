@@ -18,6 +18,13 @@
 
 $changelog = <<<'EOT'
 
+= 3.4.2 =
+* [Pro+ Edition] Fixed a bug in the firewall engine's cache where some transformed data was not always cached as expected.
+* The "Decode base64-encoded POST" policy will also detect and block base64-encoded serialized PHP objects.
+* [Pro+ Edition] Fixed a bug in the "Web Filter" callback function where the firewall was losing the path to its log.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes and adjustements.
+
 = 3.4.1 =
 * Fixed two potentials PHP notices in the Web Filter and firewall engine on systems running PHP 7.2+.
 * Added a function to the firewall engine to detect and decode octal-encoded values that could be used as WAF evasion techniques (e.g. "?foo=\050\141\154\145\162\164\051\050\170\163\163\051").
