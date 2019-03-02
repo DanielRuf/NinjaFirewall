@@ -18,6 +18,13 @@
 
 $changelog = <<<'EOT'
 
+= 3.4 =
+* Improved the firewall's Garbage Collector to make sure it will not run more than once every 5 minutes when the admin is logged in.
+* [Pro+ Edition] The "IP Access Control" whitelist and blacklist can now support CIDR notation for IPv4 and IPv6 (e.g., "66.155.0.0/17",  "2c0f:f248::/32").
+* [Pro+ Edition] Added a new option to the "Live Log" page: you can apply filters to REQUEST_URI in order to include or exclude files and folders. See "Live Log > Inclusion and exclusion filters".
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes and adjustements.
+
 = 3.3.4 =
 * Fixed an issue where duplicate IP addresses could appear in the list of banned IPs when a single installation of NinjaFirewall was used to protect two or more domains.
 * Fixed a potential "Undefined index: substitute" PHP warning message in the "Firewall Policies" page.

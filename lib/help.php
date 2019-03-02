@@ -271,19 +271,22 @@ function show_help() {
 		echo '<hr />';
 
 		echo '<h3><strong>'. _('IP Access Control') .'</strong></h3>';
-		echo _('You can permanently allow/block an IP or a part of it. IPv4 and IPv6 are fully supported by NinjaFirewall.') .
+		echo _('You can permanently allow/block an IP, a part of it or a whole range of IP addresses. IPv4 and IPv6 are fully supported by NinjaFirewall.') .
 		' '. _('You must at least enter the first 3 characters of an IP:').
 		'<br /><br />'.
-		'<strong>'. _('Full IPv4:') .'</strong>'.
+		'<strong>'. _('Full IP:') .'</strong>'.
 		'<ul>'.
 			'<li>'. _('<code>1.2.3.123</code> will only match IP <code><font color="red">1.2.3.123</font></code>') .'</li>'.
 		'</ul>'.
-		'<p><strong>'. _('Partial IPv4:') .'</strong></p>'.
+		'<p><strong>'. _('Partial IP:') .'</strong></p>'.
 		'<ul>'.
-			'<li>'. _('<code>1.2.3.</code> will match any IP address <strong>starting with</strong> <code>1.2.3.</code> (from <code><font color="red">1.2.3.</font>0</code> to <code><font color="red">1.2.3.</font>255</code>), but will not match <code>2<font color="red">1.2.3.</font>0</code>') .'</li>'.
-			'<li>'. _('<code>1.2.3</code> will match any IP address <strong>starting with</strong> <code>1.2.3</code> (from <code><font color="red">1.2.3</font>.0</code> to <code><font color="red">1.2.3</font>.255</code>, and also <code><font color="red">1.2.3</font>4.56</code> etc), but will not match <code>4.<font color="red">1.2.3</font></code>'). '</li>'.
+			'<li>'. _('<code>1.2.3.</code> will match any IP address starting with <code>1.2.3.</code> (from <code><font color="red">1.2.3.</font>0</code> to <code><font color="red">1.2.3.</font>255</code>), but will not match <code>2<font color="red">1.2.3.</font>0</code>') .'</li>'.
+			'<li>'. _('<code>1.2.3</code> will match any IP address starting with <code>1.2.3</code> (from <code><font color="red">1.2.3</font>.0</code> to <code><font color="red">1.2.3</font>.255</code>, and also <code><font color="red">1.2.3</font>4.56</code> etc), but will not match <code>4.<font color="red">1.2.3</font></code>'). '</li>'.
 		'</ul>'.
-		_('The same rules apply to IPv6 addresses. Subnets notation (e.g, 66.155.0.0/17) are not supported.').
+		'<strong>'. _('IP ranges using CIDR notation:') .'</strong>'.
+		'<ul>'.
+			'<li>'. sprintf( _('%s or %s.'), '<code>66.155.0.0/17</code>', '<code>2c0f:f248::/32</code>' ) .'</li>'.
+		'</ul>'.
 
 		'<p><strong>'. _('Rate limiting') .':</strong> '. _('This option allows you to slow down aggressive bots, crawlers, web scrapers or even small attacks. Any IP reaching the defined threshold will be banned from 1 to 999 seconds. Note that the purpose of this feature is not to permanently block an IP but rather to temporarily prevent it from accessing the site and abusing your system resources. If you want to permanently block an IP, use the blacklist instead. By default, Rate Limiting is turned off.') .'</p>'.
 		'<p>'. glyphicon('warning') .'&nbsp;'. _('IPs temporarily banned by the Rate Limiting option can be unblocked immediately by clicking either the "Save Changes" or "Restore Default Values" buttons at the bottom of this page.') .'</p>';
@@ -419,7 +422,7 @@ Oct  3 15:40:48 www ninjafirewall[19058]: CRITICAL: #2601781: ASCII character 0x
 	elseif ( $GLOBALS['mid'] == 37 ) {
 
 		echo '<p>'. _('Live Log lets you watch your blog traffic in real time, just like the Unix <code>tail -f</code> command. Note that requests sent to static elements like JS/CSS files and images are not managed by NinjaFirewall.') .'</p>'.
-		'<p>'. _('You can enable/disable the monitoring process, change the refresh rate, clear the screen, enable automatic vertical scrolling, change the log format and select which traffic you want to view (HTTP/HTTPS).'). '</p>'.
+		'<p>'. _('You can enable/disable the monitoring process, change the refresh rate, clear the screen, enable automatic vertical scrolling, change the log format and select which traffic you want to view (HTTP/HTTPS).') .' '. _('You can also apply filters to include or exclude files and folders (REQUEST_URI).') .'</p>'.
 
 		'<p><strong>'. _('Log Format'). '</strong>: '.
 		'<p>'. _('You can easily customize the log format. Possible values are:') .'</p>'.

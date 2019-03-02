@@ -138,16 +138,29 @@ if (! empty($update_options) ) {
 	}
 }
 
-// Do some housework if needed :
-nfw_housework();
+// Run the garbage collector:
+nfw_garbage_collector();
 
 // ---------------------------------------------------------------------
 
-function nfw_housework() {
+function nfw_garbage_collector() {
 
 	global $nfw_options;
 
 	$cache = './nfwlog/cache/';
+	$now = time();
+
+	// Don't do anything if the cache folder
+	// was cleaned up less than 5 minutes ago:
+	$gc = $cache . 'garbage_collector.php';
+	if ( file_exists( $gc ) ) {
+		$nfw_mtime = filemtime( $gc ) ;
+		if ( $now - $nfw_mtime < 5*60 ) {
+			return;
+		}
+		unlink( $gc );
+	}
+	touch( $gc );
 
 	// Flush temporarily blocked IPs :
 	if (! empty($nfw_options['ban_ip']) ) {

@@ -1536,7 +1536,7 @@ function fw_conf_options() {
 
 		// Firewall > Policies:
 		'scan_protocol' 		=> 3,
-		'uploads' 				=> 0,
+		'uploads' 				=> 2,
 		'substitute' 			=> 'X',
 		'sanitise_fn' 			=> 0,
 		'upload_maxsize' 		=> 0, // Defined below since v3.2.12
@@ -1583,8 +1583,8 @@ function fw_conf_options() {
 	if ( function_exists('header_register_callback') && function_exists('headers_list')
 		&& function_exists('header_remove') ) {
 
-		// X-XSS-Protection:
-		$nfw_options['response_headers'] = '000100000';
+		// Security headers:
+		$nfw_options['response_headers'] = '000300000';
 	}
 	$nfw_options['referrer_policy_enabled'] = 0;
 

@@ -110,9 +110,9 @@ if ( empty( $nfw_options['scan_protocol'] ) || ! preg_match( '/^[123]$/', $nfw_o
 				<td width="40%" align="left"><?php echo _('Allow uploads') ?></td>
 				<td width="5%" align="center">&nbsp;</td>
 				<td width="55%">
-				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 0 ) ?> value="0" id="uf1" onClick="san_onoff(0);">&nbsp;<?php echo _('Disallow uploads') . ' '. _('(default)'); ?></label></p>
+				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 0 ) ?> value="0" id="uf1" onClick="san_onoff(0);">&nbsp;<?php echo _('Disallow uploads') ?></label></p>
 				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 1 ) ?> value="1" id="uf1" onClick="san_onoff(1);">&nbsp;<?php echo _('Allow uploads') ?></label></p>
-				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 2 ) ?> value="2" id="uf2" onClick="san_onoff(1);">&nbsp;<?php echo _('Allow, but block dangerous files') ?></label>&nbsp;<?php echo glyphicon( 'help', _('See contextual help for the list of blocked files.') ) ?>
+				<p><label><input type="radio" name="uploads"<?php checked( $nfw_options['uploads'], 2 ) ?> value="2" id="uf2" onClick="san_onoff(1);">&nbsp;<?php echo _('Allow, but block dangerous files') . ' '. _('(default)'); ?></label>&nbsp;<?php echo glyphicon( 'help', _('See contextual help for the list of blocked files.') ) ?>
 				</p>
 				<br />
 				<p>
@@ -433,8 +433,8 @@ if ( empty( $nfw_options['scan_protocol'] ) || ! preg_match( '/^[123]$/', $nfw_o
 				<td width="55%" align="left">
 					<p><label><input type="radio" name="x_xss_protection" value="0"<?php checked( $nfw_options['response_headers'][3], 0 ); disabled($err, 1); ?>>&nbsp;<?php printf( _('Set to %s'), '<code>0</code>'); ?></label></p>
 					<p><label><input type="radio" name="x_xss_protection" value="2"<?php checked( $nfw_options['response_headers'][3], 2 ); disabled($err, 1); ?>>&nbsp;<?php printf( _('Set to %s'), '<code>1</code>'); ?></label></p>
-					<p><label><input type="radio" name="x_xss_protection" value="1"<?php checked( $nfw_options['response_headers'][3], 1 ); disabled($err, 1); ?>>&nbsp;<?php printf( _('Set to %s'), '<code>1; mode=block</code>'); echo ' '. _('(default)') ?></label></p>
-					<p><label><input type="radio" name="x_xss_protection" value="3"<?php checked( $nfw_options['response_headers'][3], 3 ); disabled($err, 1); ?>>&nbsp;<?php echo _('No'); ?></label></p>
+					<p><label><input type="radio" name="x_xss_protection" value="1"<?php checked( $nfw_options['response_headers'][3], 1 ); disabled($err, 1); ?>>&nbsp;<?php printf( _('Set to %s'), '<code>1; mode=block</code>') ?></label></p>
+					<p><label><input type="radio" name="x_xss_protection" value="3"<?php checked( $nfw_options['response_headers'][3], 3 ); disabled($err, 1); ?>>&nbsp;<?php echo _('No'); echo ' '. _('(default)'); ?></label></p>
 				</td>
 			</tr>
 			<tr>
@@ -759,7 +759,7 @@ function restore_firewall_policies() {
 	global $nfw_rules;
 
 	$nfw_options['scan_protocol'] = 3;
-	$nfw_options['uploads'] = 0;
+	$nfw_options['uploads'] = 2;
 	$nfw_options['sanitise_fn'] = 0;
 	$nfw_options['substitute'] = 'X';
 
@@ -790,8 +790,8 @@ function restore_firewall_policies() {
 	if ( function_exists('header_register_callback') &&
 		function_exists('headers_list') && function_exists('header_remove') ) {
 
-		// We enable X-XSS-Protection:
-		$nfw_options['response_headers'] = '000100000';
+		// Security headers:
+		$nfw_options['response_headers'] = '000300000';
 		$nfw_options['referrer_policy_enabled'] = 0;
 		$nfw_options['csp_frontend_data'] = '';
 	}

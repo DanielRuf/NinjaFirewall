@@ -244,9 +244,9 @@ html_header();
 			<tr>
 				<td width="25%" align="left"><?php echo _('Allow the following IPs') ?></td>
 				<td width="35%" align="center">
-					<input type="text" class="form-control" disabled style="width:200px;" value="" placeholder="<?php echo _('e.g.') ?> 1.2.3.4 or 1.2.3" />
+					<input type="text" class="form-control" disabled style="width:200px;" value="" placeholder="<?php echo _('e.g.') ?> 1.2.3.4 or 1.2.3.0/24" />
 					<br />
-					<i><?php echo _('Full or partial IPv4/IPv6 address.') ?></i>
+					<i><?php echo _('Full or partial IPv4/IPv6 address or CIDR notation.') ?></i>
 					<br /><br />
 					<input type="button" style="width:150px" class="btn btn-md btn-default btn-25" value="<?php echo _('Allow') ?> &#187;" disabled />
 					<br /><br />
@@ -267,9 +267,9 @@ html_header();
 			<tr>
 				<td width="25%" align="left"><?php echo _('Block the following IPs') ?></td>
 				<td width="35%" align="center">
-					<input type="text" class="form-control" disabled style="width:200px;" value="" placeholder="<?php echo _('e.g.') ?> 1.2.3.4 or 1.2.3" />
+					<input type="text" class="form-control" disabled style="width:200px;" value="" placeholder="<?php echo _('e.g.') ?> 1.2.3.4 or 1.2.3.0/24" />
 					<br />
-					<i><?php echo _('Full or partial IPv4/IPv6 address.') ?></i>
+					<i><?php echo _('Full or partial IPv4/IPv6 address or CIDR notation.') ?></i>
 					<br /><br />
 					<input type="button" style="width:150px" class="btn btn-md btn-default btn-25" value="<?php echo _('Block') ?> &#187;" disabled />
 					<br /><br />

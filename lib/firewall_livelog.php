@@ -77,6 +77,18 @@ html_header();
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<td width="45%" align="left"><?php echo _('Inclusion and exclusion filters (REQUEST_URI)') ?></td>
+				<td width="55%" align="left">
+					<select class="form-control">
+						<option><?php echo _('None') ?></option>
+						<option><?php echo _('Must include') ?></option>
+						<option><?php echo _('Must not include') ?></option>
+					</select>&nbsp;<input disabled type="text" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="<?php echo _('e.g.,') ?> /blog <?php echo _('or') ?> admin.php <?php echo _('or') ?> index.php,/blog" />
+					<br />
+					<i><?php echo _('Full or partial case-sensitive REQUEST_URI string. Multiple values must be comma-separated.') ?></i>
+				</td>
+			</tr>
 		</table>
 		<center><p><input type="submit" disabled class="btn btn-md btn-success btn-25" value="<?php echo _('Save Options') ?>" /></p></center>
 </div>
