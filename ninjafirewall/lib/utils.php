@@ -103,38 +103,75 @@ function nfw_account_creation( $user_login ) {
 add_filter( 'pre_user_login' , 'nfw_account_creation' );
 
 // ---------------------------------------------------------------------
+// Clean/delete cache folder & temp files (hourly cron job).
 
 function nfw_garbage_collector() {
 
-	// Clean/delete cache folder & temp files (hourly cron job):
-
-	$nfw_options = nfw_get_option( 'nfw_options' );
-	if ( empty( $nfw_options ) ) {
-		// We could reach this part during the installation process
-		// when the options and rules are not fully populated yet:
-		return;
-	}
-
 	$path = NFW_LOG_DIR . '/nfwlog/cache/';
 	$now = time();
-
 	// Make sure the cache folder exists, i.e, we have been
 	// through the whole installation process:
 	if (! is_dir( $path ) ) {
 		return;
 	}
 
-	// Don't do anything if the cache folder
-	// was cleaned up less than 65 minutes ago:
+	// Don't do anything if the cache folder was cleaned up less than 10 minutes ago:
 	$gc = $path . 'garbage_collector.php';
 	if ( file_exists( $gc ) ) {
 		$nfw_mtime = filemtime( $gc ) ;
-		if ( $now - $nfw_mtime < 65*60 ) {
+		if ( $now - $nfw_mtime < 10*60 ) {
 			return;
 		}
 		unlink( $gc );
 	}
 	touch( $gc );
+
+	// Fetch options:
+	$nfw_options = nfw_get_option( 'nfw_options' );
+
+	// ------------------------------------------------------------------
+	// If nfw_options is corrupted (e.g., failed update etc) we try to restore it
+	// from a backup file otherwise we restore it from the default settings.
+	if ( nfw_validate_option( $nfw_options ) === false ) {
+
+		$glob = glob( $path .'backup_*.php' );
+		$valid_option = 0;
+		// Make sure we have a backup file
+		while ( is_array( $glob ) && ! empty( $glob[0] ) ) {
+			$content = array();
+			$last_file = array_pop( $glob );
+			$content = @explode("\n:-:\n", file_get_contents( $last_file ) . "\n:-:\n");
+			$content[0] = json_decode( $content[0], true );
+
+			if ( nfw_validate_option( $content[0] ) === true ) {
+				// We can use that backup to restore our options:
+				$valid_option = 1;
+				break;
+
+			// Delete this corrupted backup file:
+			} else {
+				nfw_log_error( sprintf( 'Backup file is corrupted, deleting it (%s)', $last_file ) );
+				unlink( $last_file );
+			}
+		}
+
+		// Restore the last good backup:
+		if (! empty( $valid_option ) ) {
+			nfw_update_option( 'nfw_options', $content[0] );
+			nfw_log_error( sprintf( '"nfw_options" is corrupted, restoring from last known good backup file (%s)', $last_file ) );
+
+		// Restore the default settings if no backup file was found
+		// (this action will also restore the firewall rules):
+		} else {
+			require_once __DIR__ .'/install_default.php';
+			nfw_log_error( '"nfw_options" is corrupted, restoring default values (no valid backup found)' );
+			nfw_load_default_conf();
+		}
+
+		$nfw_options = nfw_get_option( 'nfw_options' );
+	}
+
+	// ------------------------------------------------------------------
 
 	// Check if we must delete old firewall logs:
 	if (! empty( $nfw_options['auto_del_log'] ) ) {
@@ -204,6 +241,8 @@ function nfw_garbage_collector() {
 		}
 	}
 
+	// ------------------------------------------------------------------
+
 	// NinjaFirewall's configuration backup. We create a new one daily:
 	$glob = glob( $path .'backup_*.php' );
 	if ( is_array( $glob ) && ! empty( $glob[0] ) ) {
@@ -220,11 +259,11 @@ function nfw_garbage_collector() {
 				}
 				$data = json_encode( $nfw_options ) ."\n:-:\n". json_encode($nfw_rules) ."\n:-:\n". $bd_data;
 				$file = uniqid( 'backup_'. time() .'_', true) . '.php';
-				file_put_contents( $path . $file, $data );
+				@file_put_contents( $path . $file, $data, LOCK_EX );
 				array_unshift( $glob, $path . $file );
 			}
 		}
-		// Keep the last 5 backup only (number can be defined
+		// Keep the last 5 backup only (value can be defined
 		// in the wp-config.php):
 		if ( defined('NFW_MAX_BACKUP') ) {
 			$num = (int) NFW_MAX_BACKUP;
@@ -242,15 +281,43 @@ function nfw_garbage_collector() {
 			return;
 		}
 		if ( file_exists( $path .'bf_conf.php' ) ) {
-			$bd_data = serialize( file_get_contents( $path .'bf_conf.php' ) );
+			$bd_data = json_encode( file_get_contents( $path .'bf_conf.php' ) );
 		} else {
 			$bd_data = '';
 		}
-		$data = serialize( $nfw_options ) ."\n:-:\n". serialize($nfw_rules) ."\n:-:\n". $bd_data;
+		$data = json_encode( $nfw_options ) ."\n:-:\n". json_encode($nfw_rules) ."\n:-:\n". $bd_data;
 		$file = uniqid( 'backup_'. time() .'_', true) . '.php';
-		file_put_contents( $path . $file, $data );
+		@file_put_contents( $path . $file, $data, LOCK_EX );
 	}
 
+}
+
+// ---------------------------------------------------------------------
+// Write potential errors to a specific log.
+
+function nfw_log_error( $message ) {
+
+	$log = NFW_LOG_DIR . '/nfwlog/error_log.php';
+
+	if (! file_exists( $log ) ) {
+		@file_put_contents( $log, "<?php exit; ?>\n", LOCK_EX );
+	}
+	@file_put_contents( $log, date_i18n('[d/M/y:H:i:s O]') . " $message\n", FILE_APPEND | LOCK_EX );
+
+}
+
+// ---------------------------------------------------------------------
+
+function nfw_get_blogtimezone() {
+
+	$tzstring = get_option( 'timezone_string' );
+	if (! $tzstring ) {
+		$tzstring = ini_get( 'date.timezone' );
+		if (! $tzstring ) {
+			$tzstring = 'UTC';
+		}
+	}
+	date_default_timezone_set( $tzstring );
 }
 
 // ---------------------------------------------------------------------
@@ -636,6 +703,22 @@ function nfw_delete_option( $option ) {
 		delete_site_option( $option );
 	}
 	return delete_option( $option );
+}
+
+// ---------------------------------------------------------------------
+// Make sure nfw_options is valid.
+
+function nfw_validate_option( $value ) {
+
+	if (! isset( $value['enabled'] ) || ! isset( $value['blocked_msg'] ) ||
+		! isset( $value['logo'] ) || ! isset( $value['ret_code'] ) ||
+		! isset( $value['scan_protocol'] ) || ! isset( $value['get_scan'] ) ) {
+
+		// Data is corrupted:
+		return false;
+	}
+
+	return true;
 }
 
 // ---------------------------------------------------------------------

@@ -2,8 +2,8 @@
 Contributors: nintechnet, bruandet
 Tags: security, firewall, malware, antispam, virus, scanner, hacked site, brute force, seguridad, seguranca, sicherheit, sicurezza, veiligheid
 Requires at least: 3.7
-Tested up to: 5.0
-Stable tag: 3.8.1
+Tested up to: 5.1
+Stable tag: 3.8.2
 Requires PHP: 5.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -117,7 +117,7 @@ Check out our new supercharged edition: [NinjaFirewall WP+ Edition](https://nint
 
 = Requirements =
 
-* WordPress 3.3+
+* WordPress 3.7+
 * Admin/Superadmin with `manage_options` + `unfiltered_html capabilities`.
 * PHP 5.3+ (5.4 or higher recommended), PHP 7.x or [HHVM 3.4+](https://blog.nintechnet.com/installing-ninjafirewall-with-hhvm-hiphop-virtual-machine/ "")
 * MySQL or MariaDB with MySQLi extension
@@ -198,6 +198,15 @@ NinjaFirewall works on Unix-like servers only. There is no Microsoft Windows ver
 15. Security rules updates.
 
 == Changelog ==
+
+= 3.8.2 =
+
+* Improved the firewall engine to detect shell command obfuscation tricks using uninitialized variables (e.g. `?a=cat$foo $foo/etc/$foo/passwd$foo`).
+* Added a policy to disable the fatal error handler introduced in WordPress 5.1. See "Firewall Policies > Basic Policies > Disable the fatal error handler".
+* Disabled the firewall when running WP-CLI.
+* If the firewall settings were corrupted, the garbage collector would restore the last known good configuration backup. If there is no backup available, it will restore its default settings so that NinjaFirewall will keep working and protecting the site.
+* Various fixes and adjustments.
+* [WP+ Edition] Updated IPv4/IPv6 GeoIP databases.
 
 = 3.8.1 =
 

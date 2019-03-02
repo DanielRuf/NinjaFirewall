@@ -3,7 +3,7 @@
 Plugin Name: NinjaFirewall (WP Edition)
 Plugin URI: https://nintechnet.com/
 Description: A true Web Application Firewall to protect and secure WordPress.
-Version: 3.8.1
+Version: 3.8.2
 Author: The Ninja Technologies Network
 Author URI: https://nintechnet.com/
 License: GPLv3 or later
@@ -19,7 +19,7 @@ Domain Path: /languages
  | (c) NinTechNet - https://nintechnet.com/                            |
  +---------------------------------------------------------------------+
 */
-define( 'NFW_ENGINE_VERSION', '3.8.1' );
+define( 'NFW_ENGINE_VERSION', '3.8.2' );
 /*
  +---------------------------------------------------------------------+
  | This program is free software: you can redistribute it and/or       |
@@ -57,6 +57,13 @@ define('NFW_DOC_ROOT', 510);
 define('NFW_WRAPPERS', 520);
 define('NFW_OBJECTS', 525);
 define('NFW_LOOPBACK', 540);
+$message = '<br /><br /><br /><br /><center>' .
+		sprintf( __('Sorry %s, your request cannot be processed.', 'ninjafirewall'), '<b>%%REM_ADDRESS%%</b>') .
+		'<br />' . __('For security reasons, it was blocked and logged.', 'ninjafirewall') .
+		'<br /><br />%%NINJA_LOGO%%<br /><br />' .
+		__('If you believe this was an error please contact the<br />webmaster and enclose the following incident ID:', 'ninjafirewall') .
+		'<br /><br />[ <b>#%%NUM_INCIDENT%%</b> ]</center>';
+define( 'NFW_DEFAULT_MSG', $message );
 $err_fw = array(
 	1	=> __('Cannot find WordPress configuration file', 'ninjafirewall'),
 	2	=>	__('Cannot read WordPress configuration file', 'ninjafirewall'),
@@ -319,11 +326,6 @@ function nfw_admin_init() {
 		nfw_check_emailalert();
 	}
 
-	// Run the garbage collector if needed (note that there's already
-	// a hourly cron job for that purpose, but this call is only used
-	// in the event where the admin disabled WP-Cron):
-	nfw_garbage_collector();
-
 	// Applies to admin only (unlike the WP+ Edition):
 	if (! empty( $nfw_options['wl_admin'] ) ) {
 		$_SESSION['nfw_goodguy'] = true;
@@ -473,15 +475,6 @@ function ninjafirewall_admin_menu() {
 		phpinfo(33);
 		exit;
 	}
-
-	$message = '<br /><br /><br /><br /><center>' .
-				sprintf( __('Sorry %s, your request cannot be processed.', 'ninjafirewall'), '<b>%%REM_ADDRESS%%</b>') .
-				'<br />' . __('For security reasons, it was blocked and logged.', 'ninjafirewall') .
-				'<br /><br />%%NINJA_LOGO%%<br /><br />' .
-				__('If you believe this was an error please contact the<br />webmaster and enclose the following incident ID:', 'ninjafirewall') .
-				'<br /><br />[ <b>#%%NUM_INCIDENT%%</b> ]</center>';
-
-	define( 'NFW_DEFAULT_MSG', $message );
 
 	if (! defined('NF_DISABLED') ) {
 		is_nfw_enabled();
@@ -826,19 +819,6 @@ if ( is_multisite() ) {
 	add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'ninjafirewall_settings_link' );
 }
 
-/* ------------------------------------------------------------------ */
-
-function nfw_get_blogtimezone() {
-
-	$tzstring = get_option( 'timezone_string' );
-	if (! $tzstring ) {
-		$tzstring = ini_get( 'date.timezone' );
-		if (! $tzstring ) {
-			$tzstring = 'UTC';
-		}
-	}
-	date_default_timezone_set( $tzstring );
-}
 /* ------------------------------------------------------------------ */
 
 function nfw_dashboard_widgets() {

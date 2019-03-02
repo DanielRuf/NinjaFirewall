@@ -71,7 +71,7 @@ function nfw_presave( $err = '' ) {
 		welcome_email();
 	}
 
-	$s1 = $s2 = $s3 = $s4 = $s5 = $s7 = '';
+	$s1 = ''; $s2 = ''; $s3 = ''; $s4 = ''; $s5 = ''; $s7 = '';
 	$recommended = ' ' . __('(recommended)', 'ninjafirewall');
 	if ( defined('HHVM_VERSION') ) {
 		$http_server = 7;

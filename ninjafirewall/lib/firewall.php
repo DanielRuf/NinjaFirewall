@@ -17,6 +17,7 @@
 if ( strpos($_SERVER['SCRIPT_NAME'], '/nfwlog/') !== FALSE ||
 	strpos($_SERVER['SCRIPT_NAME'], '/ninjafirewall/') !== FALSE ) { die('Forbidden'); }
 if (defined('NFW_STATUS')) { return; }
+if (defined('WP_CLI') && WP_CLI ) { return; }
 
 $nfw_ = array();
 $nfw_['fw_starttime'] = microtime(true);
@@ -191,6 +192,9 @@ if (! empty($nfw_['nfw_options']['disallow_edit']) ) {
 }
 if (! empty($nfw_['nfw_options']['disallow_mods']) ) {
 	define('DISALLOW_FILE_MODS', true);
+}
+if (! empty($nfw_['nfw_options']['disable_error_handler']) ) {
+	define('WP_DISABLE_FATAL_ERROR_HANDLER', true);
 }
 
 $nfw_['a_msg'] = '';
@@ -1030,16 +1034,19 @@ function nfw_transform_string( $string, $where ) {
 		$norm = preg_replace(
 			array('/[\n\r\t\f\v]/', '`/\*\s*\*/`', '/[\'"`]\x20*[+.]?\x20*[\'"`]/'),
 			array('', ' ', ''),
-		$norm);
+			$norm
+		);
 	} elseif ( $where == 3 ) {
+		$norm = preg_replace(
+			array('`([\\\"\'^]|\$\w+)`', '`([,;]|\s+)`'),
+			array('', ' '),
+			$string
+		);
 		$norm = preg_replace(
 			array('`/(\./)+`','`/{2,}`', '`/(.+?)/\.\./\1\b`', '`\n`', '`\\\`'),
 			array('/', '/', '/\1', '', ''),
-		$string );
-		$norm = preg_replace(
-			array('`([\\\"\'^])`','`\s([\/(])`', '`([,;]|\s+)`'),
-			array('', '\1', ' '),
-		$norm );
+			$norm
+		);
 	}
 
 	return $norm;
@@ -1120,7 +1127,7 @@ function nfw_check_b64( $key, $string ) {
 	$decoded = base64_decode($string);
 	if ( strlen($decoded) < 4 ) { return; }
 
-	if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|[ep]reg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|substr|system|unlink)\s*\(|\becho\s*[\'"]|<(?i:a[\s/]|applet|div|embed|i?frame(?:set)?|img|link|meta|marquee|object|script|style|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php|=)|(?i:(?:\b|\d)select\b.+?from\b.+?(?:\b|\d)where|(?:\b|\d)insert\b.+?into\b|(?:\b|\d)union\b.+?(?:\b|\d)select\b|(?:\b|\d)update\b.+?(?:\b|\d)set\b)|^.{0,25}[;{}]?\bO:\+?\d+:"[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*":\+?\d+:{.*?}`', $decoded) ) {
+	if ( preg_match( '`\b(?:\$?_(COOKIE|ENV|FILES|(?:GE|POS|REQUES)T|SE(RVER|SSION))|HTTP_(?:(?:POST|GET)_VARS|RAW_POST_DATA)|GLOBALS)\s*[=\[)]|\b(?i:array_map|assert|base64_(?:de|en)code|chmod|curl_exec|(?:ex|im)plode|error_reporting|eval|file(?:_get_contents)?|f(?:open|write|close)|fsockopen|function_exists|gzinflate|md5|move_uploaded_file|ob_start|passthru|[ep]reg_replace|phpinfo|stripslashes|strrev|(?:shell_)?exec|substr|system|unlink)\s*\(|\becho\s*[\'"]|<(?i:a[\s/]|applet|div|embed|i?frame(?:set)?|img|link|meta|marquee|object|script|style|textarea)\b|\W\$\{\s*[\'"]\w+[\'"]|<\?(?i:php|=)|(?i:(?:\b|\d)select\b.+?from\b.+?(?:\b|\d)where|(?:\b|\d)insert\b.+?into\b|(?:\b|\d)union\b.+?(?:\b|\d)select\b|(?:\b|\d)update\b.+?(?:\b|\d)set\b)|^.{0,25}[;{}]?\b[OC]:\+?\d+:"[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*":\+?\d+:{.*?}`', $decoded) ) {
 		nfw_log('BASE64-encoded injection', 'POST:' . $key . ' = ' . $string, '3', 0);
 		nfw_block();
 	}
@@ -1223,7 +1230,7 @@ function nfw_block() {
 	}
 
 	echo '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">' . "\n" .
-		'<html><head><title>NinjaFirewall: ' . $http_codes[$nfw_['nfw_options']['ret_code']] .
+		'<html><head><title>NinjaFirewall ' . $http_codes[$nfw_['nfw_options']['ret_code']] .
 		'</title><style>body{font-family:sans-serif;font-size:13px;color:#000;}</style><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body bgcolor="white">' . $tmp . '</body></html>';
 	exit;
 }

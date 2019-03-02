@@ -190,6 +190,7 @@ function help_nfsubpolicies() {
 		<li>' . __('Force SSL for admin and logins <code>FORCE_SSL_ADMIN</code>:', 'ninjafirewall'). '<span class="description"> ' . __('enable this option when you want to secure logins and the admin area so that both passwords and cookies are never sent in the clear. Ensure that you can access your admin console from HTTPS before enabling this option, otherwise you will lock yourself out of your site!', 'ninjafirewall'). '</span></li>
 		<li>' . __('Disable the plugin and theme editor <code>DISALLOW_FILE_EDIT</code>:', 'ninjafirewall'). '<span class="description"> ' . __('disabling the plugin and theme editor provides an additional layer of security if a hacker gains access to a well-privileged user account.', 'ninjafirewall'). '</span></li>
 		<li>' . __('Disable plugin and theme update/installation <code>DISALLOW_FILE_MODS</code>:', 'ninjafirewall'). '<span class="description"> ' . __('this option will block users being able to use the plugin and theme installation/update functionality from the WordPress admin area. Setting this constant also disables the Plugin and Theme editor.', 'ninjafirewall'). '</span></li>
+		<li>' . __('Disable the fatal error handler <code>WP_Fatal_Error_Handler</code>:', 'ninjafirewall'). '<span class="description"> ' . __('this option will disable the WSOD protection introduced in WordPress 5.1.', 'ninjafirewall'). '</span></li>
 
 		<br />
 
