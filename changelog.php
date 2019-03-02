@@ -18,6 +18,12 @@
 
 $changelog = <<<'EOT'
 
+= 3.4.1 =
+* Fixed two potentials PHP notices in the Web Filter and firewall engine on systems running PHP 7.2+.
+* Added a function to the firewall engine to detect and decode octal-encoded values that could be used as WAF evasion techniques (e.g. "?foo=\050\141\154\145\162\164\051\050\170\163\163\051").
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Updated security rules.
+
 = 3.4 =
 * Improved the firewall's Garbage Collector to make sure it will not run more than once every 5 minutes when the admin is logged in.
 * [Pro+ Edition] The "IP Access Control" whitelist and blacklist can now support CIDR notation for IPv4 and IPv6 (e.g., "66.155.0.0/17",  "2c0f:f248::/32").

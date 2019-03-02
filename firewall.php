@@ -20,6 +20,7 @@ if ( strpos($_SERVER['SCRIPT_NAME'], '/nfwlog/') !== FALSE
 	|| $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) { die('Forbidden'); }
 if (defined('NFW_STATUS')) { return; }
 
+$nfw_ = array();
 $nfw_['fw_starttime'] = microtime(true);
 
 // Optional NinjaFirewall configuration file
@@ -196,7 +197,7 @@ if (! empty($nfw_['nfw_options']['php_self']) && ! empty($_SERVER['PHP_SELF']) )
 	$_SERVER['PHP_SELF'] = nfw_sanitise( $_SERVER['PHP_SELF'], 'PHP_SELF');
 }
 
-if (! empty($nfw_['dblink']) ) { @$nfw_['dblink']->close(); }
+if (! empty($nfw_dblink) ) { @$nfw_dblink->close(); }
 unset($nfw_);
 define( 'NFW_STATUS', 22 );
 
@@ -814,6 +815,13 @@ function nfw_normalize( $string, $nfw_rules ) {
 		}
 	}
 
+	if ( preg_match('/\\\(?:0?[4-9][0-9]|1[0-7][0-9])/', $norm) ) {
+		$norm = preg_replace_callback('/\\\(0?[4-9][0-9]|1[0-7][0-9])/', 'nfw_oct2ascii', $norm );
+		if (! $norm ) {
+			return $string;
+		}
+	}
+
 	if ( preg_match('/\\\x[a-f0-9]{2}/i', $norm) ) {
 		$norm = preg_replace_callback('/\\\x([a-f0-9]{2})/i', 'nfw_hex2ascii', $norm);
 		if (! $norm ) {
@@ -964,9 +972,17 @@ function nfw_udecode( $match ) {
 
 // ---------------------------------------------------------------------
 
+function nfw_oct2ascii( $match ) {
+
+	return chr( octdec( $match[1] ) );
+
+}
+
+// ---------------------------------------------------------------------
+
 function nfw_hex2ascii( $match ) {
 
-	return chr( '0x'.$match[1] );
+	return chr( hexdec( $match[1] ) );
 
 }
 
@@ -1019,8 +1035,8 @@ function nfw_sanitise( $str, $msg ) {
 		if ($msg == 'COOKIE') {
 			$str2 = str_replace(	array('\\', "'", "\x00", "\x1a", '`', '<'),
 				array('\\\\', "\\'", '-', '-', '\\`', '&lt;'),	$str);
-		} elseif (! empty($nfw_['dblink']) ) {
-			$str2 = $nfw_['dblink']->real_escape_string($str);
+		} elseif (! empty($nfw_dblink) ) {
+			$str2 = $nfw_dblink->real_escape_string($str);
 			$str2 = str_replace(	array(  '`', '<', '>'), array( '\\`', '&lt;', '&gt;'),	$str2);
 		} else {
 			$str2 = str_replace(	array('\\', "'", '"', "\x0d", "\x0a", "\x00", "\x1a", '`', '<', '>'),
