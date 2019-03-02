@@ -37,7 +37,7 @@ html_header();
 					<center>
 						<i id="loading">&nbsp;</i>
 						<br />
-						<textarea disabled class="form-control" style="background-color:#ffffff;width:95%;height:250px;font-family:monospace;font-size:14px;" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php echo _('No traffic yet, please wait...'); echo "\n"; ?></textarea>
+						<textarea disabled class="form-control" style="background-color:#ffffff;width:95%;height:450px;font-family:monospace;font-size:14px;" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php echo _('No traffic yet, please wait...'); echo "\n"; ?></textarea>
 						<br />
 						<label><input type="radio" disabled>&nbsp;<?php echo _('On') ?></label>&nbsp;&nbsp;
 						<label><input type="radio" disabled checked="checked" />&nbsp;<?php echo _('Off') ?></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

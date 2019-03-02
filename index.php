@@ -176,13 +176,6 @@ if ( $mid == 99 ) {
 } elseif ( $mid == 39 ) {
 	require __DIR__ . '/lib/firewall_centlog.php';
 
-} elseif ( $mid == 90 ) {
-   raw_admin_log();
-
-} elseif ( $mid == 91 ) {
-	flush_admin_log();
-   raw_admin_log();
-
 //	Summary > Overview:
 } else {
 	require __DIR__ . '/lib/summary_overview.php';
@@ -285,12 +278,9 @@ function raw_admin_log() {
 	// Open the log:
 	if ( file_exists( $log ) ) {
 		$fsize = filesize( $log );
-
 		// It looks empty, return an error:
 		if ( $fsize < 5 ) {
 			$line = _('The admin log is empty.');
-			$err = 1;
-
 		// Fetch its content:
 		} else {
 			$fh = fopen( $log, 'r' );
@@ -299,62 +289,15 @@ function raw_admin_log() {
 			}
 			fclose ( $fh );
 		}
-
 	// Missing log:
 	} else {
 		$line = sprintf( _('Unable to open logfile: %s'), '/nfwlog/admin.php' );
-		$err = 1;
 	}
+?>
+	<textarea class="form-control" style="height:400px;font-family:Consolas,Monaco,monospace;resize:vertical" wrap="off"><?php echo $line; ?></textarea>
+<?php
 
-	?><html lang="en">
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<title>NinjaFirewall</title>
-			<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-			<link href="static/bootstrap.min.css" rel="stylesheet" type="text/css">
-			<link href="static/styles.css" rel="stylesheet" type="text/css">
-			<?php
-			// If the use has their own CSS style sheet, load it:
-			if ( file_exists( 'static/user.css' ) ) {
-				echo '<link href="static/user.css" rel="stylesheet" type="text/css">'."\n";
-			}
-			?>
-			<script>function dellog(){if (confirm("<?php echo _('Delete log') ?>?")){return true;}else{return false;}}</script>
-		</head>
-
-		<body>
-			<div id="main_nr" class="ntn-section text-center" style="padding-top:10px">
-				<div class="container">
-					<div class="row" style="padding:10px">
-						<?php
-						if ( empty( $err ) ) {
-							echo '<h4>nfwlog/admin.php (' . sprintf('%s bytes', number_format( $fsize ) ) .')</h4>';
-						}
-						?>
-						<textarea class="form-control" style="height:300px;font-family:Consolas,Monaco,monospace;"><?php
-						echo $line;
-						?></textarea>
-						<?php
-						if (! empty( $err ) ) {
-							echo '</div></div></div></body></html>';
-							exit;
-						}
-						?>
-						<br />
-						<form method="post" onsubmit="return dellog();">
-							<input type="hidden" name="mid" value="91" />
-							<input class="btn btn-md btn-danger btn-25" type="submit" value="<?php echo _('Delete log') ?>" />
-							&nbsp;&nbsp;&nbsp;
-							<input class="btn btn-md btn-success btn-25" type="button" value="<?php echo _('Close') ?>" onClick="window.close();" />
-						</form>
-					</div>
-				</div>
-			</div>
-			<script src="static/bootstrap.min.js<?php echo '?ver='. NFW_ENGINE_VERSION ?>"></script>
-		</body>
-	</html><?php
-
-	exit;
+	return;
 }
 
 // =====================================================================
@@ -589,7 +532,7 @@ function html_footer() {
 				<div>
 					<a href="?mid=20&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Options') ?></a><br />
 					<a href="?mid=21&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('License') ?></a><br />
-					<a href="?mid=21&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Updates') ?></a><br />
+					<a href="?mid=22&token=<?php echo $_REQUEST['token'] ?>"><?php echo _('Updates') ?></a><br />
 					<br />
 				</div>
 				<br />&nbsp;

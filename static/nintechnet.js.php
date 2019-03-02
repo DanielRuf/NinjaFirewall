@@ -42,30 +42,16 @@ function disconnect( who ) {
 
 <?php
 // =====================================================================
-// Summary > Statistics:
+// Summary > Overview:
 
 if ( $mid == 10 ) {
 	?>
-	function popup(url,width,height,scroll_bar) {
-		height=height+20;width=width+20;
-		var str = "height=" + height + ",innerHeight=" + height;
-		str += ",width=" + width + ",innerWidth=" + width;
-		if (window.screen){
-			var ah = screen.availHeight - 30;
-			var aw = screen.availWidth -10;
-			var xc = (aw - width) / 2;
-			var yc = (ah - height) / 2;
-			str += ",left=" + xc + ",screenX=" + xc;
-			str += ",top=" + yc + ",screenY=" + yc;
-			if (scroll_bar) {
-				str += ",scrollbars=no";
-			}else {
-				str += ",scrollbars=yes";
-			}
-			str += ",status=no,location=no,resizable=yes";
+	function dellog(){
+		if (confirm("<?php echo _('Delete log') ?>?")){
+			return true;
+		}else{
+			return false;
 		}
-		win = open(url, "nfpop", str);
-		setTimeout("win.window.focus()",300);
 	}
 <?php
 // =====================================================================

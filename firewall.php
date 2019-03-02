@@ -927,14 +927,15 @@ function nfw_transform_string( $string, $where ) {
 		);
 	} elseif ( $where == 3 ) {
 		$norm = preg_replace(
-			array('`/(\./)+`','`/{2,}`', '`/(.+?)/\.\./\1\b`', '`\n`', '`\\\`'),
-			array('/', '/', '/\1', '', ''),
+			array('`([\\\"\'^]|\$\w+)`', '`([,;]|\s+)`'),
+			array('', ' '),
 			$string
 		);
 		$norm = preg_replace(
-			array('`([\\\"\'^])`','`\s([\/(])`', '`([,;]|\s+)`'),
-			array('', '\1', ' '),
-		$norm );
+			array('`/(\./)+`','`/{2,}`', '`/(.+?)/\.\./\1\b`', '`\n`', '`\\\`'),
+			array('/', '/', '/\1', '', ''),
+			$norm
+		);
 	}
 
 	return $norm;

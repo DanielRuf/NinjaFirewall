@@ -310,7 +310,7 @@ function check_account_update() {
 					NFW_ENGINE_VERSION . ':' . NFW_EDN . ')' );
 	curl_setopt( $ch, CURLOPT_ENCODING, '');
 	curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
-	curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
+	curl_setopt( $ch, CURLOPT_TIMEOUT, 60 );
 	curl_setopt( $ch, CURLOPT_URL, $proto. NFW_UPDATE . '/index.php' );
 	curl_setopt( $ch, CURLOPT_POST, true );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
@@ -399,7 +399,7 @@ function download_account_update() {
 					NFW_ENGINE_VERSION . ':' . NFW_EDN . ')' );
 	curl_setopt( $ch, CURLOPT_ENCODING, '');
 	curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
-	curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
+	curl_setopt( $ch, CURLOPT_TIMEOUT, 60 );
 	curl_setopt( $ch, CURLOPT_URL, $proto. NFW_UPDATE .'/index.php' );
 	curl_setopt( $ch, CURLOPT_POST, true );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );

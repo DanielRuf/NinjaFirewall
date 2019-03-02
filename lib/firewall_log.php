@@ -179,6 +179,11 @@ echo '</center>';
 
 $levels = array( '', 'MEDIUM', 'HIGH', 'CRITICAL', 'ERROR', 'UPLOAD', 'INFO', 'DEBUG_ON' );
 
+if ( defined('NFW_TEXTAREA_HEIGHT') ) {
+	$th = (int) NFW_TEXTAREA_HEIGHT;
+} else {
+	$th = '450';
+}
 ?>
 <script>
 // We remove the '&nfw_delete=1' query string because if the user reloaded the page,
@@ -219,7 +224,7 @@ if ( isset( $data['log'] ) && is_array( $data['log'] ) ) {
 					<table width="100%" border="0" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="100%" align="center">
-								<textarea name="txtlog" class="form-control" style="background-color:#ffffff;width:95%;height:250px;font-family:monospace;font-size:14px;" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php
+								<textarea name="txtlog" class="form-control" style="background-color:#ffffff;width:95%;height:<?php echo $th; ?>px;font-family:monospace;font-size:14px;" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><?php
 								if ( ! empty( $logline ) ) {
 									echo '       DATE         INCIDENT  LEVEL     RULE     IP            REQUEST' . "\n";
 									echo $logline;

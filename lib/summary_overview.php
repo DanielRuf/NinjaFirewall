@@ -26,6 +26,11 @@ html_header();
 	<br />
 
 <?php
+// Delete admin log?
+if ( isset( $_POST['del_admin_log'] ) ) {
+	@flush_admin_log();
+	echo '<div class="alert alert-success text-left"><a class="close" data-dismiss="alert" aria-label="close">&times;</a>'. _('The log was deleted.') . '</div>';
+}
 
 // Is NF enabled/working?
 if (! defined('NF_DISABLED') ) {
@@ -85,7 +90,7 @@ if ( $_SESSION['ver'] < 1 && NFW_UPDATE && ! empty( $nfw_options['login_updates'
 		curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; NinjaFirewall/' . NFW_ENGINE_VERSION . ':' . NFW_EDN . ')' );
 		curl_setopt( $ch, CURLOPT_ENCODING, '');
 		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
-		curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
+		curl_setopt( $ch, CURLOPT_TIMEOUT, 60 );
 		curl_setopt( $ch, CURLOPT_URL, $proto. NFW_UPDATE .'/index.php' );
 		curl_setopt( $ch, CURLOPT_POST, true );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
@@ -149,8 +154,8 @@ if ( $_SESSION['ver'] == 0 ) {
       <?php
 		} else {
 			?>&nbsp;</td>
-			<td width="55%">Pro Edition <?php
-				echo NFW_ENGINE_VERSION .' '.
+			<td width="55%">Pro Edition <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-changelog" title="<?php echo _('Changelog') ?>"><?php
+				echo NFW_ENGINE_VERSION .'</a> '.
 				sprintf(
 					_('(upgrade to %s)'),
 					'<a href="https://nintechnet.com/ninjafirewall/pro-edition/">Pro+ Edition</a>'
@@ -404,8 +409,7 @@ if ( file_exists( './nfwlog/admin.php' ) ) {
 		<tr valign="middle">
 			<td width="40%"><?php echo _('Last login') ?></td>
 			<td width="5%" align="center">&nbsp;</td>
-			<td width="55%"><a href="javascript:popup('?mid=90&token=<?php
-				echo $_REQUEST['token'] ?>',640,480,0)" title="<?php echo _('Click to view the connection log.') ?>"><?php
+			<td width="55%"><a href="javascript:void(0)" data-toggle="modal" data-target="#modal-admin-log" title="<?php echo _('Admin Log') ?>"><?php
 				echo htmlspecialchars( $match[3] ) .' ('. htmlspecialchars( $match[4] ) .')</a> ~ '.
 				str_replace( '/', '-', $match[1] ) .' @ '. $match[2] ?></td>
 		</tr>
@@ -414,6 +418,51 @@ if ( file_exists( './nfwlog/admin.php' ) ) {
 }
 ?>
 	</table>
+</div>
+
+<!-- Admin log -->
+<div id="modal-admin-log" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><?php echo _('Admin Log') ?></h4>
+      </div>
+      <div class="modal-body"><?php
+        @raw_admin_log();
+        ?></div>
+      <div class="modal-footer">
+			<form method="post" onsubmit="return dellog();">
+				<input type="hidden" name="mid" value="<?php echo $GLOBALS['mid'] ?>" />
+				<input type="hidden" name="del_admin_log" value="1" />
+				<input class="btn btn-md btn-info btn-sm" type="button" value="<?php echo _('Close') ?>" data-dismiss="modal" />
+				&nbsp;&nbsp;&nbsp;
+				<input class="btn btn-md btn-danger btn-sm" type="submit" value="<?php echo _('Delete log') ?>" />
+			</form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Changelog -->
+<div id="modal-changelog" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><?php echo _('Changelog') ?></h4>
+      </div>
+      <div class="modal-body"><?php
+        include 'changelog.php';
+        ?>
+			<textarea class="form-control" style="height:400px;font-family:Consolas,Monaco,monospace;resize:vertical" wrap="on"><?php echo htmlspecialchars( $changelog ); ?></textarea>
+		</div>
+      <div class="modal-footer">
+			<input class="btn btn-md btn-info btn-sm" type="button" value="<?php echo _('Close') ?>" data-dismiss="modal" />
+      </div>
+    </div>
+  </div>
 </div>
 <?php
 

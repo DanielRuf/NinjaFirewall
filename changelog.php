@@ -18,6 +18,14 @@
 
 $changelog = <<<'EOT'
 
+= 3.4.3 =
+* Improved firewall engine to detect shell command obfuscation tricks using uninitialized variables.
+* Increased all occurrences of "CURLOPT_TIMEOUT" to 60 seconds to prevent timeout when upgrading NinjaFirewall on servers with a slow network connection.
+* Increased the height of the textarea in the "Firewall Log" and "Live Log" pages.
+* Updated security rules.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes and enhancements.
+
 = 3.4.2 =
 * [Pro+ Edition] Fixed a bug in the firewall engine's cache where some transformed data was not always cached as expected.
 * The "Decode base64-encoded POST" policy will also detect and block base64-encoded serialized PHP objects.

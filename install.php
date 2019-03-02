@@ -328,7 +328,7 @@ function nfw_system_requirements() {
 				<td width="45%" align="left"><?php
 				printf(
 					_('"auto_prepend_file" is already in use: %s'. '<br />'.
-					'Because NinjaFirewall needs to use this directive, it will orverride your current one.'),  htmlspecialchars( $tmp ) ) ?></td>
+					'Because NinjaFirewall needs to use this directive, it will override it.'),  htmlspecialchars( $tmp ) ) ?></td>
 			</tr>
 			<?php
 			} else {
@@ -1384,6 +1384,9 @@ function nfw_activation_test() {
 						$message.= _('-Securing a Joomla! installation with NinjaFirewall:') . "\n";
 						$message.= 'https://blog.nintechnet.com/securing-a-joomla-installation-with-ninjafirewall-pro/ ' . "\n\n";
 
+						$message.= _('-Test your website security with our online scanner:') . "\n";
+						$message.= 'https://webscanner.nintechnet.com/ ' . "\n\n";
+
 						$message.= '5. '. _('Help & Support Links:') . "\n\n";
 
 						$message.= _('-Each page of NinjaFirewall includes a contextual help: click on the "Help" menu tab located in the upper right corner of the corresponding page.') . "\n";
@@ -1641,7 +1644,7 @@ function account_license_connect( $data ) {
 													':'. NFW_EDN .'; '. $domain );
 	curl_setopt( $ch, CURLOPT_ENCODING, '');
 	curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
-	curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
+	curl_setopt( $ch, CURLOPT_TIMEOUT, 60 );
 	curl_setopt( $ch, CURLOPT_URL, 'http://'. NFW_UPDATE .'/index.php' );
 	curl_setopt( $ch, CURLOPT_POST, true );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
