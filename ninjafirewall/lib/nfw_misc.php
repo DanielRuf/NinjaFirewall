@@ -20,30 +20,37 @@
 if (! defined( 'NFW_ENGINE_VERSION' ) ) { die( 'Forbidden' ); }
 
 // ---------------------------------------------------------------------
+// Start a PHP session.
 
 function nfw_session_start() {
 
-	// Start a PHP session
-
 	if (! headers_sent() ) {
-
-		@ini_set('session.cookie_httponly', 1);
-		@ini_set('session.use_only_cookies', 1);
-		if ( $_SERVER['SERVER_PORT'] == 443 ) {
-			@ini_set('session.cookie_secure', 1);
-		}
 
 		if ( version_compare( PHP_VERSION, '5.4', '<' ) ) {
 			if (! session_id() ) {
+				nfw_ini_set_cookie();
 				session_start();
 			}
 		} else {
 			if ( session_status() !== PHP_SESSION_ACTIVE ) {
+				nfw_ini_set_cookie();
 				session_start();
 			}
 		}
-
 	}
+}
+
+// ---------------------------------------------------------------------
+
+function nfw_ini_set_cookie() {
+
+	if ( ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) ||
+		$_SERVER['SERVER_PORT'] == 443 || defined('NFW_IS_HTTPS') ) {
+
+		@ini_set('session.cookie_secure', 1);
+	}
+	@ini_set('session.cookie_httponly', 1);
+	@ini_set('session.use_only_cookies', 1);
 }
 
 // ---------------------------------------------------------------------
@@ -223,7 +230,7 @@ function nfw_garbage_collector() {
 		}
 		$old_backup = array_slice( $glob, $num );
 		foreach( $old_backup as $file ) {
-			echo unlink( $file );
+			unlink( $file );
 		}
 	} else {
 		// Create first backup:
@@ -332,6 +339,7 @@ function nfw_query( $query ) {
 		} else {
 			$tmp = 'author';
 		}
+		$_SESSION = array();
 		@session_destroy();
 		$query->set('author_name', '0');
 		nfw_log2('User enumeration scan (author archives)', $tmp, 2, 0);
@@ -585,6 +593,7 @@ function nfwhook_user_meta( $id, $key, $value ) {
 			nfw_log2( 'WordPress: ' . $subject, "$key: $value", 3, 0);
 		}
 
+		$_SESSION = array();
 		@session_destroy();
 
 		$nfw_options = nfw_get_option( 'nfw_options' );
@@ -626,7 +635,7 @@ function nfwhook_user_meta( $id, $key, $value ) {
 function nfw_login_form_hook() {
 
 	if (! empty( $_SESSION['nfw_bfd'] ) ) {
-		echo '<p class="message">'. __('NinjaFirewall brute-force protection is enabled and you are temporarily whitelisted.', 'ninjafirewall' ) . '</p><br />';
+		echo '<p class="message" id="nfw_login_msg">'. __('NinjaFirewall brute-force protection is enabled and you are temporarily whitelisted.', 'ninjafirewall' ) . '</p><br />';
 	}
 }
 add_filter( 'login_message', 'nfw_login_form_hook');

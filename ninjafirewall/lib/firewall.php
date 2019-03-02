@@ -18,6 +18,7 @@ if ( strpos($_SERVER['SCRIPT_NAME'], '/nfwlog/') !== FALSE ||
 	strpos($_SERVER['SCRIPT_NAME'], '/ninjafirewall/') !== FALSE ) { die('Forbidden'); }
 if (defined('NFW_STATUS')) { return; }
 
+$nfw_ = array();
 $nfw_['fw_starttime'] = microtime(true);
 
 // Optional NinjaFirewall configuration file
@@ -56,6 +57,15 @@ if (! is_dir($nfw_['log_dir']) ) {
 	}
 }
 
+// Check if we are connected over HTTPS
+if ( ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) || $_SERVER['SERVER_PORT'] == 443 ||
+	( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ) ) {
+	// This can be defined in the .htninja
+	if (! defined('NFW_IS_HTTPS') ) {
+		define('NFW_IS_HTTPS', true );
+	}
+}
+
 if ( strpos($_SERVER['SCRIPT_NAME'], 'wp-login.php' ) !== FALSE ) {
 	nfw_bfd(1);
 } elseif ( strpos($_SERVER['SCRIPT_NAME'], 'xmlrpc.php' ) !== FALSE ) {
@@ -66,49 +76,59 @@ if (empty ($wp_config)) {
 	$wp_config = dirname($nfw_['wp_content']) . '/wp-config.php';
 }
 
-if (! file_exists($wp_config) ) {
-	if (! @file_exists( $wp_config = dirname( dirname($nfw_['wp_content']) ) . '/wp-config.php') ) {
-		define( 'NFW_STATUS', 1 );
+// Check if we have a SQL link that was defined in the .htninja.
+// See "Giving NinjaFirewall a MySQLi link identifier"
+// at https://nintechnet.com/ninjafirewall/wp-edition/help/?htninja
+if (! empty( $GLOBALS['nfw_mysqli'] ) && ! empty( $GLOBALS['nfw_table_prefix'] ) ) {
+	$nfw_['mysqli'] = $GLOBALS['nfw_mysqli'];
+	$nfw_['table_prefix'] = $GLOBALS['nfw_table_prefix'];
+
+// No DB link:
+} else {
+	if (! file_exists($wp_config) ) {
+		if (! @file_exists( $wp_config = dirname( dirname($nfw_['wp_content']) ) . '/wp-config.php') ) {
+			define( 'NFW_STATUS', 1 );
+			unset($nfw_);
+			unset($wp_config);
+			return;
+		}
+	}
+	if (! $nfw_['fh'] = fopen($wp_config, 'r') ) {
+		define( 'NFW_STATUS', 2 );
 		unset($nfw_);
 		unset($wp_config);
 		return;
 	}
-}
-if (! $nfw_['fh'] = fopen($wp_config, 'r') ) {
-	define( 'NFW_STATUS', 2 );
-	unset($nfw_);
-	unset($wp_config);
-	return;
-}
 
-while (! feof($nfw_['fh'])) {
-	$nfw_['line'] = fgets($nfw_['fh']);
-	if ( preg_match('/^\s*define\s*\(\s*[\'"]DB_NAME[\'"]\s*,\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
-		$nfw_['DB_NAME'] = $nfw_['match'][1];
-	} elseif ( preg_match('/^\s*define\s*\(\s*[\'"]DB_USER[\'"]\s*,\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
-		$nfw_['DB_USER'] = $nfw_['match'][1];
-	} elseif ( preg_match('/^\s*define\s*\(\s*[\'"]DB_PASSWORD[\'"]\s*,\s*([\'"])(.+?)\1/', $nfw_['line'], $nfw_['match']) ) {
-		$nfw_['DB_PASSWORD'] = $nfw_['match'][2];
-	} elseif ( preg_match('/^\s*define\s*\(\s*[\'"]DB_HOST[\'"]\s*,\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
-		$nfw_['DB_HOST'] = $nfw_['match'][1];
-	} elseif ( preg_match('/^\s*\$table_prefix\s*=\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
-		$nfw_['table_prefix'] = $nfw_['match'][1];
+	while (! feof($nfw_['fh'])) {
+		$nfw_['line'] = fgets($nfw_['fh']);
+		if ( preg_match('/^\s*define\s*\(\s*[\'"]DB_NAME[\'"]\s*,\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
+			$nfw_['DB_NAME'] = $nfw_['match'][1];
+		} elseif ( preg_match('/^\s*define\s*\(\s*[\'"]DB_USER[\'"]\s*,\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
+			$nfw_['DB_USER'] = $nfw_['match'][1];
+		} elseif ( preg_match('/^\s*define\s*\(\s*[\'"]DB_PASSWORD[\'"]\s*,\s*([\'"])(.+?)\1/', $nfw_['line'], $nfw_['match']) ) {
+			$nfw_['DB_PASSWORD'] = $nfw_['match'][2];
+		} elseif ( preg_match('/^\s*define\s*\(\s*[\'"]DB_HOST[\'"]\s*,\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
+			$nfw_['DB_HOST'] = $nfw_['match'][1];
+		} elseif ( preg_match('/^\s*\$table_prefix\s*=\s*[\'"](.+?)[\'"]/', $nfw_['line'], $nfw_['match']) ) {
+			$nfw_['table_prefix'] = $nfw_['match'][1];
+		}
 	}
-}
-fclose($nfw_['fh']);
-unset($wp_config);
-if ( (! isset($nfw_['DB_NAME'])) || (! isset($nfw_['DB_USER'])) || (! isset($nfw_['DB_PASSWORD'])) ||	(! isset($nfw_['DB_HOST'])) || (! isset($nfw_['table_prefix'])) ) {
-	define( 'NFW_STATUS', 3 );
-	unset($nfw_);
-	return;
-}
+	fclose($nfw_['fh']);
+	unset($wp_config);
+	if ( (! isset($nfw_['DB_NAME'])) || (! isset($nfw_['DB_USER'])) || (! isset($nfw_['DB_PASSWORD'])) ||	(! isset($nfw_['DB_HOST'])) || (! isset($nfw_['table_prefix'])) ) {
+		define( 'NFW_STATUS', 3 );
+		unset($nfw_);
+		return;
+	}
 
-nfw_check_dbhost();
-@$nfw_['mysqli'] = new mysqli($nfw_['DB_HOST'], $nfw_['DB_USER'], $nfw_['DB_PASSWORD'], $nfw_['DB_NAME'], $nfw_['port'], $nfw_['socket']);
-if ($nfw_['mysqli']->connect_error) {
-	define( 'NFW_STATUS', 4 );
-	unset($nfw_);
-	return;
+	nfw_check_dbhost();
+	@$nfw_['mysqli'] = new mysqli($nfw_['DB_HOST'], $nfw_['DB_USER'], $nfw_['DB_PASSWORD'], $nfw_['DB_NAME'], $nfw_['port'], $nfw_['socket']);
+	if ($nfw_['mysqli']->connect_error) {
+		define( 'NFW_STATUS', 4 );
+		unset($nfw_);
+		return;
+	}
 }
 
 if (! $nfw_['result'] = @$nfw_['mysqli']->query('SELECT * FROM `' . $nfw_['mysqli']->real_escape_string($nfw_['table_prefix']) . "options` WHERE `option_name` = 'nfw_options'")) {
@@ -121,7 +141,7 @@ if (! $nfw_['result'] = @$nfw_['mysqli']->query('SELECT * FROM `' . $nfw_['mysql
 		return;
 	}
 	// Change the table prefix to match 'wp_1_options':
-	$nfw_['table_prefix'] = 'wp_1_';
+	$nfw_['table_prefix'] = "{$nfw_['table_prefix']}1_";
 }
 
 if (! $nfw_['options'] = @$nfw_['result']->fetch_object() ) {
@@ -319,11 +339,11 @@ if (! empty($nfw_['nfw_options']['allow_local_ip']) && ! filter_var(NFW_REMOTE_A
 	return;
 }
 
-if ( (@$nfw_['nfw_options']['scan_protocol'] == 1) && ($_SERVER['SERVER_PORT'] == 443) ) {
+if ( @$nfw_['nfw_options']['scan_protocol'] == 1 && defined('NFW_IS_HTTPS') ) {
 	nfw_quit(20);
 	return;
 }
-if ( (@$nfw_['nfw_options']['scan_protocol'] == 2) && ($_SERVER['SERVER_PORT'] != 443) ) {
+if ( @$nfw_['nfw_options']['scan_protocol'] == 2 && ! defined('NFW_IS_HTTPS') ) {
 	nfw_quit(20);
 	return;
 }
@@ -448,7 +468,7 @@ function nfw_quit( $status ) {
 	if ( isset( $nfw_['mysqli'] ) ) {
 		$nfw_['mysqli']->close();
 	}
-	$nfw_= '';
+	$nfw_ = array();
 }
 
 // =====================================================================
@@ -466,7 +486,7 @@ function nfw_check_session() {
 	// Prepare session:
 	@ini_set('session.cookie_httponly', 1);
 	@ini_set('session.use_only_cookies', 1);
-	if ( $_SERVER['SERVER_PORT'] == 443 ) {
+	if ( defined('NFW_IS_HTTPS') ) {
 		@ini_set('session.cookie_secure', 1);
 	}
 
@@ -902,6 +922,13 @@ function nfw_normalize( $string, $nfw_rules ) {
 		}
 	}
 
+	if ( preg_match('/\\\(?:0?[4-9][0-9]|1[0-7][0-9])/', $norm) ) {
+		$norm = preg_replace_callback('/\\\(0?[4-9][0-9]|1[0-7][0-9])/', 'nfw_oct2ascii', $norm );
+		if (! $norm ) {
+			return $string;
+		}
+	}
+
 	if ( preg_match('/\\\x[a-f0-9]{2}/i', $norm) ) {
 		$norm = preg_replace_callback('/\\\x([a-f0-9]{2})/i', 'nfw_hex2ascii', $norm);
 		if (! $norm ) {
@@ -1050,9 +1077,17 @@ function nfw_udecode( $match ) {
 
 // =====================================================================
 
+function nfw_oct2ascii( $match ) {
+
+	return chr( octdec( $match[1] ) );
+
+}
+
+// =====================================================================
+
 function nfw_hex2ascii( $match ) {
 
-	return chr( '0x'.$match[1] );
+	return chr( hexdec( $match[1] ) );
 
 }
 
@@ -1424,6 +1459,8 @@ function nfw_check_auth( $auth_name, $auth_pass, $auth_msgtxt, $bf_rand, $b64, $
 
 	nfw_check_session();
 
+	global $nfw_;
+
 	if ( isset($_SESSION['nfw_bfd']) && $_SESSION['nfw_bfd'] == $bf_rand ) {
 		return;
 	}
@@ -1626,7 +1663,7 @@ function nfw_response_headers() {
 	// Stop here is no more headers:
 	if ( empty($NFW_RESHEADERS[4] ) ) { return; }
 
-	if ( $_SERVER['SERVER_PORT'] != 443 &&
+	if (! defined('NFW_IS_HTTPS') &&
 	(! isset( $_SERVER['HTTP_X_FORWARDED_PROTO']) ||
 	$_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') ) {
 		return;
