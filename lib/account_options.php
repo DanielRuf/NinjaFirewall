@@ -143,6 +143,14 @@ $current_tz = @date_default_timezone_get();
 					}
 					?>
 				</select>
+				<br /><i>
+				<?php
+				printf(
+					_('If you want to add your own language file, <a href="%s">consult this article</a>.'),
+					'https://blog.nintechnet.com/ninjafirewall-pro-new-ui/#i18n'
+				);
+				?>
+				</i>
 			</td>
 		</tr>
 	</table>
@@ -269,7 +277,7 @@ function save_account_options() {
 					} else {
 						$cost = 10;
 					}
-					$nfw_options['admin_pass'] = password_hash( $new_admin_pass, PASSWORD_DEFAULT, [ 'cost' => $cost  ] );
+					$nfw_options['admin_pass'] = password_hash( $new_admin_pass, PASSWORD_DEFAULT, array( 'cost' => $cost ) );
 				}
 			}
 		}

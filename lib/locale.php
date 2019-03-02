@@ -37,5 +37,6 @@ setlocale( LC_CTYPE, "{$nfw_options['admin_lang']}.utf-8" );
 $domain = "ninjafirewall_pro-{$nfw_options['admin_lang']}";
 bindtextdomain( $domain, dirname( __DIR__ ) . '/locale' );
 textdomain( $domain );
+
 // ---------------------------------------------------------------------
 // EOF

@@ -129,7 +129,7 @@ if (! empty( $_POST['post'] ) ) {
 			<td width="40%" align="left"><?php echo _('Blocked user message') ?></td>
 			<td width="5%" align="center">&nbsp;</td>
 			<td width="55%" align="left">
-				<textarea name="blocked_msg" rows="8" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control" ><?php
+				<textarea name="blocked_msg" rows="8" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control" style="resize: vertical;"><?php
 				if (! empty( $nfw_options['blocked_msg'] ) ) {
 					echo htmlentities( base64_decode( $nfw_options['blocked_msg'] ) );
 				} else {
@@ -188,13 +188,14 @@ if (! empty( $_POST['post'] ) ) {
 							unlink( $file );
 							continue;
 						}
-						// Save it :
+						// Save it:
 						if ( preg_match( '`_-_(.+)\.php$`', $file, $match ) ) {
-							$banned_ips[] = $match[1];
+							$banned_ips[ $match[1] ] = 1;
+
 						}
 					}
 				}
-				sort( $banned_ips );
+				ksort( $banned_ips );
 				?>
 				<br />
 				<?php echo _('Currently banned IP addresses:') ?> <?php echo count($banned_ips) ?>&nbsp;<?php
@@ -204,8 +205,8 @@ if (! empty( $_POST['post'] ) ) {
 				<br />
 				<select multiple class="form-control" size="8" name="banned_list[]"<?php disabled( count( $banned_ips ), 0 ) ?>>
 				<?php
-				foreach ( $banned_ips as $ip ) {
-					echo '<option value="'. $ip .'">'. htmlentities( $ip ) .'</option>';
+				foreach ( $banned_ips as $ip => $x ) {
+					echo '<option value="'. htmlentities( $ip ) .'">'. htmlentities( $ip ) .'</option>';
 				}
 				?>
 				</select>
@@ -232,18 +233,15 @@ function save_firewall_options() {
 
 	// Clear selected IPs from the ban list :
 	if (! empty( $_POST['banned_list'] ) ) {
-		$glob = glob( dirname( __DIR__ ) .'/nfwlog/cache/ipbk*.php');
-		$banned_ips = array();
-		if ( is_array( $glob ) ) {
-			foreach ( $glob as $file ) {
-				if (preg_match( '`^.+_-_(.+)\.php$`', $file, $match ) ) {
-					$banned_ips[$match[1]] = $match[0];
-				}
-			}
-		}
 		foreach ( $_POST['banned_list'] as $ip ) {
-			if (! empty( $banned_ips[$ip] ) && file_exists( $banned_ips[$ip] ) ) {
-				unlink( $banned_ips[$ip] );
+			$ip = trim( $ip );
+			if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+				$glob = glob( dirname( __DIR__ ) ."/nfwlog/cache/ipbk*_-_{$ip}.php");
+				if ( is_array( $glob ) ) {
+					foreach ( $glob as $file ) {
+						unlink( $file );
+					}
+				}
 			}
 		}
 	}

@@ -147,7 +147,7 @@ function save_config( $data, $type ) {
 
 	// Clear this file from the opcode cache:
 	if ( function_exists( 'opcache_invalidate' ) ) {
-		opcache_invalidate( $file, true );
+		@opcache_invalidate( $file, true );
 	}
 
 }
@@ -220,6 +220,47 @@ function proplus_string() {
 	_('Please enter a secret key, from 30 to 100 ASCII printable characters. It will be used to generate your public key.');
 	_('Please enter this server IP address.');
 	_('Please enter the remote websites URL.');
+	_('1-hour');
+	_('10-second');
+	_('12-hour');
+	_('15-minute');
+	_('15-second');
+	_('24-hour');
+	_('3-hour');
+	_('30-second');
+	_('5-minute');
+	_('6-hour');
+	_('An unknown error occured while connecting to NinjaFirewall servers. Please try again in a few minutes.');
+	_('Click here to get a license');
+	_('Click here to renew it.');
+	_('Enter your new license and click on the save button');
+	_('GeoIP database not found.');
+	_('License renewal');
+	_('NinjaFirewall must be enabled and working in order to use the Live Log feature.');
+	_('Please enter the custom log format.');
+	_('Save New License');
+	_('The URL is invalid.');
+	_('The remote server rejected your request. Make sure that you uploaded the correct public key.');
+	_('The remote server returned a redirection code: %s.');
+	_('The remote server returned the following HTTP error: %s.');
+	_('The remote website did not return the expected response.');
+	_('The requested log does not exist on the remote website.');
+	_('The server returned the following HTTP code: %s %s');
+	_('This is already your current license.');
+	_('Unable to connect to NinjaFirewall server (%s).');
+	_('Unable to connect to the remote website: %s.');
+	_('Unable to open the log for read operation.');
+	_('Unknown expiration date. Use the "%s" button to attempt to fix this error.');
+	_('Warning: Your previous secret key was either corrupted or missing. A new one, as well as a new public key, were created.');
+	_('You do not have any license.');
+	_('You have a valid license.');
+	_('You must be whitelisted in order to use that feature. Click on "Firewall > Access Control" and ensure that the "Whitelist the Administrator" option is enabled.');
+	_('Your license has expired.');
+	_('Your license is not valid.');
+	_('Your license will expire soon.');
+	_("Your list is empty. Disable geolocation if you don't use it.");
+	_('Your new license has been accepted and saved.');
+	_('Your server does not seem to support the %s variable.');
 
 }
 // ---------------------------------------------------------------------

@@ -164,7 +164,7 @@ function show_help() {
 			'<li>'. _('<code>DENY</code>: A browser receiving content with this header must not display this content in any frame.') .'</li>'.
 		'</ul>'.
 
-		'<p><strong>'. _('Disable X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)') .':</strong> '. _('This header allows browsers to identify and block XSS attacks by preventing malicious scripts from executing. It is enabled by default on all compatible browsers.') .'</p>'.
+		'<p><strong>'. _('Set X-XSS-Protection (IE/Edge, Chrome, Opera and Safari browsers)') .':</strong> '. _('This header allows browsers to identify and block XSS attacks by preventing malicious scripts from executing. It is enabled by default on all compatible browsers.') .'</p>'.
 		'<p>'. glyphicon('warning') .'&nbsp;'. _('If a visitor disable their browser\'s XSS filter, you cannot re-enable it with that option.') .'</p>'.
 
 		'<p><strong>'. _('Force HttpOnly flag on all cookies to mitigate XSS attacks') .':</strong> '. _('Adding this flag to cookies helps to mitigate the risk of cross-site scripting by preventing them from being accessed through client-side scripts. NinjaFirewall can hook all cookies sent by your blog, its plugins or any other PHP script, add the <code>HttpOnly</code> flag if it is missing, and re-inject those cookies back into your server HTTP response headers right before they are sent to your visitors.') .'</p>'.
@@ -204,8 +204,11 @@ function show_help() {
 	elseif ( $GLOBALS['mid'] == 32 ) {
 
 		echo _('Access Control is a powerful set of directives that can be used to allow or restrict access to your website based on many criteria.') .' '.
-		_('To make better use of them, it is important to understand NinjaFirewall\'s directives processing order:').
+		_('To make better use of them, it is important to understand NinjaFirewall\'s directives processing order.').
+		'<br />'.
+		_('Because NinjaFirewall is a PHP firewall, its Access Control options apply to PHP scripts, not to static elements (e.g., images, JS, CSS etc). Depending on your configuration, they can also apply to HTML pages.').
 		'<br /><br />'.
+		'<p>'. _('Processing order:') .'</p>'.
 		'<p><strong>'. _('Incoming HTTP request:') .'</strong></p>'.
 		'<ol>'.
 			'<li>'. _('The <code>.htninja</code> file.') .'</li>'.

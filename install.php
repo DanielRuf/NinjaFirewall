@@ -23,15 +23,19 @@
 define('NFW_INSTALLER', true);
 
 // Start session:
-if ( ( version_compare( PHP_VERSION, '5.4', '<' ) && ! session_id() ) ||
-	session_status() !== PHP_SESSION_ACTIVE ) {
-
-	@ini_set('session.cookie_httponly', 1);
-	@ini_set('session.use_only_cookies', 1);
-	if ( $_SERVER['SERVER_PORT'] == 443 ) {
-		@ini_set('session.cookie_secure', 1);
+@ini_set('session.cookie_httponly', 1);
+@ini_set('session.use_only_cookies', 1);
+if ( $_SERVER['SERVER_PORT'] == 443 ) {
+	@ini_set('session.cookie_secure', 1);
+}
+if ( version_compare( PHP_VERSION, '5.4', '<' ) ) {
+	if (! session_id() ) {
+		session_start();
 	}
-	session_start();
+} else {
+	if ( session_status() !== PHP_SESSION_ACTIVE ) {
+		session_start();
+	}
 }
 
 // Don't cache anything:
@@ -682,7 +686,7 @@ function nfw_admin_setup_save() {
 			$nfw_options['admin_pass'] = sha1( $_POST['admin_pass'] );
 		// PHP >=5.5: use password_hash
 		} else {
-			$nfw_options['admin_pass'] = password_hash( $_POST['admin_pass'], PASSWORD_DEFAULT, [ 'cost' => 10 ] );
+			$nfw_options['admin_pass'] = password_hash( $_POST['admin_pass'], PASSWORD_DEFAULT, array( 'cost' => 10 ) );
 		}
 	}
 
@@ -1533,6 +1537,7 @@ function fw_conf_options() {
 		// Firewall > Policies:
 		'scan_protocol' 		=> 3,
 		'uploads' 				=> 0,
+		'substitute' 			=> 'X',
 		'sanitise_fn' 			=> 0,
 		'upload_maxsize' 		=> 0, // Defined below since v3.2.12
 		'get_scan' 				=> 1,

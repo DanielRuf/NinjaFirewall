@@ -92,16 +92,21 @@ if ( empty( $nfw_options['admin_name'] ) || empty( $nfw_options['admin_pass'] ) 
 }
 
 // Start a PHP session:
-if ( ( version_compare( PHP_VERSION, '5.4', '<' ) && ! session_id() ) ||
-	session_status() !== PHP_SESSION_ACTIVE ) {
-
-	@ini_set('session.cookie_httponly', 1);
-	@ini_set('session.use_only_cookies', 1);
-	if ( $_SERVER['SERVER_PORT'] == 443 ) {
-		@ini_set('session.cookie_secure', 1);
-	}
-	session_start();
+@ini_set('session.cookie_httponly', 1);
+@ini_set('session.use_only_cookies', 1);
+if ( $_SERVER['SERVER_PORT'] == 443 ) {
+	@ini_set('session.cookie_secure', 1);
 }
+if ( version_compare( PHP_VERSION, '5.4', '<' ) ) {
+	if (! session_id() ) {
+		session_start();
+	}
+} else {
+	if ( session_status() !== PHP_SESSION_ACTIVE ) {
+		session_start();
+	}
+}
+
 // Security headers + no caching:
 header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
@@ -183,7 +188,7 @@ if ( verify_admin_login( $_POST['admin_name'], $_POST['admin_pass'], $nfw_option
 		$new_password = password_hash(
 			$_POST['admin_pass'],
 			PASSWORD_DEFAULT,
-			[ 'cost' => $cost ]
+			array( 'cost' => $cost )
 		);
 		if ( $new_password !== false ) {
 			// Update the hash in the option.php file:

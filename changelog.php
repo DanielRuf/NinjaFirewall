@@ -18,6 +18,14 @@
 
 $changelog = <<<'EOT'
 
+= 3.3.4 =
+* Fixed an issue where duplicate IP addresses could appear in the list of banned IPs when a single installation of NinjaFirewall was used to protect two or more domains.
+* Fixed a potential "Undefined index: substitute" PHP warning message in the "Firewall Policies" page.
+* Fixed a potential "Zend OPcache API" warning message in the "Firewall Options" page.
+* Fixed a critical error with PHP 5.3.29 installations that do not handle short array syntax.
+* [Pro+ Edition] Updated IPv4/IPv6 GeoIP databases.
+* Minor fixes and small adjustments.
+
 = 3.3.3 =
 * Updated security rules.
 

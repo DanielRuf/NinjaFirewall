@@ -284,7 +284,7 @@ function check_account_update() {
 	global $div_error;
 
 	require_once './lib/misc.php';
-
+	global $http_err_code;
 
 	if (! NFW_UPDATE ) {
 		printf(
@@ -365,6 +365,7 @@ function download_account_update() {
 	global $div_error, $nfw_options, $update_file;
 
 	require_once './lib/misc.php';
+	global $http_err_code;
 
 	$data  = 'action=update';
 	$data .= '&edn=' . urlencode( NFW_EDN );

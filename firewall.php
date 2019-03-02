@@ -35,10 +35,10 @@ if ( @file_exists($nfw_['file'] = dirname($_SERVER['DOCUMENT_ROOT']) .'/.htninja
 	if ( $nfw_['res'] == 'BLOCK' ) {
 		header('HTTP/1.1 403 Forbidden');
 		header('Status: 403 Forbidden');
-		die('403 Forbidden');
 		header('Pragma: no-cache');
 		header('Cache-Control: no-cache, no-store, must-revalidate');
 		header('Expires: 0');
+		die('403 Forbidden');
 	}
 }
 

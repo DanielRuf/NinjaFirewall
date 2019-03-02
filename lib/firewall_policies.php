@@ -502,7 +502,7 @@ if ( empty( $nfw_options['scan_protocol'] ) || ! preg_match( '/^[123]$/', $nfw_o
 					<p><label><input type="radio" onclick="csp_onoff(1, 'csp')" name="csp_frontend" value="1"<?php checked( $nfw_options['response_headers'][6], 1 ); disabled($err, 1); ?>>&nbsp;<?php echo _('Yes') ?></label></p>
 					<p><label><input type="radio" onclick="csp_onoff(0, 'csp')" name="csp_frontend" value="0"<?php checked( $nfw_options['response_headers'][6], 0 ); disabled($err, 1); ?>>&nbsp;<?php echo _('No') . ' '. _('(default)');; ?></label></p>
 					<p>
-					<textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="csp_frontend_data" id="csp" class="form-control" rows="4"<?php readonly( $err, 1 ); readonly( $nfw_options['response_headers'][6], 0 ) ?>><?php echo htmlspecialchars( $nfw_options['csp_frontend_data'] ) ?></textarea>
+					<textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="csp_frontend_data" id="csp" class="form-control" rows="4"<?php readonly( $err, 1 ); readonly( $nfw_options['response_headers'][6], 0 ) ?> style="resize: vertical;"><?php echo htmlspecialchars( $nfw_options['csp_frontend_data'] ) ?></textarea>
 					</p>
 				</td>
 			</tr>
@@ -868,9 +868,7 @@ function save_firewall_policies() {
 	}
 	// Substitution character:
 	// Don't allow the '/' character:
-	if ( empty( $_POST['substitute'] ) || strlen( $_POST['substitute'] ) > 1 ||
-		$nfw_options['substitute'] == '/' ) {
-
+	if ( empty( $_POST['substitute'] ) || strlen( $_POST['substitute'] ) > 1 || @$nfw_options['substitute'] == '/' ) {
 		$nfw_options['substitute'] = 'X';
 	} else {
 		$nfw_options['substitute'] = $_POST['substitute'];

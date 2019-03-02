@@ -37,15 +37,19 @@ if (! defined( 'NFW_REMOTE_ADDR') ) {
 date_default_timezone_set( $nfw_options['timezone'] );
 
 // Start session :
-if ( ( version_compare( PHP_VERSION, '5.4', '<' ) && ! session_id() ) ||
-	session_status() !== PHP_SESSION_ACTIVE ) {
-
-	@ini_set('session.cookie_httponly', 1);
-	@ini_set('session.use_only_cookies', 1);
-	if ( $_SERVER['SERVER_PORT'] == 443 ) {
-		@ini_set('session.cookie_secure', 1);
+@ini_set('session.cookie_httponly', 1);
+@ini_set('session.use_only_cookies', 1);
+if ( $_SERVER['SERVER_PORT'] == 443 ) {
+	@ini_set('session.cookie_secure', 1);
+}
+if ( version_compare( PHP_VERSION, '5.4', '<' ) ) {
+	if (! session_id() ) {
+		session_start();
 	}
-	session_start();
+} else {
+	if ( session_status() !== PHP_SESSION_ACTIVE ) {
+		session_start();
+	}
 }
 
 // Don't cache anything :
